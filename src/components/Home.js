@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import image_src from '../assets/img/white-book.png';
 import '../assets/css/Home.css';
-import TopNav from './TopNav';
 import Particles from 'react-particles-js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -131,6 +129,12 @@ class Home extends Component {
             <FontAwesomeIcon icon={faDiceD20} className="animated bounce" />
           </Link>
         </div>
+        <svg width="0" height="0">
+          <radialGradient id="rg" r="150%" cx="30%" cy="107%">
+            <stop stop-color="#350069" offset="0" />
+            <stop stop-color="#B973FF" offset="0.9" />
+          </radialGradient>
+        </svg>
       </div>
     );
   }

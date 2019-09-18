@@ -25,7 +25,8 @@ function createWindow() {
     width: 1180,
     height: 720,
     show: false,
-    frame: false
+    frame: false,
+    icon: __dirname + './src/assets/img/dice_icon.png'
   });
 
   // and load the index.html of the app.
