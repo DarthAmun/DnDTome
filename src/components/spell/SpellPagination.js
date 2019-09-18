@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import '../assets/css/Pagination.css';
+import '../../assets/css/Pagination.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
-class Pagination extends Component {
+class SpellPagination extends Component {
     state = {
         currentPage: 1,
         pageStep: 10,
@@ -104,4 +104,4 @@ class Pagination extends Component {
     }
 }
 
-export default Pagination;
+export default SpellPagination;

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import '../assets/css/Spell.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import '../../assets/css/Spell.css';
 
 class Spell extends Component {
 
@@ -69,17 +67,17 @@ class Spell extends Component {
 
     render() {
         return (
-                <div className="spell" style={{ animationDelay: `${this.props.delay * 50}ms` }} onClick={this.props.onClick}>
-                    <div className={`spellSchool spellAttr ${this.props.spell.spells_school}`}>{this.props.spell.spells_school}</div>
-                    <div className="spellLevel spellAttr">{this.formatLevel(this.props.spell.spells_level)}</div>
+            <div className="spell" style={{ animationDelay: `${this.props.delay * 50}ms` }} onClick={this.props.onClick}>
+                <div className={`spellSchool spellAttr ${this.props.spell.spells_school}`}>{this.props.spell.spells_school}</div>
+                <div className="spellLevel spellAttr">{this.formatLevel(this.props.spell.spells_level)}</div>
 
-                    <div className="spellName spellAttr"><b>{this.props.spell.spells_name}</b></div>
+                <div className="spellName spellAttr"><b>{this.props.spell.spells_name}</b></div>
 
-                    <div className="spellTime smallSpellAttr"><b>Time: </b>{this.formatTime(this.props.spell.spells_time)}</div>
-                    <div className="spellDuration smallSpellAttr"><b>Duration: </b>{this.formatDuration(this.props.spell.spells_duration)}</div>
-                    <div className="spellRange smallSpellAttr"><b>Range: </b>{this.props.spell.spells_range}</div>
-                    <div className="spellComp smallSpellAttr"><b>Comp.: </b>{this.formatComponents(this.props.spell.spells_components)}</div>
-                </div>
+                <div className="spellTime smallSpellAttr"><b>Time: </b>{this.formatTime(this.props.spell.spells_time)}</div>
+                <div className="spellDuration smallSpellAttr"><b>Duration: </b>{this.formatDuration(this.props.spell.spells_duration)}</div>
+                <div className="spellRange smallSpellAttr"><b>Range: </b>{this.props.spell.spells_range}</div>
+                <div className="spellComp smallSpellAttr"><b>Comp.: </b>{this.formatComponents(this.props.spell.spells_components)}</div>
+            </div>
         )
     }
 }

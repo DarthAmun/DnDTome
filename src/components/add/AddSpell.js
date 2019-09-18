@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
-import '../assets/css/AddSpell.css';
-import TopNav from './TopNav';
-import LeftNav from './LeftNav';
+import '../../assets/css/AddSpell.css';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;

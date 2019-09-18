@@ -2,14 +2,14 @@ import '../assets/css/App.css';
 import React, { Component } from 'react';
 import { MemoryRouter, Switch, Route } from 'react-router';
 
-import SpellOverview from './SpellOverview';
-import CharOverview from './CharOverview';
-import ItemOverview from './ItemOverview';
-import SpellView from './SpellView';
-import CharView from './CharView';
+import SpellOverview from './spell/SpellOverview';
+import CharOverview from './char/CharOverview';
+import ItemOverview from './item/ItemOverview';
+import SpellView from './spell/SpellView';
+import CharView from './char/CharView';
 import Home from './Home';
-import AddView from './AddView';
-import AddSpell from './AddSpell';
+import AddView from './add/AddView';
+import AddSpell from './add/AddSpell';
 import LeftNav from './LeftNav';
 import TopNav from './TopNav';
 

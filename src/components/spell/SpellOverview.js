@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import '../assets/css/SpellOverview.css';
+import '../../assets/css/SpellOverview.css';
 import Spell from './Spell';
 import SpellView from './SpellView';
-import Pagination from './Pagination';
-import SearchBar from './SearchBar';
+import SpellPagination from './SpellPagination';
+import SpellSearchBar from './SpellSearchBar';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -54,7 +54,7 @@ class SpellOverview extends Component {
     render() {
         return (
             <div id="overview">
-                <SearchBar />
+                <SpellSearchBar />
                 <div id="spellContent">
                     <div id="spells" style={{ width: `${this.state.width}` }}>
                         {this.state.currentSpellList.spells.map((spell, index) => {
@@ -63,7 +63,7 @@ class SpellOverview extends Component {
                     </div>
                     <SpellView spell={this.state.currentSelectedSpell} />
                 </div>
-                <Pagination />
+                <SpellPagination />
             </div>
         )
     }

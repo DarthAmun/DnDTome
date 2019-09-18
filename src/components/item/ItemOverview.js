@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import '../assets/css/ItemOverview.css';
+import '../../assets/css/ItemOverview.css';
 import Item from './Item';
 import ItemView from './ItemView';
-import LeftNav from './LeftNav';
-import TopNav from './TopNav';
-
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 

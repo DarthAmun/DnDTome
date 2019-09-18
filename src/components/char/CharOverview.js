@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import '../assets/css/CharOverview.css';
+import '../../assets/css/CharOverview.css';
 import Char from './Char';
-import Pagination from './Pagination';
-import LeftNav from './LeftNav';
-import TopNav from './TopNav';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;

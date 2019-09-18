@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faIdCard, faBook } from '@fortawesome/free-solid-svg-icons';
-import '../assets/css/AddView.css';
-import TopNav from './TopNav';
-import LeftNav from './LeftNav';
+import '../../assets/css/AddView.css';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
