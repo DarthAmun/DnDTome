@@ -1,0 +1,103 @@
+#newSpell {
+    height: 100%;
+    width: 100%;
+    min-width: 450px;
+    overflow-x: hidden;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    color: dimgrey;
+    float:left;
+}
+
+#newSpell input {
+    height: 30px;
+    width: 300px;
+    border: none;
+    border-radius: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    float: right;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: white;
+    color: dimgrey;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
+
+#newSpell button {
+    height: 28px;
+    width: auto;
+    border: none;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 5px;
+    text-align: center;
+    float: left;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: #8000ff;
+    color: white;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+}
+
+#newSpell button:hover {
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    cursor: pointer;
+}
+
+#newSpell button.delete {
+    background-color: darkred;
+}
+
+#newSpell textarea {
+    height: auto;
+    min-height: 290px;
+    width: 430px;
+    float: left;
+    resize: vertical;
+    border-radius: 3px;
+    border-bottom-right-radius: 0px;
+    border: none;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    margin-bottom: 5px;
+    background-color: white;
+    color: dimgrey;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
+
+#newSpell label {
+    display: inline-block;
+    width: 450px;
+    text-align: right;
+    line-height: 30px;
+}
+
+#newSpell .top {
+    float: left;
+    width: 450px;
+    margin-right: 10px;
+}
+
+#newSpell img {
+    width: 320px;
+    margin-left: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
+
+#newSpell::-webkit-scrollbar, #newSpell textarea::-webkit-scrollbar {
+    width: 6px;
+    background-color: rgba(92, 102, 130, 1);
+    border-radius: 5px;
+}
+
+#newSpell::-webkit-scrollbar-thumb, #newSpell textarea::-webkit-scrollbar-thumb {
+    background-color: #8000ff;
+    border-radius: 5px;
+}

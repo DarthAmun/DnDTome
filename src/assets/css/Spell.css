@@ -1,0 +1,121 @@
+.spell {
+    width: 200px;
+    height: 240px;
+    float: left;
+    color: darkgrey;
+    text-align: center;
+    margin: 5px;
+    border-radius: 3px;
+    overflow: hidden;
+    opacity: 0;
+    background-color: white;
+    animation-name: zoomIn;
+    animation-duration: 500ms;
+    transition-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
+
+.spell:hover {
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    cursor: pointer;
+}
+
+.icon {
+    width: 18px;
+    height: 18px;
+}
+
+.small {
+    font-size: 6px;
+    margin-left: 5px;
+    margin-right: 5px;
+    line-height: 6px;
+}
+
+.spellAttr {
+    height: auto;
+    float: left;
+    padding: 10px;
+}
+
+.smallSpellAttr {
+    height: auto;
+    width: calc(100% - 20px);
+    float: left;
+    line-height: 10px;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.Necromancy {
+    color: #bef28e;
+}
+
+.Conjuration {
+    color: #fce97a;
+}
+
+.Evocation {
+    color: #db5740;
+}
+
+.Divination {
+    color: #9ebed2;
+}
+
+.Enchantment {
+    color: #ce90ca;
+}
+
+.Transmutation {
+    color: #e19c60;
+}
+
+.Abjuration {
+    color: #278ae4;
+}
+
+.Illusion {
+    color: #8b42f9;
+}
+
+.spellLevel {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    float: right;
+    text-align: center;
+    border-top-right-radius: 3px;
+    box-shadow: inset 0px 0px 10px -2px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    margin: 5px;
+}
+
+.spellSchool {
+    font-size: 12px;
+    line-height: 30px;
+}
+
+.spellName {
+    font-size: 14px;
+    border-top: 1px dashed lightgray;
+    border-bottom: 1px dashed lightgray;
+    width: calc(100% - 20px);
+    color: dimgray;
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(0.3, 0.3, 0.3);
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+    }
+}

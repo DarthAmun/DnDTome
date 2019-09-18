@@ -1,0 +1,24 @@
+.char {
+    width: 120px;
+    height: 120px;
+    padding: 10px;
+    text-align: center;
+    line-height: 45px;
+    float: left;
+    color: dimgrey;
+    margin: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+    opacity: 0;
+    background: white;
+    animation-name: zoomIn;
+    animation-duration: 500ms;
+    transition-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.char:hover {
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    cursor: pointer;
+}

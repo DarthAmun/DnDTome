@@ -1,0 +1,56 @@
+#pagination {
+    height: 30px;
+    width: 100%;
+    float: left;
+    color: darkgray;
+}
+
+.pageDown, .pageUp {
+    height: 30px;
+    width: 30px;
+    float: left;
+    display: block;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    background-color: #8000ff;
+    color: white;
+}
+
+.pageDown {
+    margin-right: 5px;
+}
+
+.pageUp {
+    margin-left: 5px;
+}
+
+.pageDown:hover, .pageUp:hover {
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
+}
+
+#pages {
+    width: auto;
+    height: 30px;
+    float: left;
+}
+
+#pages input {
+    height: 28px;
+    width: 50px;
+    border-radius: 5px;
+    box-shadow: none;
+    border: 1px solid lightgray;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-right: 5px;
+}
+
+#step select{
+    height: 30px;
+    width: 50px;
+    float: left;
+    border-radius: 5px;
+    margin-left: 5px;
+}

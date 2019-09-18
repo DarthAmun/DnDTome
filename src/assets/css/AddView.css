@@ -1,0 +1,31 @@
+#adds {
+    color: white;
+}
+
+#adds .add {
+    width: 130px;
+    height: 110px;
+    padding: 20px;
+    float: left;
+    text-align: center;
+    color: dimgrey;
+    margin: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: white;
+    animation-name: zoomIn;
+    animation-duration: 500ms;
+    transition-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
+
+#adds .add:hover {
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    cursor: pointer;
+}
+
+.addIcon {
+    font-size: 40px;
+}

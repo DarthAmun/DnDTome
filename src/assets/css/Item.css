@@ -1,0 +1,91 @@
+.item {
+    width: 200px;
+    height: 260px;
+    float: left;
+    color: darkgrey;
+    margin: 5px;
+    border-radius: 3px;
+    overflow: hidden;
+    opacity: 0;
+    background-color: white;
+    animation-name: zoomIn;
+    animation-duration: 500ms;
+    transition-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
+
+.item:hover {
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    cursor: pointer;
+}
+
+.itemIcon img {
+    width: 120px;
+}
+
+.itemIcon {
+    margin: 15px;
+    margin-left: 36px;
+    margin-right: 36px;
+    width: 120px;
+    height: 120px;
+    border-radius: 200px;
+    border: 2px solid deepskyblue;
+    overflow: hidden;
+    float: left;
+}
+
+.itemAttr {
+    height: auto;
+    float: left;
+    padding: 10px;
+}
+
+.itemComp {
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.smallItemAttr {
+    height: auto;
+    width: calc(100% - 20px);
+    float: left;
+    line-height: 10px;
+    font-size: 12px;
+}
+
+.Common {
+    border: 3px solid rgba(92, 102, 130, 1);
+}
+.Uncommon {
+    border: 3px solid rgb(77, 189, 86);
+}
+.Rare {
+    border: 3px solid rgb(70, 117, 247);
+}
+.VeryRare {
+    border: 3px solid rgb(161, 70, 247);
+}
+.Legendary {
+    border: 3px solid rgb(247, 206, 70);
+}
+.Artifact {
+    border: 3px solid rgb(247, 70, 70);
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(0.3, 0.3, 0.3);
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+    }
+}
