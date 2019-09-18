@@ -15,9 +15,9 @@ if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) |
   dev = true;
 }
 
+console.log("====>" + path.join(__dirname, './src/assets/db/tab_spells.db'));
 let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database(path.join(__dirname, './src/assets/db/tab_spells.db'));
-console.log("====>" + path.join(__dirname, './src/assets/db/tab_spells.db'));
 
 function createWindow() {
   // Create the browser window.
@@ -143,7 +143,6 @@ const reciveSpellCount = (q) => {
     db.all(q, function (err, rows) {
       if (err != null) {
         console.log("====>" + err);
-        callback(err);
       }
       mainWindow.webContents.send('getSpellCountResult', rows);
       console.log("====>" + `getSpellCount successfull`)
@@ -156,7 +155,6 @@ const reciveSpell = (id) => {
     db.get("SELECT * FROM 'main'.'tab_spells' WHERE spells_id=?", [id], function (err, row) {
       if (err != null) {
         console.log("====>" + err);
-        callback(err);
       }
       mainWindow.webContents.send('getSpellResult', row);
       console.log("====>" + `getSpell successfull`)
