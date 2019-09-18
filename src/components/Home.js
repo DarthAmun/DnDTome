@@ -131,8 +131,8 @@ class Home extends Component {
         </div>
         <svg width="0" height="0">
           <radialGradient id="rg" r="150%" cx="30%" cy="107%">
-            <stop stop-color="#350069" offset="0" />
-            <stop stop-color="#B973FF" offset="0.9" />
+            <stop stopColor="#350069" offset="0" />
+            <stop stopColor="#B973FF" offset="0.9" />
           </radialGradient>
         </svg>
       </div>
