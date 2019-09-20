@@ -3,14 +3,22 @@ import '../assets/css/TopNav.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
+
 class TopNav extends Component {
+
+    closeMainWindow = () => {
+        ipcRenderer.send('closeMainWindow');
+    }
+
     render() {
         return (
             <div id="topNav">
                 <div id="topBar"></div>
-                <a id="close" href="javascript:window.close()">
+                <div id="close" onClick={() => this.closeMainWindow()}>
                     <FontAwesomeIcon icon={faTimes} />
-                </a>
+                </div>
             </div>
         )
     }

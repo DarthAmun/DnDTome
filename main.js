@@ -330,3 +330,7 @@ ipcMain.on('getItems', (event, arg) => {
 ipcMain.on('backSpell', (event) => {
   mainWindow.webContents.send('backSpell');
 });
+
+ipcMain.on('closeMainWindow', (event) => {
+  mainWindow.close();
+});
