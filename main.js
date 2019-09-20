@@ -88,9 +88,6 @@ app.on('activate', () => {
   }
 });
 
-let searchQuery = {};
-let searchStep = 10;
-
 const reciveSpells = (step, start) => {
   let q = "SELECT * FROM 'main'.'tab_spells' WHERE ";
   if (this.searchQuery != null) {
@@ -139,6 +136,43 @@ const reciveSpells = (step, start) => {
   return q;
 }
 
+const reciveItems = (step, start) => {
+  let q = "SELECT * FROM 'main'.'tab_items' WHERE ";
+  if (this.searchQuery != null) {
+    if (this.searchQuery.name != null && typeof this.searchQuery.name !== 'undefined' && this.searchQuery.name != "") {
+      q += `item_name like "%${this.searchQuery.name}%" AND `;
+    }
+    if (this.searchQuery.description != null && typeof this.searchQuery.description !== 'undefined' && this.searchQuery.description != "") {
+      q += `item_description like "%${this.searchQuery.description}%" AND `;
+    }
+    if (this.searchQuery.rarity != null && typeof this.searchQuery.rarity !== 'undefined' && this.searchQuery.rarity != "") {
+      q += `item_rarity = "${this.searchQuery.rarity}" AND `;
+    }
+    if (this.searchQuery.type != null && typeof this.searchQuery.type !== 'undefined' && this.searchQuery.type != "") {
+      q += `item_type like "%${this.searchQuery.type}%" AND `;
+    }
+    if (q.includes(" AND ")) {
+      q = q.slice(0, -4);
+    } else {
+      q = q.slice(0, -6);
+    }
+  } else {
+    q = q.slice(0, -6);
+  }
+  q += ` ORDER BY item_name ASC LIMIT ${step} OFFSET ${start}`;
+  console.log(q);
+  db.serialize(function () {
+    db.all(q, function (err, rows) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      mainWindow.webContents.send('getSearchItemsResult', rows);
+      console.log("====>" + `getSearchItemsResult from ${start} to ${(start + step)} successfull`);
+    });
+  });
+  return q;
+}
+
 const reciveSpellCount = (q) => {
   db.serialize(function () {
     db.all(q, function (err, rows) {
@@ -147,6 +181,18 @@ const reciveSpellCount = (q) => {
       }
       mainWindow.webContents.send('getSpellCountResult', rows);
       console.log("====>" + `getSpellCount successfull`)
+    });
+  });
+}
+
+const reciveItemCount = (q) => {
+  db.serialize(function () {
+    db.all(q, function (err, rows) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      mainWindow.webContents.send('getItemCountResult', rows);
+      console.log("====>" + `getItemCount successfull`)
     });
   });
 }
@@ -217,33 +263,38 @@ const reciveChars = () => {
   });
 }
 
-const reciveItems = (step, start) => {
-  db.serialize(function () {
-    db.all(`SELECT * FROM 'main'.'tab_items' ORDER BY item_name ASC LIMIT ${step} OFFSET ${start}`, function (err, rows) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getItemsResult', rows);
-      console.log("====>" + `getItemsResult successfull`)
-    });
-  });
-}
-
 ipcMain.on('getSearchSpells', (event, arg) => {
   const { step, start } = arg;
   this.searchStep = step;
   reciveSpells(step, start);
 });
 
-ipcMain.on('getSpellCount', (event, arg) => {
-  reciveSpellCount(`SELECT count(*) AS count FROM tab_spells`);
+ipcMain.on('getSearchItems', (event, arg) => {
+  const { step, start } = arg;
+  this.searchStep = step;
+  reciveItems(step, start);
 });
 
-ipcMain.on('sendSearchQuery', (event, arg) => {
+ipcMain.on('getSpellCount', (event, arg) => {
+  reciveSpellCount(`SELECT count(*) AS count FROM 'main'.'tab_spells'`);
+});
+
+ipcMain.on('getItemCount', (event, arg) => {
+  reciveItemCount(`SELECT count(*) AS count FROM 'main'.'tab_items'`);
+});
+
+ipcMain.on('sendSpellSearchQuery', (event, arg) => {
   const { query } = arg;
   this.searchQuery = query;
   const q = reciveSpells(this.searchStep, 0);
-  reciveSpellCount(q.replace("SELECT * FROM tab_spells", "SELECT count(*) AS count FROM tab_spells"));
+  reciveSpellCount(q.replace("SELECT * FROM 'main'.'tab_spells'", "SELECT count(*) AS count FROM 'main'.'tab_spells'"));
+});
+
+ipcMain.on('sendItemSearchQuery', (event, arg) => {
+  const { query } = arg;
+  this.searchQuery = query;
+  const q = reciveItems(this.searchStep, 0);
+  reciveItemCount(q.replace("SELECT * FROM 'main'.'tab_items'", "SELECT count(*) AS count FROM 'main'.'tab_items'"));
 });
 
 ipcMain.on('getSpell', (event, arg) => {
@@ -272,6 +323,7 @@ ipcMain.on('getChars', (event, arg) => {
 
 ipcMain.on('getItems', (event, arg) => {
   const { step, start } = arg;
+  console.log(step + ", " + start);
   reciveItems(step, start);
 });
 

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import '../../assets/css/ItemOverview.css';
 import Item from './Item';
 import ItemView from './ItemView';
+import ItemSearchBar from './ItemSearchBar';
+import ItemPagination from './ItemPagination';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
@@ -22,11 +24,11 @@ class ItemOverview extends Component {
     }
 
     componentDidMount() {
-        ipcRenderer.send('getItems', { step: 10000, start: 0 });
-        ipcRenderer.on("getItemsResult", this.receiveItems);
+        ipcRenderer.send('getItems', { step: 10, start: 0 });
+        ipcRenderer.on("getSearchItemsResult", this.receiveItems);
     }
     componentWillUnmount() {
-        ipcRenderer.removeListener("getItemsResult", this.receiveItems)
+        ipcRenderer.removeListener("getSearchItemsResult", this.receiveItems)
     }
 
     viewItem = (item) => {
@@ -40,6 +42,7 @@ class ItemOverview extends Component {
     render() {
         return (
             <div id="overview">
+                <ItemSearchBar />
                 <div id="itemsContent">
                     <div id="items" style={{ width: `${this.state.width}` }}>
                         {this.state.currentItemList.items.map((item, index) => {
@@ -48,6 +51,7 @@ class ItemOverview extends Component {
                     </div>
                     <ItemView item={this.state.currentSelectedItem} />
                 </div>
+                <ItemPagination />
             </div>
         )
     }

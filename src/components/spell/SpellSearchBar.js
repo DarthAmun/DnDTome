@@ -18,7 +18,7 @@ class SpellSearchBar extends Component {
         if (e.key === 'Enter') {
             let query = this.state.query;
             query = this.makeQuery(query);
-            ipcRenderer.send('sendSearchQuery', { query: this.makeQuery(this.state.query) });
+            ipcRenderer.send('sendSpellSearchQuery', { query: this.makeQuery(this.state.query) });
         }
     }
     makeQuery = (value) => {
