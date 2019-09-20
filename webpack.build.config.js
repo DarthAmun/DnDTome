@@ -12,11 +12,18 @@ const OUTPUT_DIR = path.resolve(__dirname, 'dist');
 const defaultInclude = [SRC_DIR];
 
 module.exports = {
-  entry: SRC_DIR + '/index.js',
+  entry: {
+    spell: [
+      SRC_DIR + '/spell.js',
+    ],
+    main: [
+      SRC_DIR + '/index.js',
+    ]
+  },
   output: {
     path: OUTPUT_DIR,
     publicPath: './',
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   },
   module: {
     rules: [
@@ -47,7 +54,16 @@ module.exports = {
   },
   target: 'electron-renderer',
   plugins: [
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'src/index.html',
+      chunks: ['main']
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'spell.html',
+      template: 'src/index.html',
+      chunks: ['spell']
+    }),
     new ExtractTextPlugin('bundle.css'),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')

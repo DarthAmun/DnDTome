@@ -8,6 +8,7 @@ const url = require('url')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+let spellWindow;
 
 // Keep a reference for dev mode
 let dev = false;
@@ -50,6 +51,7 @@ function createWindow() {
   // Don't show until we are ready and loaded
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
+    mainWindow.setTitle("DnD Tome");
     // Open the DevTools automatically if developing
     if (dev) {
       mainWindow.webContents.openDevTools();
@@ -63,7 +65,33 @@ function createWindow() {
     // when you should delete the corresponding element.
     db.close();
     mainWindow = null;
+    spellWindow = null;
   });
+
+  spellWindow = new BrowserWindow({
+    width: 1180,
+    height: 720,
+    show: false,
+    frame: false,
+    icon: __dirname + './src/assets/img/dice_icon.png'
+  });
+
+  // and load the spell.html of the app.
+  if (dev && process.argv.indexOf('--noDevServer') === -1) {
+    indexPath = url.format({
+      protocol: 'http:',
+      host: 'localhost:8080',
+      pathname: 'spell.html',
+      slashes: true
+    });
+  } else {
+    indexPath = url.format({
+      protocol: 'file:',
+      pathname: path.join(__dirname, 'dist', 'spell.html'),
+      slashes: true
+    });
+  }
+  spellWindow.loadURL(indexPath);
 }
 
 // This method will be called when Electron has finished
@@ -331,6 +359,20 @@ ipcMain.on('backSpell', (event) => {
   mainWindow.webContents.send('backSpell');
 });
 
+ipcMain.on('backItem', (event) => {
+  mainWindow.webContents.send('backItem');
+});
+
 ipcMain.on('closeMainWindow', (event) => {
   mainWindow.close();
+});
+
+ipcMain.on('openSpellView', (event, spell) => {
+    spellWindow.show();
+    // Open the DevTools automatically if developing
+    if (dev) {
+      spellWindow.webContents.openDevTools();
+    }
+    spellWindow.setTitle("DnD Tome - " + spell.spells_name);
+    spellWindow.webContents.send('spellViewSpell', spell);
 });

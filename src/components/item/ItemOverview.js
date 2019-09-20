@@ -23,12 +23,22 @@ class ItemOverview extends Component {
         })
     }
 
+    backItem = (evt) => {
+        this.setState({
+            ...this.state,
+            width: "calc(100% - 20px)"
+        })
+    }
+
     componentDidMount() {
         ipcRenderer.send('getItems', { step: 10, start: 0 });
         ipcRenderer.on("getSearchItemsResult", this.receiveItems);
+
+        ipcRenderer.on("backItem", this.backItem);
     }
     componentWillUnmount() {
-        ipcRenderer.removeListener("getSearchItemsResult", this.receiveItems)
+        ipcRenderer.removeListener("getSearchItemsResult", this.receiveItems);
+        ipcRenderer.removeListener("backItem", this.backItem);
     }
 
     viewItem = (item) => {

@@ -18,12 +18,11 @@ class SpellView extends Component {
         text: "",
         classes: "",
         sources: "",
-        id: "",
-        show: "none",
-        width: "0px"
+        id: ""
     }
 
-    receiveSpell = (result) => {
+    receiveSpell = (event, result) => {
+        console.log(result.spells_name);
         const text = result.spells_text.replace(/\\n/gm, "\r\n");
         const sources = result.spells_sources.replace(/\\n/gm, "\r\n");
         this.setState({
@@ -38,22 +37,15 @@ class SpellView extends Component {
             text: text,
             classes: result.spells_classes,
             sources: sources,
-            id: result.spells_id,
-            show: "block",
-            width: "450px"
+            id: result.spells_id
         })
     }
 
     componentDidMount() {
-        if (this.props.spell != null) {
-            this.receiveSpell(this.props.spell);
-        }
+        ipcRenderer.on("spellViewSpell", this.receiveSpell);
     }
-
-    componentDidUpdate(prev) {
-        if (this.props.spell != prev.spell) {
-            this.receiveSpell(this.props.spell);
-        }
+    componentWillUnmount() {
+        ipcRenderer.removeListener("spellViewSpell", this.receiveSpell);
     }
 
     handleNameChange = (e) => {
@@ -158,7 +150,6 @@ class SpellView extends Component {
                 <button className="delete" onClick={this.deleteSpell}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                 <button onClick={this.saveSpell}><FontAwesomeIcon icon={faSave} /> Save</button>
             </div>
-
         )
     }
 }

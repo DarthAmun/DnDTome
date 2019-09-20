@@ -23,4 +23,5 @@
 }
 #close:hover {
     border-top: 3px solid #8000ff;
+    cursor: pointer;
 }

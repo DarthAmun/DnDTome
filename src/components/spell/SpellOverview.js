@@ -7,6 +7,7 @@ import SpellSearchBar from './SpellSearchBar';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
+const BrowserWindow = electron.remote.BrowserWindow;
 
 class SpellOverview extends Component {
     state = {
@@ -44,11 +45,12 @@ class SpellOverview extends Component {
     }
 
     viewSpell = (spell) => {
-        this.setState({
-            ...this.state,
-            currentSelectedSpell: spell,
-            width: "calc(100% - 470px)"
-        })
+        // this.setState({
+        //     ...this.state,
+        //     currentSelectedSpell: spell,
+        //     width: "calc(100% - 470px)"
+        // })
+        ipcRenderer.send('openSpellView', spell);
     }
 
     render() {

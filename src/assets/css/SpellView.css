@@ -1,6 +1,7 @@
 #spellView {
     height: 100%;
-    width: 450px;
+    width: 100%;
+    min-width: 450px;
     overflow-x: hidden;
     padding-left: 10px;
     padding-right: 10px;
