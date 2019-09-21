@@ -143,7 +143,7 @@ class LeftNav extends Component {
           </div>
         </Link>
         <svg width="0" height="0">
-          <radialGradient id="rg" r="150%" cx="30%" cy="107%">
+          <radialGradient id="rgg" r="150%" cx="30%" cy="107%">
             <stop stopColor="#350069" offset="0" />
             <stop stopColor="#B973FF" offset="0.9" />
           </radialGradient>

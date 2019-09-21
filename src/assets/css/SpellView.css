@@ -1,13 +1,21 @@
-#spellView {
+body {
     height: 100%;
-    width: 100%;
-    min-width: 450px;
-    overflow-x: hidden;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 20px;
+    margin: 0px;
+    background-color: rgb(248, 248, 248);
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    src: url('../font/Quicksand-Medium.ttf') format('truetype');
+}
+
+#spellView {
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    overflow: hidden;
     color: dimgrey;
-    float:left;
+    padding: 10px;
+    font-family: 'Quicksand', sans-serif;
 }
 
 #spellView input {
@@ -85,13 +93,15 @@
     margin-right: 10px;
 }
 
-#spellView::-webkit-scrollbar, #spellView textarea::-webkit-scrollbar {
+#spellView::-webkit-scrollbar,
+#spellView textarea::-webkit-scrollbar {
     width: 6px;
     background-color: rgba(92, 102, 130, 1);
     border-radius: 5px;
 }
 
-#spellView::-webkit-scrollbar-thumb, #spellView textarea::-webkit-scrollbar-thumb {
+#spellView::-webkit-scrollbar-thumb,
+#spellView textarea::-webkit-scrollbar-thumb {
     background-color: #8000ff;
     border-radius: 5px;
 }

@@ -7,7 +7,6 @@ import SpellSearchBar from './SpellSearchBar';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
-const BrowserWindow = electron.remote.BrowserWindow;
 
 class SpellOverview extends Component {
     state = {
