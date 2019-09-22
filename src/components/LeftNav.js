@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/css/LeftNav.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faIdCard, faPlusCircle, faHatWizard, faDiceD20 } from '@fortawesome/free-solid-svg-icons';
+import { faMeteor, faIdCard, faPlusCircle, faHatWizard, faDiceD20, faCog, faPastafarianism } from '@fortawesome/free-solid-svg-icons';
 import Particles from 'react-particles-js';
 
 class LeftNav extends Component {
@@ -129,7 +129,7 @@ class LeftNav extends Component {
         </Link>
         <Link to="/spell-overview" style={{ top: "120px" }}>
           <div className="menuItem">
-            <FontAwesomeIcon icon={faBook} />
+            <FontAwesomeIcon icon={faMeteor} />
           </div>
         </Link>
         <Link to="/item-overview" style={{ top: "170px" }}>
@@ -140,6 +140,16 @@ class LeftNav extends Component {
         <Link to="/char-overview" style={{ top: "220px" }}>
           <div className="menuItem">
             <FontAwesomeIcon icon={faIdCard} />
+          </div>
+        </Link>
+        <Link to="/monster-overview" style={{ top: "270px" }}>
+          <div className="menuItem">
+            <FontAwesomeIcon icon={faPastafarianism} />
+          </div>
+        </Link>
+        <Link to="/options" style={{ bottom: "10px" }}>
+          <div className="menuItem">
+            <FontAwesomeIcon icon={faCog} />
           </div>
         </Link>
         <svg width="0" height="0">

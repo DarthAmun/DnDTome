@@ -25,6 +25,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1180,
     height: 720,
+    minHeight: 400,
+    minWidth: 400,
     show: false,
     frame: false,
     icon: __dirname + './src/assets/img/dice_icon.png'
@@ -69,12 +71,14 @@ function createWindow() {
   });
 
   spellWindow = new BrowserWindow({
+    parent: mainWindow,
     width: 1180,
     height: 720,
     show: false,
-    frame: false,
+    frame: true,
     icon: __dirname + './src/assets/img/dice_icon.png'
   });
+  spellWindow.setMenu(null);
 
   // and load the spell.html of the app.
   if (dev && process.argv.indexOf('--noDevServer') === -1) {
