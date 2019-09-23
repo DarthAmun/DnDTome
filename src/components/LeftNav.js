@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/css/LeftNav.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMeteor, faIdCard, faPlusCircle, faHatWizard, faDiceD20, faCog, faPastafarianism } from '@fortawesome/free-solid-svg-icons';
+import { faMeteor, faIdCard, faPlusCircle, faShieldAlt, faDiceD20, faCog, faDragon } from '@fortawesome/free-solid-svg-icons';
 import Particles from 'react-particles-js';
 
 class LeftNav extends Component {
@@ -134,7 +134,7 @@ class LeftNav extends Component {
         </Link>
         <Link to="/item-overview" style={{ top: "170px" }}>
           <div className="menuItem">
-            <FontAwesomeIcon icon={faHatWizard} />
+            <FontAwesomeIcon icon={faShieldAlt} />
           </div>
         </Link>
         <Link to="/char-overview" style={{ top: "220px" }}>
@@ -144,7 +144,7 @@ class LeftNav extends Component {
         </Link>
         <Link to="/monster-overview" style={{ top: "270px" }}>
           <div className="menuItem">
-            <FontAwesomeIcon icon={faPastafarianism} />
+            <FontAwesomeIcon icon={faDragon} />
           </div>
         </Link>
         <Link to="/options" style={{ bottom: "10px" }}>

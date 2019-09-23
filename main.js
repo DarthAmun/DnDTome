@@ -98,10 +98,6 @@ function createWindow() {
     e.preventDefault();
     spellWindow.hide();
   });
-
-  spellWindow.on('resize', () => {
-    console.log("Size", spellWindow.getSize());
-  });
 }
 
 // This method will be called when Electron has finished

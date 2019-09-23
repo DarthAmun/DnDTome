@@ -5,31 +5,15 @@ import { MemoryRouter, Switch, Route } from 'react-router';
 import SpellOverview from './spell/SpellOverview';
 import CharOverview from './char/CharOverview';
 import ItemOverview from './item/ItemOverview';
-import SpellView from './spell/SpellView';
 import CharView from './char/CharView';
 import Home from './Home';
+import Options from './Options';
 import AddView from './add/AddView';
 import AddSpell from './add/AddSpell';
 import LeftNav from './LeftNav';
 import TopNav from './TopNav';
 
-const electron = window.require('electron');
-const ipcRenderer = electron.ipcRenderer;
-
 class App extends Component {
-
-  showOverview = () => {
-
-  }
-
-  showPage = (value) => {
-    const container = docu
-    if (this.state.page == 'init') {
-      return <Init></Init>;
-    }
-  }
-
-
   render() {
     return (
       <div className="App">
@@ -39,12 +23,12 @@ class App extends Component {
             <TopNav />
             <Switch>
               <Route path="/spell-overview" component={SpellOverview} />
-              <Route path="/spell-overview/:id" component={SpellView} />
               <Route path="/char-overview" component={CharOverview} />
+              <Route path="/char/:id" component={CharView} />
               <Route path="/item-overview" component={ItemOverview} />
               <Route path="/add-view" component={AddView} />
               <Route path="/add-spell" component={AddSpell} />
-              <Route path="/char/:id" component={CharView} />
+              <Route path="/options" component={Options} />
               <Route path="/" component={Home} />
             </Switch>
           </div>
