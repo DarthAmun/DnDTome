@@ -83,9 +83,10 @@ function createWindow() {
 
   spellWindow = new BrowserWindow({
     parent: mainWindow,
-    width: 1180,
-    height: 720,
+    width: 950,
+    height: 430,
     show: false,
+    resizable: false,
     frame: true,
     icon: __dirname + './src/assets/img/dice_icon.png'
   });
@@ -96,6 +97,10 @@ function createWindow() {
   spellWindow.on('close', (e) => {
     e.preventDefault();
     spellWindow.hide();
+  });
+
+  spellWindow.on('resize', () => {
+    console.log("Size", spellWindow.getSize());
   });
 }
 
@@ -360,10 +365,6 @@ ipcMain.on('getItems', (event, arg) => {
 
 ipcMain.on('backSpell', (event) => {
   mainWindow.webContents.send('backSpell');
-});
-
-ipcMain.on('backItem', (event) => {
-  mainWindow.webContents.send('backItem');
 });
 
 ipcMain.on('closeMainWindow', (event) => {

@@ -25,22 +25,12 @@ class SpellOverview extends Component {
         })
     }
 
-    backSpell = (evt) => {
-        this.setState({
-            ...this.state,
-            width: "calc(100% - 20px)"
-        })
-    }
-
     componentDidMount() {
         ipcRenderer.send('getSearchSpells', { step: 10, start: 0 });
         ipcRenderer.on("getSearchSpellsResult", this.receiveSpells);
-
-        ipcRenderer.on("backSpell", this.backSpell);
     }
     componentWillUnmount() {
         ipcRenderer.removeListener("getSearchSpellsResult", this.receiveSpells);
-        ipcRenderer.removeListener("backSpell", this.backSpell);
     }
 
     viewSpell = (spell) => {

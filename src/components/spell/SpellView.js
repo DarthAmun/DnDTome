@@ -120,16 +120,7 @@ class SpellView extends Component {
             redirectToOverview: true
         });
     }
-
-    back = (e) => {
-        this.setState({
-            ...this.state,
-            width: "0px",
-            show: "none"
-        });
-        ipcRenderer.send('backSpell');
-    }
-
+    
     render() {
         return (
             <div id="spellView" style={{ display: `${this.state.show}`, width: `${this.state.width}` }}>
@@ -145,7 +136,6 @@ class SpellView extends Component {
                     <label>Sources:<input name="sources" type="text" value={this.state.sources} onChange={this.handleSourcesChange} /></label>
                 </div>
                 <textarea value={this.state.text} onChange={this.handleChange}></textarea>
-                <button className="back" onClick={this.back}><FontAwesomeIcon icon={faArrowCircleLeft} /> Back</button>
                 <button className="delete" onClick={this.deleteSpell}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                 <button onClick={this.saveSpell}><FontAwesomeIcon icon={faSave} /> Save</button>
             </div>
