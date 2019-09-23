@@ -22,7 +22,6 @@ class SpellView extends Component {
     }
 
     receiveSpell = (event, result) => {
-        console.log(result.spells_name);
         const text = result.spells_text.replace(/\\n/gm, "\r\n");
         const sources = result.spells_sources.replace(/\\n/gm, "\r\n");
         this.setState({

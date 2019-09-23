@@ -44,11 +44,6 @@ class SpellOverview extends Component {
     }
 
     viewSpell = (spell) => {
-        // this.setState({
-        //     ...this.state,
-        //     currentSelectedSpell: spell,
-        //     width: "calc(100% - 470px)"
-        // })
         ipcRenderer.send('openSpellView', spell);
     }
 

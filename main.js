@@ -9,7 +9,7 @@ const url = require('url')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 let spellWindow;
-
+let spellPath;
 // Keep a reference for dev mode
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
@@ -41,10 +41,21 @@ function createWindow() {
       pathname: 'index.html',
       slashes: true
     });
+    spellPath = url.format({
+      protocol: 'http:',
+      host: 'localhost:8080',
+      pathname: 'spell.html',
+      slashes: true
+    });
   } else {
     indexPath = url.format({
       protocol: 'file:',
       pathname: path.join(__dirname, 'dist', 'index.html'),
+      slashes: true
+    });
+    spellPath = url.format({
+      protocol: 'file:',
+      pathname: path.join(__dirname, 'dist', 'spell.html'),
       slashes: true
     });
   }
@@ -79,23 +90,13 @@ function createWindow() {
     icon: __dirname + './src/assets/img/dice_icon.png'
   });
   spellWindow.setMenu(null);
+  spellWindow.loadURL(spellPath);
 
-  // and load the spell.html of the app.
-  if (dev && process.argv.indexOf('--noDevServer') === -1) {
-    indexPath = url.format({
-      protocol: 'http:',
-      host: 'localhost:8080',
-      pathname: 'spell.html',
-      slashes: true
-    });
-  } else {
-    indexPath = url.format({
-      protocol: 'file:',
-      pathname: path.join(__dirname, 'dist', 'spell.html'),
-      slashes: true
-    });
-  }
-  spellWindow.loadURL(indexPath);
+  // set to null
+  spellWindow.on('close', (e) => {
+    e.preventDefault();
+    spellWindow.hide();
+  });
 }
 
 // This method will be called when Electron has finished
@@ -192,7 +193,6 @@ const reciveItems = (step, start) => {
     q = q.slice(0, -6);
   }
   q += ` ORDER BY item_name ASC LIMIT ${step} OFFSET ${start}`;
-  console.log(q);
   db.serialize(function () {
     db.all(q, function (err, rows) {
       if (err != null) {
@@ -355,7 +355,6 @@ ipcMain.on('getChars', (event, arg) => {
 
 ipcMain.on('getItems', (event, arg) => {
   const { step, start } = arg;
-  console.log(step + ", " + start);
   reciveItems(step, start);
 });
 
@@ -372,11 +371,11 @@ ipcMain.on('closeMainWindow', (event) => {
 });
 
 ipcMain.on('openSpellView', (event, spell) => {
-    spellWindow.show();
-    // Open the DevTools automatically if developing
-    if (dev) {
-      spellWindow.webContents.openDevTools();
-    }
-    spellWindow.setTitle("DnD Tome - " + spell.spells_name);
-    spellWindow.webContents.send('spellViewSpell', spell);
+  spellWindow.show();
+  // Open the DevTools automatically if developing
+  if (dev) {
+    spellWindow.webContents.openDevTools();
+  }
+  spellWindow.setTitle("DnD Tome - " + spell.spells_name);
+  spellWindow.webContents.send('spellViewSpell', spell);
 });
