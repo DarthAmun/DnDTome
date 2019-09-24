@@ -1,7 +1,7 @@
 'use strict';
 
 // Import parts of electron to use
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path')
 const url = require('url')
 
@@ -122,6 +122,30 @@ app.on('activate', () => {
   }
 });
 
+const reciveAllSpells = () => {
+  let q = "SELECT * FROM 'main'.'tab_spells'";
+  db.serialize(function () {
+    db.all(q, function (err, rows) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      mainWindow.webContents.send('getAllSpellsResult', rows);
+      console.log("====>" + `getAllSpellsResult successfull`)
+    });
+  });
+}
+const reciveAllItems = () => {
+  let q = "SELECT * FROM 'main'.'tab_items'";
+  db.serialize(function () {
+    db.all(q, function (err, rows) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      mainWindow.webContents.send('getAllItemsResult', rows);
+      console.log("====>" + `getAllItemsResult successfull`)
+    });
+  });
+}
 
 let spellStep;
 let spellStart;
@@ -258,7 +282,7 @@ const saveSpell = (spell) => {
         return console.error(err.message);
       }
       console.log(`${spell.name} updated successfull`);
-      mainWindow.webContents.send('spellsUpdated', {spellStep, spellStart});
+      mainWindow.webContents.send('spellsUpdated', { spellStep, spellStart });
     });
   });
 }
@@ -271,9 +295,9 @@ const deleteSpell = (spell) => {
       if (err) {
         return console.error(err.message);
       }
-      console.log(`Deleted ${spell.name} successfull`);
+      console.log(`====>Deleted ${spell.name} successfull`);
       spellWindow.hide();
-      mainWindow.webContents.send('spellsUpdated', {spellStep, spellStart});
+      mainWindow.webContents.send('spellsUpdated', { spellStep, spellStart });
     });
   });
 }
@@ -287,7 +311,23 @@ const saveNewSpell = (spell) => {
       if (err) {
         return console.error(err.message);
       }
-      console.log(`Added ${spell.name} successfull`);
+      console.log(`====>Added ${spell.name} successfull`);
+    });
+  });
+}
+
+const saveNewSpells = (spells) => {
+  spells.forEach(spell => {
+    let data = [spell.spells_name, spell.spells_school, spell.spells_level, spell.spells_time, spell.spells_duration, spell.spells_range, spell.spells_components, spell.spells_text, spell.spells_classes, spell.spells_sources];
+    let sql = `INSERT INTO 'main'.'tab_spells' (spells_name, spells_school, spells_level, spells_time, spells_duration, spells_range, spells_components, spells_text, spells_classes, spells_sources)
+              VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    db.serialize(function () {
+      db.run(sql, data, function (err) {
+        if (err) {
+          return console.error(err.message);
+        }
+        console.log(`====>Added ${spell.spells_name} successfull`);
+      });
     });
   });
 }
@@ -303,6 +343,14 @@ const reciveChars = () => {
     });
   });
 }
+
+ipcMain.on('getAllSpells', (event) => {
+  reciveAllSpells();
+});
+
+ipcMain.on('getAllItems', (event) => {
+  reciveAllItems();
+});
 
 ipcMain.on('getSearchSpells', (event, arg) => {
   const { step, start } = arg;
@@ -356,6 +404,11 @@ ipcMain.on('deleteSpell', (event, arg) => {
 ipcMain.on('saveNewSpell', (event, arg) => {
   const { spell } = arg;
   saveNewSpell(spell);
+});
+
+ipcMain.on('saveNewSpells', (event, arg) => {
+  const { spells } = arg;
+  saveNewSpells(spells);
 });
 
 ipcMain.on('getChars', (event, arg) => {

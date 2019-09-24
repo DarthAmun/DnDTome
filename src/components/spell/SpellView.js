@@ -5,6 +5,7 @@ import { faSave, faTrashAlt, faArrowCircleLeft } from '@fortawesome/free-solid-s
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
+const { dialog } = electron.remote;
 
 class SpellView extends Component {
     state = {
@@ -22,7 +23,6 @@ class SpellView extends Component {
     }
 
     receiveSpell = (event, result) => {
-        console.log(result);
         const text = result.spells_text.replace(/\\n/gm, "\r\n");
         const sources = result.spells_sources.replace(/\\n/gm, "\r\n");
         this.setState({
@@ -115,9 +115,21 @@ class SpellView extends Component {
     }
 
     deleteSpell = (e) => {
-        ipcRenderer.send('deleteSpell', { spell: this.state });
+        const options = {
+            type: 'question',
+            buttons: ['Cancel', 'Yes, please', 'No, thanks'],
+            defaultId: 2,
+            title: `Delete ${this.state.name}?`,
+            message: 'Do you want to do this?'
+        };
+
+        dialog.showMessageBox(null, options, (response, checkboxChecked) => {
+            if(response == 1){
+                ipcRenderer.send('deleteSpell', { spell: this.state });
+            }
+        });
     }
-    
+
     render() {
         return (
             <div id="spellView" style={{ display: `${this.state.show}`, width: `${this.state.width}` }}>

@@ -3,4 +3,5 @@ node_modules/
 *.DS_Store
 dist/
 builds/
+export/
 src/assets/db/tab_spells.db

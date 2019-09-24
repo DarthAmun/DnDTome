@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faIdCard, faBook } from '@fortawesome/free-solid-svg-icons';
+import { faIdCard, faBook, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 import '../../assets/css/AddView.css';
 
 const electron = window.require('electron');
@@ -20,6 +20,11 @@ class AddView extends Component {
                     <Link to="/">
                         <div className="add">
                             <div className="addIcon"><FontAwesomeIcon icon={faIdCard} /></div><br />Add new Charakter
+                            </div>
+                    </Link>
+                    <Link to="/">
+                        <div className="add">
+                            <div className="addIcon"><FontAwesomeIcon icon={faShieldAlt} /></div><br />Add new Item
                             </div>
                     </Link>
                 </div>

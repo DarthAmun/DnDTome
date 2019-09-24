@@ -1,0 +1,61 @@
+#overview {
+    height: 100%;
+    width: 100%;
+}
+
+#content {
+    float: left;
+    height: calc(100% - 60px);
+    width: calc(100% - 80px);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+}
+
+.optionSection {
+    width: calc(100% - 20px);
+    height: auto;
+    padding: 10px;
+    background-color: white;
+    color: darkgrey;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    word-wrap: break-word;
+    margin-bottom: 20px;
+}
+
+.optionSection span {
+    font-size: 12px;
+}
+
+.optionSection button {
+    height: 28px;
+    width: auto;
+    border: none;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 5px 5px 5px 0px;
+    text-align: center;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: #8000ff;
+    color: white;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+}
+
+.optionSection button:hover {
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    cursor: pointer;
+}
+
+#content::-webkit-scrollbar {
+    width: 6px;
+    background-color: rgba(92, 102, 130, 1);
+    border-radius: 5px;
+}
+
+#content::-webkit-scrollbar-thumb {
+    background-color: #8000ff;
+    border-radius: 5px;
+}
