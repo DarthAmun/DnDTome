@@ -19,18 +19,24 @@ class SpellOverview extends Component {
         this.setState({
             ...this.state,
             currentSpellList: {
-                ...this.state.currentSpellList,
                 spells: result
             }
         })
     }
 
+    updateSpell = (evt, result) => {
+        let {spellStep, spellStart} = result;
+        ipcRenderer.send('getSearchSpells', { step: spellStep, start: spellStart });
+    }
+
     componentDidMount() {
         ipcRenderer.send('getSearchSpells', { step: 10, start: 0 });
         ipcRenderer.on("getSearchSpellsResult", this.receiveSpells);
+        ipcRenderer.on("spellsUpdated", this.updateSpell);
     }
     componentWillUnmount() {
         ipcRenderer.removeListener("getSearchSpellsResult", this.receiveSpells);
+        ipcRenderer.removeListener("spellsUpdated", this.updateSpell);
     }
 
     viewSpell = (spell) => {

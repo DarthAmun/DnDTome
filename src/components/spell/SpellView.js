@@ -22,6 +22,7 @@ class SpellView extends Component {
     }
 
     receiveSpell = (event, result) => {
+        console.log(result);
         const text = result.spells_text.replace(/\\n/gm, "\r\n");
         const sources = result.spells_sources.replace(/\\n/gm, "\r\n");
         this.setState({
@@ -115,10 +116,6 @@ class SpellView extends Component {
 
     deleteSpell = (e) => {
         ipcRenderer.send('deleteSpell', { spell: this.state });
-        this.setState({
-            ...this.state,
-            redirectToOverview: true
-        });
     }
     
     render() {

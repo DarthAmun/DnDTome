@@ -122,7 +122,12 @@ app.on('activate', () => {
   }
 });
 
+
+let spellStep;
+let spellStart;
 const reciveSpells = (step, start) => {
+  spellStep = step;
+  spellStart = start;
   let q = "SELECT * FROM 'main'.'tab_spells' WHERE ";
   if (this.searchQuery != null) {
     if (this.searchQuery.name != null && typeof this.searchQuery.name !== 'undefined' && this.searchQuery.name != "") {
@@ -253,6 +258,7 @@ const saveSpell = (spell) => {
         return console.error(err.message);
       }
       console.log(`${spell.name} updated successfull`);
+      mainWindow.webContents.send('spellsUpdated', {spellStep, spellStart});
     });
   });
 }
@@ -266,6 +272,8 @@ const deleteSpell = (spell) => {
         return console.error(err.message);
       }
       console.log(`Deleted ${spell.name} successfull`);
+      spellWindow.hide();
+      mainWindow.webContents.send('spellsUpdated', {spellStep, spellStart});
     });
   });
 }
@@ -357,10 +365,6 @@ ipcMain.on('getChars', (event, arg) => {
 ipcMain.on('getItems', (event, arg) => {
   const { step, start } = arg;
   reciveItems(step, start);
-});
-
-ipcMain.on('backSpell', (event) => {
-  mainWindow.webContents.send('backSpell');
 });
 
 ipcMain.on('closeMainWindow', (event) => {
