@@ -130,12 +130,23 @@ class Options extends Component {
             <h3>Data Export</h3>
             <span>Path: {this.state.appPath}</span><br />
             <button onClick={this.exportSpells}>Export all Spells </button><br />
-            <button onClick={this.exportItems}>Export all Items </button>
+            <button onClick={this.exportItems}>Export all Items </button><br />
+            <button onClick={this.exportItems}>Export all Monsters </button><br />
+            <button onClick={this.exportItems}>Export all Charakters </button>
           </div>
           <div className="optionSection">
             <h3>Data Import</h3>
             <button onClick={this.importSpells}>Import Spells </button><br />
-            <button onClick={this.importItems}>Import Items </button>
+            <button onClick={this.importItems}>Import Items </button><br />
+            <button onClick={this.importItems}>Import Monsters </button><br />
+            <button onClick={this.importItems}>Import Charakters </button>
+          </div>
+          <div className="optionSection">
+            <h3>Delete Data</h3>
+            <button onClick={this.importSpells}>Delete all Spells </button><br />
+            <button onClick={this.importItems}>Delete all Items </button><br />
+            <button onClick={this.importItems}>Delete all Monsters </button><br />
+            <button onClick={this.importItems}>Delete all Charakters </button>
           </div>
         </div>
       </div>
