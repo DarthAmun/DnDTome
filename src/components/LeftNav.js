@@ -124,32 +124,32 @@ class LeftNav extends Component {
         </div>
         <Link to="/add-view" style={{ top: "70px" }}>
           <div className="menuItem">
-            <FontAwesomeIcon icon={faPlusCircle} />
+            <FontAwesomeIcon icon={faPlusCircle} /> Add new
           </div>
         </Link>
         <Link to="/spell-overview" style={{ top: "120px" }}>
           <div className="menuItem">
-            <FontAwesomeIcon icon={faMeteor} />
+            <FontAwesomeIcon icon={faMeteor} /> Spell's
           </div>
         </Link>
         <Link to="/item-overview" style={{ top: "170px" }}>
           <div className="menuItem">
-            <FontAwesomeIcon icon={faShieldAlt} />
+            <FontAwesomeIcon icon={faShieldAlt} /> Item's
           </div>
         </Link>
         <Link to="/char-overview" style={{ top: "220px" }}>
           <div className="menuItem">
-            <FontAwesomeIcon icon={faIdCard} />
+            <FontAwesomeIcon icon={faIdCard} /> Char's
           </div>
         </Link>
         <Link to="/monster-overview" style={{ top: "270px" }}>
           <div className="menuItem">
-            <FontAwesomeIcon icon={faDragon} />
+            <FontAwesomeIcon icon={faDragon} /> Monster
           </div>
         </Link>
         <Link to="/options" style={{ bottom: "10px" }}>
           <div className="menuItem">
-            <FontAwesomeIcon icon={faCog} />
+            <FontAwesomeIcon icon={faCog} /> Option's
           </div>
         </Link>
         <svg width="0" height="0">
