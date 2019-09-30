@@ -132,7 +132,7 @@ class SpellView extends Component {
 
     render() {
         return (
-            <div id="spellView" style={{ display: `${this.state.show}`, width: `${this.state.width}` }}>
+            <div id="spellView">
                 <div className="top">
                     <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label>
                     <label>School:<input name="school" type="text" value={this.state.school} onChange={this.handleSchoolChange} /></label>

@@ -169,14 +169,20 @@ const reciveSpells = (step, start) => {
     if (this.searchQuery.range != null && typeof this.searchQuery.range !== 'undefined' && this.searchQuery.range != "") {
       q += `spells_range like "%${this.searchQuery.range}%" AND `;
     }
-    if (this.searchQuery.component != null && typeof this.searchQuery.component !== 'undefined' && this.searchQuery.component != "") {
-      q += `spells_components like "%${this.searchQuery.component}%" AND `;
+    if (this.searchQuery.components != null && typeof this.searchQuery.components !== 'undefined' && this.searchQuery.components != "") {
+      q += `spells_components like "%${this.searchQuery.components}%" AND `;
     }
-    if (this.searchQuery.class != null && typeof this.searchQuery.class !== 'undefined' && this.searchQuery.class != "") {
-      q += `spells_classes like "%${this.searchQuery.class}%" AND `;
+    if (this.searchQuery.classes != null && typeof this.searchQuery.classes !== 'undefined' && this.searchQuery.classes != "") {
+      q += `spells_classes like "%${this.searchQuery.classes}%" AND `;
     }
     if (this.searchQuery.text != null && typeof this.searchQuery.text !== 'undefined' && this.searchQuery.text != "") {
       q += `spells_text like "%${this.searchQuery.text}%" AND `;
+    }
+    if (this.searchQuery.sources != null && typeof this.searchQuery.sources !== 'undefined' && this.searchQuery.sources != "") {
+      q += `spells_sources like "%${this.searchQuery.sources}%" AND `;
+    }
+    if (this.searchQuery.duration != null && typeof this.searchQuery.duration !== 'undefined' && this.searchQuery.duration != "") {
+      q += `spells_duration like "%${this.searchQuery.duration}%" AND `;
     }
     if (q.includes(" AND ")) {
       q = q.slice(0, -4);

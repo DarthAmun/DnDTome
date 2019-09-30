@@ -1,78 +1,147 @@
 import React, { Component } from 'react';
 import '../../assets/css/SearchBar.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUndo } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
 class SpellSearchBar extends Component {
     state = {
-        query: ""
-    }
-
-    changeQuery = (event) => {
-        this.setState({
-            query: event.target.value
-        });
-    }
-    sendQuery = (e) => {
-        if (e.key === 'Enter') {
-            let query = this.state.query;
-            query = this.makeQuery(query);
-            ipcRenderer.send('sendSpellSearchQuery', { query: this.makeQuery(this.state.query) });
+        query: {
+            name: "",
+            school: "",
+            level: "",
+            time: "",
+            range: "",
+            duration: "",
+            components: "",
+            text: "",
+            classes: "",
+            sources: ""
         }
     }
-    makeQuery = (value) => {
-        let searchQuery = { name: "", time: "", school: "", level: "", duration: "", range: "", component: "", class: "", text: "" }
-        let querys = value.split(",");
-        querys.map((query, key) => {
-            if (query.includes("name[")) {
-                let q = query.replace("name[", "");
-                q = q.replace("]", "");
-                searchQuery.name = q.trim();
-            } else if (query.includes("time[")) {
-                let q = query.replace("time[", "");
-                q = q.replace("]", "");
-                searchQuery.time = q.trim();
-            } else if (query.includes("school[")) {
-                let q = query.replace("school[", "");
-                q = q.replace("]", "");
-                searchQuery.school = q.trim();
-            } else if (query.includes("level[")) {
-                let q = query.replace("level[", "");
-                q = q.replace("]", "");
-                searchQuery.level = q.trim();
-            } else if (query.includes("duration[")) {
-                let q = query.replace("duration[", "");
-                q = q.replace("]", "");
-                searchQuery.duration = q.trim();
-            } else if (query.includes("range[")) {
-                let q = query.replace("range[", "");
-                q = q.replace("]", "");
-                searchQuery.range = q.trim();
-            } else if (query.includes("component[")) {
-                let q = query.replace("component[", "");
-                q = q.replace("]", "");
-                searchQuery.component = q.trim();
-            } else if (query.includes("class[")) {
-                let q = query.replace("class[", "");
-                q = q.replace("]", "");
-                searchQuery.classe = q.trim();
-            } else if (query.includes("text[")) {
-                let q = query.replace("text[", "");
-                q = q.replace("]", "");
-                searchQuery.text = q.trim();
+
+    changeName = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                name: event.target.value
             }
         });
-        return searchQuery;
+    }
+    changeSchool = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                school: event.target.value
+            }
+        });
+    }
+    changeLevel = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                level: event.target.value
+            }
+        });
+    }
+    changeTime = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                time: event.target.value
+            }
+        });
+    }
+    changeRange = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                range: event.target.value
+            }
+        });
+    }
+    changeDuration = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                duration: event.target.value
+            }
+        });
+    }
+    changeComponents = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                components: event.target.value
+            }
+        });
+    }
+    changeClasses = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                classes: event.target.value
+            }
+        });
+    }
+    changeSources = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                sources: event.target.value
+            }
+        });
     }
 
+    sendQuery = (e) => {
+        if (e.key === 'Enter') {
+            ipcRenderer.send('sendSpellSearchQuery', { query: this.state.query });
+        }
+    }
+
+    resetSearch = (e) => {
+        this.setState({
+            ...this.state,
+            query: {
+                name: "",
+                school: "",
+                level: "",
+                time: "",
+                range: "",
+                duration: "",
+                components: "",
+                text: "",
+                classes: "",
+                sources: ""
+            }
+        });
+        ipcRenderer.send('sendSpellSearchQuery', { query: {} });
+    }
 
     render() {
         return (
             <div id="searchBar">
-                <input type="text" placeholder="Search like ... name[Fire], time[1 action] ..."
-                    onChange={this.changeQuery}
-                    onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "180px"}} placeholder="Name" value={this.state.query.name} onChange={this.changeName} onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "80px"}} placeholder="School" value={this.state.query.school} onChange={this.changeSchool} onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "40px"}} placeholder="Level" value={this.state.query.level} onChange={this.changeLevel} onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "80px"}} placeholder="Casting Time" value={this.state.query.time} onChange={this.changeTime} onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "80px"}} placeholder="Range" value={this.state.query.range} onChange={this.changeRange} onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "80px"}} placeholder="Duration" value={this.state.query.duration} onChange={this.changeDuration} onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "80px"}} placeholder="Components" value={this.state.query.components} onChange={this.changeComponents} onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "80px"}} placeholder="Classes" value={this.state.query.classes} onChange={this.changeClasses} onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "80px"}} placeholder="Sources" value={this.state.query.sources} onChange={this.changeSources} onKeyDown={this.sendQuery}></input>
+                <button onClick={this.resetSearch}><FontAwesomeIcon icon={faUndo} /> Reset</button>
             </div>
         )
     }

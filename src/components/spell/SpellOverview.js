@@ -25,7 +25,7 @@ class SpellOverview extends Component {
     }
 
     updateSpell = (evt, result) => {
-        let {spellStep, spellStart} = result;
+        let { spellStep, spellStart } = result;
         ipcRenderer.send('getSearchSpells', { step: spellStep, start: spellStart });
     }
 
@@ -46,14 +46,13 @@ class SpellOverview extends Component {
     render() {
         return (
             <div id="overview">
-                <SpellSearchBar />
-                <div id="spellContent">
+                <div id="spellOverview">
+                    <SpellSearchBar />
                     <div id="spells" style={{ width: `${this.state.width}` }}>
                         {this.state.currentSpellList.spells.map((spell, index) => {
                             return <Spell delay={index} spell={spell} key={spell.spells_id} onClick={() => this.viewSpell(spell)} />;
                         })}
                     </div>
-                    <SpellView spell={this.state.currentSelectedSpell} />
                 </div>
                 <SpellPagination />
             </div>

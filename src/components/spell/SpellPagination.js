@@ -72,7 +72,7 @@ class SpellPagination extends Component {
             pageStep: parseInt(e.target.value),
             currentPage: 1
         });
-        ipcRenderer.send('getSearchSpells', { step: e.target.value, start: 1 });
+        ipcRenderer.send('getSearchSpells', { step: e.target.value, start: 0 });
     }
 
     render() {
