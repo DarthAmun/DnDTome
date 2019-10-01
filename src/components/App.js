@@ -5,11 +5,16 @@ import { MemoryRouter, Switch, Route } from 'react-router';
 import SpellOverview from './spell/SpellOverview';
 import CharOverview from './char/CharOverview';
 import ItemOverview from './item/ItemOverview';
+import MonsterOverview from './monster/MonsterOverview';
+
 import CharView from './char/CharView';
+
 import Home from './Home';
 import Options from './Options';
+
 import AddView from './add/AddView';
 import AddSpell from './add/AddSpell';
+
 import LeftNav from './LeftNav';
 import TopNav from './TopNav';
 
@@ -23,9 +28,10 @@ class App extends Component {
             <TopNav />
             <Switch>
               <Route path="/spell-overview" component={SpellOverview} />
+              <Route path="/item-overview" component={ItemOverview} />
+              <Route path="/monster-overview" component={MonsterOverview} />
               <Route path="/char-overview" component={CharOverview} />
               <Route path="/char/:id" component={CharView} />
-              <Route path="/item-overview" component={ItemOverview} />
               <Route path="/add-view" component={AddView} />
               <Route path="/add-spell" component={AddSpell} />
               <Route path="/options" component={Options} />
