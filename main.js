@@ -31,7 +31,7 @@ function createWindow() {
     minWidth: 400,
     show: false,
     frame: false,
-    icon: __dirname + './src/assets/img/dice_icon.png'
+    icon: __dirname + './src/assets/img/dice_icon.ico'
   });
 
   // and load the index.html of the app.
@@ -103,7 +103,7 @@ function createWindow() {
     show: false,
     resizable: false,
     frame: true,
-    icon: __dirname + './src/assets/img/dice_icon.png'
+    icon: __dirname + './src/assets/img/dice_icon.ico'
   });
   spellWindow.setMenu(null);
   spellWindow.loadURL(spellPath);
@@ -120,7 +120,7 @@ function createWindow() {
     show: false,
     resizable: false,
     frame: true,
-    icon: __dirname + './src/assets/img/dice_icon.png'
+    icon: __dirname + './src/assets/img/dice_icon.ico'
   });
   itemWindow.setMenu(null);
   itemWindow.loadURL(itemPath);
