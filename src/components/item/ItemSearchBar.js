@@ -1,58 +1,85 @@
 import React, { Component } from 'react';
 import '../../assets/css/SearchBar.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUndo } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
 class ItemSearchBar extends Component {
     state = {
-        query: ""
-    }
-
-    changeQuery = (event) => {
-        this.setState({
-            query: event.target.value
-        });
-    }
-    sendQuery = (e) => {
-        if (e.key === 'Enter') {
-            let query = this.state.query;
-            query = this.makeQuery(query);
-            ipcRenderer.send('sendItemSearchQuery', { query: this.makeQuery(this.state.query) });
+        query: {
+            name: "",
+            description: "",
+            rarity: "",
+            type: ""
         }
     }
-    makeQuery = (value) => {
-        let searchQuery = { name: "", description: "", rarity: "", type: "" }
-        let querys = value.split(",");
-        querys.map((query, key) => {
-            if (query.includes("name[")) {
-                let q = query.replace("name[", "");
-                q = q.replace("]", "");
-                searchQuery.name = q.trim();
-            } else if (query.includes("desc[")) {
-                let q = query.replace("desc[", "");
-                q = q.replace("]", "");
-                searchQuery.description = q.trim();
-            } else if (query.includes("rarity[")) {
-                let q = query.replace("rarity[", "");
-                q = q.replace("]", "");
-                searchQuery.rarity = q.trim();
-            } else if (query.includes("type[")) {
-                let q = query.replace("type[", "");
-                q = q.replace("]", "");
-                searchQuery.type = q.trim();
-            } 
+
+    changeName = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                name: event.target.value
+            }
         });
-        return searchQuery;
+    }
+    changeRarity = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                rarity: event.target.value
+            }
+        });
+    }
+    changeType = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                type: event.target.value
+            }
+        });
+    }
+    changeDescription = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                description: event.target.value
+            }
+        });
     }
 
+    sendQuery = (e) => {
+        if (e.key === 'Enter') {
+            ipcRenderer.send('sendItemSearchQuery', { query: this.state.query });
+        }
+    }
+
+    resetSearch = (e) => {
+        this.setState({
+            ...this.state,
+            query: {
+                name: "",
+                description: "",
+                rarity: "",
+                type: ""
+            }
+        });
+        ipcRenderer.send('sendItemSearchQuery', { query: {} });
+    }
 
     render() {
         return (
             <div id="searchBar">
-                <input type="text" placeholder="Search like ... name[Fire], desc[1 action] ..."
-                    onChange={this.changeQuery}
-                    onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "180px"}} placeholder="Name" value={this.state.query.name} onChange={this.changeName} onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "180px"}} placeholder="Rarity" value={this.state.query.rarity} onChange={this.changeRarity} onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "180px"}} placeholder="Type" value={this.state.query.type} onChange={this.changeType} onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "180px"}} placeholder="Description" value={this.state.query.description} onChange={this.changeDescription} onKeyDown={this.sendQuery}></input>
+                <button onClick={this.resetSearch}><FontAwesomeIcon icon={faUndo} /> Reset</button>
             </div>
         )
     }

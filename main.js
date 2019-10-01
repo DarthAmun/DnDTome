@@ -10,6 +10,8 @@ const url = require('url')
 let mainWindow;
 let spellWindow;
 let spellPath;
+let itemWindow;
+let itemPath;
 // Keep a reference for dev mode
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
@@ -47,6 +49,12 @@ function createWindow() {
       pathname: 'spell.html',
       slashes: true
     });
+    itemPath = url.format({
+      protocol: 'http:',
+      host: 'localhost:8080',
+      pathname: 'item.html',
+      slashes: true
+    });
   } else {
     indexPath = url.format({
       protocol: 'file:',
@@ -56,6 +64,11 @@ function createWindow() {
     spellPath = url.format({
       protocol: 'file:',
       pathname: path.join(__dirname, 'dist', 'spell.html'),
+      slashes: true
+    });
+    itemPath = url.format({
+      protocol: 'file:',
+      pathname: path.join(__dirname, 'dist', 'item.html'),
       slashes: true
     });
   }
@@ -79,8 +92,10 @@ function createWindow() {
     db.close();
     mainWindow = null;
     spellWindow = null;
+    itemWindow = null;
   });
 
+  //Spell window
   spellWindow = new BrowserWindow({
     parent: mainWindow,
     width: 950,
@@ -92,11 +107,26 @@ function createWindow() {
   });
   spellWindow.setMenu(null);
   spellWindow.loadURL(spellPath);
-
-  // set to null
   spellWindow.on('close', (e) => {
     e.preventDefault();
     spellWindow.hide();
+  });
+
+  //Item window
+  itemWindow = new BrowserWindow({
+    parent: mainWindow,
+    width: 800,
+    height: 445,
+    show: false,
+    resizable: false,
+    frame: true,
+    icon: __dirname + './src/assets/img/dice_icon.png'
+  });
+  itemWindow.setMenu(null);
+  itemWindow.loadURL(itemPath);
+  itemWindow.on('close', (e) => {
+    e.preventDefault();
+    itemWindow.hide();
   });
 }
 
@@ -153,36 +183,36 @@ const reciveSpells = (step, start) => {
   spellStep = step;
   spellStart = start;
   let q = "SELECT * FROM 'main'.'tab_spells' WHERE ";
-  if (this.searchQuery != null) {
-    if (this.searchQuery.name != null && typeof this.searchQuery.name !== 'undefined' && this.searchQuery.name != "") {
-      q += `spells_name like "%${this.searchQuery.name}%" AND `;
+  if (this.searchSpellQuery != null) {
+    if (this.searchSpellQuery.name != null && typeof this.searchSpellQuery.name !== 'undefined' && this.searchSpellQuery.name != "") {
+      q += `spells_name like "%${this.searchSpellQuery.name}%" AND `;
     }
-    if (this.searchQuery.time != null && typeof this.searchQuery.time !== 'undefined' && this.searchQuery.time != "") {
-      q += `spells_time like "%${this.searchQuery.time}%" AND `;
+    if (this.searchSpellQuery.time != null && typeof this.searchSpellQuery.time !== 'undefined' && this.searchSpellQuery.time != "") {
+      q += `spells_time like "%${this.searchSpellQuery.time}%" AND `;
     }
-    if (this.searchQuery.level != null && typeof this.searchQuery.level !== 'undefined' && this.searchQuery.level != "") {
-      q += `spells_level = "${this.searchQuery.level}" AND `;
+    if (this.searchSpellQuery.level != null && typeof this.searchSpellQuery.level !== 'undefined' && this.searchSpellQuery.level != "") {
+      q += `spells_level = "${this.searchSpellQuery.level}" AND `;
     }
-    if (this.searchQuery.school != null && typeof this.searchQuery.school !== 'undefined' && this.searchQuery.school != "") {
-      q += `spells_school like "%${this.searchQuery.school}%" AND `;
+    if (this.searchSpellQuery.school != null && typeof this.searchSpellQuery.school !== 'undefined' && this.searchSpellQuery.school != "") {
+      q += `spells_school like "%${this.searchSpellQuery.school}%" AND `;
     }
-    if (this.searchQuery.range != null && typeof this.searchQuery.range !== 'undefined' && this.searchQuery.range != "") {
-      q += `spells_range like "%${this.searchQuery.range}%" AND `;
+    if (this.searchSpellQuery.range != null && typeof this.searchSpellQuery.range !== 'undefined' && this.searchSpellQuery.range != "") {
+      q += `spells_range like "%${this.searchSpellQuery.range}%" AND `;
     }
-    if (this.searchQuery.components != null && typeof this.searchQuery.components !== 'undefined' && this.searchQuery.components != "") {
-      q += `spells_components like "%${this.searchQuery.components}%" AND `;
+    if (this.searchSpellQuery.components != null && typeof this.searchSpellQuery.components !== 'undefined' && this.searchSpellQuery.components != "") {
+      q += `spells_components like "%${this.searchSpellQuery.components}%" AND `;
     }
-    if (this.searchQuery.classes != null && typeof this.searchQuery.classes !== 'undefined' && this.searchQuery.classes != "") {
-      q += `spells_classes like "%${this.searchQuery.classes}%" AND `;
+    if (this.searchSpellQuery.classes != null && typeof this.searchSpellQuery.classes !== 'undefined' && this.searchSpellQuery.classes != "") {
+      q += `spells_classes like "%${this.searchSpellQuery.classes}%" AND `;
     }
-    if (this.searchQuery.text != null && typeof this.searchQuery.text !== 'undefined' && this.searchQuery.text != "") {
-      q += `spells_text like "%${this.searchQuery.text}%" AND `;
+    if (this.searchSpellQuery.text != null && typeof this.searchSpellQuery.text !== 'undefined' && this.searchSpellQuery.text != "") {
+      q += `spells_text like "%${this.searchSpellQuery.text}%" AND `;
     }
-    if (this.searchQuery.sources != null && typeof this.searchQuery.sources !== 'undefined' && this.searchQuery.sources != "") {
-      q += `spells_sources like "%${this.searchQuery.sources}%" AND `;
+    if (this.searchSpellQuery.sources != null && typeof this.searchSpellQuery.sources !== 'undefined' && this.searchSpellQuery.sources != "") {
+      q += `spells_sources like "%${this.searchSpellQuery.sources}%" AND `;
     }
-    if (this.searchQuery.duration != null && typeof this.searchQuery.duration !== 'undefined' && this.searchQuery.duration != "") {
-      q += `spells_duration like "%${this.searchQuery.duration}%" AND `;
+    if (this.searchSpellQuery.duration != null && typeof this.searchSpellQuery.duration !== 'undefined' && this.searchSpellQuery.duration != "") {
+      q += `spells_duration like "%${this.searchSpellQuery.duration}%" AND `;
     }
     if (q.includes(" AND ")) {
       q = q.slice(0, -4);
@@ -205,20 +235,24 @@ const reciveSpells = (step, start) => {
   return q;
 }
 
+let itemStep;
+let itemStart;
 const reciveItems = (step, start) => {
+  itemStep = step;
+  itemStart = start;
   let q = "SELECT * FROM 'main'.'tab_items' WHERE ";
-  if (this.searchQuery != null) {
-    if (this.searchQuery.name != null && typeof this.searchQuery.name !== 'undefined' && this.searchQuery.name != "") {
-      q += `item_name like "%${this.searchQuery.name}%" AND `;
+  if (this.searchItemQuery != null) {
+    if (this.searchItemQuery.name != null && typeof this.searchItemQuery.name !== 'undefined' && this.searchItemQuery.name != "") {
+      q += `item_name like "%${this.searchItemQuery.name}%" AND `;
     }
-    if (this.searchQuery.description != null && typeof this.searchQuery.description !== 'undefined' && this.searchQuery.description != "") {
-      q += `item_description like "%${this.searchQuery.description}%" AND `;
+    if (this.searchItemQuery.description != null && typeof this.searchItemQuery.description !== 'undefined' && this.searchItemQuery.description != "") {
+      q += `item_description like "%${this.searchItemQuery.description}%" AND `;
     }
-    if (this.searchQuery.rarity != null && typeof this.searchQuery.rarity !== 'undefined' && this.searchQuery.rarity != "") {
-      q += `item_rarity = "${this.searchQuery.rarity}" AND `;
+    if (this.searchItemQuery.rarity != null && typeof this.searchItemQuery.rarity !== 'undefined' && this.searchItemQuery.rarity != "") {
+      q += `item_rarity like "%${this.searchItemQuery.rarity}%" AND `;
     }
-    if (this.searchQuery.type != null && typeof this.searchQuery.type !== 'undefined' && this.searchQuery.type != "") {
-      q += `item_type like "%${this.searchQuery.type}%" AND `;
+    if (this.searchItemQuery.type != null && typeof this.searchItemQuery.type !== 'undefined' && this.searchItemQuery.type != "") {
+      q += `item_type like "%${this.searchItemQuery.type}%" AND `;
     }
     if (q.includes(" AND ")) {
       q = q.slice(0, -4);
@@ -293,6 +327,22 @@ const saveSpell = (spell) => {
   });
 }
 
+const saveItem = (item) => {
+  let data = [item.name, item.type, item.rarity, item.description, item.pic, item.id];
+  let sql = `UPDATE 'main'.'tab_items'
+              SET item_name = ?, item_type = ?, item_rarity = ?, item_description = ?, item_pic = ?
+              WHERE item_id = ?`;
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`${item.name} updated successfull`);
+      mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
+    });
+  });
+}
+
 const deleteSpell = (spell) => {
   let data = [spell.id];
   let sql = `DELETE FROM 'main'.'tab_spells' WHERE spells_id = ?`;
@@ -360,13 +410,13 @@ ipcMain.on('getAllItems', (event) => {
 
 ipcMain.on('getSearchSpells', (event, arg) => {
   const { step, start } = arg;
-  this.searchStep = step;
+  this.searchSpellStep = step;
   reciveSpells(step, start);
 });
 
 ipcMain.on('getSearchItems', (event, arg) => {
   const { step, start } = arg;
-  this.searchStep = step;
+  this.searchItemStep = step;
   reciveItems(step, start);
 });
 
@@ -380,15 +430,15 @@ ipcMain.on('getItemCount', (event, arg) => {
 
 ipcMain.on('sendSpellSearchQuery', (event, arg) => {
   const { query } = arg;
-  this.searchQuery = query;
-  const q = reciveSpells(this.searchStep, 0);
+  this.searchSpellQuery = query;
+  const q = reciveSpells(this.searchSpellStep, 0);
   reciveSpellCount(q.replace("SELECT * FROM 'main'.'tab_spells'", "SELECT count(*) AS count FROM 'main'.'tab_spells'"));
 });
 
 ipcMain.on('sendItemSearchQuery', (event, arg) => {
   const { query } = arg;
-  this.searchQuery = query;
-  const q = reciveItems(this.searchStep, 0);
+  this.searchItemQuery = query;
+  const q = reciveItems(this.searchItemStep, 0);
   reciveItemCount(q.replace("SELECT * FROM 'main'.'tab_items'", "SELECT count(*) AS count FROM 'main'.'tab_items'"));
 });
 
@@ -400,6 +450,11 @@ ipcMain.on('getSpell', (event, arg) => {
 ipcMain.on('saveSpell', (event, arg) => {
   const { spell } = arg;
   saveSpell(spell);
+});
+
+ipcMain.on('saveItem', (event, arg) => {
+  const { item } = arg;
+  saveItem(item);
 });
 
 ipcMain.on('deleteSpell', (event, arg) => {
@@ -421,21 +476,24 @@ ipcMain.on('getChars', (event, arg) => {
   reciveChars();
 });
 
-ipcMain.on('getItems', (event, arg) => {
-  const { step, start } = arg;
-  reciveItems(step, start);
-});
-
 ipcMain.on('closeMainWindow', (event) => {
   mainWindow.close();
 });
 
 ipcMain.on('openSpellView', (event, spell) => {
   spellWindow.show();
-  // Open the DevTools automatically if developing
   if (dev) {
     spellWindow.webContents.openDevTools();
   }
   spellWindow.setTitle("DnD Tome - " + spell.spells_name);
-  spellWindow.webContents.send('spellViewSpell', spell);
+  spellWindow.webContents.send('onViewSpell', spell);
+});
+
+ipcMain.on('openItemView', (event, item) => {
+  itemWindow.show();
+  if (dev) {
+    itemWindow.webContents.openDevTools();
+  }
+  itemWindow.setTitle("DnD Tome - " + item.item_name);
+  itemWindow.webContents.send('onViewItem', item);
 });

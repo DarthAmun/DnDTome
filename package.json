@@ -1,12 +1,12 @@
 {
   "name": "dndtome",
   "version": "0.0.1",
-  "description": "Test electron programm",
+  "description": "Program to learn react and electron on the subject of pen and paper",
   "author": "DarthAmun",
-  "homepage": "https://github.com/pbarbiero/basic-electron-react-boilerplate",
+  "homepage": "https://github.com/DarthAmun/dndtome",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pbarbiero/basic-electron-react-boilerplate.git"
+    "url": "https://github.com/DarthAmun/dndtome.git"
   },
   "license": "MIT",
   "main": "main.js",

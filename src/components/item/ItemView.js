@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import '../../assets/css/ItemView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTrashAlt, faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
+const { dialog } = electron.remote;
 
 class ItemView extends Component {
     state = {
@@ -13,12 +14,10 @@ class ItemView extends Component {
         description: "",
         pic: "",
         rarity: "",
-        type: "",
-        show: "none",
-        width: "0px"
+        type: ""
     }
 
-    receiveItem = (result) => {
+    receiveItem = (event, result) => {
         const text = result.item_description.replace(/\\n/gm, "\r\n");
         this.setState({
             ...this.state,
@@ -27,22 +26,15 @@ class ItemView extends Component {
             description: text,
             pic: result.item_pic,
             rarity: result.item_rarity,
-            type: result.item_type,
-            show: "block",
-            width: "450px"
+            type: result.item_type
         })
     }
 
     componentDidMount() {
-        if(this.props.item != null){
-            this.receiveItem(this.props.item);
-        }
+        ipcRenderer.on("onViewItem", this.receiveItem);
     }
-
-    componentDidUpdate(prev) {
-        if (this.props.item != prev.item) {
-            this.receiveItem(this.props.item);
-        }
+    componentWillUnmount() {
+        ipcRenderer.removeListener("onViewItem", this.receiveItem);
     }
 
     handleNameChange = (e) => {
@@ -81,38 +73,38 @@ class ItemView extends Component {
     }
 
     deleteItem = (e) => {
-        ipcRenderer.send('deleteItem', { item: this.state });
-        this.setState({
-            ...this.state,
-            redirectToOverview: true
-        });
-    }
+        const options = {
+            type: 'question',
+            buttons: ['Cancel', 'Yes, please', 'No, thanks'],
+            defaultId: 2,
+            title: `Delete ${this.state.name}?`,
+            message: 'Do you want to do this?'
+        };
 
-    back = (e) => {
-        this.setState({
-            ...this.state,
-            width: "0px",
-            show: "none"
+        dialog.showMessageBox(null, options, (response) => {
+            if (response == 1) {
+                ipcRenderer.send('deleteItem', { item: this.state });
+            }
         });
-        ipcRenderer.send('backItem');
     }
 
     render() {
         return (
-                    <div id="itemView" style={{ display: `${this.state.show}`, width: `${this.state.width}` }}>
-                        <div className="top">
-                            <label><img src={this.state.pic}></img></label>
-                            <label>Pic:<input name="pic" type="text" value={this.state.pic} onChange={this.handlePicChange} /></label>
-                            <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label>
-                            <label>Rarity:<input name="rarity" type="text" value={this.state.rarity} onChange={this.handleRarityChange} /></label>
-                            <label>Type:<input name="type" type="text" value={this.state.type} onChange={this.handleTypeChange} /></label>
-                        </div>
-                        <textarea value={this.state.description} onChange={this.handleDescriptionChange}></textarea>
-                        <button className="back" onClick={this.back}><FontAwesomeIcon icon={faArrowCircleLeft} /> Back</button>
-                        <button className="delete" onClick={this.deleteItem}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
-                        <button onClick={this.saveItem}><FontAwesomeIcon icon={faSave} /> Save</button>
-                    </div>
-                    
+            <div id="itemView">
+                <div className="top">
+                    <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label>
+                    <label>Pic:<input name="pic" type="text" value={this.state.pic} onChange={this.handlePicChange} /></label>
+                </div>
+                <div className="top">
+                    <label>Rarity:<input name="rarity" type="text" value={this.state.rarity} onChange={this.handleRarityChange} /></label>
+                    <label>Type:<input name="type" type="text" value={this.state.type} onChange={this.handleTypeChange} /></label>
+                </div>
+                <button className="delete" onClick={this.deleteItem}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                <button onClick={this.saveItem}><FontAwesomeIcon icon={faSave} /> Save</button>
+                <div className="image"><img src={this.state.pic}></img></div>
+                <textarea value={this.state.description} onChange={this.handleDescriptionChange}></textarea>
+            </div>
+
         )
     }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../../assets/css/SpellView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTrashAlt, faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -42,10 +42,10 @@ class SpellView extends Component {
     }
 
     componentDidMount() {
-        ipcRenderer.on("spellViewSpell", this.receiveSpell);
+        ipcRenderer.on("onViewSpell", this.receiveSpell);
     }
     componentWillUnmount() {
-        ipcRenderer.removeListener("spellViewSpell", this.receiveSpell);
+        ipcRenderer.removeListener("onViewSpell", this.receiveSpell);
     }
 
     handleNameChange = (e) => {
@@ -123,7 +123,7 @@ class SpellView extends Component {
             message: 'Do you want to do this?'
         };
 
-        dialog.showMessageBox(null, options, (response, checkboxChecked) => {
+        dialog.showMessageBox(null, options, (response) => {
             if(response == 1){
                 ipcRenderer.send('deleteSpell', { spell: this.state });
             }

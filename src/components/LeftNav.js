@@ -144,7 +144,7 @@ class LeftNav extends Component {
         </Link>
         <Link to="/monster-overview" style={{ top: "270px" }}>
           <div className="menuItem">
-            <FontAwesomeIcon icon={faDragon} /> Monster
+            <FontAwesomeIcon icon={faDragon} /> Monsters
           </div>
         </Link>
         <Link to="/options" style={{ bottom: "10px" }}>

@@ -16,6 +16,9 @@ module.exports = {
         spell: [
             SRC_DIR + '/spell.js',
         ],
+        item: [
+            SRC_DIR + '/item.js',
+        ],
         main: [
             SRC_DIR + '/index.js',
         ]
@@ -62,6 +65,11 @@ module.exports = {
             filename: 'spell.html',
             template: 'src/index.html',
             chunks: ['spell']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'item.html',
+            template: 'src/index.html',
+            chunks: ['item']
         }),
         new ExtractTextPlugin({ filename: 'bundle.css' }),
         new webpack.DefinePlugin({

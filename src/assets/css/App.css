@@ -49,6 +49,15 @@ html, body, #root {
   text-align: right;
 }
 
+#content {
+  float: left;
+  height: calc(100% - 60px);
+  width: calc(100% - 120px);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 20px;
+}
+
 a {
   text-decoration: none;
   color: #8000ff;

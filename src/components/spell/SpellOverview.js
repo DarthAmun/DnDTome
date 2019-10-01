@@ -11,8 +11,7 @@ const ipcRenderer = electron.ipcRenderer;
 class SpellOverview extends Component {
     state = {
         currentSpellList: { spells: [] },
-        currentSelectedSpell: null,
-        width: "100%"
+        currentSelectedSpell: null
     }
 
     receiveSpells = (evt, result) => {
@@ -48,7 +47,7 @@ class SpellOverview extends Component {
             <div id="overview">
                 <div id="spellOverview">
                     <SpellSearchBar />
-                    <div id="spells" style={{ width: `${this.state.width}` }}>
+                    <div id="spells">
                         {this.state.currentSpellList.spells.map((spell, index) => {
                             return <Spell delay={index} spell={spell} key={spell.spells_id} onClick={() => this.viewSpell(spell)} />;
                         })}

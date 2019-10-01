@@ -12,11 +12,14 @@ const defaultInclude = [SRC_DIR];
 
 module.exports = {
   entry: {
-    main: [
-      SRC_DIR + '/index.js',
-    ],
     spell: [
       SRC_DIR + '/spell.js',
+    ],
+    item: [
+      SRC_DIR + '/item.js',
+    ],
+    main: [
+      SRC_DIR + '/index.js',
     ]
   },
   output: {
@@ -60,6 +63,11 @@ module.exports = {
       template: 'src/index.html',
       chunks: ['spell']
     }),
+    new HtmlWebpackPlugin({
+      filename: 'item.html',
+      template: 'src/index.html',
+      chunks: ['item']
+    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
     })
@@ -78,8 +86,8 @@ module.exports = {
         ['.'],
         { shell: true, env: process.env, stdio: 'inherit' }
       )
-      .on('close', code => process.exit(0))
-      .on('error', spawnError => console.error(spawnError));
+        .on('close', code => process.exit(0))
+        .on('error', spawnError => console.error(spawnError));
     }
   }
 };

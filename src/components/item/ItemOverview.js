@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import '../../assets/css/ItemOverview.css';
 import Item from './Item';
-import ItemView from './ItemView';
 import ItemSearchBar from './ItemSearchBar';
 import ItemPagination from './ItemPagination';
 const electron = window.require('electron');
@@ -10,8 +9,7 @@ const ipcRenderer = electron.ipcRenderer;
 class ItemOverview extends Component {
     state = {
         currentItemList: { items: [] },
-        currentSelectedItem: null,
-        width: "100%"
+        currentSelectedItem: null
     }
 
     receiveItems = (evt, result) => {
@@ -23,43 +21,35 @@ class ItemOverview extends Component {
         })
     }
 
-    backItem = (evt) => {
-        this.setState({
-            ...this.state,
-            width: "calc(100% - 20px)"
-        })
+    updateItem = (evt, result) => {
+        let { itemStep, itemStart } = result;
+        ipcRenderer.send('getSearchItems', { step: itemStep, start: itemStart });
     }
 
     componentDidMount() {
-        ipcRenderer.send('getItems', { step: 10, start: 0 });
+        ipcRenderer.send('getSearchItems', { step: 10, start: 0 });
         ipcRenderer.on("getSearchItemsResult", this.receiveItems);
-
-        ipcRenderer.on("backItem", this.backItem);
+        ipcRenderer.on("itemsUpdated", this.updateItem);
     }
     componentWillUnmount() {
         ipcRenderer.removeListener("getSearchItemsResult", this.receiveItems);
-        ipcRenderer.removeListener("backItem", this.backItem);
+        ipcRenderer.removeListener("itemsUpdated", this.updateItem);
     }
 
     viewItem = (item) => {
-        this.setState({
-            ...this.state,
-            currentSelectedItem: item,
-            width: "calc(100% - 470px)"
-        })
+        ipcRenderer.send('openItemView', item);
     }
 
     render() {
         return (
             <div id="overview">
-                <ItemSearchBar />
-                <div id="itemsContent">
-                    <div id="items" style={{ width: `${this.state.width}` }}>
+                <div id="itemsOverview">
+                    <ItemSearchBar />
+                    <div id="items">
                         {this.state.currentItemList.items.map((item, index) => {
                             return <Item delay={index} item={item} key={item.item_id} onClick={() => this.viewItem(item)} />;
                         })}
                     </div>
-                    <ItemView item={this.state.currentSelectedItem} />
                 </div>
                 <ItemPagination />
             </div>

@@ -3,6 +3,7 @@
     width: 100%;
     float: left;
     color: darkgray;
+    line-height: 30px;
 }
 
 .pageDown, .pageUp {
@@ -45,6 +46,7 @@
     padding-left: 5px;
     padding-right: 5px;
     margin-right: 5px;
+    float: left;
 }
 
 #step select{
