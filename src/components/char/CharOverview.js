@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../assets/css/CharOverview.css';
+import '../../assets/css/char/CharOverview.css';
 import Char from './Char';
 
 const electron = window.require('electron');

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../assets/css/spell/SpellView.css';
+import '../../assets/css/monster/MonsterView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -7,7 +7,7 @@ const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const { dialog } = electron.remote;
 
-class SpellView extends Component {
+class MonsterView extends Component {
     state = {
         name: "",
         school: "",
@@ -22,30 +22,30 @@ class SpellView extends Component {
         id: ""
     }
 
-    receiveSpell = (event, result) => {
-        const text = result.spells_text.replace(/\\n/gm, "\r\n");
-        const sources = result.spells_sources.replace(/\\n/gm, "\r\n");
+    receiveMonster = (event, result) => {
+        const text = result.monster_text.replace(/\\n/gm, "\r\n");
+        const sources = result.monster_sources.replace(/\\n/gm, "\r\n");
         this.setState({
             ...this.state,
-            name: result.spells_name,
-            school: result.spells_school,
-            level: result.spells_level,
-            time: result.spells_time,
-            range: result.spells_range,
-            duration: result.spells_duration,
-            components: result.spells_components,
+            name: result.monster_name,
+            school: result.monster_school,
+            level: result.monster_level,
+            time: result.monster_time,
+            range: result.monster_range,
+            duration: result.monster_duration,
+            components: result.monster_components,
             text: text,
-            classes: result.spells_classes,
+            classes: result.monster_classes,
             sources: sources,
-            id: result.spells_id
+            id: result.monster_id
         })
     }
 
     componentDidMount() {
-        ipcRenderer.on("onViewSpell", this.receiveSpell);
+        ipcRenderer.on("onViewMonster", this.receiveMonster);
     }
     componentWillUnmount() {
-        ipcRenderer.removeListener("onViewSpell", this.receiveSpell);
+        ipcRenderer.removeListener("onViewMonster", this.receiveMonster);
     }
 
     handleNameChange = (e) => {
@@ -110,11 +110,11 @@ class SpellView extends Component {
         });
     }
 
-    saveSpell = (e) => {
-        ipcRenderer.send('saveSpell', { spell: this.state });
+    saveMonster = (e) => {
+        ipcRenderer.send('saveMonster', { monster: this.state });
     }
 
-    deleteSpell = (e) => {
+    deleteMonster = (e) => {
         const options = {
             type: 'question',
             buttons: ['Cancel', 'Yes, please', 'No, thanks'],
@@ -125,14 +125,14 @@ class SpellView extends Component {
 
         dialog.showMessageBox(null, options, (response) => {
             if(response == 1){
-                ipcRenderer.send('deleteSpell', { spell: this.state });
+                ipcRenderer.send('deleteMonster', { monster: this.state });
             }
         });
     }
 
     render() {
         return (
-            <div id="spellView">
+            <div id="monsterView">
                 <div className="top">
                     <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label>
                     <label>School:<input name="school" type="text" value={this.state.school} onChange={this.handleSchoolChange} /></label>
@@ -145,11 +145,11 @@ class SpellView extends Component {
                     <label>Sources:<input name="sources" type="text" value={this.state.sources} onChange={this.handleSourcesChange} /></label>
                 </div>
                 <textarea value={this.state.text} onChange={this.handleChange}></textarea>
-                <button className="delete" onClick={this.deleteSpell}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
-                <button onClick={this.saveSpell}><FontAwesomeIcon icon={faSave} /> Save</button>
+                <button className="delete" onClick={this.deleteMonster}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                <button onClick={this.saveMonster}><FontAwesomeIcon icon={faSave} /> Save</button>
             </div>
         )
     }
 }
 
-export default SpellView;
+export default MonsterView;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../assets/css/ItemView.css';
+import '../../assets/css/item/ItemView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 

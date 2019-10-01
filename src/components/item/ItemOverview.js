@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../assets/css/ItemOverview.css';
+import '../../assets/css/item/ItemOverview.css';
 import Item from './Item';
 import ItemSearchBar from './ItemSearchBar';
 import ItemPagination from './ItemPagination';

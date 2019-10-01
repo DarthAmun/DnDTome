@@ -7,7 +7,7 @@ body {
 
 @font-face {
     font-family: 'Quicksand';
-    src: url('../font/Quicksand-Medium.ttf') format('truetype');
+    src: url('../../font/Quicksand-Medium.ttf') format('truetype');
 }
 
 #spellView {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../assets/css/Spell.css';
+import '../../assets/css/spell/Spell.css';
 
 class Spell extends Component {
 
