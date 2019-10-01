@@ -358,6 +358,21 @@ const deleteSpell = (spell) => {
   });
 }
 
+const deleteItem = (item) => {
+  let data = [item.id];
+  let sql = `DELETE FROM 'main'.'tab_items' WHERE item_id = ?`;
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`====>Deleted ${item.name} successfull`);
+      spellWindow.hide();
+      mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
+    });
+  });
+}
+
 const saveNewSpell = (spell) => {
   let data = [spell.name, spell.school, spell.level, spell.time, spell.duration, spell.range, spell.components, spell.text, spell.classes, spell.sources];
   let sql = `INSERT INTO 'main'.'tab_spells' (spells_name, spells_school, spells_level, spells_time, spells_duration, spells_range, spells_components, spells_text, spells_classes, spells_sources)
@@ -460,6 +475,11 @@ ipcMain.on('saveItem', (event, arg) => {
 ipcMain.on('deleteSpell', (event, arg) => {
   const { spell } = arg;
   deleteSpell(spell);
+});
+
+ipcMain.on('deleteItem', (event, arg) => {
+  const { item } = arg;
+  deleteItem(item);
 });
 
 ipcMain.on('saveNewSpell', (event, arg) => {
