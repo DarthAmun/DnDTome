@@ -71,7 +71,7 @@ module.exports = {
             template: 'src/index.html',
             chunks: ['item']
         }),
-        new ExtractTextPlugin({ filename: 'bundle.css' }),
+        new ExtractTextPlugin({ filename: '[name].css' }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
