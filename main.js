@@ -285,6 +285,39 @@ const reciveMonsters = (step, start) => {
     if (this.searchMonsterQuery.name != null && typeof this.searchMonsterQuery.name !== 'undefined' && this.searchMonsterQuery.name != "") {
       q += `monster_name like "%${this.searchMonsterQuery.name}%" AND `;
     }
+    if (this.searchMonsterQuery.type != null && typeof this.searchMonsterQuery.type !== 'undefined' && this.searchMonsterQuery.type != "") {
+      q += `monster_type like "%${this.searchMonsterQuery.type}%" AND `;
+    }
+    if (this.searchMonsterQuery.subtype != null && typeof this.searchMonsterQuery.subtype !== 'undefined' && this.searchMonsterQuery.subtype != "") {
+      q += `monster_subtype like "%${this.searchMonsterQuery.subtype}%" AND `;
+    }
+    if (this.searchMonsterQuery.cr != null && typeof this.searchMonsterQuery.cr !== 'undefined' && this.searchMonsterQuery.cr != "") {
+      q += `monster_cr = "${this.searchMonsterQuery.cr}" AND `;
+    }
+    if (this.searchMonsterQuery.alignment != null && typeof this.searchMonsterQuery.alignment !== 'undefined' && this.searchMonsterQuery.alignment != "") {
+      q += `monster_alignment like "%${this.searchMonsterQuery.alignment}%" AND `;
+    }
+    if (this.searchMonsterQuery.speed != null && typeof this.searchMonsterQuery.speed !== 'undefined' && this.searchMonsterQuery.speed != "") {
+      q += `monster_speed like "%${this.searchMonsterQuery.speed}%" AND `;
+    }
+    if (this.searchMonsterQuery.senses != null && typeof this.searchMonsterQuery.senses !== 'undefined' && this.searchMonsterQuery.senses != "") {
+      q += `monster_senses like "%${this.searchMonsterQuery.senses}%" AND `;
+    }
+    if (this.searchMonsterQuery.senses != null && typeof this.searchMonsterQuery.senses !== 'undefined' && this.searchMonsterQuery.senses != "") {
+      q += `monster_senses like "%${this.searchMonsterQuery.senses}%" AND `;
+    }
+    if (this.searchMonsterQuery.ability != null && typeof this.searchMonsterQuery.ability !== 'undefined' && this.searchMonsterQuery.ability != "") {
+      q += `monster_sAblt like "%${this.searchMonsterQuery.ability}%" AND `;
+    }
+    if (this.searchMonsterQuery.action != null && typeof this.searchMonsterQuery.action !== 'undefined' && this.searchMonsterQuery.action != "") {
+      q += `(monster_ablt like "%${this.searchMonsterQuery.action}%" OR `;
+      q += `monster_lAbtl like "%${this.searchMonsterQuery.action}%") AND `;
+    }
+    if (this.searchMonsterQuery.damage != null && typeof this.searchMonsterQuery.damage !== 'undefined' && this.searchMonsterQuery.damage != "") {
+      q += `(monster_dmgVulnerabilities like "%${this.searchMonsterQuery.damage}%" OR `;
+      q += `monster_dmgResistance like "%${this.searchMonsterQuery.damage}%" OR `;
+      q += `monster_dmgImmunities like "%${this.searchMonsterQuery.damage}%") AND `;
+    }
     if (q.includes(" AND ")) {
       q = q.slice(0, -4);
     } else {
