@@ -4,4 +4,4 @@ node_modules/
 dist/
 builds/
 export/
-src/assets/db/tab_spells.db
+src/assets/db/tab.db
