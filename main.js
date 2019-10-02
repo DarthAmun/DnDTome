@@ -416,9 +416,9 @@ const saveSpell = (spell) => {
 }
 
 const saveItem = (item) => {
-  let data = [item.name, item.type, item.rarity, item.description, item.pic, item.id];
+  let data = [item.name, item.type, item.rarity, item.description, item.pic, item.source, item.id];
   let sql = `UPDATE 'main'.'tab_items'
-              SET item_name = ?, item_type = ?, item_rarity = ?, item_description = ?, item_pic = ?
+              SET item_name = ?, item_type = ?, item_rarity = ?, item_description = ?, item_pic = ?, item_source = ?
               WHERE item_id = ?`;
   db.serialize(function () {
     db.run(sql, data, function (err) {

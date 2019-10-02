@@ -14,7 +14,8 @@ class ItemView extends Component {
         description: "",
         pic: "",
         rarity: "",
-        type: ""
+        type: "",
+        source: ""
     }
 
     receiveItem = (event, result) => {
@@ -26,7 +27,8 @@ class ItemView extends Component {
             description: text,
             pic: result.item_pic,
             rarity: result.item_rarity,
-            type: result.item_type
+            type: result.item_type,
+            source: result.item_source
         })
     }
 
@@ -67,6 +69,12 @@ class ItemView extends Component {
             type: e.target.value
         });
     }
+    handleSourceChange = (e) => {
+        this.setState({
+            ...this.state,
+            source: e.target.value
+        });
+    }
 
     saveItem = (e) => {
         ipcRenderer.send('saveItem', { item: this.state });
@@ -100,7 +108,7 @@ class ItemView extends Component {
             <div id="itemView">
                 <div className="top">
                     <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label>
-                    <label>Sources:<input name="sources" type="text" value={this.state.sources} onChange={this.handleSourcesChange} /></label>
+                    <label>Sources:<input name="source" type="text" value={this.state.source} onChange={this.handleSourceChange} /></label>
                     <label>Pic:<input name="pic" type="text" value={this.state.pic} onChange={this.handlePicChange} /></label>
                 </div>
                 <div className="top">
