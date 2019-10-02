@@ -455,7 +455,7 @@ const deleteItem = (item) => {
         return console.error(err.message);
       }
       console.log(`====>Deleted ${item.name} successfull`);
-      spellWindow.hide();
+      itemWindow.hide();
       mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
     });
   });
