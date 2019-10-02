@@ -89,6 +89,13 @@ class ItemView extends Component {
     }
 
     render() {
+        const style = {
+            backgroundImage: `url(${this.state.pic})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat'
+        };
+
         return (
             <div id="itemView">
                 <div className="top">
@@ -101,7 +108,7 @@ class ItemView extends Component {
                 </div>
                 <button className="delete" onClick={this.deleteItem}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                 <button onClick={this.saveItem}><FontAwesomeIcon icon={faSave} /> Save</button>
-                <div className="image"><img src={this.state.pic}></img></div>
+                <div className="image" style={style}></div>
                 <textarea value={this.state.description} onChange={this.handleDescriptionChange}></textarea>
             </div>
 

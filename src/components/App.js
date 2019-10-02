@@ -14,6 +14,7 @@ import Options from './Options';
 
 import AddView from './add/AddView';
 import AddSpell from './add/AddSpell';
+import AddItem from './add/AddItem';
 
 import LeftNav from './LeftNav';
 import TopNav from './TopNav';
@@ -34,6 +35,7 @@ class App extends Component {
               <Route path="/char/:id" component={CharView} />
               <Route path="/add-view" component={AddView} />
               <Route path="/add-spell" component={AddSpell} />
+              <Route path="/add-item" component={AddItem} />
               <Route path="/options" component={Options} />
               <Route path="/" component={Home} />
             </Switch>

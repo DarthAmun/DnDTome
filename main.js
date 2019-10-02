@@ -197,34 +197,34 @@ const reciveSpells = (step, start) => {
   let q = "SELECT * FROM 'main'.'tab_spells' WHERE ";
   if (this.searchSpellQuery != null) {
     if (this.searchSpellQuery.name != null && typeof this.searchSpellQuery.name !== 'undefined' && this.searchSpellQuery.name != "") {
-      q += `spells_name like "%${this.searchSpellQuery.name}%" AND `;
+      q += `spell_name like "%${this.searchSpellQuery.name}%" AND `;
     }
     if (this.searchSpellQuery.time != null && typeof this.searchSpellQuery.time !== 'undefined' && this.searchSpellQuery.time != "") {
-      q += `spells_time like "%${this.searchSpellQuery.time}%" AND `;
+      q += `spell_time like "%${this.searchSpellQuery.time}%" AND `;
     }
     if (this.searchSpellQuery.level != null && typeof this.searchSpellQuery.level !== 'undefined' && this.searchSpellQuery.level != "") {
-      q += `spells_level = "${this.searchSpellQuery.level}" AND `;
+      q += `spell_level = "${this.searchSpellQuery.level}" AND `;
     }
     if (this.searchSpellQuery.school != null && typeof this.searchSpellQuery.school !== 'undefined' && this.searchSpellQuery.school != "") {
-      q += `spells_school like "%${this.searchSpellQuery.school}%" AND `;
+      q += `spell_school like "%${this.searchSpellQuery.school}%" AND `;
     }
     if (this.searchSpellQuery.range != null && typeof this.searchSpellQuery.range !== 'undefined' && this.searchSpellQuery.range != "") {
-      q += `spells_range like "%${this.searchSpellQuery.range}%" AND `;
+      q += `spell_range like "%${this.searchSpellQuery.range}%" AND `;
     }
     if (this.searchSpellQuery.components != null && typeof this.searchSpellQuery.components !== 'undefined' && this.searchSpellQuery.components != "") {
-      q += `spells_components like "%${this.searchSpellQuery.components}%" AND `;
+      q += `spell_components like "%${this.searchSpellQuery.components}%" AND `;
     }
     if (this.searchSpellQuery.classes != null && typeof this.searchSpellQuery.classes !== 'undefined' && this.searchSpellQuery.classes != "") {
-      q += `spells_classes like "%${this.searchSpellQuery.classes}%" AND `;
+      q += `spell_classes like "%${this.searchSpellQuery.classes}%" AND `;
     }
     if (this.searchSpellQuery.text != null && typeof this.searchSpellQuery.text !== 'undefined' && this.searchSpellQuery.text != "") {
-      q += `spells_text like "%${this.searchSpellQuery.text}%" AND `;
+      q += `spell_text like "%${this.searchSpellQuery.text}%" AND `;
     }
     if (this.searchSpellQuery.sources != null && typeof this.searchSpellQuery.sources !== 'undefined' && this.searchSpellQuery.sources != "") {
-      q += `spells_sources like "%${this.searchSpellQuery.sources}%" AND `;
+      q += `spell_sources like "%${this.searchSpellQuery.sources}%" AND `;
     }
     if (this.searchSpellQuery.duration != null && typeof this.searchSpellQuery.duration !== 'undefined' && this.searchSpellQuery.duration != "") {
-      q += `spells_duration like "%${this.searchSpellQuery.duration}%" AND `;
+      q += `spell_duration like "%${this.searchSpellQuery.duration}%" AND `;
     }
     if (q.includes(" AND ")) {
       q = q.slice(0, -4);
@@ -234,7 +234,7 @@ const reciveSpells = (step, start) => {
   } else {
     q = q.slice(0, -6);
   }
-  q += ` ORDER BY spells_name ASC LIMIT ${step} OFFSET ${start}`;
+  q += ` ORDER BY spell_name ASC LIMIT ${step} OFFSET ${start}`;
   db.serialize(function () {
     db.all(q, function (err, rows) {
       if (err != null) {
@@ -389,7 +389,7 @@ const reciveMonsterCount = (q) => {
 
 const reciveSpell = (id) => {
   db.serialize(function () {
-    db.get("SELECT * FROM 'main'.'tab_spells' WHERE spells_id=?", [id], function (err, row) {
+    db.get("SELECT * FROM 'main'.'tab_spells' WHERE spell_id=?", [id], function (err, row) {
       if (err != null) {
         console.log("====>" + err);
       }
@@ -402,8 +402,8 @@ const reciveSpell = (id) => {
 const saveSpell = (spell) => {
   let data = [spell.name, spell.school, spell.level, spell.time, spell.duration, spell.range, spell.components, spell.text, spell.classes, spell.sources, spell.id];
   let sql = `UPDATE 'main'.'tab_spells'
-              SET spells_name = ?, spells_school = ?, spells_level = ?, spells_time = ?, spells_duration = ?, spells_range = ?, spells_components = ?, spells_text = ?, spells_classes = ?, spells_sources = ?
-              WHERE spells_id = ?`;
+              SET spell_name = ?, spell_school = ?, spell_level = ?, spell_time = ?, spell_duration = ?, spell_range = ?, spell_components = ?, spell_text = ?, spell_classes = ?, spell_sources = ?
+              WHERE spell_id = ?`;
   db.serialize(function () {
     db.run(sql, data, function (err) {
       if (err) {
@@ -433,7 +433,7 @@ const saveItem = (item) => {
 
 const deleteSpell = (spell) => {
   let data = [spell.id];
-  let sql = `DELETE FROM 'main'.'tab_spells' WHERE spells_id = ?`;
+  let sql = `DELETE FROM 'main'.'tab_spells' WHERE spell_id = ?`;
   db.serialize(function () {
     db.run(sql, data, function (err) {
       if (err) {
@@ -463,7 +463,7 @@ const deleteItem = (item) => {
 
 const saveNewSpell = (spell) => {
   let data = [spell.name, spell.school, spell.level, spell.time, spell.duration, spell.range, spell.components, spell.text, spell.classes, spell.sources];
-  let sql = `INSERT INTO 'main'.'tab_spells' (spells_name, spells_school, spells_level, spells_time, spells_duration, spells_range, spells_components, spells_text, spells_classes, spells_sources)
+  let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_school, spell_level, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources)
               VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   db.serialize(function () {
     db.run(sql, data, function (err) {
@@ -474,10 +474,49 @@ const saveNewSpell = (spell) => {
     });
   });
 }
-
 const saveNewSpells = (spells) => {
   spells.forEach(spell => {
-    this.saveNewSpell(spell);
+    let data = [spell.spell_name, spell.spell_school, spell.spell_level, spell.spell_time, spell.spell_duration, spell.spell_range, spell.spell_components, spell.spell_text, spell.spell_classes, spell.spell_sources];
+    let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_school, spell_level, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources)
+                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    db.serialize(function () {
+      db.run(sql, data, function (err) {
+        if (err) {
+          return console.error(err.message);
+        }
+        console.log(`====>Added ${spell.spell_name} successfull`);
+      });
+    });
+  });
+}
+
+const saveNewItem = (item) => {
+  let data = [item.name, item.description, item.pic, item.rarity, item.type, item.source];
+  let sql = `INSERT INTO 'main'.'tab_items' (item_name, item_description, item_pic, item_rarity, item_type, item_source)
+              VALUES  (?, ?, ?, ?, ?, ?)`;
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`====>Added ${item.name} successfull`);
+    });
+  });
+}
+const saveNewItems = (items) => {
+  console.log(items);
+  items.forEach(item => {
+    let data = [item.item_name, item.item_description, item.item_pic, item.item_rarity, item.item_type, item.item_source];
+    let sql = `INSERT INTO 'main'.'tab_items' (item_name, item_description, item_pic, item_rarity, item_type, item_source)
+              VALUES  (?, ?, ?, ?, ?, ?)`;
+    db.serialize(function () {
+      db.run(sql, data, function (err) {
+        if (err) {
+          return console.error(err.message);
+        }
+        console.log(`====>Added ${item.item_name} successfull`);
+      });
+    });
   });
 }
 
@@ -585,10 +624,18 @@ ipcMain.on('saveNewSpell', (event, arg) => {
   const { spell } = arg;
   saveNewSpell(spell);
 });
-
 ipcMain.on('saveNewSpells', (event, arg) => {
   const { spells } = arg;
   saveNewSpells(spells);
+});
+
+ipcMain.on('saveNewItem', (event, arg) => {
+  const { item } = arg;
+  saveNewItem(item);
+});
+ipcMain.on('saveNewItems', (event, arg) => {
+  const { items } = arg;
+  saveNewItems(items);
 });
 
 ipcMain.on('getChars', (event, arg) => {
@@ -604,7 +651,7 @@ ipcMain.on('openSpellView', (event, spell) => {
   if (dev) {
     spellWindow.webContents.openDevTools();
   }
-  spellWindow.setTitle("DnD Tome - " + spell.spells_name);
+  spellWindow.setTitle("DnD Tome - " + spell.spell_name);
   spellWindow.webContents.send('onViewSpell', spell);
 });
 

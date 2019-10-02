@@ -23,21 +23,21 @@ class SpellView extends Component {
     }
 
     receiveSpell = (event, result) => {
-        const text = result.spells_text.replace(/\\n/gm, "\r\n");
-        const sources = result.spells_sources.replace(/\\n/gm, "\r\n");
+        const text = result.spell_text.replace(/\\n/gm, "\r\n");
+        const sources = result.spell_sources.replace(/\\n/gm, "\r\n");
         this.setState({
             ...this.state,
-            name: result.spells_name,
-            school: result.spells_school,
-            level: result.spells_level,
-            time: result.spells_time,
-            range: result.spells_range,
-            duration: result.spells_duration,
-            components: result.spells_components,
+            name: result.spell_name,
+            school: result.spell_school,
+            level: result.spell_level,
+            time: result.spell_time,
+            range: result.spell_range,
+            duration: result.spell_duration,
+            components: result.spell_components,
             text: text,
-            classes: result.spells_classes,
+            classes: result.spell_classes,
             sources: sources,
-            id: result.spells_id
+            id: result.spell_id
         })
     }
 

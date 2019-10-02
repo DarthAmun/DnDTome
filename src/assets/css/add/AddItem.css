@@ -1,0 +1,98 @@
+#newItem {
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    overflow: hidden;
+    color: dimgrey;
+    padding: 10px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#newItem input {
+    height: 30px;
+    width: 200px;
+    border: none;
+    border-radius: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    float: right;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: white;
+    color: dimgrey;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
+
+#newItem button {
+    height: 32px;
+    width: 110px;
+    border: none;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 5px;
+    text-align: center;
+    float: left;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: #8000ff;
+    color: white;
+    cursor: pointer;
+}
+
+#newItem button:hover {
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    cursor: pointer;
+}
+
+#newItem textarea {
+    height: 300px;
+    width: 428px;
+    float: left;
+    resize: none;
+    border-radius: 3px;
+    border-bottom-right-radius: 0px;
+    border: none;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    margin-bottom: 5px;
+    background-color: white;
+    color: dimgrey;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
+
+#newItem .image {
+    float: left;
+    width: 320px;
+    height: 320px;
+    overflow: hidden;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
+
+#newItem label {
+    display: inline-block;
+    width: 320px;
+    text-align: right;
+    line-height: 30px;
+}
+
+#newItem .top {
+    float: left;
+    width: 320px;
+    margin-right: 10px;
+}
+
+#newItem::-webkit-scrollbar, #newItem textarea::-webkit-scrollbar {
+    width: 6px;
+    background-color: rgba(92, 102, 130, 1);
+    border-radius: 5px;
+}
+
+#newItem::-webkit-scrollbar-thumb, #newItem textarea::-webkit-scrollbar-thumb {
+    background-color: #8000ff;
+    border-radius: 5px;
+}

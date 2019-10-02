@@ -22,7 +22,7 @@ class AddView extends Component {
                             <div className="addIcon"><FontAwesomeIcon icon={faIdCard} /></div><br />Add new Charakter
                             </div>
                     </Link>
-                    <Link to="/">
+                    <Link to="/add-item">
                         <div className="add">
                             <div className="addIcon"><FontAwesomeIcon icon={faShieldAlt} /></div><br />Add new Item
                             </div>

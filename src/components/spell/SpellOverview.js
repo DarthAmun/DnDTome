@@ -48,7 +48,7 @@ class SpellOverview extends Component {
                     <SpellSearchBar />
                     <div id="spells">
                         {this.state.currentSpellList.spells.map((spell, index) => {
-                            return <Spell delay={index} spell={spell} key={spell.spells_id} onClick={() => this.viewSpell(spell)} />;
+                            return <Spell delay={index} spell={spell} key={spell.spell_id} onClick={() => this.viewSpell(spell)} />;
                         })}
                     </div>
                 </div>
