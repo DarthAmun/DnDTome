@@ -13,7 +13,8 @@ class AddItem extends Component {
         description: "",
         pic: "",
         rarity: "",
-        type: ""
+        type: "",
+        source: ""
     }
 
     handleNameChange = (e) => {
@@ -46,6 +47,12 @@ class AddItem extends Component {
             type: e.target.value
         });
     }
+    handleSourceChange = (e) => {
+        this.setState({
+            ...this.state,
+            source: e.target.value
+        });
+    }
 
     saveItem = (e) => {
         ipcRenderer.send('saveNewItem', { item: this.state });
@@ -65,14 +72,15 @@ class AddItem extends Component {
                     <div className="image" style={style}></div>
                     <textarea value={this.state.description} onChange={this.handleDescriptionChange}></textarea>
                     <div className="top">
-                        <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label>
                         <label>Pic:<input name="pic" type="text" value={this.state.pic} onChange={this.handlePicChange} /></label>
+                        <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label>
+                        <label>Sources:<input name="name" type="text" value={this.state.source} onChange={this.handleSourceChange} /></label>
                     </div>
                     <div className="top">
                         <label>Rarity:<input name="rarity" type="text" value={this.state.rarity} onChange={this.handleRarityChange} /></label>
                         <label>Type:<input name="type" type="text" value={this.state.type} onChange={this.handleTypeChange} /></label>
+                        <button onClick={this.saveItem}><FontAwesomeIcon icon={faSave} /> Save</button>
                     </div>
-                    <button onClick={this.saveItem}><FontAwesomeIcon icon={faSave} /> Save</button>
                 </div>
             </div>
         )

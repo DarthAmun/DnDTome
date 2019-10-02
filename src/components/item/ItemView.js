@@ -100,14 +100,15 @@ class ItemView extends Component {
             <div id="itemView">
                 <div className="top">
                     <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label>
+                    <label>Sources:<input name="sources" type="text" value={this.state.sources} onChange={this.handleSourcesChange} /></label>
                     <label>Pic:<input name="pic" type="text" value={this.state.pic} onChange={this.handlePicChange} /></label>
                 </div>
                 <div className="top">
                     <label>Rarity:<input name="rarity" type="text" value={this.state.rarity} onChange={this.handleRarityChange} /></label>
                     <label>Type:<input name="type" type="text" value={this.state.type} onChange={this.handleTypeChange} /></label>
+                    <button className="delete" onClick={this.deleteItem}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                    <button onClick={this.saveItem}><FontAwesomeIcon icon={faSave} /> Save</button>
                 </div>
-                <button className="delete" onClick={this.deleteItem}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
-                <button onClick={this.saveItem}><FontAwesomeIcon icon={faSave} /> Save</button>
                 <div className="image" style={style}></div>
                 <textarea value={this.state.description} onChange={this.handleDescriptionChange}></textarea>
             </div>

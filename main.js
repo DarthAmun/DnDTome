@@ -116,7 +116,7 @@ function createWindow() {
   itemWindow = new BrowserWindow({
     parent: mainWindow,
     width: 800,
-    height: 445,
+    height: 480,
     show: false,
     resizable: false,
     frame: true,

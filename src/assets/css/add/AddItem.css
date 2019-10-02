@@ -1,7 +1,13 @@
+#overview {
+    height: 100%;
+    width: 100%;
+}
+
 #newItem {
     height: calc(100% - 20px);
     width: calc(100% - 20px);
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     color: dimgrey;
     padding: 10px;
     font-family: 'Quicksand', sans-serif;
@@ -33,7 +39,7 @@
     padding-right: 10px;
     margin-bottom: 5px;
     text-align: center;
-    float: left;
+    float: right;
     font-family: inherit;
     font-size: 14px;
     background-color: #8000ff;
