@@ -11,6 +11,7 @@ class Options extends Component {
   state = {
     spells: [],
     items: [],
+    monsters: [],
     appPath: app.getAppPath() + '\\export'
   }
 
@@ -28,16 +29,26 @@ class Options extends Component {
     })
   }
 
+  receiveAllMonsters = (evt, result) => {
+    this.setState({
+      ...this.state,
+      monsters: result
+    })
+  }
+
   componentDidMount() {
     ipcRenderer.send('getAllSpells');
     ipcRenderer.send('getAllItems');
+    ipcRenderer.send('getAllMonsters');
     ipcRenderer.on("getAllSpellsResult", this.receiveAllSpells);
     ipcRenderer.on("getAllItemsResult", this.receiveAllItems);
+    ipcRenderer.on("getAllMonstersResult", this.receiveAllMonsters);
 
   }
   componentWillUnmount() {
     ipcRenderer.removeListener("getAllSpellsResult", this.receiveAllSpells);
     ipcRenderer.removeListener("getAllItemsResult", this.receiveAllItems);
+    ipcRenderer.removeListener("getAllMonstersResult", this.receiveAllMonsters)
   }
 
   exportSpells = (e) => {
@@ -78,6 +89,25 @@ class Options extends Component {
     });
   }
 
+  exportMonsters = (e) => {
+    let content = JSON.stringify(this.state.monsters);
+
+    let fileName = this.state.appPath;
+    if (!fs.existsSync(fileName)) {
+      fs.mkdirSync(fileName);
+      console.log("Export folder created!");
+    }
+    fileName = fileName + '\\monsters.json';
+    console.log(fileName);
+    // fileName is a string that contains the path and filename created in the save file dialog.  
+    fs.writeFile(fileName, content, (err) => {
+      if (err) {
+        alert("An error ocurred creating the file " + err.message)
+      }
+      alert("The file has been succesfully saved");
+    });
+  }
+
   importSpells = (e) => {
     dialog.showOpenDialog((fileNames) => {
       // fileNames is an array that contains all the selected
@@ -93,7 +123,6 @@ class Options extends Component {
         }
 
         // Change how to handle the file content
-        console.log("The file content is : " + data);
         let spells = JSON.parse(data);
         ipcRenderer.send('saveNewSpells', { spells });
       });
@@ -115,9 +144,29 @@ class Options extends Component {
         }
 
         // Change how to handle the file content
-        console.log("The file content is : " + data);
-        let spells = JSON.parse(data);
-        ipcRenderer.send('saveNewItems', { spells }); // fehlt noch
+        let items = JSON.parse(data);
+        ipcRenderer.send('saveNewItems', { items }); // fehlt noch
+      });
+    });
+  }
+
+  importMonsters = (e) => {
+    dialog.showOpenDialog((fileNames) => {
+      // fileNames is an array that contains all the selected
+      if (fileNames === undefined) {
+        console.log("No file selected");
+        return;
+      }
+
+      fs.readFile(fileNames[0], 'utf-8', (err, data) => {
+        if (err) {
+          alert("An error ocurred reading the file :" + err.message);
+          return;
+        }
+
+        // Change how to handle the file content
+        let monsters = JSON.parse(data);
+        ipcRenderer.send('saveNewMonsters', { monsters }); // fehlt noch
       });
     });
   }
@@ -132,14 +181,14 @@ class Options extends Component {
               <span>Path: {this.state.appPath}</span><br />
               <button onClick={this.exportSpells}>Export all Spells </button><br />
               <button onClick={this.exportItems}>Export all Items </button><br />
-              <button onClick={this.exportItems}>Export all Monsters </button><br />
+              <button onClick={this.exportMonsters}>Export all Monsters </button><br />
               <button onClick={this.exportItems}>Export all Charakters </button>
             </div>
             <div className="optionSection">
               <h3>Data Import</h3>
               <button onClick={this.importSpells}>Import Spells </button><br />
               <button onClick={this.importItems}>Import Items </button><br />
-              <button onClick={this.importItems}>Import Monsters </button><br />
+              <button onClick={this.importMonsters}>Import Monsters </button><br />
               <button onClick={this.importItems}>Import Charakters </button>
             </div>
             <div className="optionSection">

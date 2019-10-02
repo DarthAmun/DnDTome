@@ -176,6 +176,18 @@ const reciveAllItems = () => {
     });
   });
 }
+const reciveAllMonsters = () => {
+  let q = "SELECT * FROM 'main'.'tab_monsters'";
+  db.serialize(function () {
+    db.all(q, function (err, rows) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      mainWindow.webContents.send('getAllMonstersResult', rows);
+      console.log("====>" + `getAllMonstersResult successfull`)
+    });
+  });
+}
 
 let spellStep;
 let spellStart;
@@ -465,17 +477,7 @@ const saveNewSpell = (spell) => {
 
 const saveNewSpells = (spells) => {
   spells.forEach(spell => {
-    let data = [spell.spells_name, spell.spells_school, spell.spells_level, spell.spells_time, spell.spells_duration, spell.spells_range, spell.spells_components, spell.spells_text, spell.spells_classes, spell.spells_sources];
-    let sql = `INSERT INTO 'main'.'tab_spells' (spells_name, spells_school, spells_level, spells_time, spells_duration, spells_range, spells_components, spells_text, spells_classes, spells_sources)
-              VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    db.serialize(function () {
-      db.run(sql, data, function (err) {
-        if (err) {
-          return console.error(err.message);
-        }
-        console.log(`====>Added ${spell.spells_name} successfull`);
-      });
-    });
+    this.saveNewSpell(spell);
   });
 }
 
