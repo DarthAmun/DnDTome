@@ -1,6 +1,6 @@
 .monster {
     width: 200px;
-    height: 240px;
+    height: 260px;
     float: left;
     color: darkgrey;
     text-align: center;
@@ -22,6 +22,23 @@
     cursor: pointer;
 }
 
+.monsterIcon img {
+    max-width: 90px;
+    max-height: 90px;
+}
+
+.monsterIcon {
+    margin-bottom: 5px;
+    margin-left: 55px;
+    margin-right: 55px;
+    width: 90px;
+    height: 90px;
+    border-radius: 90px;
+    border: 2px solid #8000ff;
+    overflow: hidden;
+    float: left;
+}
+
 .icon {
     width: 18px;
     height: 18px;
@@ -40,45 +57,13 @@
     padding: 10px;
 }
 
-.smallSpellAttr {
+.smallMonsterAttr {
     height: auto;
     width: calc(100% - 20px);
     float: left;
     line-height: 10px;
     padding: 10px;
     font-size: 12px;
-}
-
-.Necromancy {
-    color: #bef28e;
-}
-
-.Conjuration {
-    color: #fce97a;
-}
-
-.Evocation {
-    color: #db5740;
-}
-
-.Divination {
-    color: #9ebed2;
-}
-
-.Enchantment {
-    color: #ce90ca;
-}
-
-.Transmutation {
-    color: #e19c60;
-}
-
-.Abjuration {
-    color: #278ae4;
-}
-
-.Illusion {
-    color: #8b42f9;
 }
 
 .monsterLevel {
@@ -93,9 +78,12 @@
     margin: 5px;
 }
 
-.monsterSchool {
+.monsterType {
     font-size: 12px;
     line-height: 30px;
+    max-width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .monsterName {

@@ -48,7 +48,7 @@ class MonsterOverview extends Component {
                     <MonsterSearchBar />
                     <div id="monsters">
                         {this.state.currentMonsterList.monsters.map((monster, index) => {
-                            return <Monster delay={index} monster={monster} key={monster.monsters_id} onClick={() => this.viewMonster(monster)} />;
+                            return <Monster delay={index} monster={monster} key={monster.monster_id} onClick={() => this.viewMonster(monster)} />;
                         })}
                     </div>
                 </div>

@@ -3,6 +3,7 @@
     height: 260px;
     float: left;
     color: darkgrey;
+    text-align: center;
     margin: 5px;
     border-radius: 3px;
     overflow: hidden;
@@ -22,7 +23,8 @@
 }
 
 .itemIcon img {
-    width: 120px;
+    max-width: 120px;
+    max-height: 120px;
 }
 
 .itemIcon {
@@ -32,7 +34,7 @@
     width: 120px;
     height: 120px;
     border-radius: 200px;
-    border: 2px solid deepskyblue;
+    border: 2px solid #8000ff;
     overflow: hidden;
     float: left;
 }

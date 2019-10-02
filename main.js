@@ -275,6 +275,37 @@ const reciveItems = (step, start) => {
   return q;
 }
 
+let monsterStep;
+let monsterStart;
+const reciveMonsters = (step, start) => {
+  monsterStep = step;
+  monsterStart = start;
+  let q = "SELECT * FROM 'main'.'tab_monsters' WHERE ";
+  if (this.searchMonsterQuery != null) {
+    if (this.searchMonsterQuery.name != null && typeof this.searchMonsterQuery.name !== 'undefined' && this.searchMonsterQuery.name != "") {
+      q += `monster_name like "%${this.searchMonsterQuery.name}%" AND `;
+    }
+    if (q.includes(" AND ")) {
+      q = q.slice(0, -4);
+    } else {
+      q = q.slice(0, -6);
+    }
+  } else {
+    q = q.slice(0, -6);
+  }
+  q += ` ORDER BY monster_name ASC LIMIT ${step} OFFSET ${start}`;
+  db.serialize(function () {
+    db.all(q, function (err, rows) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      mainWindow.webContents.send('getSearchMonstersResult', rows);
+      console.log("====>" + `getSearchMonstersResult from ${start} to ${(start + step)} successfull`)
+    });
+  });
+  return q;
+}
+
 const reciveSpellCount = (q) => {
   db.serialize(function () {
     db.all(q, function (err, rows) {
@@ -295,6 +326,18 @@ const reciveItemCount = (q) => {
       }
       mainWindow.webContents.send('getItemCountResult', rows);
       console.log("====>" + `getItemCount successfull`)
+    });
+  });
+}
+
+const reciveMonsterCount = (q) => {
+  db.serialize(function () {
+    db.all(q, function (err, rows) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      mainWindow.webContents.send('getMonsterCountResult', rows);
+      console.log("====>" + `getMonsterCount successfull`)
     });
   });
 }
@@ -423,6 +466,10 @@ ipcMain.on('getAllItems', (event) => {
   reciveAllItems();
 });
 
+ipcMain.on('getAllMonsters', (event) => {
+  reciveAllMonsters();
+});
+
 ipcMain.on('getSearchSpells', (event, arg) => {
   const { step, start } = arg;
   this.searchSpellStep = step;
@@ -435,12 +482,22 @@ ipcMain.on('getSearchItems', (event, arg) => {
   reciveItems(step, start);
 });
 
+ipcMain.on('getSearchMonsters', (event, arg) => {
+  const { step, start } = arg;
+  this.searchMonsterStep = step;
+  reciveMonsters(step, start);
+});
+
 ipcMain.on('getSpellCount', (event, arg) => {
   reciveSpellCount(`SELECT count(*) AS count FROM 'main'.'tab_spells'`);
 });
 
 ipcMain.on('getItemCount', (event, arg) => {
   reciveItemCount(`SELECT count(*) AS count FROM 'main'.'tab_items'`);
+});
+
+ipcMain.on('getMonsterCount', (event, arg) => {
+  reciveMonsterCount(`SELECT count(*) AS count FROM 'main'.'tab_monsters'`);
 });
 
 ipcMain.on('sendSpellSearchQuery', (event, arg) => {
@@ -455,6 +512,13 @@ ipcMain.on('sendItemSearchQuery', (event, arg) => {
   this.searchItemQuery = query;
   const q = reciveItems(this.searchItemStep, 0);
   reciveItemCount(q.replace("SELECT * FROM 'main'.'tab_items'", "SELECT count(*) AS count FROM 'main'.'tab_items'"));
+});
+
+ipcMain.on('sendMonsterSearchQuery', (event, arg) => {
+  const { query } = arg;
+  this.searchMonsterQuery = query;
+  const q = reciveMonsters(this.searchMonsterStep, 0);
+  reciveMonsterCount(q.replace("SELECT * FROM 'main'.'tab_monsters'", "SELECT count(*) AS count FROM 'main'.'tab_monsters'"));
 });
 
 ipcMain.on('getSpell', (event, arg) => {
