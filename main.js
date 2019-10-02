@@ -399,6 +399,18 @@ const reciveSpell = (id) => {
   });
 }
 
+const reciveChar = (id) => {
+  db.serialize(function () {
+    db.get("SELECT * FROM 'main'.'tab_characters' WHERE char_id=?", [id], function (err, row) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      mainWindow.webContents.send('getCharResult', row);
+      console.log("====>" + `getCharResult successfull`)
+    });
+  });
+}
+
 const saveSpell = (spell) => {
   let data = [spell.name, spell.school, spell.level, spell.time, spell.duration, spell.range, spell.components, spell.text, spell.classes, spell.sources, spell.id];
   let sql = `UPDATE 'main'.'tab_spells'
@@ -522,7 +534,7 @@ const saveNewItems = (items) => {
 
 const reciveChars = () => {
   db.serialize(function () {
-    db.all("SELECT * FROM 'main'.'tab_characters' ORDER BY chars_player ASC", function (err, rows) {
+    db.all("SELECT * FROM 'main'.'tab_characters' ORDER BY char_player ASC", function (err, rows) {
       if (err != null) {
         console.log("====>" + err);
       }
@@ -640,6 +652,11 @@ ipcMain.on('saveNewItems', (event, arg) => {
 
 ipcMain.on('getChars', (event, arg) => {
   reciveChars();
+});
+
+ipcMain.on('getChar', (event, arg) => {
+  const { id } = arg;
+  reciveChar(id);
 });
 
 ipcMain.on('closeMainWindow', (event) => {

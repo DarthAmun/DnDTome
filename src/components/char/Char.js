@@ -8,11 +8,11 @@ class Char extends Component {
 
     render() {
         return (
-            <Link to={`/char/${this.props.char.chars_id}`}>
+            <Link to={`/char/${this.props.char.char_id}`}>
                 <div className="char" style={{ animationDelay: `${this.props.delay * 50}ms` }}>
                     <div className="addIcon"><FontAwesomeIcon icon={faUserCircle} /></div>
-                    <div className="charComp smallCharAttr">{this.props.char.chars_name}</div>
-                    <div className="charComp smallCharAttr">{this.props.char.chars_player}</div>
+                    <div className="charComp smallCharAttr">{this.props.char.char_name}</div>
+                    <div className="charComp smallCharAttr">{this.props.char.char_player}</div>
                 </div>
             </Link>
         )

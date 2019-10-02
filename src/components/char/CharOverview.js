@@ -11,7 +11,6 @@ class SpellOverview extends Component {
     }
 
     receiveChars = (evt, result) => {
-        console.log(result);
         this.setState({
             currentCharList: {
                 chars: result
@@ -32,7 +31,7 @@ class SpellOverview extends Component {
             <div id="overview">
                 <div id="chars">
                     {this.state.currentCharList.chars.map((char, index) => {
-                        return <Char delay={index} char={char} key={char.chars_id} />;
+                        return <Char delay={index} char={char} key={char.char_id} />;
                     })}
                 </div>
             </div>
