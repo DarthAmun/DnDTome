@@ -20,7 +20,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    align-items: flex-start;
+    align-items: center;
     align-content: flex-start;
 }
 
@@ -32,7 +32,6 @@ body {
     padding-left: 10px;
     padding-right: 10px;
     margin-left: 5px;
-    margin-bottom: 5px;
     float: right;
     font-family: inherit;
     font-size: 14px;
@@ -87,40 +86,66 @@ body {
 
 #char .image {
     float: left;
-    width: 150px;
-    height: 150px;
+    width: 134px;
+    height: 134px;
     border-radius: 100px;
     border: 3px solid #8000ff;
     overflow: hidden;
-    margin-right: 5px;
-    margin-bottom: 5px;
+    margin-right: 10px;
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
     background-color: white;
+    margin: 5px;
 }
 
 #char label {
     display: inline-block;
-    width: 320px;
+    width: auto;
     text-align: right;
     line-height: 30px;
+    float: right;
+    margin-bottom: 5px;
 }
 
-#char .labelGroup {
-    width: 320px;
-}
-
-#char .smallLabelGroup, #char .smallLabelGroup label {
-    width: 250px;
+#char .labelGroup, #char .smallLabelGroup {
+    width: auto;
+    margin-right: 10px;
+    margin: 5px;
 }
 
 #char .smallLabelGroup input {
     width: 100px;
 }
 
-#char .top {
+#char .abilityScores {
+    height: 100px;
+    width: 430px;
+    margin: 5px;
+}
+#char .abilityScores .score {
+    width: 210px;
     float: left;
-    width: 320px;
-    margin-right: 10px;
+    height: 35px;
+    line-height: 30px;
+}
+#char .abilityScores .score input {
+    width: 40px;
+    margin-right: 5px;
+}
+#char .abilityScores .score label {
+    float: left;
+    width: 180px;
+}
+
+#char .abilityScores .score .abilityBonus {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    float: right;
+    text-align: center;
+    border-top-right-radius: 3px;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    border-radius: 30px;
+    background-color: white;
 }
 
 #char::-webkit-scrollbar, #char textarea::-webkit-scrollbar {
