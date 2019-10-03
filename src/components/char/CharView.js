@@ -8,6 +8,7 @@ const ipcRenderer = electron.ipcRenderer;
 
 class CharView extends Component {
     state = {
+        lastSave: new Date().getSeconds(),
         id: "",
         name: "",
         player: "",
@@ -80,6 +81,17 @@ class CharView extends Component {
     componentWillUnmount() {
         ipcRenderer.removeListener("getCharResult", this.receiveChar)
         ipcRenderer.removeListener("getCharSpellsResult", this.receiveSpells);
+        ipcRenderer.send('saveChar', { char: this.state });
+    }
+    componentDidUpdate(prevProps, prevState) {
+        let sec = new Date().getSeconds();
+        if (prevState !== this.state && ((this.state.lastSave + 3) <= sec)) {
+            this.setState({
+                ...this.state,
+                lastSave: sec
+            });
+            ipcRenderer.send('saveChar', { char: this.state });
+        }
     }
 
     formatScore = (score) => {

@@ -455,6 +455,24 @@ const saveItem = (item) => {
   });
 }
 
+const saveChar = (char) => {
+  let data = [char.name, char.player, char.prof, char.exp, char.pic, char.class, char.race, char.background, char.ac, char.hp, char.currentHp, 
+    char.init, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.actions, char.features, char.profsLangs, char.notes, char.id];
+  let sql = `UPDATE 'main'.'tab_characters'
+              SET char_name = ?, char_player = ?, char_prof = ?, char_exp = ?, char_pic = ?, char_class = ?, char_race = ?, char_background = ?, 
+              char_ac = ?, char_hp = ?, char_hp_current = ?, char_init = ?, char_str = ?, char_dex = ?, char_con = ?, char_int = ?, char_wis = ?, 
+              char_cha = ?, char_actions = ?, char_features = ?, char_profs_langs = ?, char_notes = ?
+              WHERE char_id = ?`;
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`${char.name} updated successfull`);
+    });
+  });
+}
+
 const deleteSpell = (spell) => {
   let data = [spell.id];
   let sql = `DELETE FROM 'main'.'tab_spells' WHERE spell_id = ?`;
@@ -632,6 +650,11 @@ ipcMain.on('saveSpell', (event, arg) => {
 ipcMain.on('saveItem', (event, arg) => {
   const { item } = arg;
   saveItem(item);
+});
+
+ipcMain.on('saveChar', (event, arg) => {
+  const { char } = arg;
+  saveChar(char);
 });
 
 ipcMain.on('deleteSpell', (event, arg) => {
