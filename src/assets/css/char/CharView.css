@@ -1,13 +1,6 @@
-body {
+#overview {
     height: 100%;
-    margin: 0px;
-    background-color: rgb(248, 248, 248);
-    overflow: hidden;
-}
-
-@font-face {
-    font-family: 'Quicksand';
-    src: url('../../font/Quicksand-Medium.ttf') format('truetype');
+    width: 100%;
 }
 
 #char {
@@ -15,11 +8,13 @@ body {
     width: calc(100% - 20px);
     overflow: hidden;
     color: dimgrey;
-    padding: 10px;
-    font-family: 'Quicksand', sans-serif;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    overflow-y: auto;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
     align-content: flex-start;
 }
@@ -68,8 +63,8 @@ body {
 }
 
 #char textarea {
-    height: 300px;
-    width: 428px;
+    height: 240px;
+    width: 280px;
     float: left;
     resize: none;
     border-radius: 3px;
@@ -78,7 +73,7 @@ body {
     padding: 10px;
     font-family: inherit;
     font-size: 14px;
-    margin-bottom: 5px;
+    margin: 5px;
     background-color: white;
     color: dimgrey;
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
@@ -148,13 +143,49 @@ body {
     background-color: white;
 }
 
-#char::-webkit-scrollbar, #char textarea::-webkit-scrollbar {
+#char .charSpells {
+    height: 260px;
+    width: auto;
+    min-width: 300px;
+    max-width: 610px;
+    float: left;
+    border-radius: 3px;
+    border: none;
+    margin: 5px;
+    background-color: white;
+    color: dimgrey;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    overflow-y: auto;
+}
+
+#char .charSpells tr {
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    border-bottom: 1px dashed lightgray;
+}
+
+#char .charSpells .charSpell:hover {
+    font-weight: bold;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
+
+#char .charSpells td, #char .charSpells th {
+    padding: 5px;
+    text-align: left;
+}
+
+#char table {
+    border-collapse: collapse;
+}
+
+#char::-webkit-scrollbar, #char textarea::-webkit-scrollbar, #char .charSpells::-webkit-scrollbar {
     width: 6px;
     background-color: rgba(92, 102, 130, 1);
     border-radius: 5px;
 }
 
-#char::-webkit-scrollbar-thumb, #char textarea::-webkit-scrollbar-thumb {
+#char::-webkit-scrollbar-thumb, #char textarea::-webkit-scrollbar-thumb, #char .charSpells::-webkit-scrollbar-thumb {
     background-color: #8000ff;
     border-radius: 5px;
 }

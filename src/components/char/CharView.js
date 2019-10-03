@@ -11,7 +11,7 @@ class CharView extends Component {
         id: "",
         name: "",
         player: "",
-        level: "",
+        prof: "",
         exp: "",
         pic: "",
         class: "",
@@ -26,7 +26,12 @@ class CharView extends Component {
         con: "",
         int: "",
         wis: "",
-        cha: ""
+        cha: "",
+        actions: "",
+        features: "",
+        profsLangs: "",
+        notes: "",
+        spells: []
     }
 
     receiveChar = (event, result) => {
@@ -37,7 +42,7 @@ class CharView extends Component {
             id: result.char_id,
             player: result.char_player,
             pic: result.char_pic,
-            level: result.char_level,
+            prof: result.char_prof,
             exp: result.char_exp,
             class: result.char_class,
             race: result.char_race,
@@ -51,16 +56,124 @@ class CharView extends Component {
             con: result.char_con,
             int: result.char_int,
             wis: result.char_wis,
-            cha: result.char_cha
+            cha: result.char_cha,
+            actions: result.char_actions,
+            features: result.char_features,
+            profsLangs: result.char_profs_langs,
+            notes: result.char_notes
+        })
+    }
+
+    receiveSpells = (event, result) => {
+        this.setState({
+            ...this.state,
+            spells: result
         })
     }
 
     componentDidMount() {
         ipcRenderer.send('getChar', { id: this.props.match.params.id });
         ipcRenderer.on("getCharResult", this.receiveChar);
+        ipcRenderer.send('getCharSpells', { id: this.props.match.params.id });
+        ipcRenderer.on("getCharSpellsResult", this.receiveSpells);
     }
     componentWillUnmount() {
         ipcRenderer.removeListener("getCharResult", this.receiveChar)
+        ipcRenderer.removeListener("getCharSpellsResult", this.receiveSpells);
+    }
+
+    formatScore = (score) => {
+        let mod = Math.floor((score - 10) / 2);
+        if (mod >= 0) {
+            return "+" + mod;
+        } else {
+            return mod;
+        }
+    }
+
+    viewSpell = (spell) => {
+        ipcRenderer.send('openSpellView', spell);
+    }
+
+    render() {
+
+        const style = {
+            backgroundImage: `url(${this.state.pic})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat'
+        };
+
+        return (
+            <div id="overview">
+                <div id="char">
+                    <div className="image" style={style}></div>
+                    <div className="labelGroup">
+                        <label>Pic:<input name="pic" type="text" value={this.state.pic} onChange={this.handlePicChange} /></label><br />
+                        <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label><br />
+                        <label>Player:<input name="player" type="text" value={this.state.player} onChange={this.handlePlayerChange} /></label><br />
+                        <label>Class:<input name="class" type="text" value={this.state.class} onChange={this.handleClassChange} /></label>
+                    </div>
+                    <div className="smallLabelGroup">
+                        <label>Exp:<input name="exp" type="number" value={this.state.exp} onChange={this.handleExpChange} /></label><br />
+                        <label>Race:<input name="race" type="text" value={this.state.race} onChange={this.handleRaceChange} /></label><br />
+                        <label>Background:<input name="background" type="text" value={this.state.background} onChange={this.handleBackgroundChange} /></label><br />
+                        <label>Proficiency:<input name="level" type="number" value={this.state.prof} onChange={this.handleProfChange} /></label>
+                    </div>
+                    <div className="smallLabelGroup">
+                        <label>HP:<input name="hp" type="number" value={this.state.hp} onChange={this.handleHPChange} /></label><br />
+                        <label>Current Hp:<input name="currentHP" type="number" value={this.state.currentHp} onChange={this.handleCurrentHPChange} /></label><br />
+                        <label>Armor Class:<input name="ac" type="number" value={this.state.ac} onChange={this.handleACChange} /></label><br />
+                        <label>Initiative:<input name="initiativ" type="number" value={this.state.init} onChange={this.handleInitChange} /></label>
+                    </div>
+                    <div className="abilityScores">
+                        <div className="score">
+                            <label>Strength: <input type="number" value={this.state.str} onChange={this.handleStrChange}></input></label>
+                            <div className="abilityBonus">{this.formatScore(this.state.str)}</div>
+                        </div>
+                        <div className="score">
+                            <label>Intelligence: <input type="number" value={this.state.int} onChange={this.handleIntChange}></input></label>
+                            <div className="abilityBonus">{this.formatScore(this.state.int)}</div>
+                        </div>
+                        <div className="score">
+                            <label>Dexterity: <input type="number" value={this.state.dex} onChange={this.handleDexChange}></input></label>
+                            <div className="abilityBonus">{this.formatScore(this.state.dex)}</div>
+                        </div>
+                        <div className="score">
+                            <label>Wisdom: <input type="number" value={this.state.wis} onChange={this.handleWisChange}></input></label>
+                            <div className="abilityBonus">{this.formatScore(this.state.wis)}</div>
+                        </div>
+                        <div className="score">
+                            <label>Constitution: <input type="number" value={this.state.con} onChange={this.handleConChange}></input></label>
+                            <div className="abilityBonus">{this.formatScore(this.state.con)}</div>
+                        </div>
+                        <div className="score">
+                            <label>Charisma: <input type="number" value={this.state.cha} onChange={this.handleChaChange}></input></label>
+                            <div className="abilityBonus">{this.formatScore(this.state.cha)}</div>
+                        </div>
+                    </div>
+                    <textarea value={this.state.actions} onChange={this.handleActionsChange} placeholder="Actions..."></textarea>
+                    <textarea value={this.state.features} onChange={this.handleFeaturesChange} placeholder="Features..."></textarea>
+                    <textarea value={this.state.profsLangs} onChange={this.handleProfsLangsChange} placeholder="Proficiencies & Languages..."></textarea>
+                    <textarea value={this.state.notes} onChange={this.handleNotesChange} placeholder="Notes..."></textarea>
+                    <div className="charSpells">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>Lvl</th>
+                                    <th>Name</th>
+                                    <th>Casting Time</th>
+                                    <th>Range</th>
+                                </tr>
+                                {this.state.spells.map((spell, index) => {
+                                    return <tr className="charSpell" key={spell.spell_id} onClick={() => this.viewSpell(spell)} style={{ cursor: 'pointer' }}><td>{spell.spell_level}</td><td>{spell.spell_name}</td><td>{spell.spell_time}</td><td>{spell.spell_range}</td></tr>;
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     handleNameChange = (e) => {
@@ -75,10 +188,10 @@ class CharView extends Component {
             pic: e.target.value
         });
     }
-    handleLevelChange = (e) => {
+    handleProfChange = (e) => {
         this.setState({
             ...this.state,
-            level: e.target.value
+            prof: e.target.value
         });
     }
     handleExpChange = (e) => {
@@ -171,76 +284,29 @@ class CharView extends Component {
             cha: e.target.value
         });
     }
-
-    formatScore = (score) => {
-        let mod = Math.floor((score - 10) / 2);
-        if (mod >= 0) {
-            return "+" + mod;
-        } else {
-            return mod;
-        }
+    handleActionsChange = (e) => {
+        this.setState({
+            ...this.state,
+            actions: e.target.value
+        });
     }
-
-    render() {
-
-        const style = {
-            backgroundImage: `url(${this.state.pic})`,
-            backgroundPosition: 'center',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat'
-        };
-
-        return (
-            <div id="overview">
-                <div id="char">
-                    <div className="image" style={style}></div>
-                    <div className="labelGroup">
-                        <label>Pic:<input name="pic" type="text" value={this.state.pic} onChange={this.handlePicChange} /></label><br />
-                        <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label><br />
-                        <label>Player:<input name="player" type="text" value={this.state.player} onChange={this.handlePlayerChange} /></label><br />
-                        <label>Class:<input name="class" type="text" value={this.state.class} onChange={this.handleClassChange} /></label>
-                    </div>
-                    <div className="smallLabelGroup">
-                        <label>Level:<input name="level" type="number" value={this.state.level} onChange={this.handleLevelChange} /></label><br />
-                        <label>Exp:<input name="exp" type="number" value={this.state.exp} onChange={this.handleExpChange} /></label><br />
-                        <label>Race:<input name="race" type="text" value={this.state.race} onChange={this.handleRaceChange} /></label><br />
-                        <label>Background:<input name="background" type="text" value={this.state.background} onChange={this.handleBackgroundChange} /></label>
-                    </div>
-                    <div className="smallLabelGroup">
-                        <label>HP:<input name="hp" type="number" value={this.state.hp} onChange={this.handleHPChange} /></label><br />
-                        <label>Current Hp:<input name="currentHP" type="number" value={this.state.currentHp} onChange={this.handleCurrentHPChange} /></label><br />
-                        <label>Armor Class:<input name="ac" type="number" value={this.state.ac} onChange={this.handleACChange} /></label><br />
-                        <label>Initiative:<input name="initiativ" type="number" value={this.state.init} onChange={this.handleInitChange} /></label>
-                    </div>
-                    <div className="abilityScores">
-                        <div className="score">
-                            <label>Strength: <input type="number" value={this.state.str} onChange={this.handleStrChange}></input></label>
-                            <div className="abilityBonus">{this.formatScore(this.state.str)}</div>
-                        </div>
-                        <div className="score">
-                            <label>Intelligence: <input type="number" value={this.state.int} onChange={this.handleIntChange}></input></label>
-                            <div className="abilityBonus">{this.formatScore(this.state.int)}</div>
-                        </div>
-                        <div className="score">
-                            <label>Dexterity: <input type="number" value={this.state.dex} onChange={this.handleDexChange}></input></label>
-                            <div className="abilityBonus">{this.formatScore(this.state.dex)}</div>
-                        </div>
-                        <div className="score">
-                            <label>Wisdom: <input type="number" value={this.state.wis} onChange={this.handleWisChange}></input></label>
-                            <div className="abilityBonus">{this.formatScore(this.state.wis)}</div>
-                        </div>
-                        <div className="score">
-                            <label>Constitution: <input type="number" value={this.state.con} onChange={this.handleConChange}></input></label>
-                            <div className="abilityBonus">{this.formatScore(this.state.con)}</div>
-                        </div>
-                        <div className="score">
-                            <label>Charisma: <input type="number" value={this.state.cha} onChange={this.handleChaChange}></input></label>
-                            <div className="abilityBonus">{this.formatScore(this.state.cha)}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
+    handleFeaturesChange = (e) => {
+        this.setState({
+            ...this.state,
+            features: e.target.value
+        });
+    }
+    handleProfsLangsChange = (e) => {
+        this.setState({
+            ...this.state,
+            profsLangs: e.target.value
+        });
+    }
+    handleNotesChange = (e) => {
+        this.setState({
+            ...this.state,
+            notes: e.target.value
+        });
     }
 }
 

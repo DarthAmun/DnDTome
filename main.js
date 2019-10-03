@@ -411,6 +411,18 @@ const reciveChar = (id) => {
   });
 }
 
+const reciveCharSpells = (id) => {
+  db.serialize(function () {
+    db.all("SELECT * FROM 'main'.'tab_characters_spells' AS a LEFT JOIN 'main'.'tab_spells' AS b ON a.spell_id = b.spell_id WHERE char_id=? ORDER BY b.spell_level, b.spell_name", [id], function (err, rows) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      mainWindow.webContents.send('getCharSpellsResult', rows);
+      console.log("====>" + `getCharSpellsResult successfull`)
+    });
+  });
+}
+
 const saveSpell = (spell) => {
   let data = [spell.name, spell.school, spell.level, spell.time, spell.duration, spell.range, spell.components, spell.text, spell.classes, spell.sources, spell.id];
   let sql = `UPDATE 'main'.'tab_spells'
@@ -657,6 +669,11 @@ ipcMain.on('getChars', (event, arg) => {
 ipcMain.on('getChar', (event, arg) => {
   const { id } = arg;
   reciveChar(id);
+});
+
+ipcMain.on('getCharSpells', (event, arg) => {
+  const { id } = arg;
+  reciveCharSpells(id);
 });
 
 ipcMain.on('closeMainWindow', (event) => {
