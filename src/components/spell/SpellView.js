@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../../assets/css/spell/SpellView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -114,6 +114,10 @@ class SpellView extends Component {
         ipcRenderer.send('saveSpell', { spell: this.state });
     }
 
+    addSpellToChar = (e) => {
+        
+    }
+
     deleteSpell = (e) => {
         const options = {
             type: 'question',
@@ -147,6 +151,7 @@ class SpellView extends Component {
                 <textarea value={this.state.text} onChange={this.handleChange}></textarea>
                 <button className="delete" onClick={this.deleteSpell}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                 <button onClick={this.saveSpell}><FontAwesomeIcon icon={faSave} /> Save</button>
+                <button onClick={this.addSpellToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
             </div>
         )
     }
