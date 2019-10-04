@@ -12,6 +12,8 @@ let spellWindow;
 let spellPath;
 let itemWindow;
 let itemPath;
+let monsterWindow;
+let monsterPath;
 // Keep a reference for dev mode
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
@@ -55,6 +57,12 @@ function createWindow() {
       pathname: 'item.html',
       slashes: true
     });
+    monsterPath = url.format({
+      protocol: 'http:',
+      host: 'localhost:8080',
+      pathname: 'monster.html',
+      slashes: true
+    });
   } else {
     indexPath = url.format({
       protocol: 'file:',
@@ -69,6 +77,11 @@ function createWindow() {
     itemPath = url.format({
       protocol: 'file:',
       pathname: path.join(__dirname, 'dist', 'item.html'),
+      slashes: true
+    });
+    monsterPath = url.format({
+      protocol: 'file:',
+      pathname: path.join(__dirname, 'dist', 'monster.html'),
       slashes: true
     });
   }
@@ -93,6 +106,7 @@ function createWindow() {
     mainWindow = null;
     spellWindow = null;
     itemWindow = null;
+    monsterWindow = null;
   });
 
   //Spell window
@@ -127,6 +141,23 @@ function createWindow() {
   itemWindow.on('close', (e) => {
     e.preventDefault();
     itemWindow.hide();
+  });
+
+  //Monster window
+  monsterWindow = new BrowserWindow({
+    parent: mainWindow,
+    width: 915,
+    height: 750,
+    show: false,
+    resizable: true,
+    frame: true,
+    icon: __dirname + './src/assets/img/dice_icon.ico'
+  });
+  monsterWindow.setMenu(null);
+  monsterWindow.loadURL(monsterPath);
+  monsterWindow.on('close', (e) => {
+    e.preventDefault();
+    monsterWindow.hide();
   });
 }
 
@@ -719,4 +750,13 @@ ipcMain.on('openItemView', (event, item) => {
   }
   itemWindow.setTitle("DnD Tome - " + item.item_name);
   itemWindow.webContents.send('onViewItem', item);
+});
+
+ipcMain.on('openMonsterView', (event, monster) => {
+  monsterWindow.show();
+  if (dev) {
+    //monsterWindow.webContents.openDevTools();
+  }
+  monsterWindow.setTitle("DnD Tome - " + monster.monster_name);
+  monsterWindow.webContents.send('onViewMonster', monster);
 });

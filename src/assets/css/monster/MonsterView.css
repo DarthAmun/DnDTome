@@ -7,7 +7,7 @@ body {
 
 @font-face {
     font-family: 'Quicksand';
-    src: url('../font/Quicksand-Medium.ttf') format('truetype');
+    src: url('../../font/Quicksand-Medium.ttf') format('truetype');
 }
 
 #monsterView {
@@ -21,7 +21,7 @@ body {
 
 #monsterView input {
     height: 30px;
-    width: 300px;
+    width: 200px;
     border: none;
     border-radius: 3px;
     padding-left: 10px;
@@ -37,20 +37,20 @@ body {
 }
 
 #monsterView button {
-    height: 28px;
-    width: auto;
+    height: 32px;
+    width: 110px;
     border: none;
     border-radius: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    margin: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
     text-align: center;
     float: right;
     font-family: inherit;
     font-size: 14px;
     background-color: #8000ff;
     color: white;
-    border-bottom: 2px solid transparent;
     cursor: pointer;
 }
 
@@ -64,8 +64,8 @@ body {
 }
 
 #monsterView textarea {
-    height: 308px;
-    width: 430px;
+    height: 218px;
+    width: 268px;
     float: left;
     resize: none;
     border-radius: 3px;
@@ -74,23 +74,76 @@ body {
     padding: 10px;
     font-family: inherit;
     font-size: 14px;
+    margin-right: 5px;
     margin-bottom: 5px;
     background-color: white;
     color: dimgrey;
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
 }
 
+#monsterView textarea.small {
+    height: 28px;
+    width: 300px; 
+}
+
 #monsterView label {
     display: inline-block;
-    width: 450px;
+    width: 320px;
     text-align: right;
     line-height: 30px;
 }
 
 #monsterView .top {
     float: left;
-    width: 450px;
-    margin-right: 10px;
+    width: 320px;
+    height: 220px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+#monsterView .image {
+    float: left;
+    width: 220px;
+    height: 220px;
+    overflow: hidden;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    background-color: white;
+}
+
+#monsterView .abilityScores {
+    height: 220px;
+    width: 220px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    float: left;
+}
+#monsterView .abilityScores .score {
+    width: 210px;
+    float: left;
+    height: 35px;
+    line-height: 30px;
+}
+#monsterView .abilityScores .score input {
+    width: 40px;
+    margin-right: 5px;
+}
+#monsterView .abilityScores .score label {
+    float: left;
+    width: 180px;
+}
+
+#monsterView .abilityScores .score .abilityBonus {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    float: right;
+    text-align: center;
+    border-top-right-radius: 3px;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    border-radius: 30px;
+    background-color: white;
 }
 
 #monsterView::-webkit-scrollbar,

@@ -13,6 +13,9 @@ const defaultInclude = [SRC_DIR];
 
 module.exports = {
     entry: {
+        monster: [
+            SRC_DIR + '/monster.js',
+        ],
         spell: [
             SRC_DIR + '/spell.js',
         ],
@@ -70,6 +73,11 @@ module.exports = {
             filename: 'item.html',
             template: 'src/index.html',
             chunks: ['item']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'monster.html',
+            template: 'src/index.html',
+            chunks: ['monster']
         }),
         new ExtractTextPlugin({ filename: '[name].css' }),
         new webpack.DefinePlugin({
