@@ -15,12 +15,20 @@ class Spell extends Component {
         return value;
     }
 
-    formatRitualIcon = (value) => {
+    hasRitual = (value) => {
         if (value == '1') {
-            return <img className="icon" src={ritual_image_src} alt="Ritual" />;
+            return <div className="icon">R</div>;
         }
         return "";
     }
+    hasConcentration = (value) => {
+        let search = value.toLowerCase();
+        if (search.includes("concentration")) {
+            return <div className="icon">C</div>;
+        }
+        return "";
+    }
+
 
     formatComponents = (value) => {
         let words = value.split('(');
@@ -70,6 +78,8 @@ class Spell extends Component {
             <div className="spell" style={{ animationDelay: `${this.props.delay * 50}ms` }} onClick={this.props.onClick}>
                 <div className={`spellSchool spellAttr ${this.props.spell.spell_school}`}>{this.props.spell.spell_school}</div>
                 <div className="spellLevel spellAttr">{this.formatLevel(this.props.spell.spell_level)}</div>
+                {this.hasRitual(this.props.spell.spell_ritual)}
+                {this.hasConcentration(this.props.spell.spell_duration)}
 
                 <div className="spellName spellAttr"><b>{this.props.spell.spell_name}</b></div>
 
