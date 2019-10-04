@@ -67,7 +67,7 @@ class App extends Component {
             return <PageLayout><Option /></PageLayout>
           }} />
           <Route path="/" render={() => {
-            return <div className="App">
+            return <div className="App homeDrag">
               <div id="content">
                 <Home />
               </div>

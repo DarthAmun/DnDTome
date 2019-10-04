@@ -8,6 +8,11 @@
   z-index: 10;
   color: #8000ff;
   font-size: 120px;
+  -webkit-app-region: no-drag;
+}
+
+.homeDrag {
+  -webkit-app-region: drag;
 }
 
 #icon {
