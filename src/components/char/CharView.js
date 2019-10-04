@@ -103,6 +103,11 @@ class CharView extends Component {
         }
     }
 
+    formatCastingTime = (value) => {
+        let words = value.split(',');
+        return words[0];
+    }
+
     viewSpell = (spell) => {
         ipcRenderer.send('openSpellView', spell);
     }
@@ -178,7 +183,7 @@ class CharView extends Component {
                                     <th>Range</th>
                                 </tr>
                                 {this.state.spells.map((spell, index) => {
-                                    return <tr className="charSpell" key={spell.spell_id} onClick={() => this.viewSpell(spell)} style={{ cursor: 'pointer' }}><td>{spell.spell_level}</td><td>{spell.spell_name}</td><td>{spell.spell_time}</td><td>{spell.spell_range}</td></tr>;
+                                    return <tr className="charSpell" key={spell.spell_id} onClick={() => this.viewSpell(spell)} style={{ cursor: 'pointer' }}><td>{spell.spell_level}</td><td>{spell.spell_name}</td><td>{this.formatCastingTime(spell.spell_time)}</td><td>{spell.spell_range}</td></tr>;
                                 })}
                             </tbody>
                         </table>
