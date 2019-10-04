@@ -51,8 +51,8 @@ class App extends Component {
           <Route path="/char-overview" render={() => {
             return <PageLayout><CharOverview /></PageLayout>
           }} />
-          <Route path="/char/:id" render={() => {
-            return <PageLayout><CharView /></PageLayout>
+          <Route path="/char/:id" render={props => {
+            return <PageLayout><CharView {...props}/></PageLayout>
           }} />
           <Route path="/add-view" render={() => {
             return <PageLayout><AddView /></PageLayout>
