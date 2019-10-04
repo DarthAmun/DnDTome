@@ -19,100 +19,52 @@ import AddItem from './add/AddItem';
 import LeftNav from './LeftNav';
 import TopNav from './TopNav';
 
+class PageLayout extends Component {
+  render() {
+    return (
+      <div className="App">
+        <LeftNav />
+        <div id="content">
+          <TopNav />
+          {this.props.children}
+        </div>
+        <div id="credits">by DarthAmun</div>
+      </div>
+    );
+  }
+}
+
 class App extends Component {
   render() {
     return (
       <MemoryRouter>
         <Switch>
           <Route path="/spell-overview" render={() => {
-            return <div className="App">
-              <LeftNav />
-              <div id="content">
-                <TopNav />
-                <SpellOverview />
-              </div>
-              <div id="credits">by DarthAmun</div>
-            </div>
+            return <PageLayout><SpellOverview /></PageLayout>
           }} />
           <Route path="/item-overview" render={() => {
-            return <div className="App">
-              <LeftNav />
-              <div id="content">
-                <TopNav />
-                <ItemOverview />
-              </div>
-              <div id="credits">by DarthAmun</div>
-            </div>
+            return <PageLayout><ItemOverview /></PageLayout>
           }} />
           <Route path="/monster-overview" render={() => {
-            return <div className="App">
-              <LeftNav />
-              <div id="content">
-                <TopNav />
-                <MonsterOverview />
-              </div>
-              <div id="credits">by DarthAmun</div>
-            </div>
+            return <PageLayout><MonsterOverview /></PageLayout>
           }} />
           <Route path="/char-overview" render={() => {
-            return <div className="App">
-              <LeftNav />
-              <div id="content">
-                <TopNav />
-                <CharOverview />
-              </div>
-              <div id="credits">by DarthAmun</div>
-            </div>
+            return <PageLayout><CharOverview /></PageLayout>
           }} />
           <Route path="/char/:id" render={() => {
-            return <div className="App">
-              <LeftNav />
-              <div id="content">
-                <TopNav />
-                <CharView />
-              </div>
-              <div id="credits">by DarthAmun</div>
-            </div>
+            return <PageLayout><CharView /></PageLayout>
           }} />
           <Route path="/add-view" render={() => {
-            return <div className="App">
-              <LeftNav />
-              <div id="content">
-                <TopNav />
-                <AddView />
-              </div>
-              <div id="credits">by DarthAmun</div>
-            </div>
+            return <PageLayout><AddView /></PageLayout>
           }} />
           <Route path="/add-spell" render={() => {
-            return <div className="App">
-              <LeftNav />
-              <div id="content">
-                <TopNav />
-                <AddSpell />
-              </div>
-              <div id="credits">by DarthAmun</div>
-            </div>
+            return <PageLayout><AddSpell /></PageLayout>
           }} />
           <Route path="/add-item" render={() => {
-            return <div className="App">
-              <LeftNav />
-              <div id="content">
-                <TopNav />
-                <AddItem />
-              </div>
-              <div id="credits">by DarthAmun</div>
-            </div>
+            return <PageLayout><AddItem /></PageLayout>
           }} />
           <Route path="/options" render={() => {
-            return <div className="App">
-              <LeftNav />
-              <div id="content">
-                <TopNav />
-                <Option />
-              </div>
-              <div id="credits">by DarthAmun</div>
-            </div>
+            return <PageLayout><Option /></PageLayout>
           }} />
           <Route path="/" render={() => {
             return <div className="App">
