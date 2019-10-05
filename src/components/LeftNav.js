@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/css/LeftNav.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMeteor, faIdCard, faPlusCircle, faShieldAlt, faDiceD20, faCog, faDragon } from '@fortawesome/free-solid-svg-icons';
+import { faMeteor, faIdCard, faShieldAlt, faDiceD20, faCog, faDragon } from '@fortawesome/free-solid-svg-icons';
 import Particles from 'react-particles-js';
 
 class LeftNav extends Component {
@@ -122,27 +122,22 @@ class LeftNav extends Component {
         <div className="gradIcon">
           <FontAwesomeIcon icon={faDiceD20} className="smallIcon" />
         </div>
-        <Link to="/add-view" style={{ top: "70px" }}>
-          <div className="menuItem">
-            <FontAwesomeIcon icon={faPlusCircle} /> Add new
-          </div>
-        </Link>
-        <Link to="/spell-overview" style={{ top: "120px" }}>
+        <Link to="/spell-overview" style={{ top: "70px" }}>
           <div className="menuItem">
             <FontAwesomeIcon icon={faMeteor} /> Spells
           </div>
         </Link>
-        <Link to="/item-overview" style={{ top: "170px" }}>
+        <Link to="/item-overview" style={{ top: "120px" }}>
           <div className="menuItem">
             <FontAwesomeIcon icon={faShieldAlt} /> Items
           </div>
         </Link>
-        <Link to="/char-overview" style={{ top: "220px" }}>
+        <Link to="/char-overview" style={{ top: "170px" }}>
           <div className="menuItem">
             <FontAwesomeIcon icon={faIdCard} /> Chars
           </div>
         </Link>
-        <Link to="/monster-overview" style={{ top: "270px" }}>
+        <Link to="/monster-overview" style={{ top: "220px" }}>
           <div className="menuItem">
             <FontAwesomeIcon icon={faDragon} /> Monsters
           </div>

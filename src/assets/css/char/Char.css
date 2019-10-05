@@ -16,6 +16,7 @@
     transition-duration: 500ms;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
 }
 
 .char:hover {

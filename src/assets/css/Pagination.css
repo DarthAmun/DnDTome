@@ -19,6 +19,21 @@
     color: white;
 }
 
+#pagination .button {
+    height: 30px;
+    padding-right: 10px;
+    padding-left: 10px;
+    float: left;
+    display: block;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    background-color: #8000ff;
+    color: white;
+    margin-left: 5px;
+}
+
 .pageDown {
     margin-right: 5px;
 }

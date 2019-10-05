@@ -12,7 +12,6 @@ import CharView from './char/CharView';
 import Home from './Home';
 import Options from './Options';
 
-import AddView from './add/AddView';
 import AddSpell from './add/AddSpell';
 import AddItem from './add/AddItem';
 
@@ -54,9 +53,6 @@ class App extends Component {
           <Route path="/char/:id" render={props => {
             return <PageLayout><CharView {...props}/></PageLayout>
           }} />
-          <Route path="/add-view" render={() => {
-            return <PageLayout><AddView /></PageLayout>
-          }} />
           <Route path="/add-spell" render={() => {
             return <PageLayout><AddSpell /></PageLayout>
           }} />
@@ -64,7 +60,7 @@ class App extends Component {
             return <PageLayout><AddItem /></PageLayout>
           }} />
           <Route path="/options" render={() => {
-            return <PageLayout><Option /></PageLayout>
+            return <PageLayout><Options /></PageLayout>
           }} />
           <Route path="/" render={() => {
             return <div className="App homeDrag">
