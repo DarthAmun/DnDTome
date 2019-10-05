@@ -87,7 +87,7 @@ class SpellPagination extends Component {
                         max={Math.ceil(this.state.spellCount / this.state.pageStep)}
                         onChange={this.pageJumpTo}
                         onKeyDown={this.handleKeyDown} />
-                    | {Math.ceil(this.state.spellCount / this.state.pageStep)}
+                    / {Math.ceil(this.state.spellCount / this.state.pageStep)}
                 </div>
                 <div className="pageUp" onClick={this.pageUp}>
                     <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
@@ -100,6 +100,7 @@ class SpellPagination extends Component {
                         <option>50</option>
                     </select>
                 </div>
+                <div className="delimiter">|</div>
                 <Link to="/add-spell" className="button">
                     <FontAwesomeIcon icon={faPlus} /> Add new Spell
                 </Link>

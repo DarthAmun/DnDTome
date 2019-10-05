@@ -86,7 +86,7 @@ class MonsterPagination extends Component {
                         max={Math.ceil(this.state.monsterCount / this.state.pageStep)}
                         onChange={this.pageJumpTo}
                         onKeyDown={this.handleKeyDown} />
-                    | {Math.ceil(this.state.monsterCount / this.state.pageStep)}
+                    / {Math.ceil(this.state.monsterCount / this.state.pageStep)}
                 </div>
                 <div className="pageUp" onClick={this.pageUp}>
                     <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>

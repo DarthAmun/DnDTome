@@ -6,6 +6,16 @@
     line-height: 30px;
 }
 
+#pagination .delimiter  {
+    height: 30px;
+    width: auto;
+    margin-left: 10px;
+    margin-right: 5px;
+    text-align: center;
+    line-height: 30px;
+    float: left;
+}
+
 .pageDown, .pageUp {
     height: 30px;
     width: 30px;

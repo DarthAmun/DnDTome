@@ -87,7 +87,7 @@ class ItemPagination extends Component {
                         max={Math.ceil(this.state.itemCount / this.state.pageStep)}
                         onChange={this.pageJumpTo}
                         onKeyDown={this.handleKeyDown} />
-                    | {Math.ceil(this.state.itemCount / this.state.pageStep)}
+                    / {Math.ceil(this.state.itemCount / this.state.pageStep)}
                 </div>
                 <div className="pageUp" onClick={this.pageUp}>
                     <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
@@ -100,6 +100,7 @@ class ItemPagination extends Component {
                         <option>50</option>
                     </select>
                 </div>
+                <div className="delimiter">|</div>
                 <Link to="/add-item" className="button">
                     <FontAwesomeIcon icon={faPlus} /> Add new Item
                 </Link>
