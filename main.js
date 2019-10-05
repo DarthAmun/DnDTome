@@ -486,6 +486,29 @@ const saveItem = (item) => {
   });
 }
 
+const saveMonster = (monster) => {
+  let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment, monster.ac, monster.hp, monster.speed, monster.str, 
+    monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.saveingThrows, monster.skills, monster.dmgVulnerabilitie, 
+    monster.dmgResistance, monster.dmgImmunities, monster.senses, monster.lang, monster.cr, monster.sAblt, monster.ablt, monster.lAblt, 
+    monster.source, monster.pic, monster.id];
+  let sql = `UPDATE 'main'.'tab_monsters'
+              SET monster_name = ?, monster_size = ?, monster_type = ?, monster_subtype = ?, monster_alignment = ?, monster_armorClass = ?,
+              monster_hitPoints = ?, monster_speed = ?, monster_strength = ?, monster_dexterity = ?, monster_constitution = ?, 
+              monster_intelligence = ?, monster_wisdom = ?, monster_charisma = ?, monster_savingThrows = ?, monster_skills = ?, 
+              monster_dmgVulnerabilities = ?, monster_dmgResistance = ?, monster_dmgImmunities = ?, monster_senses = ?, monster_lang = ?, 
+              monster_cr = ?, monster_sAblt = ?, monster_ablt = ?, monster_lAbtl = ?, monster_source = ?, monster_pic = ?
+              WHERE monster_id = ?`; 
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`${monster.name} updated successfull`);
+      mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
+    });
+  });
+}
+
 const saveChar = (char) => {
   let data = [char.name, char.player, char.prof, char.exp, char.pic, char.class, char.race, char.background, char.ac, char.hp, char.currentHp, 
     char.init, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.actions, char.features, char.profsLangs, char.notes, char.id];
@@ -530,6 +553,21 @@ const deleteItem = (item) => {
       console.log(`====>Deleted ${item.name} successfull`);
       itemWindow.hide();
       mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
+    });
+  });
+}
+
+const deleteMonster = (monster) => {
+  let data = [monster.id];
+  let sql = `DELETE FROM 'main'.'tab_monsters' WHERE monster_id = ?`;
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`====>Deleted ${monster.name} successfull`);
+      itemWindow.hide();
+      mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
     });
   });
 }
@@ -683,6 +721,11 @@ ipcMain.on('saveItem', (event, arg) => {
   saveItem(item);
 });
 
+ipcMain.on('saveMonster', (event, arg) => {
+  const { monster } = arg;
+  saveMonster(monster);
+});
+
 ipcMain.on('saveChar', (event, arg) => {
   const { char } = arg;
   saveChar(char);
@@ -696,6 +739,11 @@ ipcMain.on('deleteSpell', (event, arg) => {
 ipcMain.on('deleteItem', (event, arg) => {
   const { item } = arg;
   deleteItem(item);
+});
+
+ipcMain.on('deleteMonster', (event, arg) => {
+  const { monster } = arg;
+  deleteMonster(monster);
 });
 
 ipcMain.on('saveNewSpell', (event, arg) => {
@@ -755,7 +803,7 @@ ipcMain.on('openItemView', (event, item) => {
 ipcMain.on('openMonsterView', (event, monster) => {
   monsterWindow.show();
   if (dev) {
-    //monsterWindow.webContents.openDevTools();
+    monsterWindow.webContents.openDevTools();
   }
   monsterWindow.setTitle("DnD Tome - " + monster.monster_name);
   monsterWindow.webContents.send('onViewMonster', monster);

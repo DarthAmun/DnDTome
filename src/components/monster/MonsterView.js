@@ -166,15 +166,15 @@ class MonsterView extends Component {
                     </div>
                 </div>
                 <div className="top">
-                    <textarea className="small" value={this.state.saveingThrows} onChange={this.handleDescriptionChange} placeholder="Saving Throws..."></textarea>
-                    <textarea className="small" value={this.state.skills} onChange={this.handleDescriptionChange} placeholder="Skills..."></textarea>
-                    <textarea className="small" value={this.state.senses} onChange={this.handleDescriptionChange} placeholder="Senses..."></textarea>
-                    <textarea className="small" value={this.state.lang} onChange={this.handleDescriptionChange} placeholder="Languages..."></textarea>
+                    <textarea className="small" value={this.state.saveingThrows} onChange={this.handleSaveingThrowsChange} placeholder="Saving Throws..."></textarea>
+                    <textarea className="small" value={this.state.skills} onChange={this.handleSkillsChange} placeholder="Skills..."></textarea>
+                    <textarea className="small" value={this.state.senses} onChange={this.handleSensesChange} placeholder="Senses..."></textarea>
+                    <textarea className="small" value={this.state.lang} onChange={this.handleLangChange} placeholder="Languages..."></textarea>
                 </div>
                 <div className="top">
-                    <textarea className="small" value={this.state.dmgVulnerabilitie} onChange={this.handleDescriptionChange} placeholder="Vulnerabilities..."></textarea>
-                    <textarea className="small" value={this.state.dmgResistance} onChange={this.handleDescriptionChange} placeholder="Resistances..."></textarea>
-                    <textarea className="small" value={this.state.dmgImmunities} onChange={this.handleDescriptionChange} placeholder="Immunities..."></textarea>
+                    <textarea className="small" value={this.state.dmgVulnerabilitie} onChange={this.handleVulnerabilitieChange} placeholder="Vulnerabilities..."></textarea>
+                    <textarea className="small" value={this.state.dmgResistance} onChange={this.handleResistanceChange} placeholder="Resistances..."></textarea>
+                    <textarea className="small" value={this.state.dmgImmunities} onChange={this.handleImmunitiesChange} placeholder="Immunities..."></textarea>
                 </div>
                 <textarea value={this.state.sAblt} onChange={this.handleDescriptionChange} placeholder="Resistances..."></textarea>
                 <textarea value={this.state.ablt} onChange={this.handleDescriptionChange} placeholder="Resistances..."></textarea>
@@ -283,6 +283,30 @@ class MonsterView extends Component {
         this.setState({
             ...this.state,
             cha: e.target.value
+        });
+    }
+    handleSaveingThrowsChange = (e) => {
+        this.setState({
+            ...this.state,
+            saveingThrows: e.target.value
+        });
+    }
+    handleSkillsChange = (e) => {
+        this.setState({
+            ...this.state,
+            skills: e.target.value
+        });
+    }
+    handleSensesChange = (e) => {
+        this.setState({
+            ...this.state,
+            senses: e.target.value
+        });
+    }
+    handleLangChange = (e) => {
+        this.setState({
+            ...this.state,
+            lang: e.target.value
         });
     }
 }
