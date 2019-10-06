@@ -9,16 +9,6 @@ const { dialog } = electron.remote;
 
 class SpellView extends Component {
     state = {
-        name: "",
-        school: "",
-        level: "",
-        time: "",
-        range: "",
-        duration: "",
-        components: "",
-        text: "",
-        classes: "",
-        sources: "",
         id: ""
     }
 
@@ -46,6 +36,52 @@ class SpellView extends Component {
     }
     componentWillUnmount() {
         ipcRenderer.removeListener("onViewSpell", this.receiveSpell);
+    }
+
+    saveSpell = (e) => {
+        ipcRenderer.send('saveSpell', { spell: this.state });
+    }
+
+    addSpellToChar = (e) => {
+        
+    }
+
+    deleteSpell = (e) => {
+        const options = {
+            type: 'question',
+            buttons: ['Cancel', 'Yes, please', 'No, thanks'],
+            defaultId: 2,
+            title: `Delete ${this.state.name}?`,
+            message: 'Do you want to do this?'
+        };
+
+        dialog.showMessageBox(null, options, (response) => {
+            if(response == 1){
+                ipcRenderer.send('deleteSpell', { spell: this.state });
+            }
+        });
+    }
+
+    render() {
+        return (
+            <div id="spellView">
+                <div className="top">
+                    <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label>
+                    <label>School:<input name="school" type="text" value={this.state.school} onChange={this.handleSchoolChange} /></label>
+                    <label>Level:<input name="level" type="text" value={this.state.level} onChange={this.handleLevelChange} /></label>
+                    <label>Casting Time:<input name="time" type="text" value={this.state.time} onChange={this.handleTimeChange} /></label>
+                    <label>Range:<input name="range" type="text" value={this.state.range} onChange={this.handleRangeChange} /></label>
+                    <label>Duration:<input name="duration" type="text" value={this.state.duration} onChange={this.handleDurationChange} /></label>
+                    <label>Components:<input name="components" type="text" value={this.state.components} onChange={this.handleComponentsChange} /></label>
+                    <label>Classes:<input name="classes" type="text" value={this.state.classes} onChange={this.handleClassesChange} /></label>
+                    <label>Sources:<input name="sources" type="text" value={this.state.sources} onChange={this.handleSourcesChange} /></label>
+                </div>
+                <textarea value={this.state.text} onChange={this.handleChange}></textarea>
+                <button className="delete" onClick={this.deleteSpell}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                <button onClick={this.saveSpell}><FontAwesomeIcon icon={faSave} /> Save</button>
+                <button onClick={this.addSpellToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
+            </div>
+        )
     }
 
     handleNameChange = (e) => {
@@ -108,52 +144,6 @@ class SpellView extends Component {
             ...this.state,
             text: e.target.value
         });
-    }
-
-    saveSpell = (e) => {
-        ipcRenderer.send('saveSpell', { spell: this.state });
-    }
-
-    addSpellToChar = (e) => {
-        
-    }
-
-    deleteSpell = (e) => {
-        const options = {
-            type: 'question',
-            buttons: ['Cancel', 'Yes, please', 'No, thanks'],
-            defaultId: 2,
-            title: `Delete ${this.state.name}?`,
-            message: 'Do you want to do this?'
-        };
-
-        dialog.showMessageBox(null, options, (response) => {
-            if(response == 1){
-                ipcRenderer.send('deleteSpell', { spell: this.state });
-            }
-        });
-    }
-
-    render() {
-        return (
-            <div id="spellView">
-                <div className="top">
-                    <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label>
-                    <label>School:<input name="school" type="text" value={this.state.school} onChange={this.handleSchoolChange} /></label>
-                    <label>Level:<input name="level" type="text" value={this.state.level} onChange={this.handleLevelChange} /></label>
-                    <label>Casting Time:<input name="time" type="text" value={this.state.time} onChange={this.handleTimeChange} /></label>
-                    <label>Range:<input name="range" type="text" value={this.state.range} onChange={this.handleRangeChange} /></label>
-                    <label>Duration:<input name="duration" type="text" value={this.state.duration} onChange={this.handleDurationChange} /></label>
-                    <label>Components:<input name="components" type="text" value={this.state.components} onChange={this.handleComponentsChange} /></label>
-                    <label>Classes:<input name="classes" type="text" value={this.state.classes} onChange={this.handleClassesChange} /></label>
-                    <label>Sources:<input name="sources" type="text" value={this.state.sources} onChange={this.handleSourcesChange} /></label>
-                </div>
-                <textarea value={this.state.text} onChange={this.handleChange}></textarea>
-                <button className="delete" onClick={this.deleteSpell}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
-                <button onClick={this.saveSpell}><FontAwesomeIcon icon={faSave} /> Save</button>
-                <button onClick={this.addSpellToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
-            </div>
-        )
     }
 }
 

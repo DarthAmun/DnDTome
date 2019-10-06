@@ -111,9 +111,34 @@
     width: 100px;
 }
 
-#char .abilityScores {
-    height: 100px;
-    width: 430px;
+#char .deathSaves {
+    height: 90px;
+    width: 150px;
+    margin: 5px;
+    float: left;
+    border-radius: 3px;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    background-color: white;
+    color: dimgrey;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
+#char .deathSaves .deathSave {
+    height: 45px;
+    width: 150px;
+    line-height: 45px;
+}
+#char .deathSaves .deathSave input{
+    height: 15px;
+    width: 15px;
+    margin-right: 5px;
+    margin-top: 15px;
+}
+
+#char .abilityScores, #char .savingThrows, #char .skills {
+    height: 205px;
+    width: 210px;
     margin: 5px;
 }
 #char .abilityScores .score {
@@ -122,13 +147,40 @@
     height: 35px;
     line-height: 30px;
 }
-#char .abilityScores .score input {
+#char .abilityScores .score input, #char .savingThrows input, #char .skills input {
     width: 40px;
     margin-right: 5px;
 }
-#char .abilityScores .score label {
+#char .abilityScores .score label, #char .savingThrows label, #char .skills label {
     float: left;
     width: 180px;
+}
+
+#char .savingThrows{
+    width: 180px;
+}
+#char .savingThrows input[type=radio], #char .skills input[type=radio] { 
+    width: 15px;
+    height: 15px;
+    margin-top: 8px;
+    margin-right: 0px;
+    float: right;
+
+    background-color: white;
+    border: none;
+}
+
+#char .skills{
+    width: 270px;
+}
+#char .skillRow {
+    height: 205px;
+    width: 270px;
+    float: left;
+}
+#char .skills label {
+    float: left;
+    width: 270px;
 }
 
 #char .abilityScores .score .abilityBonus {

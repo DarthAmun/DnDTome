@@ -28,6 +28,12 @@ class CharView extends Component {
         int: "",
         wis: "",
         cha: "",
+        strSave: "",
+        dexSave: "",
+        conSave: "",
+        intSave: "",
+        wisSave: "",
+        chaSave: "",
         actions: "",
         features: "",
         profsLangs: "",
@@ -58,6 +64,12 @@ class CharView extends Component {
             int: result.char_int,
             wis: result.char_wis,
             cha: result.char_cha,
+            strSave: result.char_strSave,
+            dexSave: result.char_dexSave,
+            conSave: result.char_conSave,
+            intSave: result.char_intSave,
+            wisSave: result.char_wisSave,
+            chaSave: result.char_chaSave,
             actions: result.char_actions,
             features: result.char_features,
             profsLangs: result.char_profs_langs,
@@ -125,7 +137,7 @@ class CharView extends Component {
             <div id="overview">
                 <div id="char">
                     <div className="image" style={style}></div>
-                    <div className="labelGroup">
+                    <div className="smallLabelGroup">
                         <label>Pic:<input name="pic" type="text" value={this.state.pic} onChange={this.handlePicChange} /></label><br />
                         <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label><br />
                         <label>Player:<input name="player" type="text" value={this.state.player} onChange={this.handlePlayerChange} /></label><br />
@@ -143,30 +155,73 @@ class CharView extends Component {
                         <label>Armor Class:<input name="ac" type="number" value={this.state.ac} onChange={this.handleACChange} /></label><br />
                         <label>Initiative:<input name="initiativ" type="number" value={this.state.init} onChange={this.handleInitChange} /></label>
                     </div>
+                    <div className="deathSaves">
+                        <b>Death Saves:</b>
+                        <div className="deathSave">Sucesses: <input type="radio" /><input type="radio" /><input type="radio" /></div>
+                        <div className="deathSave">Failures: <input type="radio" /><input type="radio" /><input type="radio" /></div>
+                    </div>
                     <div className="abilityScores">
                         <div className="score">
                             <label>Strength: <input type="number" value={this.state.str} onChange={this.handleStrChange}></input></label>
                             <div className="abilityBonus">{this.formatScore(this.state.str)}</div>
                         </div>
                         <div className="score">
-                            <label>Intelligence: <input type="number" value={this.state.int} onChange={this.handleIntChange}></input></label>
-                            <div className="abilityBonus">{this.formatScore(this.state.int)}</div>
-                        </div>
-                        <div className="score">
                             <label>Dexterity: <input type="number" value={this.state.dex} onChange={this.handleDexChange}></input></label>
                             <div className="abilityBonus">{this.formatScore(this.state.dex)}</div>
-                        </div>
-                        <div className="score">
-                            <label>Wisdom: <input type="number" value={this.state.wis} onChange={this.handleWisChange}></input></label>
-                            <div className="abilityBonus">{this.formatScore(this.state.wis)}</div>
                         </div>
                         <div className="score">
                             <label>Constitution: <input type="number" value={this.state.con} onChange={this.handleConChange}></input></label>
                             <div className="abilityBonus">{this.formatScore(this.state.con)}</div>
                         </div>
                         <div className="score">
+                            <label>Intelligence: <input type="number" value={this.state.int} onChange={this.handleIntChange}></input></label>
+                            <div className="abilityBonus">{this.formatScore(this.state.int)}</div>
+                        </div>
+                        <div className="score">
+                            <label>Wisdom: <input type="number" value={this.state.wis} onChange={this.handleWisChange}></input></label>
+                            <div className="abilityBonus">{this.formatScore(this.state.wis)}</div>
+                        </div>
+                        <div className="score">
                             <label>Charisma: <input type="number" value={this.state.cha} onChange={this.handleChaChange}></input></label>
                             <div className="abilityBonus">{this.formatScore(this.state.cha)}</div>
+                        </div>
+                    </div>
+                    <div className="savingThrows">
+                        <label>Str Save: <input type="number" value={this.state.strSave} onChange={this.handleStrSaveChange}></input><input type="radio" /></label>
+                        <label>Dex Save: <input type="number" value={this.state.dexSave} onChange={this.handleDexSaveChange}></input><input type="radio" /></label>
+                        <label>Con Save: <input type="number" value={this.state.conSave} onChange={this.handleConSaveChange}></input><input type="radio" /></label>
+                        <label>Int Save: <input type="number" value={this.state.intSave} onChange={this.handleIntSaveChange}></input><input type="radio" /></label>
+                        <label>Wis Save: <input type="number" value={this.state.wisSave} onChange={this.handleWisSaveChange}></input><input type="radio" /></label>
+                        <label>Cha Save: <input type="number" value={this.state.chaSave} onChange={this.handleChaSaveChange}></input><input type="radio" /></label>
+                    </div>
+                    <div className="skills">
+                        <div classame="skillRow">
+                            <label>Acrobatics (Dex): <input type="number" value={this.state.acrobatics} onChange={this.handleAcrobaticsChange}></input><input type="radio" /></label>
+                            <label>Animal Handling (Wis): <input type="number" value={this.state.animalHandling} onChange={this.handleAnimalHandlingChange}></input><input type="radio" /></label>
+                            <label>Arcana (Int): <input type="number" value={this.state.arcana} onChange={this.handleArcanaChange}></input><input type="radio" /></label>
+                            <label>Athletics (Str): <input type="number" value={this.state.athletics} onChange={this.handleAthleticsChange}></input><input type="radio" /></label>
+                            <label>Deception (Cha): <input type="number" value={this.state.deception} onChange={this.handleDeceptionChange}></input><input type="radio" /></label>
+                            <label>History (Int): <input type="number" value={this.state.history} onChange={this.handleHistoryChange}></input><input type="radio" /></label>
+                        </div>
+                    </div>
+                    <div className="skills">
+                        <div classame="skillRow">
+                            <label>Insight (Wis): <input type="number" value={this.state.insight} onChange={this.handleInsightChange}></input><input type="radio" /></label>
+                            <label>Intimidation (Cha): <input type="number" value={this.state.intimidation} onChange={this.handleIntimidationChange}></input><input type="radio" /></label>
+                            <label>Investigation (Int): <input type="number" value={this.state.investigation} onChange={this.handleInvestigationChange}></input><input type="radio" /></label>
+                            <label>Medicine (Wis): <input type="number" value={this.state.medicine} onChange={this.handleMedicineChange}></input><input type="radio" /></label>
+                            <label>Nature (Int): <input type="number" value={this.state.nature} onChange={this.handleNatureChange}></input><input type="radio" /></label>
+                            <label>Perception (Wis): <input type="number" value={this.state.perception} onChange={this.handlePerceptionChange}></input><input type="radio" /></label>
+                        </div>
+                    </div>
+                    <div className="skills">
+                        <div classame="skillRow">
+                            <label>Performance (Cha): <input type="number" value={this.state.performance} onChange={this.handlePerformanceChange}></input><input type="radio" /></label>
+                            <label>Persuasion (Cha): <input type="number" value={this.state.persuasion} onChange={this.handlePersuasionChange}></input><input type="radio" /></label>
+                            <label>Religion (Int): <input type="number" value={this.state.religion} onChange={this.handleReligionChange}></input><input type="radio" /></label>
+                            <label>Sleight of Hand (Dex): <input type="number" value={this.state.sleightOfHand} onChange={this.handleSleightOfHandChange}></input><input type="radio" /></label>
+                            <label>Stealth (Dex): <input type="number" value={this.state.stealth} onChange={this.handleStealthChange}></input><input type="radio" /></label>
+                            <label>Survival (Wis): <input type="number" value={this.state.survival} onChange={this.handleSurvivalChange}></input><input type="radio" /></label>
                         </div>
                     </div>
                     <textarea value={this.state.actions} onChange={this.handleActionsChange} placeholder="Actions..."></textarea>
@@ -189,7 +244,7 @@ class CharView extends Component {
                         </table>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
 
@@ -299,6 +354,42 @@ class CharView extends Component {
         this.setState({
             ...this.state,
             cha: e.target.value
+        });
+    }
+    handleStrSaveChange = (e) => {
+        this.setState({
+            ...this.state,
+            strSave: e.target.value
+        });
+    }
+    handleDexSaveChange = (e) => {
+        this.setState({
+            ...this.state,
+            dexSave: e.target.value
+        });
+    }
+    handleConSaveChange = (e) => {
+        this.setState({
+            ...this.state,
+            conSave: e.target.value
+        });
+    }
+    handleIntSaveChange = (e) => {
+        this.setState({
+            ...this.state,
+            intSave: e.target.value
+        });
+    }
+    handleWisSaveChange = (e) => {
+        this.setState({
+            ...this.state,
+            wisSave: e.target.value
+        });
+    }
+    handleChaSaveChange = (e) => {
+        this.setState({
+            ...this.state,
+            chaSave: e.target.value
         });
     }
     handleActionsChange = (e) => {

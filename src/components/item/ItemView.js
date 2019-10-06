@@ -9,6 +9,7 @@ const { dialog } = electron.remote;
 
 class ItemView extends Component {
     state = {
+        id: "",
         name: "",
         id: "",
         description: "",
@@ -37,43 +38,6 @@ class ItemView extends Component {
     }
     componentWillUnmount() {
         ipcRenderer.removeListener("onViewItem", this.receiveItem);
-    }
-
-    handleNameChange = (e) => {
-        this.setState({
-            ...this.state,
-            name: e.target.value
-        });
-    }
-    handleDescriptionChange = (e) => {
-        this.setState({
-            ...this.state,
-            description: e.target.value
-        });
-    }
-    handlePicChange = (e) => {
-        this.setState({
-            ...this.state,
-            pic: e.target.value
-        });
-    }
-    handleRarityChange = (e) => {
-        this.setState({
-            ...this.state,
-            rarity: e.target.value
-        });
-    }
-    handleTypeChange = (e) => {
-        this.setState({
-            ...this.state,
-            type: e.target.value
-        });
-    }
-    handleSourceChange = (e) => {
-        this.setState({
-            ...this.state,
-            source: e.target.value
-        });
     }
 
     saveItem = (e) => {
@@ -122,6 +86,43 @@ class ItemView extends Component {
             </div>
 
         )
+    }
+
+    handleNameChange = (e) => {
+        this.setState({
+            ...this.state,
+            name: e.target.value
+        });
+    }
+    handleDescriptionChange = (e) => {
+        this.setState({
+            ...this.state,
+            description: e.target.value
+        });
+    }
+    handlePicChange = (e) => {
+        this.setState({
+            ...this.state,
+            pic: e.target.value
+        });
+    }
+    handleRarityChange = (e) => {
+        this.setState({
+            ...this.state,
+            rarity: e.target.value
+        });
+    }
+    handleTypeChange = (e) => {
+        this.setState({
+            ...this.state,
+            type: e.target.value
+        });
+    }
+    handleSourceChange = (e) => {
+        this.setState({
+            ...this.state,
+            source: e.target.value
+        });
     }
 }
 
