@@ -8,7 +8,7 @@
     position: relative;
 }
 
-#leftNav a, .smallIcon {
+#leftNav a {
     height: 40px;
     width: 95px;
     padding-left: 5px;
@@ -25,22 +25,15 @@
 }
 
 #leftNav a svg{
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .smallIcon {
     color: #8000ff;
-    display: block;
-    left: 30px;
-    top: 20px;
-    height: 40px;
-    width: 50px;
     font-size: 40px;
-    border: none;
-    padding: 0px;
 }
 
-#leftNav a:hover, .menuItemActiv {
+#leftNav a:hover, #leftNav a.menuItemActiv {
     border-left: 3px solid #8000ff;
     cursor: pointer;
 }
@@ -52,7 +45,21 @@
     top: 0;
     left: 0;
     z-index: 1;
-}   
+}  
+
+.gradIcon {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 70px;
+    background-color: white;
+    border-radius: 60px;
+    position: absolute;
+    left: 25px;
+    top: 10px;
+    border: none;
+    padding: 0px;
+}
 
 .gradIcon svg * {
     fill: url(#rgg);
