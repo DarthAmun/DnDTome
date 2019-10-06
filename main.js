@@ -566,7 +566,7 @@ const deleteMonster = (monster) => {
         return console.error(err.message);
       }
       console.log(`====>Deleted ${monster.name} successfull`);
-      itemWindow.hide();
+      monsterWindow.hide();
       mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
     });
   });
@@ -626,6 +626,54 @@ const saveNewItems = (items) => {
           return console.error(err.message);
         }
         console.log(`====>Added ${item.item_name} successfull`);
+      });
+    });
+  });
+}
+
+const saveNewMonster = (monster) => {
+  let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment, monster.ac, monster.hp, monster.speed, monster.str, 
+    monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.saveingThrows, monster.skills, monster.dmgVulnerabilitie, 
+    monster.dmgResistance, monster.dmgImmunities, monster.senses, monster.lang, monster.cr, monster.sAblt, monster.ablt, monster.lAblt, 
+    monster.source, monster.pic];
+  let sql = `INSERT INTO 'main'.'tab_monsters'
+              (monster_name, monster_size, monster_type, monster_subtype, monster_alignment, monster_armorClass,
+              monster_hitPoints, monster_speed, monster_strength, monster_dexterity, monster_constitution, 
+              monster_intelligence, monster_wisdom, monster_charisma, monster_savingThrows, monster_skills, 
+              monster_dmgVulnerabilities, monster_dmgResistance, monster_dmgImmunities, monster_senses, monster_lang, 
+              monster_cr, monster_sAblt, monster_ablt, monster_lAbtl, monster_source, monster_pic)
+              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`; 
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`====>Added ${monster.name} successfull`);
+    });
+  });
+}
+const saveNewMonsters = (monsters) => {
+  console.log(monsters);
+  monsters.forEach(monster => {
+    let data = [monster.monster_name, monster.monster_size, monster.monster_type, monster.monster_subtype, monster.monster_alignment, 
+      monster.monster_armorClass, monster.monster_hitPoints, monster.monster_speed, monster.monster_strength, monster.monster_dexterity, 
+      monster.monster_constitution, monster.monster_intelligence, monster.monster_wisdom, monster.monster_charisma, monster.monster_savingThrows, 
+      monster.monster_skills, monster.monster_dmgVulnerabilities, monster.monster_dmgResistance, monster.monster_dmgImmunities, 
+      monster.monster_senses, monster.monster_lang, monster.monster_cr, monster.monster_sAblt, monster.monster_ablt, monster.monster_lAbtl, 
+      monster.monster_source, monster.monster_pic];
+    let sql = `INSERT INTO 'main'.'tab_monsters'
+                (monster_name, monster_size, monster_type, monster_subtype, monster_alignment, monster_armorClass,
+                monster_hitPoints, monster_speed, monster_strength, monster_dexterity, monster_constitution, 
+                monster_intelligence, monster_wisdom, monster_charisma, monster_savingThrows, monster_skills, 
+                monster_dmgVulnerabilities, monster_dmgResistance, monster_dmgImmunities, monster_senses, monster_lang, 
+                monster_cr, monster_sAblt, monster_ablt, monster_lAbtl, monster_source, monster_pic)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`; 
+    db.serialize(function () {
+      db.run(sql, data, function (err) {
+        if (err) {
+          return console.error(err.message);
+        }
+        console.log(`====>Added ${monster.monster_name} successfull`);
       });
     });
   });
@@ -762,6 +810,15 @@ ipcMain.on('saveNewItem', (event, arg) => {
 ipcMain.on('saveNewItems', (event, arg) => {
   const { items } = arg;
   saveNewItems(items);
+});
+
+ipcMain.on('saveNewMonster', (event, arg) => {
+  const { monster } = arg;
+  saveNewMonster(monster);
+});
+ipcMain.on('saveNewMonsters', (event, arg) => {
+  const { monsters } = arg;
+  saveNewMonsters(monsters);
 });
 
 ipcMain.on('getChars', (event, arg) => {

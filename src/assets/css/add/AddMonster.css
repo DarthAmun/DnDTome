@@ -1,0 +1,154 @@
+#overview {
+    height: 100%;
+    width: 100%;
+}
+
+#monsterView {
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    color: dimgrey;
+    padding: 10px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#monsterView input {
+    height: 30px;
+    width: 200px;
+    border: none;
+    border-radius: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    float: right;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: white;
+    color: dimgrey;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
+
+#monsterView button {
+    height: 32px;
+    width: 110px;
+    border: none;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    text-align: center;
+    float: right;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: #8000ff;
+    color: white;
+    cursor: pointer;
+}
+
+#monsterView button:hover {
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    cursor: pointer;
+}
+
+#monsterView button.delete {
+    background-color: darkred;
+}
+
+#monsterView textarea {
+    height: 218px;
+    width: 268px;
+    float: left;
+    resize: none;
+    border-radius: 3px;
+    border-bottom-right-radius: 0px;
+    border: none;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    background-color: white;
+    color: dimgrey;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
+
+#monsterView textarea.small {
+    height: 28px;
+    width: 300px; 
+}
+
+#monsterView label {
+    display: inline-block;
+    width: 320px;
+    text-align: right;
+    line-height: 30px;
+}
+
+#monsterView .top {
+    float: left;
+    width: 320px;
+    height: 220px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+#monsterView .image {
+    float: left;
+    width: 220px;
+    height: 220px;
+    overflow: hidden;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    background-color: white;
+}
+
+#monsterView .abilityScores {
+    height: 220px;
+    width: 220px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    float: left;
+}
+#monsterView .abilityScores .score {
+    width: 210px;
+    float: left;
+    height: 35px;
+    line-height: 30px;
+}
+#monsterView .abilityScores .score input {
+    width: 40px;
+    margin-right: 5px;
+}
+#monsterView .abilityScores .score label {
+    float: left;
+    width: 180px;
+}
+
+#monsterView .abilityScores .score .abilityBonus {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    float: right;
+    text-align: center;
+    border-top-right-radius: 3px;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    border-radius: 30px;
+    background-color: white;
+}
+
+#monsterView::-webkit-scrollbar,
+#monsterView textarea::-webkit-scrollbar {
+    width: 6px;
+    background-color: rgba(92, 102, 130, 1);
+    border-radius: 5px;
+}
+
+#monsterView::-webkit-scrollbar-thumb,
+#monsterView textarea::-webkit-scrollbar-thumb {
+    background-color: #8000ff;
+    border-radius: 5px;
+}

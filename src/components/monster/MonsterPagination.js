@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import '../../assets/css/Pagination.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -99,6 +100,10 @@ class MonsterPagination extends Component {
                         <option>50</option>
                     </select>
                 </div>
+                <div className="delimiter">|</div>
+                <Link to="/add-monster" className="button">
+                    <FontAwesomeIcon icon={faPlus} /> Add new Monster
+                </Link>
             </div >
         )
     }

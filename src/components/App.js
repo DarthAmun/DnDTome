@@ -14,6 +14,7 @@ import Options from './Options';
 
 import AddSpell from './add/AddSpell';
 import AddItem from './add/AddItem';
+import AddMonster from './add/AddMonster';
 
 import LeftNav from './LeftNav';
 import TopNav from './TopNav';
@@ -58,6 +59,9 @@ class App extends Component {
           }} />
           <Route path="/add-item" render={() => {
             return <PageLayout><AddItem /></PageLayout>
+          }} />
+          <Route path="/add-monster" render={() => {
+            return <PageLayout><AddMonster /></PageLayout>
           }} />
           <Route path="/options" render={() => {
             return <PageLayout><Options /></PageLayout>
