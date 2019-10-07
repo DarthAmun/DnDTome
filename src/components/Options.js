@@ -1,8 +1,10 @@
 import '../assets/css/Options.css';
 import React, { Component } from 'react';
-import { ipcMain } from 'electron';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
 
 const electron = window.require('electron');
+const { shell } = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const { dialog, app } = electron.remote;
 const fs = require('fs');
@@ -49,6 +51,13 @@ class Options extends Component {
     ipcRenderer.removeListener("getAllSpellsResult", this.receiveAllSpells);
     ipcRenderer.removeListener("getAllItemsResult", this.receiveAllItems);
     ipcRenderer.removeListener("getAllMonstersResult", this.receiveAllMonsters)
+  }
+
+  toPatreon = () => {
+    shell.openExternal("https://www.patreon.com/bePatron?u=25310394");
+  }
+  toDiscord = () => {
+    shell.openExternal("https://discord.gg/2KB3tzG");
   }
 
   exportSpells = (e) => {
@@ -176,6 +185,14 @@ class Options extends Component {
       <div id="overview">
         <div id="optionContent">
           <div id="options">
+            <div className="optionSection">
+              <h3>What to support me?</h3>
+              <button className="patreon" onClick={this.toPatreon}><FontAwesomeIcon icon={faPatreon} /> Become a patron</button>
+            </div>
+            <div className="optionSection">
+              <h3>Found some bugs? Or have some feedback?</h3>
+              <button className="discord" onClick={this.toDiscord}><FontAwesomeIcon icon={faDiscord} /> Join the discord</button>
+            </div>
             <div className="optionSection">
               <h3>Data Export</h3>
               <span>Path: {this.state.appPath}</span><br />

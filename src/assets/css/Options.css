@@ -30,7 +30,8 @@
     font-size: 12px;
 }
 
-.optionSection button {
+#options button {
+    background-color: #8000ff;
     height: 28px;
     width: auto;
     border: none;
@@ -41,10 +42,19 @@
     text-align: center;
     font-family: inherit;
     font-size: 14px;
-    background-color: #8000ff;
     color: white;
-    border-bottom: 2px solid transparent;
     cursor: pointer;
+}
+#options .optionSection button.patreon {
+    background-color: rgb(232, 91, 70);
+}
+#options .optionSection button.discord {
+    background-color: #7289DA;
+}
+
+#options .optionSection button {
+    background-color: #8000ff;
+    border-bottom: 2px solid transparent;
 }
 
 .optionSection button:hover {
