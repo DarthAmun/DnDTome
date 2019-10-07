@@ -94,6 +94,15 @@ class SpellSearchBar extends Component {
             }
         });
     }
+    changeText = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                text: event.target.value
+            }
+        });
+    }
     changeSources = (event) => {
         this.setState({
             ...this.state,
@@ -140,6 +149,7 @@ class SpellSearchBar extends Component {
                 <input type="text" style={{width: "80px"}} placeholder="Duration" value={this.state.query.duration} onChange={this.changeDuration} onKeyDown={this.sendQuery}></input>
                 <input type="text" style={{width: "80px"}} placeholder="Components" value={this.state.query.components} onChange={this.changeComponents} onKeyDown={this.sendQuery}></input>
                 <input type="text" style={{width: "80px"}} placeholder="Classes" value={this.state.query.classes} onChange={this.changeClasses} onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "180px"}} placeholder="Text" value={this.state.query.text} onChange={this.changeText} onKeyDown={this.sendQuery}></input>
                 <input type="text" style={{width: "80px"}} placeholder="Sources" value={this.state.query.sources} onChange={this.changeSources} onKeyDown={this.sendQuery}></input>
                 <button onClick={this.resetSearch}><FontAwesomeIcon icon={faUndo} /> Reset</button>
             </div>

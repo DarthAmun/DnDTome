@@ -297,6 +297,9 @@ const reciveItems = (step, start) => {
     if (this.searchItemQuery.type != null && typeof this.searchItemQuery.type !== 'undefined' && this.searchItemQuery.type != "") {
       q += `item_type like "%${this.searchItemQuery.type}%" AND `;
     }
+    if (this.searchItemQuery.source != null && typeof this.searchItemQuery.source !== 'undefined' && this.searchItemQuery.source != "") {
+      q += `item_source like "%${this.searchItemQuery.source}%" AND `;
+    }
     if (q.includes(" AND ")) {
       q = q.slice(0, -4);
     } else {

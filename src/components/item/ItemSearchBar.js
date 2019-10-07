@@ -12,7 +12,8 @@ class ItemSearchBar extends Component {
             name: "",
             description: "",
             rarity: "",
-            type: ""
+            type: "",
+            source: ""
         }
     }
 
@@ -52,6 +53,15 @@ class ItemSearchBar extends Component {
             }
         });
     }
+    changeSource = (event) => {
+        this.setState({
+            ...this.state,
+            query: {
+                ...this.state.query,
+                source: event.target.value
+            }
+        });
+    }
 
     sendQuery = (e) => {
         if (e.key === 'Enter') {
@@ -66,7 +76,8 @@ class ItemSearchBar extends Component {
                 name: "",
                 description: "",
                 rarity: "",
-                type: ""
+                type: "",
+                source: ""
             }
         });
         ipcRenderer.send('sendItemSearchQuery', { query: {} });
@@ -78,6 +89,7 @@ class ItemSearchBar extends Component {
                 <input type="text" style={{width: "180px"}} placeholder="Name" value={this.state.query.name} onChange={this.changeName} onKeyDown={this.sendQuery}></input>
                 <input type="text" style={{width: "180px"}} placeholder="Rarity" value={this.state.query.rarity} onChange={this.changeRarity} onKeyDown={this.sendQuery}></input>
                 <input type="text" style={{width: "180px"}} placeholder="Type" value={this.state.query.type} onChange={this.changeType} onKeyDown={this.sendQuery}></input>
+                <input type="text" style={{width: "180px"}} placeholder="Source" value={this.state.query.source} onChange={this.changeSource} onKeyDown={this.sendQuery}></input>
                 <input type="text" style={{width: "180px"}} placeholder="Description" value={this.state.query.description} onChange={this.changeDescription} onKeyDown={this.sendQuery}></input>
                 <button onClick={this.resetSearch}><FontAwesomeIcon icon={faUndo} /> Reset</button>
             </div>
