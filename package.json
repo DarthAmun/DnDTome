@@ -14,8 +14,8 @@
     "prod": "webpack --config webpack.build.config.js && electron --noDevServer .",
     "dev": "webpack-dev-server --hot --host 0.0.0.0 --config=./webpack.dev.config.js",
     "package": "webpack --config webpack.build.config.js",
-    "postpackage": "electron-packager ./ --out=./builds --icon=./src/assets/img/dice_icon.ico",
-    "sqlite-rebuild": "electron-rebuild -f -w sqlite3"
+    "postpackage": "electron-packager ./ --out=./builds --icon=./src/assets/img/dice_icon.ico --overwrite",
+    "postinstall": "electron-builder install-app-deps"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -42,7 +42,9 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.24",
     "@fortawesome/free-solid-svg-icons": "^5.11.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "electron-builder": "^21.2.0",
     "kex": "^2.1.5",
+    "node-gyp": "^6.0.0",
     "react-particles-js": "^2.7.0",
     "sqlite3": "^4.1.0"
   }
