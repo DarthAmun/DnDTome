@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import '../../assets/css/SearchBar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUndo } from '@fortawesome/free-solid-svg-icons';
@@ -6,155 +6,52 @@ import { faUndo } from '@fortawesome/free-solid-svg-icons';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
-class SpellSearchBar extends Component {
-    state = {
-        query: {
-            name: "",
-            school: "",
-            level: "",
-            time: "",
-            range: "",
-            duration: "",
-            components: "",
-            text: "",
-            classes: "",
-            sources: ""
-        }
-    }
+export default function SpellSearchBar() {
+    const [name, setName] = useState("");
+    const [school, setSchool] = useState("");
+    const [level, setLevel] = useState("");
+    const [time, setTime] = useState("");
+    const [range, setRange] = useState("");
+    const [duration, setDuration] = useState("");
+    const [components, setComponents] = useState("");
+    const [text, setText] = useState("");
+    const [classes, setClasses] = useState("");
+    const [sources, setSources] = useState("");
 
-    changeName = (event) => {
-        this.setState({
-            ...this.state,
-            query: {
-                ...this.state.query,
-                name: event.target.value
-            }
-        });
-    }
-    changeSchool = (event) => {
-        this.setState({
-            ...this.state,
-            query: {
-                ...this.state.query,
-                school: event.target.value
-            }
-        });
-    }
-    changeLevel = (event) => {
-        this.setState({
-            ...this.state,
-            query: {
-                ...this.state.query,
-                level: event.target.value
-            }
-        });
-    }
-    changeTime = (event) => {
-        this.setState({
-            ...this.state,
-            query: {
-                ...this.state.query,
-                time: event.target.value
-            }
-        });
-    }
-    changeRange = (event) => {
-        this.setState({
-            ...this.state,
-            query: {
-                ...this.state.query,
-                range: event.target.value
-            }
-        });
-    }
-    changeDuration = (event) => {
-        this.setState({
-            ...this.state,
-            query: {
-                ...this.state.query,
-                duration: event.target.value
-            }
-        });
-    }
-    changeComponents = (event) => {
-        this.setState({
-            ...this.state,
-            query: {
-                ...this.state.query,
-                components: event.target.value
-            }
-        });
-    }
-    changeClasses = (event) => {
-        this.setState({
-            ...this.state,
-            query: {
-                ...this.state.query,
-                classes: event.target.value
-            }
-        });
-    }
-    changeText = (event) => {
-        this.setState({
-            ...this.state,
-            query: {
-                ...this.state.query,
-                text: event.target.value
-            }
-        });
-    }
-    changeSources = (event) => {
-        this.setState({
-            ...this.state,
-            query: {
-                ...this.state.query,
-                sources: event.target.value
-            }
-        });
-    }
-
-    sendQuery = (e) => {
+    function sendQuery(e) {
         if (e.key === 'Enter') {
-            ipcRenderer.send('sendSpellSearchQuery', { query: this.state.query });
+            ipcRenderer.send('sendSpellSearchQuery', { query: {name, school, level, time, range, duration, components, text, classes, sources} });
         }
     }
 
-    resetSearch = (e) => {
-        this.setState({
-            ...this.state,
-            query: {
-                name: "",
-                school: "",
-                level: "",
-                time: "",
-                range: "",
-                duration: "",
-                components: "",
-                text: "",
-                classes: "",
-                sources: ""
-            }
-        });
+    function resetSearch(e) {
+        setName("");
+        setSchool("");
+        setLevel("");
+        setTime("");
+        setRange("");
+        setDuration("");
+        setComponents("");
+        setText("");
+        setClasses("");
+        setSources("");
         ipcRenderer.send('sendSpellSearchQuery', { query: {} });
     }
 
-    render() {
-        return (
-            <div id="searchBar">
-                <input type="text" style={{width: "180px"}} placeholder="Name" value={this.state.query.name} onChange={this.changeName} onKeyDown={this.sendQuery}></input>
-                <input type="text" style={{width: "80px"}} placeholder="School" value={this.state.query.school} onChange={this.changeSchool} onKeyDown={this.sendQuery}></input>
-                <input type="text" style={{width: "40px"}} placeholder="Level" value={this.state.query.level} onChange={this.changeLevel} onKeyDown={this.sendQuery}></input>
-                <input type="text" style={{width: "80px"}} placeholder="Casting Time" value={this.state.query.time} onChange={this.changeTime} onKeyDown={this.sendQuery}></input>
-                <input type="text" style={{width: "80px"}} placeholder="Range" value={this.state.query.range} onChange={this.changeRange} onKeyDown={this.sendQuery}></input>
-                <input type="text" style={{width: "80px"}} placeholder="Duration" value={this.state.query.duration} onChange={this.changeDuration} onKeyDown={this.sendQuery}></input>
-                <input type="text" style={{width: "80px"}} placeholder="Components" value={this.state.query.components} onChange={this.changeComponents} onKeyDown={this.sendQuery}></input>
-                <input type="text" style={{width: "80px"}} placeholder="Classes" value={this.state.query.classes} onChange={this.changeClasses} onKeyDown={this.sendQuery}></input>
-                <input type="text" style={{width: "180px"}} placeholder="Text" value={this.state.query.text} onChange={this.changeText} onKeyDown={this.sendQuery}></input>
-                <input type="text" style={{width: "80px"}} placeholder="Sources" value={this.state.query.sources} onChange={this.changeSources} onKeyDown={this.sendQuery}></input>
-                <button onClick={this.resetSearch}><FontAwesomeIcon icon={faUndo} /> Reset</button>
-            </div>
-        )
-    }
-}
+    return (
+        <div id="searchBar">
+            <input type="text" style={{ width: "180px" }} placeholder="Name" value={name} onChange={e => setName(e.target.value)} onKeyDown={sendQuery}></input>
+            <input type="text" style={{ width: "80px" }} placeholder="School" value={school} onChange={e => setSchool(e.target.value)} onKeyDown={sendQuery}></input>
+            <input type="text" style={{ width: "40px" }} placeholder="Level" value={level} onChange={e => setLevel(e.target.value)} onKeyDown={sendQuery}></input>
+            <input type="text" style={{ width: "80px" }} placeholder="Casting Time" value={time} onChange={e => setTime(e.target.value)} onKeyDown={sendQuery}></input>
+            <input type="text" style={{ width: "80px" }} placeholder="Range" value={range} onChange={e => setRange(e.target.value)} onKeyDown={sendQuery}></input>
+            <input type="text" style={{ width: "80px" }} placeholder="Duration" value={duration} onChange={e => setDuration(e.target.value)} onKeyDown={sendQuery}></input>
+            <input type="text" style={{ width: "80px" }} placeholder="Components" value={components} onChange={e => setComponents(e.target.value)} onKeyDown={sendQuery}></input>
+            <input type="text" style={{ width: "80px" }} placeholder="Classes" value={classes} onChange={e => setClasses(e.target.value)} onKeyDown={sendQuery}></input>
+            <input type="text" style={{ width: "180px" }} placeholder="Text" value={text} onChange={e => setText(e.target.value)} onKeyDown={sendQuery}></input>
+            <input type="text" style={{ width: "80px" }} placeholder="Sources" value={sources} onChange={e => setSources(e.target.value)} onKeyDown={sendQuery}></input>
+            <button onClick={resetSearch}><FontAwesomeIcon icon={faUndo} /> Reset</button>
+        </div>
+    )
 
-export default SpellSearchBar;
+}
