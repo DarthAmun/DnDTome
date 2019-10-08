@@ -14,8 +14,9 @@
     "prod": "webpack --config webpack.build.config.js && electron --noDevServer .",
     "dev": "webpack-dev-server --hot --host 0.0.0.0 --config=./webpack.dev.config.js",
     "package": "webpack --config webpack.build.config.js",
-    "postpackage": "electron-packager ./ --out=./builds --icon=./src/assets/img/dice_icon.ico --overwrite",
-    "postinstall": "electron-builder install-app-deps"
+    "postpackage": "electron-packager ./ --out=./builds --icon=./src/assets/img/dice_icon.ico --overwrite --archtype=linux --arch=x64",
+    "postinstall": "electron-builder install-app-deps",
+    "builder": "electron-builder --linux"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -27,7 +28,6 @@
     "css-loader": "^3.2.0",
     "electron": "^1.8.8",
     "electron-packager": "^14.0.6",
-    "electron-rebuild": "^1.8.6",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^2.28.0",
@@ -36,14 +36,14 @@
     "react-router-dom": "^5.0.1",
     "style-loader": "^0.19.1",
     "webpack": "^3.12.0",
-    "webpack-dev-server": "^2.11.5"
+    "webpack-dev-server": "^2.11.5",
+    "electron-builder": "^21.2.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.24",
     "@fortawesome/free-brands-svg-icons": "^5.11.1",
     "@fortawesome/free-solid-svg-icons": "^5.11.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "electron-builder": "^21.2.0",
     "kex": "^2.1.5",
     "node-gyp": "^6.0.0",
     "react-particles-js": "^2.7.0",
