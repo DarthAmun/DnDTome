@@ -14,7 +14,7 @@
     "prod": "webpack --config webpack.build.config.js && electron --noDevServer .",
     "dev": "webpack-dev-server --hot --host 0.0.0.0 --config=./webpack.dev.config.js",
     "package": "webpack --config webpack.build.config.js",
-    "postpackage": "electron-packager ./ --out=./builds --icon=./src/assets/img/dice_icon.ico --overwrite --archtype=linux --arch=x64",
+    "postpackage": "electron-packager ./ --out=./builds --icon=./src/assets/img/dice_icon.ico --overwrite --platform=linux --arch=x64",
     "postinstall": "electron-builder install-app-deps",
     "builder": "electron-builder --linux"
   },
