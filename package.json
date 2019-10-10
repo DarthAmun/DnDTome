@@ -14,9 +14,12 @@
     "prod": "webpack --config webpack.build.config.js && electron --noDevServer .",
     "dev": "webpack-dev-server --hot --host 0.0.0.0 --config=./webpack.dev.config.js",
     "package": "webpack --config webpack.build.config.js",
-    "postpackage": "electron-packager ./ --out=./builds --icon=./src/assets/img/dice_icon.ico --overwrite --platform=linux --arch=x64",
-    "postinstall": "electron-builder install-app-deps",
-    "builder": "electron-builder --linux"
+    "postpackage": "npm run package-win && npm run package-linux",
+    "package-win": "electron-packager ./ --out=./builds --icon=./src/assets/img/dice_icon.ico --overwrite --platform=win32 --arch=x64",
+    "package-linux": "electron-packager ./ --out=./builds --icon=./src/assets/img/dice_icon.png --overwrite --platform=linux --arch=x64",
+    "postinstall": "npm run appDeps-win && npm run appDeps-linux",
+    "appDeps-win": "electron-builder install-app-deps --platform=win32 --arch=x64",
+    "appDeps-linux": "electron-builder install-app-deps --platform=linux --arch=x64"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
