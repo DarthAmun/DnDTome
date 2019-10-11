@@ -12,14 +12,16 @@ class SpellPagination extends Component {
         currentPage: 1,
         pageStep: 10,
         spellCount: 0,
-        currentSpellList: { spells: [] }
+        currentSpellList: { spells: [] },
+        maxPages: 0
     }
 
     receiveSpellCount = (evt, result) => {
         this.setState({
             ...this.state,
             spellCount: result[0].count,
-            currentPage: 1
+            currentPage: 1,
+            maxPages: Math.ceil(result[0].count / this.state.pageStep)
         })
     }
 
@@ -32,7 +34,7 @@ class SpellPagination extends Component {
     }
 
     pageUp = () => {
-        let count = Math.ceil(this.state.spellCount / 10);
+        let count = this.state.maxPages;
         let newCount = this.state.currentPage + 1;
         if (newCount <= count) {
             this.setState({
@@ -53,7 +55,7 @@ class SpellPagination extends Component {
     }
     pageJumpTo = (event) => {
         if (!isNaN(event.target.value)) {
-            if (event.target.value > 0 && event.target.value <= Math.ceil(this.state.spellCount / 10)) {
+            if (event.target.value > 0 && event.target.value <= this.state.maxPages) {
                 this.setState({
                     ...this.state,
                     currentPage: parseInt(event.target.value)
@@ -71,7 +73,8 @@ class SpellPagination extends Component {
         this.setState({
             ...this.state,
             pageStep: parseInt(e.target.value),
-            currentPage: 1
+            currentPage: 1,
+            maxPages: Math.ceil(this.state.spellCount / parseInt(e.target.value))
         });
         ipcRenderer.send('getSearchSpells', { step: e.target.value, start: 0 });
     }
@@ -84,7 +87,7 @@ class SpellPagination extends Component {
                 </div>
                 <div id="pages">
                     <input id="pageInput" type="number" value={this.state.currentPage} min="1"
-                        max={Math.ceil(this.state.spellCount / this.state.pageStep)}
+                        max={this.state.maxPages}
                         onChange={this.pageJumpTo}
                         onKeyDown={this.handleKeyDown} />
                     / {Math.ceil(this.state.spellCount / this.state.pageStep)}
