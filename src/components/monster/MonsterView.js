@@ -145,21 +145,22 @@ class MonsterView extends Component {
                         <div className="abilityBonus">{this.formatScore(this.state.str)}</div>
                     </div>
                     <div className="score">
-                        <label>Intelligence: <input type="number" value={this.state.int} onChange={this.handleIntChange}></input></label>
-                        <div className="abilityBonus">{this.formatScore(this.state.int)}</div>
+                        <label>Constitution: <input type="number" value={this.state.con} onChange={this.handleConChange}></input></label>
+                        <div className="abilityBonus">{this.formatScore(this.state.con)}</div>
                     </div>
                     <div className="score">
                         <label>Dexterity: <input type="number" value={this.state.dex} onChange={this.handleDexChange}></input></label>
                         <div className="abilityBonus">{this.formatScore(this.state.dex)}</div>
                     </div>
                     <div className="score">
+                        <label>Intelligence: <input type="number" value={this.state.int} onChange={this.handleIntChange}></input></label>
+                        <div className="abilityBonus">{this.formatScore(this.state.int)}</div>
+                    </div>
+                    <div className="score">
                         <label>Wisdom: <input type="number" value={this.state.wis} onChange={this.handleWisChange}></input></label>
                         <div className="abilityBonus">{this.formatScore(this.state.wis)}</div>
                     </div>
-                    <div className="score">
-                        <label>Constitution: <input type="number" value={this.state.con} onChange={this.handleConChange}></input></label>
-                        <div className="abilityBonus">{this.formatScore(this.state.con)}</div>
-                    </div>
+                    
                     <div className="score">
                         <label>Charisma: <input type="number" value={this.state.cha} onChange={this.handleChaChange}></input></label>
                         <div className="abilityBonus">{this.formatScore(this.state.cha)}</div>
