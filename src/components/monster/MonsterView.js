@@ -176,13 +176,49 @@ class MonsterView extends Component {
                     <textarea className="small" value={this.state.dmgResistance} onChange={this.handleResistanceChange} placeholder="Resistances..."></textarea>
                     <textarea className="small" value={this.state.dmgImmunities} onChange={this.handleImmunitiesChange} placeholder="Immunities..."></textarea>
                 </div>
-                <textarea value={this.state.sAblt} onChange={this.handleDescriptionChange} placeholder="Resistances..."></textarea>
-                <textarea value={this.state.ablt} onChange={this.handleDescriptionChange} placeholder="Resistances..."></textarea>
-                <textarea value={this.state.lAblt} onChange={this.handleDescriptionChange} placeholder="Resistances..."></textarea>
+                <textarea value={this.state.sAblt} onChange={this.handleSAbltChange} placeholder="Special abilities..."></textarea>
+                <textarea value={this.state.ablt} onChange={this.handleAbltChange} placeholder="Actions..."></textarea>
+                <textarea value={this.state.lAblt} onChange={this.handleLAblChange} placeholder="Legendary Actions..."></textarea>
             </div>
         )
     }
-
+    
+    handleImmunitiesChange = (e) => {
+        this.setState({
+            ...this.state,
+            dmgImmunities: e.target.value
+        });
+    }
+    handleResistanceChange = (e) => {
+        this.setState({
+            ...this.state,
+            dmgResistance: e.target.value
+        });
+    }
+    handleVulnerabilitieChange = (e) => {
+        this.setState({
+            ...this.state,
+            dmgVulnerabilitie: e.target.value
+        });
+    }
+    handleLAblChange = (e) => {
+        this.setState({
+            ...this.state,
+            lAblt: e.target.value
+        });
+    }
+    handleAbltChange = (e) => {
+        this.setState({
+            ...this.state,
+            ablt: e.target.value
+        });
+    }
+    handleSAbltChange = (e) => {
+        this.setState({
+            ...this.state,
+            sAblt: e.target.value
+        });
+    }
     handleNameChange = (e) => {
         this.setState({
             ...this.state,
