@@ -34,6 +34,7 @@ class MonsterView extends Component {
         dmgVulnerabilitie: "",
         dmgResistance: "",
         dmgImmunities: "",
+        conImmunities: "",
         sAblt: "",
         ablt: "",
         lAblt: ""
@@ -69,6 +70,7 @@ class MonsterView extends Component {
             dmgVulnerabilitie: result.monster_dmgVulnerabilities,
             dmgResistance: result.monster_dmgResistance,
             dmgImmunities: result.monster_dmgImmunities,
+            conImmunities: result.monster_conImmunities,
             sAblt: text_sAblt,
             ablt: text_ablt,
             lAblt: text_lAbtl
@@ -175,7 +177,8 @@ class MonsterView extends Component {
                 <div className="top">
                     <textarea className="small" value={this.state.dmgVulnerabilitie} onChange={this.handleVulnerabilitieChange} placeholder="Vulnerabilities..."></textarea>
                     <textarea className="small" value={this.state.dmgResistance} onChange={this.handleResistanceChange} placeholder="Resistances..."></textarea>
-                    <textarea className="small" value={this.state.dmgImmunities} onChange={this.handleImmunitiesChange} placeholder="Immunities..."></textarea>
+                    <textarea className="small" value={this.state.dmgImmunities} onChange={this.handleImmunitiesChange} placeholder="Damage immunities..."></textarea>
+                    <textarea className="small" value={this.state.conImmunities} onChange={this.handleConImmunitiesChange} placeholder="Condition immunities..."></textarea>
                 </div>
                 <textarea value={this.state.sAblt} onChange={this.handleSAbltChange} placeholder="Special abilities..."></textarea>
                 <textarea value={this.state.ablt} onChange={this.handleAbltChange} placeholder="Actions..."></textarea>
@@ -184,6 +187,12 @@ class MonsterView extends Component {
         )
     }
     
+    handleConImmunitiesChange = (e) => {
+        this.setState({
+            ...this.state,
+            conImmunities: e.target.value
+        });
+    }
     handleImmunitiesChange = (e) => {
         this.setState({
             ...this.state,
