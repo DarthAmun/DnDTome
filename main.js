@@ -490,17 +490,17 @@ const saveItem = (item) => {
 }
 
 const saveMonster = (monster) => {
-  let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment, monster.ac, monster.hp, monster.speed, monster.str, 
-    monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.saveingThrows, monster.skills, monster.dmgVulnerabilitie, 
-    monster.dmgResistance, monster.dmgImmunities, monster.senses, monster.lang, monster.cr, monster.sAblt, monster.ablt, monster.lAblt, 
-    monster.source, monster.pic, monster.id];
+  let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment, monster.ac, monster.hp, monster.speed, monster.str,
+  monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.saveingThrows, monster.skills, monster.dmgVulnerabilitie,
+  monster.dmgResistance, monster.dmgImmunities, monster.senses, monster.lang, monster.cr, monster.sAblt, monster.ablt, monster.lAblt,
+  monster.source, monster.pic, monster.id];
   let sql = `UPDATE 'main'.'tab_monsters'
               SET monster_name = ?, monster_size = ?, monster_type = ?, monster_subtype = ?, monster_alignment = ?, monster_armorClass = ?,
               monster_hitPoints = ?, monster_speed = ?, monster_strength = ?, monster_dexterity = ?, monster_constitution = ?, 
               monster_intelligence = ?, monster_wisdom = ?, monster_charisma = ?, monster_savingThrows = ?, monster_skills = ?, 
               monster_dmgVulnerabilities = ?, monster_dmgResistance = ?, monster_dmgImmunities = ?, monster_senses = ?, monster_lang = ?, 
               monster_cr = ?, monster_sAblt = ?, monster_ablt = ?, monster_lAbtl = ?, monster_source = ?, monster_pic = ?
-              WHERE monster_id = ?`; 
+              WHERE monster_id = ?`;
   db.serialize(function () {
     db.run(sql, data, function (err) {
       if (err) {
@@ -513,8 +513,8 @@ const saveMonster = (monster) => {
 }
 
 const saveChar = (char) => {
-  let data = [char.name, char.player, char.prof, char.exp, char.pic, char.class, char.race, char.background, char.ac, char.hp, char.currentHp, 
-    char.init, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.actions, char.features, char.profsLangs, char.notes, char.id];
+  let data = [char.name, char.player, char.prof, char.exp, char.pic, char.class, char.race, char.background, char.ac, char.hp, char.currentHp,
+  char.init, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.actions, char.features, char.profsLangs, char.notes, char.id];
   let sql = `UPDATE 'main'.'tab_characters'
               SET char_name = ?, char_player = ?, char_prof = ?, char_exp = ?, char_pic = ?, char_class = ?, char_race = ?, char_background = ?, 
               char_ac = ?, char_hp = ?, char_hp_current = ?, char_init = ?, char_str = ?, char_dex = ?, char_con = ?, char_int = ?, char_wis = ?, 
@@ -635,17 +635,17 @@ const saveNewItems = (items) => {
 }
 
 const saveNewMonster = (monster) => {
-  let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment, monster.ac, monster.hp, monster.speed, monster.str, 
-    monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.saveingThrows, monster.skills, monster.dmgVulnerabilitie, 
-    monster.dmgResistance, monster.dmgImmunities, monster.senses, monster.lang, monster.cr, monster.sAblt, monster.ablt, monster.lAblt, 
-    monster.source, monster.pic];
+  let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment, monster.ac, monster.hp, monster.speed, monster.str,
+  monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.saveingThrows, monster.skills, monster.dmgVulnerabilitie,
+  monster.dmgResistance, monster.dmgImmunities, monster.monster_conImmunities, monster.senses, monster.lang, monster.cr, monster.sAblt, monster.ablt, monster.lAblt,
+  monster.source, monster.pic];
   let sql = `INSERT INTO 'main'.'tab_monsters'
               (monster_name, monster_size, monster_type, monster_subtype, monster_alignment, monster_armorClass,
               monster_hitPoints, monster_speed, monster_strength, monster_dexterity, monster_constitution, 
               monster_intelligence, monster_wisdom, monster_charisma, monster_savingThrows, monster_skills, 
-              monster_dmgVulnerabilities, monster_dmgResistance, monster_dmgImmunities, monster_senses, monster_lang, 
+              monster_dmgVulnerabilities, monster_dmgResistance, monster_dmgImmunities, monster_conImmunities, monster_senses, monster_lang, 
               monster_cr, monster_sAblt, monster_ablt, monster_lAbtl, monster_source, monster_pic)
-              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`; 
+              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
   db.serialize(function () {
     db.run(sql, data, function (err) {
       if (err) {
@@ -656,27 +656,159 @@ const saveNewMonster = (monster) => {
   });
 }
 const saveNewMonsters = (monsters) => {
-  console.log(monsters);
   monsters.forEach(monster => {
-    let data = [monster.monster_name, monster.monster_size, monster.monster_type, monster.monster_subtype, monster.monster_alignment, 
-      monster.monster_armorClass, monster.monster_hitPoints, monster.monster_speed, monster.monster_strength, monster.monster_dexterity, 
-      monster.monster_constitution, monster.monster_intelligence, monster.monster_wisdom, monster.monster_charisma, monster.monster_savingThrows, 
-      monster.monster_skills, monster.monster_dmgVulnerabilities, monster.monster_dmgResistance, monster.monster_dmgImmunities, 
-      monster.monster_senses, monster.monster_lang, monster.monster_cr, monster.monster_sAblt, monster.monster_ablt, monster.monster_lAbtl, 
-      monster.monster_source, monster.monster_pic];
+    let data = [monster.monster_name, monster.monster_size, monster.monster_type, monster.monster_subtype, monster.monster_alignment,
+    monster.monster_armorClass, monster.monster_hitPoints, monster.monster_speed, monster.monster_strength, monster.monster_dexterity,
+    monster.monster_constitution, monster.monster_intelligence, monster.monster_wisdom, monster.monster_charisma, monster.monster_savingThrows,
+    monster.monster_skills, monster.monster_dmgVulnerabilities, monster.monster_dmgResistance, monster.monster_dmgImmunities, monster.monster_conImmunities,
+    monster.monster_senses, monster.monster_lang, monster.monster_cr, monster.monster_sAblt, monster.monster_ablt, monster.monster_lAbtl,
+    monster.monster_source, monster.monster_pic];
     let sql = `INSERT INTO 'main'.'tab_monsters'
                 (monster_name, monster_size, monster_type, monster_subtype, monster_alignment, monster_armorClass,
                 monster_hitPoints, monster_speed, monster_strength, monster_dexterity, monster_constitution, 
                 monster_intelligence, monster_wisdom, monster_charisma, monster_savingThrows, monster_skills, 
-                monster_dmgVulnerabilities, monster_dmgResistance, monster_dmgImmunities, monster_senses, monster_lang, 
+                monster_dmgVulnerabilities, monster_dmgResistance, monster_dmgImmunities, monster_conImmunities, monster_senses, monster_lang, 
                 monster_cr, monster_sAblt, monster_ablt, monster_lAbtl, monster_source, monster_pic)
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`; 
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
     db.serialize(function () {
       db.run(sql, data, function (err) {
         if (err) {
           return console.error(err.message);
         }
         console.log(`====>Added ${monster.monster_name} successfull`);
+      });
+    });
+  });
+}
+
+const fomatSkills = (monster) => {
+  let skills = ""
+  if (monster.athletics !== undefined) {
+    skills += "Athletics +" + monster.athletics + ", "
+  }
+  if (monster.acrobatics !== undefined) {
+    skills += "Acrobatics +" + monster.acrobatics + ", "
+  }
+  if (monster.sleight_of_hand !== undefined) {
+    skills += "Sleight of Hand +" + monster.sleight_of_hand + ", "
+  }
+  if (monster.stealth !== undefined) {
+    skills += "Stealth +" + monster.stealth + ", "
+  }
+  if (monster.arcana !== undefined) {
+    skills += "Arcana +" + monster.arcana + ", "
+  }
+  if (monster.history !== undefined) {
+    skills += "History +" + monster.history + ", "
+  }
+  if (monster.investigation !== undefined) {
+    skills += "Investigation +" + monster.investigation + ", "
+  }
+  if (monster.nature !== undefined) {
+    skills += "Nature +" + monster.nature + ", "
+  }
+  if (monster.religion !== undefined) {
+    skills += "Religion +" + monster.religion + ", "
+  }
+  if (monster.animal_handling !== undefined) {
+    skills += "Animal Handling +" + monster.animal_handling + ", "
+  }
+  if (monster.insight !== undefined) {
+    skills += "Insight +" + monster.insight + ", "
+  }
+  if (monster.medicine !== undefined) {
+    skills += "Medicine +" + monster.medicine + ", "
+  }
+  if (monster.perception !== undefined) {
+    skills += "Perception +" + monster.perception + ", "
+  }
+  if (monster.survival !== undefined) {
+    skills += "Survival +" + monster.survival + ", "
+  }
+  if (monster.deception !== undefined) {
+    skills += "Deception +" + monster.deception + ", "
+  }
+  if (monster.intimidation !== undefined) {
+    skills += "Intimidation +" + monster.intimidation + ", "
+  }
+  if (monster.performance !== undefined) {
+    skills += "Performance +" + monster.performance + ", "
+  }
+  if (monster.persuasion !== undefined) {
+    skills += "Persuasion +" + monster.persuasion + ", "
+  }
+  return skills.substr(0, skills.length-2);
+}
+
+const fomatSaves = (monster) => {
+  let saves = ""
+  if (monster.strength_save !== undefined) {
+    saves += "STR +" + monster.strength_save + ", "
+  }
+  if (monster.dexterity_save !== undefined) {
+    saves += "DEX +" + monster.dexterity_save + ", "
+  }
+  if (monster.constitution_save !== undefined) {
+    saves += "CON +" + monster.constitution_save + ", "
+  }
+  if (monster.intelligence_save !== undefined) {
+    saves += "INT +" + monster.intelligence_save + ", "
+  }
+  if (monster.wisdom_save !== undefined) {
+    saves += "WIS +" + monster.wisdom_save + ", "
+  }
+  if (monster.charisma_save !== undefined) {
+    saves += "CHA +" + monster.charisma_save + ", "
+  }
+  return saves.substr(0, saves.length-2);
+}
+
+const saveNewMonstersSRD = (monsters) => {
+  monsters.forEach(monster => {
+    const hitPoints = monster.hit_points + " (" + monster.hit_dice + ")";
+
+    let sAblt = "";
+    if (monster.special_abilities !== undefined) {
+      monster.special_abilities.forEach(specialAbilities => {
+        sAblt += specialAbilities.name + "\r\n" + specialAbilities.desc + "\r\n";
+      });
+    }
+
+    let ablt = "";
+    if (monster.actions !== undefined) {
+      monster.actions.forEach(actions => {
+        ablt += actions.name + "\r\n" + actions.desc + "\r\n";
+      });
+    }
+
+    let lAblt = "";
+    if (monster.legendary_actions !== undefined) {
+      monster.legendary_actions.forEach(legendaryActions => {
+        lAblt += legendaryActions.name + "\r\n" + legendaryActions.desc + "\r\n";
+      });
+    }
+
+    let skills = fomatSkills(monster);
+    let saves = fomatSaves(monster);
+
+    let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment,
+    monster.armor_class, hitPoints, monster.speed, monster.strength, monster.dexterity,
+    monster.constitution, monster.intelligence, monster.wisdom, monster.charisma, monster.damage_vulnerabilities,
+    monster.damage_resistances, monster.damage_immunities, monster.condition_immunities, monster.senses, monster.languages, monster.challenge_rating,
+      sAblt, ablt, lAblt, skills, saves];
+    let sql = `INSERT INTO 'main'.'tab_monsters'
+                  (monster_name, monster_size, monster_type, monster_subtype, monster_alignment, monster_armorClass,
+                  monster_hitPoints, monster_speed, monster_strength, monster_dexterity, monster_constitution, 
+                  monster_intelligence, monster_wisdom, monster_charisma,
+                  monster_dmgVulnerabilities, monster_dmgResistance, monster_dmgImmunities, monster_conImmunities, monster_senses, monster_lang, 
+                  monster_cr, monster_sAblt, monster_ablt, monster_lAbtl, monster_skills, monster_savingThrows)
+                  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    db.serialize(function () {
+      db.run(sql, data, function (err) {
+        if (err) {
+          return console.error(err.message);
+        }
+        console.log(`====>Added ${monster.name} successfull`);
       });
     });
   });
@@ -822,6 +954,10 @@ ipcMain.on('saveNewMonster', (event, arg) => {
 ipcMain.on('saveNewMonsters', (event, arg) => {
   const { monsters } = arg;
   saveNewMonsters(monsters);
+});
+ipcMain.on('saveNewMonstersSRD', (event, arg) => {
+  const { monsters } = arg;
+  saveNewMonstersSRD(monsters);
 });
 
 ipcMain.on('getChars', (event, arg) => {

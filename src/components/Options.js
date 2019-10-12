@@ -180,6 +180,27 @@ class Options extends Component {
     });
   }
 
+  importMonstersSRD = (e) => {
+    dialog.showOpenDialog((fileNames) => {
+      // fileNames is an array that contains all the selected
+      if (fileNames === undefined) {
+        console.log("No file selected");
+        return;
+      }
+
+      fs.readFile(fileNames[0], 'utf-8', (err, data) => {
+        if (err) {
+          alert("An error ocurred reading the file :" + err.message);
+          return;
+        }
+
+        // Change how to handle the file content
+        let monsters = JSON.parse(data);
+        ipcRenderer.send('saveNewMonstersSRD', { monsters }); // fehlt noch
+      });
+    });
+  }
+
   render() {
     return (
       <div id="overview">
@@ -206,6 +227,7 @@ class Options extends Component {
               <button onClick={this.importSpells}>Import Spells </button><br />
               <button onClick={this.importItems}>Import Items </button><br />
               <button onClick={this.importMonsters}>Import Monsters </button><br />
+              <button onClick={this.importMonstersSRD}>Import Monsters (5e-SRD-Format)</button><br />
               <button onClick={this.importItems}>Import Charakters </button>
             </div>
             <div className="optionSection">
