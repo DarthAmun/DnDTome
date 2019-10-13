@@ -133,12 +133,12 @@ class LeftNav extends Component {
             <FontAwesomeIcon icon={faShieldAlt} /> Items
           </div>
         </Link>
-        <Link to="/char-overview" style={{ top: "170px" }} className={this.props.location.pathname == "/char-overview" ? "menuItemActiv" : ""}>
+        {/* <Link to="/char-overview" style={{ top: "170px" }} className={this.props.location.pathname == "/char-overview" ? "menuItemActiv" : ""}>
           <div className="menuItem">
             <FontAwesomeIcon icon={faIdCard} /> Chars
           </div>
-        </Link>
-        <Link to="/monster-overview" style={{ top: "220px" }} className={this.props.location.pathname == "/monster-overview" ? "menuItemActiv" : ""}>
+        </Link> */}
+        <Link to="/monster-overview" style={{ top: "170px" }} className={this.props.location.pathname == "/monster-overview" ? "menuItemActiv" : ""}>
           <div className="menuItem">
             <FontAwesomeIcon icon={faDragon} /> Monsters
           </div>

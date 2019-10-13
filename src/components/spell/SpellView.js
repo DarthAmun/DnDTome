@@ -79,7 +79,7 @@ class SpellView extends Component {
                 <textarea value={this.state.text} onChange={this.handleChange}></textarea>
                 <button className="delete" onClick={this.deleteSpell}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                 <button onClick={this.saveSpell}><FontAwesomeIcon icon={faSave} /> Save</button>
-                <button onClick={this.addSpellToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
+                {/* <button onClick={this.addSpellToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button> */}
             </div>
         )
     }

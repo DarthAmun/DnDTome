@@ -220,23 +220,23 @@ class Options extends Component {
               <button onClick={this.exportSpells}>Export all Spells </button><br />
               <button onClick={this.exportItems}>Export all Items </button><br />
               <button onClick={this.exportMonsters}>Export all Monsters </button><br />
-              <button onClick={this.exportItems}>Export all Charakters </button>
+              {/* <button onClick={this.exportItems}>Export all Charakters </button> */}
             </div>
             <div className="optionSection">
               <h3>Data Import</h3>
               <button onClick={this.importSpells}>Import Spells </button><br />
               <button onClick={this.importItems}>Import Items </button><br />
-              <button onClick={this.importMonsters}>Import Monsters </button><br />
-              <button onClick={this.importMonstersSRD}>Import Monsters (5e-SRD-Format)</button><br />
-              <button onClick={this.importItems}>Import Charakters </button>
+              <button onClick={this.importMonsters}>Import Monsters </button>
+              {/* <button onClick={this.importMonstersSRD}>Import Monsters (5e-SRD-Format)</button><br /> */}
+              {/* <button onClick={this.importItems}>Import Charakters </button> */}
             </div>
-            <div className="optionSection">
+            {/* <div className="optionSection">
               <h3>Delete Data</h3>
               <button onClick={this.importSpells}>Delete all Spells </button><br />
               <button onClick={this.importItems}>Delete all Items </button><br />
-              <button onClick={this.importItems}>Delete all Monsters </button><br />
+              <button onClick={this.importItems}>Delete all Monsters </button>
               <button onClick={this.importItems}>Delete all Charakters </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
