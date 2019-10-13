@@ -175,7 +175,7 @@ class Options extends Component {
 
         // Change how to handle the file content
         let monsters = JSON.parse(data);
-        ipcRenderer.send('saveNewMonsters', { monsters }); // fehlt noch
+        ipcRenderer.send('saveNewMonsters', { monsters });
       });
     });
   }
@@ -196,9 +196,19 @@ class Options extends Component {
 
         // Change how to handle the file content
         let monsters = JSON.parse(data);
-        ipcRenderer.send('saveNewMonstersSRD', { monsters }); // fehlt noch
+        ipcRenderer.send('saveNewMonstersSRD', { monsters });
       });
     });
+  }
+
+  deleteAllItems = () => {
+    ipcRenderer.send('deleteAllItems');
+  }
+  deleteAllSpells = () => {
+    ipcRenderer.send('deleteAllSpells');
+  }
+  deleteAllMonsters = () => {
+    ipcRenderer.send('deleteAllMonsters');
   }
 
   render() {
@@ -230,13 +240,13 @@ class Options extends Component {
               {/* <button onClick={this.importMonstersSRD}>Import Monsters (5e-SRD-Format)</button><br /> */}
               {/* <button onClick={this.importItems}>Import Charakters </button> */}
             </div>
-            {/* <div className="optionSection">
+            <div className="optionSection">
               <h3>Delete Data</h3>
-              <button onClick={this.importSpells}>Delete all Spells </button><br />
-              <button onClick={this.importItems}>Delete all Items </button><br />
-              <button onClick={this.importItems}>Delete all Monsters </button>
-              <button onClick={this.importItems}>Delete all Charakters </button>
-            </div> */}
+              <button onClick={this.deleteAllSpells}>Delete all Spells </button><br />
+              <button onClick={this.deleteAllItems}>Delete all Items </button><br />
+              <button onClick={this.deleteAllMonsters}>Delete all Monsters </button>
+              {/* <button onClick={this.importItems}>Delete all Charakters </button> */}
+            </div>
           </div>
         </div>
       </div>

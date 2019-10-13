@@ -826,6 +826,17 @@ const reciveChars = () => {
   });
 }
 
+const deleteAll = (tab) => {
+  db.serialize(function () {
+    db.run(`DELETE FROM tab_${tab}`, function (err) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log(`====> All ${tab} successfull`)
+    });
+  });
+}
+
 ipcMain.on('getAllSpells', (event) => {
   reciveAllSpells();
 });
@@ -1003,4 +1014,14 @@ ipcMain.on('openMonsterView', (event, monster) => {
   }
   monsterWindow.setTitle("DnD Tome - " + monster.monster_name);
   monsterWindow.webContents.send('onViewMonster', monster);
+});
+
+ipcMain.on('deleteAllSpells', (event) => {
+  deleteAll("spells");
+});
+ipcMain.on('deleteAllItems', (event) => {
+  deleteAll("items");
+});
+ipcMain.on('deleteAllMonsters', (event) => {
+  deleteAll("monsters");
 });
