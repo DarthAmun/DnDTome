@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../assets/css/monster/MonsterView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -7,84 +7,79 @@ const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const { dialog } = electron.remote;
 
-class MonsterView extends Component {
-    state = {
-        id: "",
-        name: "",
-        pic: "",
-        size: "",
-        type: "",
-        subtype: "",
-        alignment: "",
-        ac: "",
-        hp: "",
-        speed: "",
-        cr: "",
-        source: "",
-        str: "",
-        dex: "",
-        con: "",
-        int: "",
-        wis: "",
-        cha: "",
-        saveingThrows: "",
-        skills: "",
-        senses: "",
-        lang: "",
-        dmgVulnerabilitie: "",
-        dmgResistance: "",
-        dmgImmunities: "",
-        conImmunities: "",
-        sAblt: "",
-        ablt: "",
-        lAblt: ""
-    }
+export default function MonsterView() {
+    const [id, setId] = useState("");
+    const [name, setName] = useState("");
+    const [pic, setPic] = useState("");
+    const [size, setSize] = useState("");
+    const [type, setType] = useState("");
+    const [subtype, setSubtype] = useState("");
+    const [alignment, setAlignment] = useState("");
+    const [ac, setAc] = useState("");
+    const [hp, setHp] = useState("");
+    const [speed, setSpeed] = useState("");
+    const [cr, setCr] = useState("");
+    const [source, setSource] = useState("");
+    const [str, setStr] = useState("");
+    const [dex, setDex] = useState("");
+    const [con, setCon] = useState("");
+    const [int, setInt] = useState("");
+    const [wis, setWis] = useState("");
+    const [cha, setCha] = useState("");
+    const [savingThrows, setSavingThrows] = useState("");
+    const [skills, setSkills] = useState("");
+    const [senses, setSenses] = useState("");
+    const [lang, setLang] = useState("");
+    const [dmgVulnerabilitie, setDmgVulnerabilitie] = useState("");
+    const [dmgResistance, setDmgResistance] = useState("");
+    const [dmgImmunities, setDmgImmunities] = useState("");
+    const [conImmunities, setConImmunities] = useState("");
+    const [sAblt, setSAblt] = useState("");
+    const [ablt, setAblt] = useState("");
+    const [lAblt, setLAblt] = useState("");
 
-    receiveMonster = (event, result) => {
+    const receiveMonster = (event, result) => {
         const text_sAblt = result.monster_sAblt.replace(/\\r\\n/gm, "\r\n");
         const text_ablt = result.monster_ablt.replace(/\\r\\n/gm, "\r\n");
         const text_lAbtl = result.monster_lAbtl.replace(/\\r\\n/gm, "\r\n");
-        this.setState({
-            ...this.state,
-            id: result.monster_id,
-            name: result.monster_name,
-            pic: result.monster_pic,
-            size: result.monster_size,
-            type: result.monster_type,
-            alignment: result.monster_alignment,
-            ac: result.monster_armorClass,
-            hp: result.monster_hitPoints,
-            speed: result.monster_speed,
-            cr: result.monster_cr,
-            source: result.monster_source,
-            str: result.monster_strength,
-            dex: result.monster_dexterity,
-            con: result.monster_constitution,
-            int: result.monster_intelligence,
-            wis: result.monster_wisdom,
-            cha: result.monster_charisma,
-            saveingThrows: result.monster_savingThrows,
-            skills: result.monster_skills,
-            senses: result.monster_senses,
-            lang: result.monster_lang,
-            dmgVulnerabilitie: result.monster_dmgVulnerabilities,
-            dmgResistance: result.monster_dmgResistance,
-            dmgImmunities: result.monster_dmgImmunities,
-            conImmunities: result.monster_conImmunities,
-            sAblt: text_sAblt,
-            ablt: text_ablt,
-            lAblt: text_lAbtl
-        })
+
+        setId(result.monster_id);
+        setName(result.monster_name);
+        setType(result.monster_type);
+        setSubtype(result.monster_subtype);
+        setPic(result.monster_pic);
+        setSize(result.monster_size);
+        setType(result.monster_type);
+        setAlignment(result.monster_alignment);
+        setAc(result.monster_armorClass);
+        setHp(result.monster_hitPoints);
+        setSpeed(result.monster_speed);
+        setCr(result.monster_cr);
+        setSource(result.monster_source);
+        setStr(result.monster_strength);
+        setDex(result.monster_dexterity);
+        setCon(result.monster_constitution);
+        setInt(result.monster_intelligence);
+        setWis(result.monster_wisdom);
+        setCha(result.monster_charisma);
+        setSavingThrows(result.monster_savingThrows);
+        setSkills(result.monster_skills);
+        setSenses(result.monster_senses);
+        setLang(result.monster_lang);
+        setDmgVulnerabilitie(result.monster_dmgVulnerabilities);
+        setDmgResistance(result.monster_dmgResistance);
+        setDmgImmunities(result.monster_dmgImmunities);
+        setConImmunities(result.monster_conImmunities);
+        setSAblt(text_sAblt);
+        setAblt(text_ablt);
+        setLAblt(text_lAbtl);
     }
 
-    componentDidMount() {
-        ipcRenderer.on("onViewMonster", this.receiveMonster);
-    }
-    componentWillUnmount() {
-        ipcRenderer.removeListener("onViewMonster", this.receiveMonster);
-    }
+    useEffect(() => {
+        ipcRenderer.on("onViewMonster", receiveMonster);
+    }, []);
 
-    formatScore = (score) => {
+    const formatScore = (score) => {
         let mod = Math.floor((score - 10) / 2);
         if (mod >= 0) {
             return "+" + mod;
@@ -93,268 +88,99 @@ class MonsterView extends Component {
         }
     }
 
-    saveMonster = (e) => {
-        ipcRenderer.send('saveMonster', { monster: this.state });
+    const saveMonster = (e) => {
+        ipcRenderer.send('saveMonster', { monster: { id, name, type, subtype, cr, ac, hp, str, dex, con, 
+            int, wis, cha, senses, lang, speed, source, skills, savingThrows, dmgImmunities, dmgResistance, 
+            dmgVulnerabilitie, conImmunities, sAblt, ablt, lAblt, pic, size, alignment } });
     }
 
-    deleteMonster = (e) => {
+    const deleteMonster = (e) => {
         const options = {
             type: 'question',
             buttons: ['Cancel', 'Yes, please', 'No, thanks'],
             defaultId: 2,
-            title: `Delete ${this.state.name}?`,
+            title: `Delete ${name}?`,
             message: 'Do you want to do this?'
         };
 
         dialog.showMessageBox(null, options, (response) => {
             if (response == 1) {
-                ipcRenderer.send('deleteMonster', { monster: this.state });
+                ipcRenderer.send('deleteMonster', { monster: { id, name, type, subtype, cr, ac, hp, str, dex, con, 
+                    int, wis, cha, senses, lang, speed, source, skills, savingThrows, dmgImmunities, dmgResistance, 
+                    dmgVulnerabilitie, conImmunities, sAblt, ablt, lAblt, pic, size, alignment } });
             }
         });
     }
 
-    render() {
-        const style = {
-            backgroundImage: `url(${this.state.pic})`,
-            backgroundPosition: 'center',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat'
-        };
+    const style = {
+        backgroundImage: `url(${pic})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat'
+    };
 
-        return (
-            <div id="monsterView">
-                <div className="image" style={style}></div>
-                <div className="top">
-                    <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label>
-                    <label>Size:<input name="size" type="text" value={this.state.size} onChange={this.handleSizeChange} /></label>
-                    <label>Type:<input name="type" type="text" value={this.state.type} onChange={this.handleTypeChange} /></label>
-                    <label>Subtype:<input name="subtype" type="text" value={this.state.subtype} onChange={this.handleSubtypeChange} /></label>
-                    <label>Pic:<input name="pic" type="text" value={this.state.pic} onChange={this.handlePicChange} /></label>
-                    <label>Source:<input name="source" type="text" value={this.state.source} onChange={this.handleSourceChange} /></label>
-                </div>
-                <div className="top">
-                    <label>Cr:<input name="cr" type="text" value={this.state.cr} onChange={this.handleCrChange} /></label>
-                    <label>Alignment:<input name="alignment" type="text" value={this.state.alignment} onChange={this.handleAlignmentChange} /></label>
-                    <label>AC:<input name="ac" type="number" value={this.state.ac} onChange={this.handleACChange} /></label>
-                    <label>Hit Points:<input name="hp" type="text" value={this.state.hp} onChange={this.handleHPChange} /></label>
-                    <label>Speed:<input name="speed" type="text" value={this.state.speed} onChange={this.handleSpeedChange} /></label>
-                    <button className="delete" onClick={this.deleteMonster}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
-                    <button onClick={this.saveMonster}><FontAwesomeIcon icon={faSave} /> Save</button>
-                </div>
-                <div className="abilityScores">
-                    <div className="score">
-                        <label>Strength: <input type="number" value={this.state.str} onChange={this.handleStrChange}></input></label>
-                        <div className="abilityBonus">{this.formatScore(this.state.str)}</div>
-                    </div>
-                    <div className="score">
-                        <label>Constitution: <input type="number" value={this.state.con} onChange={this.handleConChange}></input></label>
-                        <div className="abilityBonus">{this.formatScore(this.state.con)}</div>
-                    </div>
-                    <div className="score">
-                        <label>Dexterity: <input type="number" value={this.state.dex} onChange={this.handleDexChange}></input></label>
-                        <div className="abilityBonus">{this.formatScore(this.state.dex)}</div>
-                    </div>
-                    <div className="score">
-                        <label>Intelligence: <input type="number" value={this.state.int} onChange={this.handleIntChange}></input></label>
-                        <div className="abilityBonus">{this.formatScore(this.state.int)}</div>
-                    </div>
-                    <div className="score">
-                        <label>Wisdom: <input type="number" value={this.state.wis} onChange={this.handleWisChange}></input></label>
-                        <div className="abilityBonus">{this.formatScore(this.state.wis)}</div>
-                    </div>
-                    
-                    <div className="score">
-                        <label>Charisma: <input type="number" value={this.state.cha} onChange={this.handleChaChange}></input></label>
-                        <div className="abilityBonus">{this.formatScore(this.state.cha)}</div>
-                    </div>
-                </div>
-                <div className="top">
-                    <textarea className="small" value={this.state.saveingThrows} onChange={this.handleSaveingThrowsChange} placeholder="Saving Throws..."></textarea>
-                    <textarea className="small" value={this.state.skills} onChange={this.handleSkillsChange} placeholder="Skills..."></textarea>
-                    <textarea className="small" value={this.state.senses} onChange={this.handleSensesChange} placeholder="Senses..."></textarea>
-                    <textarea className="small" value={this.state.lang} onChange={this.handleLangChange} placeholder="Languages..."></textarea>
-                </div>
-                <div className="top">
-                    <textarea className="small" value={this.state.dmgVulnerabilitie} onChange={this.handleVulnerabilitieChange} placeholder="Vulnerabilities..."></textarea>
-                    <textarea className="small" value={this.state.dmgResistance} onChange={this.handleResistanceChange} placeholder="Resistances..."></textarea>
-                    <textarea className="small" value={this.state.dmgImmunities} onChange={this.handleImmunitiesChange} placeholder="Damage immunities..."></textarea>
-                    <textarea className="small" value={this.state.conImmunities} onChange={this.handleConImmunitiesChange} placeholder="Condition immunities..."></textarea>
-                </div>
-                <textarea value={this.state.sAblt} onChange={this.handleSAbltChange} placeholder="Special abilities..."></textarea>
-                <textarea value={this.state.ablt} onChange={this.handleAbltChange} placeholder="Actions..."></textarea>
-                <textarea value={this.state.lAblt} onChange={this.handleLAblChange} placeholder="Legendary Actions..."></textarea>
+    return (
+        <div id="monsterView">
+            <div className="image" style={style}></div>
+            <div className="top">
+                <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} /></label>
+                <label>Size:<input name="size" type="text" value={size} onChange={e => setSize(e.target.value)} /></label>
+                <label>Type:<input name="type" type="text" value={type} onChange={e => setType(e.target.value)} /></label>
+                <label>Subtype:<input name="subtype" type="text" value={subtype} onChange={e => setSubtype(e.target.value)} /></label>
+                <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label>
+                <label>Source:<input name="source" type="text" value={source} onChange={e => setSource(e.target.value)} /></label>
             </div>
-        )
-    }
-    
-    handleConImmunitiesChange = (e) => {
-        this.setState({
-            ...this.state,
-            conImmunities: e.target.value
-        });
-    }
-    handleImmunitiesChange = (e) => {
-        this.setState({
-            ...this.state,
-            dmgImmunities: e.target.value
-        });
-    }
-    handleResistanceChange = (e) => {
-        this.setState({
-            ...this.state,
-            dmgResistance: e.target.value
-        });
-    }
-    handleVulnerabilitieChange = (e) => {
-        this.setState({
-            ...this.state,
-            dmgVulnerabilitie: e.target.value
-        });
-    }
-    handleLAblChange = (e) => {
-        this.setState({
-            ...this.state,
-            lAblt: e.target.value
-        });
-    }
-    handleAbltChange = (e) => {
-        this.setState({
-            ...this.state,
-            ablt: e.target.value
-        });
-    }
-    handleSAbltChange = (e) => {
-        this.setState({
-            ...this.state,
-            sAblt: e.target.value
-        });
-    }
-    handleNameChange = (e) => {
-        this.setState({
-            ...this.state,
-            name: e.target.value
-        });
-    }
-    handlePicChange = (e) => {
-        this.setState({
-            ...this.state,
-            pic: e.target.value
-        });
-    }
-    handleSizeChange = (e) => {
-        this.setState({
-            ...this.state,
-            size: e.target.value
-        });
-    }
-    handleTypeChange = (e) => {
-        this.setState({
-            ...this.state,
-            type: e.target.value
-        });
-    }
-    handleSubtypeChange = (e) => {
-        this.setState({
-            ...this.state,
-            subtype: e.target.value
-        });
-    }
-    handleAlignmentChange = (e) => {
-        this.setState({
-            ...this.state,
-            alignment: e.target.value
-        });
-    }
-    handleACChange = (e) => {
-        this.setState({
-            ...this.state,
-            ac: e.target.value
-        });
-    }
-    handleHPChange = (e) => {
-        this.setState({
-            ...this.state,
-            hp: e.target.value
-        });
-    }
-    handleSpeedChange = (e) => {
-        this.setState({
-            ...this.state,
-            speed: e.target.value
-        });
-    }
-    handleCrChange = (e) => {
-        this.setState({
-            ...this.state,
-            cr: e.target.value
-        });
-    }
-    handleSourceChange = (e) => {
-        this.setState({
-            ...this.state,
-            source: e.target.value
-        });
-    }
-    handleStrChange = (e) => {
-        this.setState({
-            ...this.state,
-            str: e.target.value
-        });
-    }
-    handleDexChange = (e) => {
-        this.setState({
-            ...this.state,
-            dex: e.target.value
-        });
-    }
-    handleConChange = (e) => {
-        this.setState({
-            ...this.state,
-            con: e.target.value
-        });
-    }
-    handleIntChange = (e) => {
-        this.setState({
-            ...this.state,
-            int: e.target.value
-        });
-    }
-    handleWisChange = (e) => {
-        this.setState({
-            ...this.state,
-            wis: e.target.value
-        });
-    }
-    handleChaChange = (e) => {
-        this.setState({
-            ...this.state,
-            cha: e.target.value
-        });
-    }
-    handleSaveingThrowsChange = (e) => {
-        this.setState({
-            ...this.state,
-            saveingThrows: e.target.value
-        });
-    }
-    handleSkillsChange = (e) => {
-        this.setState({
-            ...this.state,
-            skills: e.target.value
-        });
-    }
-    handleSensesChange = (e) => {
-        this.setState({
-            ...this.state,
-            senses: e.target.value
-        });
-    }
-    handleLangChange = (e) => {
-        this.setState({
-            ...this.state,
-            lang: e.target.value
-        });
-    }
-}
+            <div className="top">
+                <label>Cr:<input name="cr" type="text" value={cr} onChange={e => setCr(e.target.value)} /></label>
+                <label>Alignment:<input name="alignment" type="text" value={alignment} onChange={e => setAlignment(e.target.value)} /></label>
+                <label>AC:<input name="ac" type="number" value={ac} onChange={e => setAc(e.target.value)} /></label>
+                <label>Hit Points:<input name="hp" type="text" value={hp} onChange={e => setHp(e.target.value)} /></label>
+                <label>Speed:<input name="speed" type="text" value={speed} onChange={e => setSpeed(e.target.value)} /></label>
+                <button className="delete" onClick={deleteMonster}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                <button onClick={saveMonster}><FontAwesomeIcon icon={faSave} /> Save</button>
+            </div>
+            <div className="abilityScores">
+                <div className="score">
+                    <label>Strength: <input type="number" value={str} onChange={e => setStr(e.target.value)}></input></label>
+                    <div className="abilityBonus">{formatScore(str)}</div>
+                </div>
+                <div className="score">
+                    <label>Dexterity: <input type="number" value={dex} onChange={e => setDex(e.target.value)}></input></label>
+                    <div className="abilityBonus">{formatScore(dex)}</div>
+                </div>
+                <div className="score">
+                    <label>Constitution: <input type="number" value={con} onChange={e => setCon(e.target.value)}></input></label>
+                    <div className="abilityBonus">{formatScore(con)}</div>
+                </div>
+                <div className="score">
+                    <label>Intelligence: <input type="number" value={int} onChange={e => setInt(e.target.value)}></input></label>
+                    <div className="abilityBonus">{formatScore(int)}</div>
+                </div>
+                <div className="score">
+                    <label>Wisdom: <input type="number" value={wis} onChange={e => setWis(e.target.value)}></input></label>
+                    <div className="abilityBonus">{formatScore(wis)}</div>
+                </div>
 
-export default MonsterView;
+                <div className="score">
+                    <label>Charisma: <input type="number" value={cha} onChange={e => setCha(e.target.value)}></input></label>
+                    <div className="abilityBonus">{formatScore(cha)}</div>
+                </div>
+            </div>
+            <div className="top">
+                <textarea className="small" value={savingThrows} onChange={e => setSavingThrows(e.target.value)} placeholder="Saving Throws..."></textarea>
+                <textarea className="small" value={skills} onChange={e => setSkills(e.target.value)} placeholder="Skills..."></textarea>
+                <textarea className="small" value={senses} onChange={e => setSenses(e.target.value)} placeholder="Senses..."></textarea>
+                <textarea className="small" value={lang} onChange={e => setLang(e.target.value)} placeholder="Languages..."></textarea>
+            </div>
+            <div className="top">
+                <textarea className="small" value={dmgVulnerabilitie} onChange={e => setDmgVulnerabilitie(e.target.value)} placeholder="Vulnerabilities..."></textarea>
+                <textarea className="small" value={dmgResistance} onChange={e => setDmgResistance(e.target.value)} placeholder="Resistances..."></textarea>
+                <textarea className="small" value={dmgImmunities} onChange={e => setDmgImmunities(e.target.value)} placeholder="Damage immunities..."></textarea>
+                <textarea className="small" value={conImmunities} onChange={e => setConImmunities(e.target.value)} placeholder="Condition immunities..."></textarea>
+            </div>
+            <textarea value={sAblt} onChange={e => setSAblt(e.target.value)} placeholder="Special abilities..."></textarea>
+            <textarea value={ablt} onChange={e => setAblt(e.target.value)} placeholder="Actions..."></textarea>
+            <textarea value={lAblt} onChange={e => setLAblt(e.target.value)} placeholder="Legendary Actions..."></textarea>
+        </div>
+    )
+}
