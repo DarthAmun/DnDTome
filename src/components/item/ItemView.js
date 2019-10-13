@@ -29,10 +29,13 @@ export default function ItemView() {
 
     useEffect(() => {
         ipcRenderer.on("onViewItem", receiveItem);
+        return () => {
+            ipcRenderer.removeListener("onViewItem", receiveItem);
+        }
     }, []);
 
     const saveItem = (e) => {
-        ipcRenderer.send('saveItem', { item: {id, name, pic, type, rarity,source, description} });
+        ipcRenderer.send('saveItem', { item: { id, name, pic, type, rarity, source, description } });
     }
 
     const deleteItem = (e) => {
@@ -46,7 +49,7 @@ export default function ItemView() {
 
         dialog.showMessageBox(null, options, (response) => {
             if (response == 1) {
-                ipcRenderer.send('deleteItem', { item: {id, name, pic, type, rarity,source, description} });
+                ipcRenderer.send('deleteItem', { item: { id, name, pic, type, rarity, source, description } });
             }
         });
     }

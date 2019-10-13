@@ -77,6 +77,9 @@ export default function MonsterView() {
 
     useEffect(() => {
         ipcRenderer.on("onViewMonster", receiveMonster);
+        return () => {
+            ipcRenderer.removeListener("onViewMonster", receiveMonster);
+        }
     }, []);
 
     const formatScore = (score) => {
@@ -89,9 +92,13 @@ export default function MonsterView() {
     }
 
     const saveMonster = (e) => {
-        ipcRenderer.send('saveMonster', { monster: { id, name, type, subtype, cr, ac, hp, str, dex, con, 
-            int, wis, cha, senses, lang, speed, source, skills, savingThrows, dmgImmunities, dmgResistance, 
-            dmgVulnerabilitie, conImmunities, sAblt, ablt, lAblt, pic, size, alignment } });
+        ipcRenderer.send('saveMonster', {
+            monster: {
+                id, name, type, subtype, cr, ac, hp, str, dex, con,
+                int, wis, cha, senses, lang, speed, source, skills, savingThrows, dmgImmunities, dmgResistance,
+                dmgVulnerabilitie, conImmunities, sAblt, ablt, lAblt, pic, size, alignment
+            }
+        });
     }
 
     const deleteMonster = (e) => {
@@ -105,9 +112,13 @@ export default function MonsterView() {
 
         dialog.showMessageBox(null, options, (response) => {
             if (response == 1) {
-                ipcRenderer.send('deleteMonster', { monster: { id, name, type, subtype, cr, ac, hp, str, dex, con, 
-                    int, wis, cha, senses, lang, speed, source, skills, savingThrows, dmgImmunities, dmgResistance, 
-                    dmgVulnerabilitie, conImmunities, sAblt, ablt, lAblt, pic, size, alignment } });
+                ipcRenderer.send('deleteMonster', {
+                    monster: {
+                        id, name, type, subtype, cr, ac, hp, str, dex, con,
+                        int, wis, cha, senses, lang, speed, source, skills, savingThrows, dmgImmunities, dmgResistance,
+                        dmgVulnerabilitie, conImmunities, sAblt, ablt, lAblt, pic, size, alignment
+                    }
+                });
             }
         });
     }

@@ -39,6 +39,9 @@ export default function SpellView() {
 
     useEffect(() => {
         ipcRenderer.on("onViewSpell", receiveSpell);
+        return () => {
+            ipcRenderer.removeListener("onViewSpell", receiveSpell);
+        }
     }, []);
 
     const saveSpell = (e) => {
@@ -71,12 +74,12 @@ export default function SpellView() {
                 <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Name..." /></label>
                 <label>School:<input name="school" type="text" value={school} onChange={e => setSchool(e.target.value)} placeholder="School..." /></label>
                 <label>Level:<input name="level" type="number" value={level} onChange={e => setLevel(e.target.value)} /></label>
-                <label>Casting Time:<input name="time" type="text" value={time} onChange={e => setTime(e.target.value)} placeholder="Casting Time..."/></label>
+                <label>Casting Time:<input name="time" type="text" value={time} onChange={e => setTime(e.target.value)} placeholder="Casting Time..." /></label>
                 <label>Range:<input name="range" type="text" value={range} onChange={e => setRange(e.target.value)} placeholder="Range..." /></label>
                 <label>Duration:<input name="duration" type="text" value={duration} onChange={e => setDuration(e.target.value)} placeholder="Duration..." /></label>
                 <label>Components:<input name="components" type="text" value={components} onChange={e => setComponents(e.target.value)} placeholder="Components..." /></label>
                 <label>Classes:<input name="classes" type="text" value={classes} onChange={e => setClasses(e.target.value)} placeholder="Classes..." /></label>
-                <label>Sources:<input name="sources" type="text" value={sources} onChange={e => setSources(e.target.value)} placeholder="Sources..."/></label>
+                <label>Sources:<input name="sources" type="text" value={sources} onChange={e => setSources(e.target.value)} placeholder="Sources..." /></label>
             </div>
             <textarea value={text} onChange={e => setText(e.target.value)} placeholder="Describtion..."></textarea>
             <button className="delete" onClick={deleteSpell}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>

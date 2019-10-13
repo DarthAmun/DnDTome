@@ -12,11 +12,13 @@ export default function Pagination({ name }) {
     const [pageStep, setPageStep] = useState(10);
     const [count, setCount] = useState(0);
     const [maxPages, setMaxPages] = useState(0);
-    const [currentList, setCurrentList] = useState({ objects: [] });
 
     useEffect(() => {
         ipcRenderer.send(`get${name}Count`);
         ipcRenderer.on(`get${name}CountResult`, receiveCount);
+        return () => {
+            ipcRenderer.removeListener(`get${name}CountResult`, receiveCount);
+        }
     }, []);
 
     const receiveCount = (evt, result) => {
