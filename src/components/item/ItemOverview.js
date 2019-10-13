@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import '../../assets/css/item/ItemOverview.css';
 import Item from './Item';
-import ItemSearchBar from './ItemSearchBar';
-import ItemPagination from './ItemPagination';
+import SearchBar from '../SearchBar';
+import Pagination from '../Pagination';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
@@ -44,14 +44,14 @@ class ItemOverview extends Component {
         return (
             <div id="overview">
                 <div id="itemsOverview">
-                    <ItemSearchBar />
+                    <SearchBar inputs={["name", "description", "rarity", "type", "source"]} queryName="sendItemSearchQuery" />
                     <div id="items">
                         {this.state.currentItemList.items.map((item, index) => {
                             return <Item delay={index} item={item} key={item.item_id} onClick={() => this.viewItem(item)} />;
                         })}
                     </div>
                 </div>
-                <ItemPagination />
+                <Pagination name="Item" />
             </div>
         )
     }

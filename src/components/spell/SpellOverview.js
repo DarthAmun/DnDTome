@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import '../../assets/css/spell/SpellOverview.css';
 import Spell from './Spell';
-import SpellPagination from './SpellPagination';
-import SpellSearchBar from './SpellSearchBar';
+import Pagination from '../Pagination';
+import SearchBar from '../SearchBar';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -45,14 +45,14 @@ class SpellOverview extends Component {
         return (
             <div id="overview">
                 <div id="spellOverview">
-                    <SpellSearchBar />
+                    <SearchBar inputs={["name", "school", "level", "duration", "time", "range", "components", "text", "classes", "sources"]} queryName="sendSpellSearchQuery" />
                     <div id="spells">
                         {this.state.currentSpellList.spells.map((spell, index) => {
                             return <Spell delay={index} spell={spell} key={spell.spell_id} onClick={() => this.viewSpell(spell)} />;
                         })}
                     </div>
                 </div>
-                <SpellPagination />
+                <Pagination name="Spell" />
             </div>
         )
     }

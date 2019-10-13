@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import '../../assets/css/monster/MonsterOverview.css';
 import Monster from './Monster';
-import MonsterPagination from './MonsterPagination';
-import MonsterSearchBar from './MonsterSearchBar';
+import Pagination from '../Pagination';
+import SearchBar from '../SearchBar';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -45,14 +45,14 @@ class MonsterOverview extends Component {
         return (
             <div id="overview">
                 <div id="monsterOverview">
-                    <MonsterSearchBar />
+                    <SearchBar inputs={["name", "type", "subtype", "cr", "alignment", "speed", "damage", "senses", "ability", "action"]} queryName="sendMonsterSearchQuery" />
                     <div id="monsters">
                         {this.state.currentMonsterList.monsters.map((monster, index) => {
                             return <Monster delay={index} monster={monster} key={monster.monster_id} onClick={() => this.viewMonster(monster)} />;
                         })}
                     </div>
                 </div>
-                <MonsterPagination />
+                <Pagination name="Monster" />
             </div>
         )
     }

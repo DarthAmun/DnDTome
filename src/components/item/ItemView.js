@@ -84,7 +84,6 @@ class ItemView extends Component {
                 <div className="image" style={style}></div>
                 <textarea value={this.state.description} onChange={this.handleDescriptionChange}></textarea>
             </div>
-
         )
     }
 
