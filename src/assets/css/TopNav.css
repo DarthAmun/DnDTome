@@ -6,13 +6,13 @@
 
 #topBar {
     -webkit-app-region: drag;
-    width: calc(100% - 40px);
+    width: calc(100% - 80px);
     height: 40px;
     float: left;
 }
 
 
-#close {
+#close, #minimize {
     float: right;
     width: 40px;
     height: 37px;
@@ -20,8 +20,9 @@
     text-align: center;
     border-top: 3px solid transparent;
     color: #8000ff;
+    font-size: 12px;
 }
-#close:hover {
+#close:hover, #minimize:hover {
     border-top: 3px solid #8000ff;
     cursor: pointer;
 }

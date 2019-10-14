@@ -989,6 +989,10 @@ ipcMain.on('closeMainWindow', (event) => {
   mainWindow.close();
 });
 
+ipcMain.on('minimizeMainWindow', (event) => {
+  mainWindow.minimize();
+});
+
 ipcMain.on('openSpellView', (event, spell) => {
   spellWindow.show();
   if (dev) {
