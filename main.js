@@ -30,7 +30,7 @@ function createWindow() {
     width: 1180,
     height: 680,
     minHeight: 400,
-    minWidth: 400,
+    minWidth: 660,
     show: false,
     frame: false,
     icon: __dirname + './src/assets/img/dice_icon.ico'
