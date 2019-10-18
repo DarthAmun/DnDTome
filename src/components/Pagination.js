@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import useKeyPress from './Hooks/useKeyPress';
 import '../assets/css/Pagination.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +13,15 @@ export default function Pagination({ name }) {
     const [pageStep, setPageStep] = useState(10);
     const [count, setCount] = useState(0);
     const [maxPages, setMaxPages] = useState(0);
+
+    const top = useKeyPress('ArrowUp');
+    useEffect(() => {
+        if(top === true) pageUp();
+    },[top]);
+    const down = useKeyPress('ArrowDown');
+    useEffect(() => {
+        if(down === true) pageDown();
+    },[down]);
 
     useEffect(() => {
         ipcRenderer.send(`get${name}Count`);
