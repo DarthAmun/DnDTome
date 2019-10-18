@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../../assets/css/spell/SpellOverview.css';
 import Spell from './Spell';
 import Pagination from '../Pagination';
@@ -9,11 +9,11 @@ const ipcRenderer = electron.ipcRenderer;
 
 export default function SpellOverview() {
     const [currentSpellList, setCurrentSpellList] = useState({ spells: [] });
-
-    
+    const spells = useRef(null);
 
     const receiveSpells = (evt, result) => {
-        setCurrentSpellList({ spells: result })
+        setCurrentSpellList({ spells: result });
+        spells.current.scrollTop = 0;
     }
 
     const updateSpell = (evt, result) => {
@@ -39,7 +39,7 @@ export default function SpellOverview() {
         <div id="overview">
             <div id="spellOverview">
                 <SearchBar inputs={["name", "school", "level", "duration", "time", "range", "components", "text", "classes", "sources"]} queryName="sendSpellSearchQuery" />
-                <div id="spells">
+                <div id="spells" ref={spells}>
                     {currentSpellList.spells.map((spell, index) => {
                         return <Spell delay={index} spell={spell} key={spell.spell_id} onClick={() => viewSpell(spell)} />;
                     })}
