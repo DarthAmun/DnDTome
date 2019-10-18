@@ -1029,3 +1029,8 @@ ipcMain.on('deleteAllItems', (event) => {
 ipcMain.on('deleteAllMonsters', (event) => {
   deleteAll("monsters");
 });
+
+ipcMain.on('displayMessage', (event, message) => {
+  console.log("Save Message");
+  mainWindow.webContents.send('displayMessage', message);
+});

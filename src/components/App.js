@@ -18,6 +18,7 @@ import AddMonster from './add/AddMonster';
 
 import LeftNav from './LeftNav';
 import TopNav from './TopNav';
+import Notification from './Notification';
 
 import packageJson from '../../package.json'
 
@@ -25,6 +26,7 @@ class PageLayout extends Component {
   render() {
     return (
       <div className="App">
+        <Notification />
         <LeftNav />
         <div id="content">
           <TopNav />

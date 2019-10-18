@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../assets/css/spell/SpellView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -46,6 +46,7 @@ export default function SpellView() {
 
     const saveSpell = (e) => {
         ipcRenderer.send('saveSpell', { spell: { id, name, school, level, time, range, duration, components, text, classes, sources } });
+        ipcRenderer.send('displayMessage', {type: "Saved", message: "Saved successful"})
     }
 
     const addSpellToChar = (e) => {
