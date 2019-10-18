@@ -46,7 +46,6 @@ export default function SpellView() {
 
     const saveSpell = (e) => {
         ipcRenderer.send('saveSpell', { spell: { id, name, school, level, time, range, duration, components, text, classes, sources } });
-        ipcRenderer.send('displayMessage', {type: "Saved", message: "Saved successful"})
     }
 
     const addSpellToChar = (e) => {

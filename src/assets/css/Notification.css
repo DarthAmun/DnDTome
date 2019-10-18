@@ -1,13 +1,14 @@
 .notification {
     position: absolute;
     top: 5px;
-    width: 200px;
-    height: 50px;
+    width: 300px;
+    height: auto;
     line-height: 25px;
-    left: calc(50% - 100px);
+    left: calc(50% - 150px);
     border-radius: 5px;
     background-color: white;
     color:  #8000ff;
     padding: 10px;
     display: none;
+    box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.3);
 }

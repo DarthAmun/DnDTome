@@ -469,6 +469,7 @@ const saveSpell = (spell) => {
       }
       console.log(`${spell.name} updated successfull`);
       mainWindow.webContents.send('spellsUpdated', { spellStep, spellStart });
+      mainWindow.webContents.send('displayMessage', {type: `Saved spell`, message: `Saved ${spell.name} successful`});
     });
   });
 }
@@ -485,6 +486,7 @@ const saveItem = (item) => {
       }
       console.log(`${item.name} updated successfull`);
       mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
+      mainWindow.webContents.send('displayMessage', {type: `Saved item`, message: `Saved ${item.name} successful`});
     });
   });
 }
@@ -508,6 +510,7 @@ const saveMonster = (monster) => {
       }
       console.log(`${monster.name} updated successfull`);
       mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
+      mainWindow.webContents.send('displayMessage', {type: `Saved monster`, message: `Saved ${monster.name} successful`});
     });
   });
 }
@@ -526,6 +529,7 @@ const saveChar = (char) => {
         return console.error(err.message);
       }
       console.log(`${char.name} updated successfull`);
+      mainWindow.webContents.send('displayMessage', {type: `Saved character`, message: `Added ${char.name} successful`});
     });
   });
 }
@@ -541,6 +545,7 @@ const deleteSpell = (spell) => {
       console.log(`====>Deleted ${spell.name} successfull`);
       spellWindow.hide();
       mainWindow.webContents.send('spellsUpdated', { spellStep, spellStart });
+      mainWindow.webContents.send('displayMessage', {type: `Deleted monster`, message: `Deleted ${spell.name} successful`});
     });
   });
 }
@@ -556,6 +561,7 @@ const deleteItem = (item) => {
       console.log(`====>Deleted ${item.name} successfull`);
       itemWindow.hide();
       mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
+      mainWindow.webContents.send('displayMessage', {type: `Deleted item`, message: `Deleted ${item.name} successful`});
     });
   });
 }
@@ -571,6 +577,7 @@ const deleteMonster = (monster) => {
       console.log(`====>Deleted ${monster.name} successfull`);
       monsterWindow.hide();
       mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
+      mainWindow.webContents.send('displayMessage', {type: `Deleted monster`, message: `Deleted ${monster.name} successful`});
     });
   });
 }
@@ -585,6 +592,7 @@ const saveNewSpell = (spell) => {
         return console.error(err.message);
       }
       console.log(`====>Added ${spell.name} successfull`);
+      mainWindow.webContents.send('displayMessage', {type: `Added monster`, message: `Added ${spell.name} successful`});
     });
   });
 }
@@ -599,6 +607,7 @@ const saveNewSpells = (spells) => {
           return console.error(err.message);
         }
         console.log(`====>Added ${spell.spell_name} successfull`);
+        mainWindow.webContents.send('displayMessage', {type: `Added spell`, message: `Added ${spell.spell_name} successful`});
       });
     });
   });
@@ -614,6 +623,7 @@ const saveNewItem = (item) => {
         return console.error(err.message);
       }
       console.log(`====>Added ${item.name} successfull`);
+      mainWindow.webContents.send('displayMessage', {type: `Added item`, message: `Added ${item.name} successful`});
     });
   });
 }
@@ -629,6 +639,7 @@ const saveNewItems = (items) => {
           return console.error(err.message);
         }
         console.log(`====>Added ${item.item_name} successfull`);
+        mainWindow.webContents.send('displayMessage', {type: `Added item`, message: `Added ${item.item_name} successful`});
       });
     });
   });
@@ -652,6 +663,7 @@ const saveNewMonster = (monster) => {
         return console.error(err.message);
       }
       console.log(`====>Added ${monster.name} successfull`);
+      mainWindow.webContents.send('displayMessage', {type: `Added monster`, message: `Added ${monster.name} successful`});
     });
   });
 }
@@ -676,6 +688,7 @@ const saveNewMonsters = (monsters) => {
           return console.error(err.message);
         }
         console.log(`====>Added ${monster.monster_name} successfull`);
+        mainWindow.webContents.send('displayMessage', {type: `Added monster`, message: `Added ${monster.monster_name} successful`});
       });
     });
   });
@@ -812,6 +825,7 @@ const saveNewMonstersSRD = (monsters) => {
       });
     });
   });
+  mainWindow.webContents.send('displayMessage', {type: `Added all monster`, message: "Added all successful"});
 }
 
 const reciveChars = () => {
@@ -832,7 +846,8 @@ const deleteAll = (tab) => {
       if (err != null) {
         console.log("====>" + err);
       }
-      console.log(`====> All ${tab} successfull`)
+      console.log(`====> All ${tab} successfull`);
+      mainWindow.webContents.send('displayMessage', {type: `Delete All ${tab}`, message: "delete all successful"});
     });
   });
 }
@@ -1032,5 +1047,5 @@ ipcMain.on('deleteAllMonsters', (event) => {
 
 ipcMain.on('displayMessage', (event, message) => {
   console.log("Save Message");
-  mainWindow.webContents.send('displayMessage', message);
+  mainWindow.webContents.send('displayMessage', {type: "Saved", message: "Saved successful"});
 });
