@@ -20,9 +20,9 @@ if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) |
   dev = true;
 }
 
-console.log("====>" + path.join(__dirname, './src/assets/db/tab.db'));
+console.log("====>" + path.join(__dirname, './src/assets/db/tab.db').replace("app.asar\\",""));
 let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database(path.join(__dirname, './src/assets/db/tab.db'));
+let db = new sqlite3.Database(path.join(__dirname, './src/assets/db/tab.db').replace("app.asar\\",""));
 
 function createWindow() {
   // Create the browser window.

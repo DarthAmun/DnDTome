@@ -217,7 +217,7 @@ class Options extends Component {
         <div id="optionContent">
           <div id="options">
             <div className="optionSection">
-              <h3>What to support me?</h3>
+              <h3>Want to support me?</h3>
               <button className="patreon" onClick={this.toPatreon}><FontAwesomeIcon icon={faPatreon} /> Become a patron</button>
             </div>
             <div className="optionSection">
