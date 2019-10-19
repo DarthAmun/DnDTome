@@ -1,143 +1,145 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import '../assets/css/Home.css';
 import Particles from 'react-particles-js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDiceD20, faDragon } from '@fortawesome/free-solid-svg-icons';
+import { faDiceD20 } from '@fortawesome/free-solid-svg-icons';
 
-const electron = window.require('electron');
-const ipcRenderer = electron.ipcRenderer;
+export default function Home() {
+  let history = useHistory();
 
-class Home extends Component {
-  render() {
-    return (
-      <div className="home">
-        <Particles className="particlesWrapperContainer" params={{
-          "particles": {
-            "number": {
-              "value": 160,
-              "density": {
-                "enable": true,
-                "value_area": 800
-              }
+  useEffect(() => {
+    setTimeout(function () {
+      history.push("/spell-overview");
+    }, 3000);
+  }, []);
+
+  return (
+    <div className="home">
+      <Particles className="particlesWrapperContainer" params={{
+        "particles": {
+          "number": {
+            "value": 160,
+            "density": {
+              "enable": true,
+              "value_area": 800
+            }
+          },
+          "color": {
+            "value": "#8000ff"
+          },
+          "shape": {
+            "type": "circle",
+            "stroke": {
+              "width": 0,
+              "color": "#000000"
             },
-            "color": {
-              "value": "#8000ff"
+            "polygon": {
+              "nb_sides": 5
             },
-            "shape": {
-              "type": "circle",
-              "stroke": {
-                "width": 0,
-                "color": "#000000"
-              },
-              "polygon": {
-                "nb_sides": 5
-              },
-              "image": {
-                "src": "img/github.svg",
-                "width": 100,
-                "height": 100
-              }
-            },
-            "opacity": {
-              "value": 1,
-              "random": true,
-              "anim": {
-                "enable": true,
-                "speed": 1,
-                "opacity_min": 0,
-                "sync": false
-              }
-            },
-            "size": {
-              "value": 2,
-              "random": true,
-              "anim": {
-                "enable": false,
-                "speed": 4,
-                "size_min": 0.3,
-                "sync": false
-              }
-            },
-            "line_linked": {
-              "enable": false,
-              "distance": 150,
-              "color": "#ffffff",
-              "opacity": 0.4,
-              "width": 1
-            },
-            "move": {
+            "image": {
+              "src": "img/github.svg",
+              "width": 100,
+              "height": 100
+            }
+          },
+          "opacity": {
+            "value": 1,
+            "random": true,
+            "anim": {
               "enable": true,
               "speed": 1,
-              "direction": "none",
-              "random": true,
-              "straight": false,
-              "out_mode": "out",
-              "bounce": false,
-              "attract": {
-                "enable": false,
-                "rotateX": 600,
-                "rotateY": 600
-              }
+              "opacity_min": 0,
+              "sync": false
             }
           },
-          "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-              "onhover": {
-                "enable": false,
-                "mode": "bubble"
-              },
-              "onclick": {
-                "enable": false,
-                "mode": "repulse"
-              },
-              "resize": true
+          "size": {
+            "value": 2,
+            "random": true,
+            "anim": {
+              "enable": false,
+              "speed": 4,
+              "size_min": 0.3,
+              "sync": false
+            }
+          },
+          "line_linked": {
+            "enable": false,
+            "distance": 150,
+            "color": "#ffffff",
+            "opacity": 0.4,
+            "width": 1
+          },
+          "move": {
+            "enable": true,
+            "speed": 1,
+            "direction": "none",
+            "random": true,
+            "straight": false,
+            "out_mode": "out",
+            "bounce": false,
+            "attract": {
+              "enable": false,
+              "rotateX": 600,
+              "rotateY": 600
+            }
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": {
+              "enable": false,
+              "mode": "bubble"
             },
-            "modes": {
-              "grab": {
-                "distance": 400,
-                "line_linked": {
-                  "opacity": 1
-                }
-              },
-              "bubble": {
-                "distance": 250,
-                "size": 0,
-                "duration": 2,
-                "opacity": 0,
-                "speed": 3
-              },
-              "repulse": {
-                "distance": 400,
-                "duration": 0.4
-              },
-              "push": {
-                "particles_nb": 4
-              },
-              "remove": {
-                "particles_nb": 2
-              }
-            }
+            "onclick": {
+              "enable": false,
+              "mode": "repulse"
+            },
+            "resize": true
           },
-          "retina_detect": true
-        }} />
-        <div id="container">
-          <div id="title">DnDTome</div>
-          <Link to="/spell-overview">
-            <FontAwesomeIcon icon={faDiceD20} className="animated bounce" />
-          </Link>
-        </div>
-        <svg width="0" height="0">
-          <radialGradient id="rg" r="150%" cx="30%" cy="107%">
-            <stop stopColor="#350069" offset="0" />
-            <stop stopColor="#B973FF" offset="0.9" />
-          </radialGradient>
-        </svg>
+          "modes": {
+            "grab": {
+              "distance": 400,
+              "line_linked": {
+                "opacity": 1
+              }
+            },
+            "bubble": {
+              "distance": 250,
+              "size": 0,
+              "duration": 2,
+              "opacity": 0,
+              "speed": 3
+            },
+            "repulse": {
+              "distance": 400,
+              "duration": 0.4
+            },
+            "push": {
+              "particles_nb": 4
+            },
+            "remove": {
+              "particles_nb": 2
+            }
+          }
+        },
+        "retina_detect": true
+      }} />
+      <div id="container">
+        <div id="title">DnDTome</div>
+        <Link to="/spell-overview">
+          <FontAwesomeIcon icon={faDiceD20} className="animated bounce" />
+        </Link>
       </div>
-    );
-  }
-}
+      <svg width="0" height="0">
+        <radialGradient id="rg" r="150%" cx="30%" cy="107%">
+          <stop stopColor="#350069" offset="0" />
+          <stop stopColor="#B973FF" offset="0.9" />
+        </radialGradient>
+      </svg>
+    </div>
+  );
 
-export default Home;
+}

@@ -14,14 +14,14 @@ export default function Pagination({ name }) {
     const [count, setCount] = useState(0);
     const [maxPages, setMaxPages] = useState(0);
 
-    const top = useKeyPress('ArrowUp');
+    const right = useKeyPress('ArrowRight');
     useEffect(() => {
-        if(top === true) pageUp();
-    },[top]);
-    const down = useKeyPress('ArrowDown');
+        if(right === true) pageUp();
+    },[right]);
+    const left = useKeyPress('ArrowLeft');
     useEffect(() => {
-        if(down === true) pageDown();
-    },[down]);
+        if(left === true) pageDown();
+    },[left]);
 
     useEffect(() => {
         ipcRenderer.send(`get${name}Count`);
