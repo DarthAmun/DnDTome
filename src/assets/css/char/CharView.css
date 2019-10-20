@@ -241,3 +241,64 @@
     background-color: #8000ff;
     border-radius: 5px;
 }
+
+
+#char .tabComponent {
+    height: auto;
+    width: 100%;
+    float:left;
+}
+#char .tabComponent .tabSelector {
+    height: auto;
+    width: calc(100% - 10px);
+    float:left;
+    padding: 10px;
+    background-color: white;
+    margin-left: -10px;
+}
+#char .tabComponent .tabSelector .tabName {
+    height: 30px;
+    width: auto;
+    border: none;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 2px;
+    text-align: center;
+    line-height: 30px;
+    float: left;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: #8000ff;
+    color: white;
+    cursor: pointer;
+    position: relative;
+}
+#char .tabComponent .tabSelector .tabName.active:after {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(128, 0, 255, 0);
+	border-top-color: #8000ff;
+	border-width: 10px;
+	margin-left: -10px;
+}
+
+
+#char .tabComponent .tabs {
+    height: auto;
+    width: 100%;
+    float:left;
+}
+#char .tabComponent .tabs .tabContent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: flex-start;
+}
