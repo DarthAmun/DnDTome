@@ -78,6 +78,22 @@
     color: dimgrey;
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
 }
+#char textarea.big {
+    height: 400px;
+    width: 280px;
+    float: left;
+    resize: none;
+    border-radius: 3px;
+    border-bottom-right-radius: 0px;
+    border: none;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    margin: 5px;
+    background-color: white;
+    color: dimgrey;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
 
 #char .image {
     float: left;

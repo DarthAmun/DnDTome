@@ -37,7 +37,13 @@ export default function CharView(props) {
     const [chaSave, setChaSave] = useState(0);
 
     const [actions, setActions] = useState("");
+    const [bonusActions, setBonusActions] = useState("");
+    const [reactions, setReactions] = useState("");
+
+    const [classFeatures, setClassFeatures] = useState("");
+    const [racialFeatures, setRacialFeatures] = useState("");
     const [features, setFeatures] = useState("");
+
     const [profsLangs, setProfsLangs] = useState("");
     const [notes, setNotes] = useState("");
 
@@ -91,7 +97,13 @@ export default function CharView(props) {
         setChaSave(result.char_chaSave);
 
         setActions(result.char_actions);
+        setBonusActions(result.char_bonusActions);
+        setReactions(result.char_reactions);
+
+        setClassFeatures(result.char_clasFeatures);
+        setRacialFeatures(result.char_racialFeatures);
         setFeatures(result.char_features);
+
         setProfsLangs(result.char_profs_langs);
         setNotes(result.char_notes);
 
@@ -153,7 +165,7 @@ export default function CharView(props) {
             char: {
                 id, name, player, prof, exp, pic, classes, race, background, ac, hp, currentHp,
                 init, str, dex, con, int, wis, cha, strSave, dexSave, conSave, intSave, wisSave, chaSave,
-                actions, features, profsLangs, notes, acrobatics, animalHandling, arcana,
+                actions, bonusActions, reactions, classFeatures, racialFeatures, features, profsLangs, notes, acrobatics, animalHandling, arcana,
                 athletics, deception, history, insight, intimidation, investigation, medicine, nature,
                 perception, performance, persuasion, religion, sleightOfHand, stealth, survival
             }
@@ -294,10 +306,14 @@ export default function CharView(props) {
                             </div>
                         </div>
                         <div className="tabContent" style={{ display: tabs.actions ? "flex" : "none" }}>
-                            <textarea value={actions} onChange={e => setActions(e.target.value)} placeholder="Actions..."></textarea>
+                            <textarea className="big" value={actions} onChange={e => setActions(e.target.value)} placeholder="Actions..."></textarea>
+                            <textarea className="big" value={bonusActions} onChange={e => setBonusActions(e.target.value)} placeholder="Bonus actions..."></textarea>
+                            <textarea className="big" value={reactions} onChange={e => setReactions(e.target.value)} placeholder="Reactions..."></textarea>
                         </div>
                         <div className="tabContent" style={{ display: tabs.features ? "flex" : "none" }}>
-                            <textarea value={features} onChange={e => setFeatures(e.target.value)} placeholder="Features..."></textarea>
+                            <textarea className="big" value={classFeatures} onChange={e => setClassFeatures(e.target.value)} placeholder="Class features..."></textarea>
+                            <textarea className="big" value={racialFeatures} onChange={e => setRacialFeatures(e.target.value)} placeholder="Racial features..."></textarea>
+                            <textarea className="big" value={features} onChange={e => setFeatures(e.target.value)} placeholder="Feats..."></textarea>
                         </div>
                         <div className="tabContent" style={{ display: tabs.spells ? "flex" : "none" }}>
                             <div className="charSpells">
