@@ -518,18 +518,18 @@ const saveMonster = (monster) => {
 const saveChar = (char) => {
   let data = [char.name, char.player, char.prof, char.exp, char.pic, char.classes, char.race, char.background, char.ac, char.hp, char.currentHp,
   char.init, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.actions, char.bonusActions, char.reactions, char.features, char.classFeatures, char.racialFeatures, 
-  char.profsLangs, char.notes, char.acrobatics,
+  char.profsLangs, char.notesOne, char.notesTwo, char.notesThree, char.acrobatics,
   char.animalHandling, char.arcana, char.athletics, char.deception, char.history, char.insight, char.intimidation,
   char.investigation, char.medicine, char.nature, char.perception, char.performance, char.persuasion, char.religion, char.sleightOfHand, 
-  char.stealth, char.survival, char.id];
+  char.stealth, char.survival, char.spellNotes, char.id];
   let sql = `UPDATE 'main'.'tab_characters'
               SET char_name = ?, char_player = ?, char_prof = ?, char_exp = ?, char_pic = ?, char_classes = ?, char_race = ?, char_background = ?, 
               char_ac = ?, char_hp = ?, char_hp_current = ?, char_init = ?, char_str = ?, char_dex = ?, char_con = ?, char_int = ?, char_wis = ?, 
               char_cha = ?, char_actions = ?, char_bonusActions = ?, char_reactions = ?, char_features = ?, char_classFeatures = ?, char_racialFeatures = ?, 
-              char_profs_langs = ?, char_notes = ?, char_acrobatics = ?,   char_animalHandling = ?, 
+              char_profs_langs = ?, char_notesOne = ?, char_notesTwo = ?, char_notesThree = ?, char_acrobatics = ?,   char_animalHandling = ?, 
               char_arcana = ?, char_athletics = ?, char_deception = ?, char_history = ?, char_insight = ?, char_intimidation = ?, char_investigation = ?, 
               char_medicine = ?, char_nature = ?, char_perception = ?, char_performance = ?, char_persuasion = ?, char_religion = ?, 
-              char_sleightOfHand = ?, char_stealth = ?, char_survival = ?
+              char_sleightOfHand = ?, char_stealth = ?, char_survival = ?, char_spellNotes = ?
               WHERE char_id = ?`;
   db.serialize(function () {
     db.run(sql, data, function (err) {
@@ -537,7 +537,7 @@ const saveChar = (char) => {
         return console.error(err.message);
       }
       console.log(`${char.name} updated successfull`);
-      mainWindow.webContents.send('displayMessage', {type: `Saved character`, message: `Added ${char.name} successful`});
+      mainWindow.webContents.send('displayMessage', {type: `Saved character`, message: `Saved ${char.name} successful`});
     });
   });
 }
@@ -600,7 +600,7 @@ const saveNewSpell = (spell) => {
         return console.error(err.message);
       }
       console.log(`====>Added ${spell.name} successfull`);
-      mainWindow.webContents.send('displayMessage', {type: `Added monster`, message: `Added ${spell.name} successful`});
+      mainWindow.webContents.send('displayMessage', {type: `Added spell`, message: `Added ${spell.name} successful`});
     });
   });
 }

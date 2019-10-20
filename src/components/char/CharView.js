@@ -45,7 +45,10 @@ export default function CharView(props) {
     const [features, setFeatures] = useState("");
 
     const [profsLangs, setProfsLangs] = useState("");
-    const [notes, setNotes] = useState("");
+
+    const [notesOne, setNotesOne] = useState("");
+    const [notesTwo, setNotesTwo] = useState("");
+    const [notesThree, setNotesThree] = useState("");
 
     const [acrobatics, setAcrobatics] = useState(0);
     const [animalHandling, setAnimalHandling] = useState(0);
@@ -66,6 +69,7 @@ export default function CharView(props) {
     const [stealth, setStealth] = useState(0);
     const [survival, setSurvival] = useState(0);
 
+    const [spellNotes, setSpellNotes] = useState("");
     const [spells, setSpells] = useState([]);
 
     const receiveChar = (event, result) => {
@@ -105,7 +109,10 @@ export default function CharView(props) {
         setFeatures(result.char_features);
 
         setProfsLangs(result.char_profs_langs);
-        setNotes(result.char_notes);
+
+        setNotesOne(result.char_notesOne);
+        setNotesTwo(result.char_notesTwo);
+        setNotesThree(result.char_notesThree);
 
         setAcrobatics(result.char_acrobatics);
         setAnimalHandling(result.char_animalHandling);
@@ -125,6 +132,8 @@ export default function CharView(props) {
         setSleightOfHand(result.char_sleightOfHand);
         setStealth(result.char_stealth);
         setSurvival(result.char_survival);
+
+        setSpellNotes(result.char_spellNotes);
     }
 
     const receiveSpells = (event, result) => {
@@ -151,6 +160,13 @@ export default function CharView(props) {
         }
     }
 
+    const formatLevel = (value) => {
+        if (value == "0") {
+            return "C";
+        }
+        return value;
+    }
+
     const formatCastingTime = (value) => {
         let words = value.split(',');
         return words[0];
@@ -165,9 +181,10 @@ export default function CharView(props) {
             char: {
                 id, name, player, prof, exp, pic, classes, race, background, ac, hp, currentHp,
                 init, str, dex, con, int, wis, cha, strSave, dexSave, conSave, intSave, wisSave, chaSave,
-                actions, bonusActions, reactions, classFeatures, racialFeatures, features, profsLangs, notes, acrobatics, animalHandling, arcana,
+                actions, bonusActions, reactions, classFeatures, racialFeatures, features, profsLangs, 
+                notesOne, notesTwo, notesThree, acrobatics, animalHandling, arcana,
                 athletics, deception, history, insight, intimidation, investigation, medicine, nature,
-                perception, performance, persuasion, religion, sleightOfHand, stealth, survival
+                perception, performance, persuasion, religion, sleightOfHand, stealth, survival, spellNotes
             }
         });;
     }
@@ -326,14 +343,22 @@ export default function CharView(props) {
                                             <th>Range</th>
                                         </tr>
                                         {spells.map((spell, index) => {
-                                            return <tr className="charSpell" key={spell.spell_id} onClick={() => viewSpell(spell)} style={{ cursor: 'pointer' }}><td>{spell.spell_level}</td><td>{spell.spell_name}</td><td>{formatCastingTime(spell.spell_time)}</td><td>{spell.spell_range}</td></tr>;
+                                            return <tr className="charSpell" key={spell.spell_id} onClick={() => viewSpell(spell)} style={{ cursor: 'pointer' }}>
+                                                <td>{formatLevel(spell.spell_level)}</td>
+                                                <td>{spell.spell_name}</td>
+                                                <td>{formatCastingTime(spell.spell_time)}</td>
+                                                <td>{spell.spell_range}</td>
+                                            </tr>;
                                         })}
                                     </tbody>
                                 </table>
                             </div>
+                            <textarea className="big" value={spellNotes} onChange={e => setSpellNotes(e.target.value)} placeholder="Spell Notes..."></textarea>
                         </div>
                         <div className="tabContent" style={{ display: tabs.notes ? "flex" : "none" }}>
-                            <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Notes..."></textarea>
+                            <textarea value={notesOne} onChange={e => setNotesOne(e.target.value)} placeholder="Notes..."></textarea>
+                            <textarea value={notesTwo} onChange={e => setNotesTwo(e.target.value)} placeholder="Notes..."></textarea>
+                            <textarea value={notesThree} onChange={e => setNotesThree(e.target.value)} placeholder="Notes..."></textarea>
                         </div>
                     </div>
                 </div>
