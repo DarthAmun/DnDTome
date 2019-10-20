@@ -116,7 +116,7 @@ export default function Options() {
 
         // Change how to handle the file content
         let spellsJson = JSON.parse(data);
-        ipcRenderer.send('saveNewSpells', { spellsJson });
+        ipcRenderer.send('saveNewSpells', { spells: spellsJson });
       });
     });
   }
@@ -137,7 +137,7 @@ export default function Options() {
 
         // Change how to handle the file content
         let itemsJson = JSON.parse(data);
-        ipcRenderer.send('saveNewItems', { itemsJson }); // fehlt noch
+        ipcRenderer.send('saveNewItems', { items: itemsJson }); // fehlt noch
       });
     });
   }
@@ -158,7 +158,7 @@ export default function Options() {
 
         // Change how to handle the file content
         let monstersJson = JSON.parse(data);
-        ipcRenderer.send('saveNewMonsters', { monstersJson });
+        ipcRenderer.send('saveNewMonsters', { monsters: monstersJson });
       });
     });
   }
