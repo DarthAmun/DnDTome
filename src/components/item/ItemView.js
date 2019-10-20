@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../assets/css/item/ItemView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -54,6 +54,10 @@ export default function ItemView() {
         });
     }
 
+    const addItemToChar = (e) => {
+
+    }
+
     const style = {
         backgroundImage: `url(${pic})`,
         backgroundPosition: 'center',
@@ -73,6 +77,7 @@ export default function ItemView() {
                 <label>Type:<input name="type" type="text" value={type} onChange={e => setType(e.target.value)} /></label>
                 <button className="delete" onClick={deleteItem}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                 <button onClick={saveItem}><FontAwesomeIcon icon={faSave} /> Save</button>
+                <button onClick={addItemToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
             </div>
             <div className="image" style={style}></div>
             <textarea value={description} onChange={e => setDescription(e.target.value)}></textarea>

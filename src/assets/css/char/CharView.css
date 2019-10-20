@@ -225,26 +225,60 @@
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
     overflow-y: auto;
 }
+#char .charItems {
+    width: 100%;
+    height: 420px;
+    float: left;
+    border-radius: 3px;
+    border: none;
+    margin: 5px;
+    background-color: white;
+    color: dimgrey;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    overflow-y: auto;
+}
 
-#char .charSpells tr {
+#char .charSpells tr, #char .charItems tr {
     height: 20px;
     line-height: 20px;
     font-size: 12px;
     border-bottom: 1px dashed lightgray;
 }
 
-#char .charSpells .charSpell:hover {
+#char .charSpells .charSpell:hover, #char .charItems .charItem:hover {
     font-weight: bold;
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
 }
 
-#char .charSpells td, #char .charSpells th {
+#char .charSpells td, #char .charSpells th, #char .charItems td, #char .charItems th {
     padding: 5px;
     text-align: left;
+}
+#char .charItems td.centered, #char .charItems th.centered {
+    text-align: center;
+}
+#char .charItems td.centered input {
+    float: unset;
+    margin: 0px;
+}
+#char .charItems td.centered input[type=checkbox] {
+    margin-top: 9px;
 }
 
 #char table {
     border-collapse: collapse;
+}
+#char table.itemTable {
+    width: 100%;
+}
+
+#char table input{
+    width: 30px;
+    height: 30px;
+}
+#char table input[type=checkbox]{
+    width: 15px;
+    height: 15px;
 }
 
 #char::-webkit-scrollbar, #char textarea::-webkit-scrollbar, #char .charSpells::-webkit-scrollbar {

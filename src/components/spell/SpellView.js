@@ -84,7 +84,7 @@ export default function SpellView() {
             <textarea value={text} onChange={e => setText(e.target.value)} placeholder="Describtion..."></textarea>
             <button className="delete" onClick={deleteSpell}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
             <button onClick={saveSpell}><FontAwesomeIcon icon={faSave} /> Save</button>
-            {/* <button onClick={addSpellToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button> */}
+            <button onClick={addSpellToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
         </div>
     )
 }
