@@ -71,6 +71,7 @@ export default function CharView(props) {
 
     const [spellNotes, setSpellNotes] = useState("");
     const [spells, setSpells] = useState([]);
+    const [items, setItems] = useState([]);
 
     const receiveChar = (event, result) => {
         setName(result.char_name);
@@ -139,15 +140,21 @@ export default function CharView(props) {
     const receiveSpells = (event, result) => {
         setSpells(result);
     }
+    const receiveItems = (event, result) => {
+        setItems(result);
+    }
 
     useEffect(() => {
         ipcRenderer.send('getChar', { id: props.match.params.id });
         ipcRenderer.on("getCharResult", receiveChar);
         ipcRenderer.send('getCharSpells', { id: props.match.params.id });
         ipcRenderer.on("getCharSpellsResult", receiveSpells);
+        ipcRenderer.send('getCharItems', { id: props.match.params.id });
+        ipcRenderer.on("getCharItemsResult", receiveItems);
         return () => {
             ipcRenderer.removeListener("getCharResult", receiveChar)
             ipcRenderer.removeListener("getCharSpellsResult", receiveSpells);
+            ipcRenderer.removeListener("getCharItemsResult", receiveItems);
         }
     }, []);
 
@@ -174,6 +181,9 @@ export default function CharView(props) {
 
     const viewSpell = (spell) => {
         ipcRenderer.send('openSpellView', spell);
+    }
+    const viewItem= (item) => {
+        ipcRenderer.send('openItemView', item);
     }
 
     const saveChar = (spell) => {
@@ -207,6 +217,17 @@ export default function CharView(props) {
         }
     }
 
+    const setItemAmount = (id, amount) => {
+        setItems(...items, items[])
+    }
+    const setItemEquiped = (id, amount) => {
+
+    }
+    const setItemAttuned = (id, amount) => {
+
+    }
+
+    
     const style = {
         backgroundImage: `url(${pic})`,
         backgroundPosition: 'center',
@@ -354,6 +375,30 @@ export default function CharView(props) {
                                 </table>
                             </div>
                             <textarea className="big" value={spellNotes} onChange={e => setSpellNotes(e.target.value)} placeholder="Spell Notes..."></textarea>
+                        </div>
+                        <div className="tabContent" style={{ display: tabs.equipment ? "flex" : "none" }}>
+                            <div className="charItems">
+                                <table className="itemTable">
+                                    <tbody>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Type</th>
+                                            <th>Amount</th>
+                                            <th>Equiped?</th>
+                                            <th>Attuned?</th>
+                                        </tr>
+                                        {items.map((item, index) => {
+                                            return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
+                                                <td onClick={() => viewItem(item)}>{item.item_name}</td>
+                                                <td onClick={() => viewItem(item)}>{item.item_type}</td>
+                                                <td className="centered"><input type="number" value={item.item_amount} onChange={e => setItemAmount(item.id, e.target.value)}/></td>
+                                                <td className="centered"><input type="checkbox" value={item.item_equiped} onChange={e => setItemEquiped(item.id, e.target.value)}/></td>
+                                                <td className="centered"><input type="checkbox" value={item.item_attuned} onChange={e => setItemAttuned(item.id, e.target.value)}/></td>
+                                            </tr>;
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <div className="tabContent" style={{ display: tabs.notes ? "flex" : "none" }}>
                             <textarea value={notesOne} onChange={e => setNotesOne(e.target.value)} placeholder="Notes..."></textarea>
