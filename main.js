@@ -1045,7 +1045,6 @@ ipcMain.on('deleteAllMonsters', (event) => {
   deleteAll("monsters");
 });
 
-ipcMain.on('displayMessage', (event, message) => {
-  console.log("Save Message");
-  mainWindow.webContents.send('displayMessage', {type: "Saved", message: "Saved successful"});
+ipcMain.on('displayMessage', (event, m) => {
+  mainWindow.webContents.send('displayMessage', {type: m.type, message: m.message});
 });
