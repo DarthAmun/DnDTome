@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import '../../assets/css/char/CharView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import StatChart from './StatChart';
 
 const electron = window.require('electron');
@@ -183,8 +183,15 @@ export default function CharView(props) {
     const viewSpell = (spell) => {
         ipcRenderer.send('openSpellView', spell);
     }
-    const viewItem= (item) => {
+    const viewItem = (item) => {
         ipcRenderer.send('openItemView', item);
+    }
+
+    const deleteCharSpell = (spell) => {
+        ipcRenderer.send('deleteCharSpell', {spell: spell});
+    }
+    const deleteCharItem = (item) => {
+        ipcRenderer.send('deleteCharItem', {item: item});
     }
 
     const saveChar = (spell) => {
@@ -192,7 +199,7 @@ export default function CharView(props) {
             char: {
                 id, name, player, prof, exp, pic, classes, race, background, ac, hp, currentHp,
                 init, str, dex, con, int, wis, cha, strSave, dexSave, conSave, intSave, wisSave, chaSave,
-                actions, bonusActions, reactions, features, classFeatures, racialFeatures, profsLangs, 
+                actions, bonusActions, reactions, features, classFeatures, racialFeatures, profsLangs,
                 notesOne, notesTwo, notesThree, acrobatics, animalHandling, arcana,
                 athletics, deception, history, insight, intimidation, investigation, medicine, nature,
                 perception, performance, persuasion, religion, sleightOfHand, stealth, survival, spellNotes
@@ -226,32 +233,32 @@ export default function CharView(props) {
 
     const createValueListenerItem = useCallback((item, fieldName) => e => {
         const allItemsWithChangedSingleItem = items.map(editItem => {
-            if(item === editItem) {
-                return {...item, [fieldName]: e.target.value};
+            if (item === editItem) {
+                return { ...item, [fieldName]: e.target.value };
             }
             return editItem;
         })
         setItems(allItemsWithChangedSingleItem);
-    },[items, setItems]);
+    }, [items, setItems]);
     const createCheckedListenerItem = useCallback((item, fieldName) => e => {
         const allItemsWithChangedSingleItem = items.map(editItem => {
-            if(item === editItem) {
-                return {...item, [fieldName]: e.target.checked};
+            if (item === editItem) {
+                return { ...item, [fieldName]: e.target.checked };
             }
             return editItem;
         })
         setItems(allItemsWithChangedSingleItem);
-    },[items, setItems]);
+    }, [items, setItems]);
     const createCheckedListenerSpell = useCallback((spell, fieldName) => e => {
         const allItemsWithChangedSingleSpell = spells.map(editSpell => {
-            if(spell === editSpell) {
-                return {...spell, [fieldName]: e.target.checked};
+            if (spell === editSpell) {
+                return { ...spell, [fieldName]: e.target.checked };
             }
             return editSpell;
         })
         setSpells(allItemsWithChangedSingleSpell);
-    },[spells, setSpells]);
-    
+    }, [spells, setSpells]);
+
     const style = {
         backgroundImage: `url(${pic})`,
         backgroundPosition: 'center',
@@ -279,7 +286,7 @@ export default function CharView(props) {
             subject: 'Cha', A: cha, fullMark: 40,
         },
     ];
-    
+
 
     return (
         <div id="overview">
@@ -412,6 +419,7 @@ export default function CharView(props) {
                                             <th>Casting Time</th>
                                             <th>Range</th>
                                             <th>Prepared?</th>
+                                            <th>Remove</th>
                                         </tr>
                                         {spells.map((spell, index) => {
                                             return <tr className="charSpell" key={spell.spell_id} style={{ cursor: 'pointer' }}>
@@ -419,7 +427,8 @@ export default function CharView(props) {
                                                 <td onClick={() => viewSpell(spell)}>{spell.spell_name}</td>
                                                 <td onClick={() => viewSpell(spell)}>{formatCastingTime(spell.spell_time)}</td>
                                                 <td onClick={() => viewSpell(spell)}>{spell.spell_range}</td>
-                                                <td className="centered"><input name="prepared" type="checkbox" checked={spell.spell_prepared} onChange={createCheckedListenerSpell(spell, "spell_prepared")}/></td>
+                                                <td className="centered"><input name="prepared" type="checkbox" checked={spell.spell_prepared} onChange={createCheckedListenerSpell(spell, "spell_prepared")} /></td>
+                                                <td onClick={() => deleteCharSpell(spell)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
                                             </tr>;
                                         })}
                                     </tbody>
@@ -437,14 +446,16 @@ export default function CharView(props) {
                                             <th>Amount</th>
                                             <th>Equiped?</th>
                                             <th>Attuned?</th>
+                                            <th>Remove</th>
                                         </tr>
                                         {items.map((item, index) => {
                                             return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
                                                 <td onClick={() => viewItem(item)}>{item.item_name}</td>
                                                 <td onClick={() => viewItem(item)}>{item.item_type}</td>
-                                                <td className="centered"><input type="number" value={item.item_amount} onChange={createValueListenerItem(item, "item_amount")}/></td>
-                                                <td className="centered"><input name="equiped" type="checkbox" checked={item.item_equiped} onChange={createCheckedListenerItem(item, "item_equiped")}/></td>
-                                                <td className="centered"><input name="attuned" type="checkbox" checked={item.item_attuned} onChange={createCheckedListenerItem(item, "item_attuned")}/></td>
+                                                <td className="centered"><input type="number" value={item.item_amount} onChange={createValueListenerItem(item, "item_amount")} /></td>
+                                                <td className="centered"><input name="equiped" type="checkbox" checked={item.item_equiped} onChange={createCheckedListenerItem(item, "item_equiped")} /></td>
+                                                <td className="centered"><input name="attuned" type="checkbox" checked={item.item_attuned} onChange={createCheckedListenerItem(item, "item_attuned")} /></td>
+                                                <td onClick={() => deleteCharItem(item)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
                                             </tr>;
                                         })}
                                     </tbody>

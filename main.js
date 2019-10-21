@@ -904,6 +904,35 @@ const deleteAll = (tab) => {
   });
 }
 
+const deleteCharSpell = (spell) => {
+  let data = [spell.id];
+  let sql = `DELETE FROM 'main'.'tab_characters_spells' WHERE id = ?`;
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`====>Removed ${spell.spell_name} successfull`);
+      mainWindow.webContents.send('displayMessage', { type: `Removed spell`, message: `Removed ${spell.spell_name} successful` });
+      reciveCharSpells(spell.char_id);
+    });
+  });
+}
+const deleteCharItem = (item) => {
+  let data = [item.id];
+  let sql = `DELETE FROM 'main'.'tab_characters_items' WHERE id = ?`;
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`====>Removed ${item.item_name} successfull`);
+      mainWindow.webContents.send('displayMessage', { type: `Removed item`, message: `Removed ${item.item_name} successful` });
+      reciveCharItems(item.char_id);
+    });
+  });
+}
+
 ipcMain.on('getAllSpells', (event) => {
   reciveAllSpells();
 });
@@ -1062,6 +1091,14 @@ ipcMain.on('getCharSpells', (event, arg) => {
 ipcMain.on('getCharItems', (event, arg) => {
   const { id } = arg;
   reciveCharItems(id);
+});
+ipcMain.on('deleteCharSpell', (event, arg) => {
+  const { spell } = arg;
+  deleteCharSpell(spell);
+});
+ipcMain.on('deleteCharItem', (event, arg) => {
+  const { item } = arg;
+  deleteCharItem(item);
 });
 
 ipcMain.on('closeMainWindow', (event) => {

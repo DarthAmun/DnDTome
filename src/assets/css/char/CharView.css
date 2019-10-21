@@ -254,7 +254,7 @@
     padding: 5px;
     text-align: left;
 }
-#char .charItems td.centered, #char .charItems th.centered {
+#char .charItems td.centered, #char .charItems th.centered, #char .charSpells td.centered, #char .charSpells th.centered {
     text-align: center;
 }
 #char .charItems td.centered input {
@@ -264,6 +264,14 @@
 #char .charItems td.centered input[type=checkbox] {
     margin-top: 9px;
 }
+.removeIcon {
+    font-size: 16px;
+    color: darkred;
+}
+.removeIcon:hover {
+    color: red;
+}
+
 
 #char table {
     border-collapse: collapse;
