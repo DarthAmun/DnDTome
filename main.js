@@ -20,9 +20,9 @@ if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) |
   dev = true;
 }
 
-console.log("====>" + path.join(__dirname, './src/assets/db/tab.db').replace("app.asar\\",""));
+console.log("====>" + path.join(__dirname, './src/assets/db/tab.db').replace("app.asar\\", ""));
 let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database(path.join(__dirname, './src/assets/db/tab.db').replace("app.asar\\",""));
+let db = new sqlite3.Database(path.join(__dirname, './src/assets/db/tab.db').replace("app.asar\\", ""));
 
 function createWindow() {
   // Create the browser window.
@@ -481,7 +481,7 @@ const saveSpell = (spell) => {
       }
       console.log(`${spell.name} updated successfull`);
       mainWindow.webContents.send('spellsUpdated', { spellStep, spellStart });
-      mainWindow.webContents.send('displayMessage', {type: `Saved spell`, message: `Saved ${spell.name} successful`});
+      mainWindow.webContents.send('displayMessage', { type: `Saved spell`, message: `Saved ${spell.name} successful` });
     });
   });
 }
@@ -498,7 +498,7 @@ const saveItem = (item) => {
       }
       console.log(`${item.name} updated successfull`);
       mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
-      mainWindow.webContents.send('displayMessage', {type: `Saved item`, message: `Saved ${item.name} successful`});
+      mainWindow.webContents.send('displayMessage', { type: `Saved item`, message: `Saved ${item.name} successful` });
     });
   });
 }
@@ -522,17 +522,17 @@ const saveMonster = (monster) => {
       }
       console.log(`${monster.name} updated successfull`);
       mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
-      mainWindow.webContents.send('displayMessage', {type: `Saved monster`, message: `Saved ${monster.name} successful`});
+      mainWindow.webContents.send('displayMessage', { type: `Saved monster`, message: `Saved ${monster.name} successful` });
     });
   });
 }
 
 const saveChar = (char) => {
   let data = [char.name, char.player, char.prof, char.exp, char.pic, char.classes, char.race, char.background, char.ac, char.hp, char.currentHp,
-  char.init, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.actions, char.bonusActions, char.reactions, char.features, char.classFeatures, char.racialFeatures, 
+  char.init, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.actions, char.bonusActions, char.reactions, char.features, char.classFeatures, char.racialFeatures,
   char.profsLangs, char.notesOne, char.notesTwo, char.notesThree, char.acrobatics,
   char.animalHandling, char.arcana, char.athletics, char.deception, char.history, char.insight, char.intimidation,
-  char.investigation, char.medicine, char.nature, char.perception, char.performance, char.persuasion, char.religion, char.sleightOfHand, 
+  char.investigation, char.medicine, char.nature, char.perception, char.performance, char.persuasion, char.religion, char.sleightOfHand,
   char.stealth, char.survival, char.spellNotes, char.id];
   let sql = `UPDATE 'main'.'tab_characters'
               SET char_name = ?, char_player = ?, char_prof = ?, char_exp = ?, char_pic = ?, char_classes = ?, char_race = ?, char_background = ?, 
@@ -549,7 +549,40 @@ const saveChar = (char) => {
         return console.error(err.message);
       }
       console.log(`${char.name} updated successfull`);
-      mainWindow.webContents.send('displayMessage', {type: `Saved character`, message: `Saved ${char.name} successful`});
+      mainWindow.webContents.send('displayMessage', { type: `Saved character`, message: `Saved ${char.name} successful` });
+    });
+  });
+}
+const saveCharItems = (items) => {
+  items.forEach(item => {
+    let data = [item.item_amount, item.item_equiped, item.item_attuned, item.id];
+    let sql = `UPDATE 'main'.'tab_characters_items'
+              SET item_amount = ?, item_equiped = ?, item_attuned = ?
+              WHERE id = ?`;
+    db.serialize(function () {
+      db.run(sql, data, function (err) {
+        if (err) {
+          return console.error(err.message);
+        }
+        console.log(`${item.item_name} updated successfull`);
+      });
+    });
+  });
+}
+const saveCharSpells = (spells) => {
+  console.log(spells);
+  spells.forEach(spell => {
+    let data = [spell.spell_prepared, spell.id];
+    let sql = `UPDATE 'main'.'tab_characters_spells'
+              SET spell_prepared = ?
+              WHERE id = ?`;
+    db.serialize(function () {
+      db.run(sql, data, function (err) {
+        if (err) {
+          return console.error(err.message);
+        }
+        console.log(`${spell.spell_name} updated successfull`);
+      });
     });
   });
 }
@@ -565,7 +598,7 @@ const deleteSpell = (spell) => {
       console.log(`====>Deleted ${spell.name} successfull`);
       spellWindow.hide();
       mainWindow.webContents.send('spellsUpdated', { spellStep, spellStart });
-      mainWindow.webContents.send('displayMessage', {type: `Deleted monster`, message: `Deleted ${spell.name} successful`});
+      mainWindow.webContents.send('displayMessage', { type: `Deleted monster`, message: `Deleted ${spell.name} successful` });
     });
   });
 }
@@ -581,7 +614,7 @@ const deleteItem = (item) => {
       console.log(`====>Deleted ${item.name} successfull`);
       itemWindow.hide();
       mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
-      mainWindow.webContents.send('displayMessage', {type: `Deleted item`, message: `Deleted ${item.name} successful`});
+      mainWindow.webContents.send('displayMessage', { type: `Deleted item`, message: `Deleted ${item.name} successful` });
     });
   });
 }
@@ -597,7 +630,7 @@ const deleteMonster = (monster) => {
       console.log(`====>Deleted ${monster.name} successfull`);
       monsterWindow.hide();
       mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
-      mainWindow.webContents.send('displayMessage', {type: `Deleted monster`, message: `Deleted ${monster.name} successful`});
+      mainWindow.webContents.send('displayMessage', { type: `Deleted monster`, message: `Deleted ${monster.name} successful` });
     });
   });
 }
@@ -612,7 +645,7 @@ const saveNewSpell = (spell) => {
         return console.error(err.message);
       }
       console.log(`====>Added ${spell.name} successfull`);
-      mainWindow.webContents.send('displayMessage', {type: `Added spell`, message: `Added ${spell.name} successful`});
+      mainWindow.webContents.send('displayMessage', { type: `Added spell`, message: `Added ${spell.name} successful` });
     });
   });
 }
@@ -627,7 +660,7 @@ const saveNewSpells = (spells) => {
           return console.error(err.message);
         }
         console.log(`====>Added ${spell.spell_name} successfull`);
-        mainWindow.webContents.send('displayMessage', {type: `Added spell`, message: `Added ${spell.spell_name} successful`});
+        mainWindow.webContents.send('displayMessage', { type: `Added spell`, message: `Added ${spell.spell_name} successful` });
       });
     });
   });
@@ -643,7 +676,7 @@ const saveNewItem = (item) => {
         return console.error(err.message);
       }
       console.log(`====>Added ${item.name} successfull`);
-      mainWindow.webContents.send('displayMessage', {type: `Added item`, message: `Added ${item.name} successful`});
+      mainWindow.webContents.send('displayMessage', { type: `Added item`, message: `Added ${item.name} successful` });
     });
   });
 }
@@ -658,7 +691,7 @@ const saveNewItems = (items) => {
           return console.error(err.message);
         }
         console.log(`====>Added ${item.item_name} successfull`);
-        mainWindow.webContents.send('displayMessage', {type: `Added item`, message: `Added ${item.item_name} successful`});
+        mainWindow.webContents.send('displayMessage', { type: `Added item`, message: `Added ${item.item_name} successful` });
       });
     });
   });
@@ -682,7 +715,7 @@ const saveNewMonster = (monster) => {
         return console.error(err.message);
       }
       console.log(`====>Added ${monster.name} successfull`);
-      mainWindow.webContents.send('displayMessage', {type: `Added monster`, message: `Added ${monster.name} successful`});
+      mainWindow.webContents.send('displayMessage', { type: `Added monster`, message: `Added ${monster.name} successful` });
     });
   });
 }
@@ -707,7 +740,7 @@ const saveNewMonsters = (monsters) => {
           return console.error(err.message);
         }
         console.log(`====>Added ${monster.monster_name} successfull`);
-        mainWindow.webContents.send('displayMessage', {type: `Added monster`, message: `Added ${monster.monster_name} successful`});
+        mainWindow.webContents.send('displayMessage', { type: `Added monster`, message: `Added ${monster.monster_name} successful` });
       });
     });
   });
@@ -769,7 +802,7 @@ const fomatSkills = (monster) => {
   if (monster.persuasion !== undefined) {
     skills += "Persuasion +" + monster.persuasion + ", "
   }
-  return skills.substr(0, skills.length-2);
+  return skills.substr(0, skills.length - 2);
 }
 
 const fomatSaves = (monster) => {
@@ -792,7 +825,7 @@ const fomatSaves = (monster) => {
   if (monster.charisma_save !== undefined) {
     saves += "CHA +" + monster.charisma_save + ", "
   }
-  return saves.substr(0, saves.length-2);
+  return saves.substr(0, saves.length - 2);
 }
 
 const saveNewMonstersSRD = (monsters) => {
@@ -844,7 +877,7 @@ const saveNewMonstersSRD = (monsters) => {
       });
     });
   });
-  mainWindow.webContents.send('displayMessage', {type: `Added all monster`, message: "Added all successful"});
+  mainWindow.webContents.send('displayMessage', { type: `Added all monster`, message: "Added all successful" });
 }
 
 const reciveChars = () => {
@@ -866,7 +899,7 @@ const deleteAll = (tab) => {
         console.log("====>" + err);
       }
       console.log(`====> All ${tab} successfull`);
-      mainWindow.webContents.send('displayMessage', {type: `Delete All ${tab}`, message: "delete all successful"});
+      mainWindow.webContents.send('displayMessage', { type: `Delete All ${tab}`, message: "delete all successful" });
     });
   });
 }
@@ -957,6 +990,14 @@ ipcMain.on('saveMonster', (event, arg) => {
 ipcMain.on('saveChar', (event, arg) => {
   const { char } = arg;
   saveChar(char);
+});
+ipcMain.on('saveCharItems', (event, arg) => {
+  const { items } = arg;
+  saveCharItems(items);
+});
+ipcMain.on('saveCharSpells', (event, arg) => {
+  const { spells } = arg;
+  saveCharSpells(spells);
 });
 
 ipcMain.on('deleteSpell', (event, arg) => {
@@ -1069,5 +1110,5 @@ ipcMain.on('deleteAllMonsters', (event) => {
 });
 
 ipcMain.on('displayMessage', (event, m) => {
-  mainWindow.webContents.send('displayMessage', {type: m.type, message: m.message});
+  mainWindow.webContents.send('displayMessage', { type: m.type, message: m.message });
 });

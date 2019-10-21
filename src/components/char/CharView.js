@@ -197,7 +197,13 @@ export default function CharView(props) {
                 athletics, deception, history, insight, intimidation, investigation, medicine, nature,
                 perception, performance, persuasion, religion, sleightOfHand, stealth, survival, spellNotes
             }
-        });;
+        });
+        ipcRenderer.send('saveCharItems', {
+            items: items
+        });
+        ipcRenderer.send('saveCharSpells', {
+            spells: spells
+        });
     }
 
     const showTab = (tab) => {
@@ -218,7 +224,7 @@ export default function CharView(props) {
         }
     }
 
-    const createListener = useCallback((item, fieldName) => e => {
+    const createValueListenerItem = useCallback((item, fieldName) => e => {
         const allItemsWithChangedSingleItem = items.map(editItem => {
             if(item === editItem) {
                 return {...item, [fieldName]: e.target.value};
@@ -227,6 +233,24 @@ export default function CharView(props) {
         })
         setItems(allItemsWithChangedSingleItem);
     },[items, setItems]);
+    const createCheckedListenerItem = useCallback((item, fieldName) => e => {
+        const allItemsWithChangedSingleItem = items.map(editItem => {
+            if(item === editItem) {
+                return {...item, [fieldName]: e.target.checked};
+            }
+            return editItem;
+        })
+        setItems(allItemsWithChangedSingleItem);
+    },[items, setItems]);
+    const createCheckedListenerSpell = useCallback((spell, fieldName) => e => {
+        const allItemsWithChangedSingleSpell = spells.map(editSpell => {
+            if(spell === editSpell) {
+                return {...spell, [fieldName]: e.target.checked};
+            }
+            return editSpell;
+        })
+        setSpells(allItemsWithChangedSingleSpell);
+    },[spells, setSpells]);
     
     const style = {
         backgroundImage: `url(${pic})`,
@@ -336,7 +360,6 @@ export default function CharView(props) {
                                 <label>Wis Save: <input type="number" value={wisSave} onChange={e => setWisSave(e.target.value)}></input><input type="radio" /></label>
                                 <label>Cha Save: <input type="number" value={chaSave} onChange={e => setCha(e.target.value)}></input><input type="radio" /></label>
                             </div>
-                            <textarea value={profsLangs} onChange={e => setProfsLangs(e.target.value)} placeholder="Proficiencies & Languages..."></textarea>
                             <div className="skills">
                                 <div classame="skillRow">
                                     <label>Acrobatics (Dex): <input type="number" value={acrobatics} onChange={e => setAcrobatics(e.target.value)}></input><input type="radio" /></label>
@@ -367,6 +390,7 @@ export default function CharView(props) {
                                     <label>Survival (Wis): <input type="number" value={survival} onChange={e => setSurvival(e.target.value)}></input><input type="radio" /></label>
                                 </div>
                             </div>
+                            <textarea value={profsLangs} onChange={e => setProfsLangs(e.target.value)} placeholder="Proficiencies & Languages..."></textarea>
                         </div>
                         <div className="tabContent" style={{ display: tabs.actions ? "flex" : "none" }}>
                             <textarea className="big" value={actions} onChange={e => setActions(e.target.value)} placeholder="Actions..."></textarea>
@@ -387,13 +411,15 @@ export default function CharView(props) {
                                             <th>Name</th>
                                             <th>Casting Time</th>
                                             <th>Range</th>
+                                            <th>Prepared?</th>
                                         </tr>
                                         {spells.map((spell, index) => {
-                                            return <tr className="charSpell" key={spell.spell_id} onClick={() => viewSpell(spell)} style={{ cursor: 'pointer' }}>
-                                                <td>{formatLevel(spell.spell_level)}</td>
-                                                <td>{spell.spell_name}</td>
-                                                <td>{formatCastingTime(spell.spell_time)}</td>
-                                                <td>{spell.spell_range}</td>
+                                            return <tr className="charSpell" key={spell.spell_id} style={{ cursor: 'pointer' }}>
+                                                <td onClick={() => viewSpell(spell)}>{formatLevel(spell.spell_level)}</td>
+                                                <td onClick={() => viewSpell(spell)}>{spell.spell_name}</td>
+                                                <td onClick={() => viewSpell(spell)}>{formatCastingTime(spell.spell_time)}</td>
+                                                <td onClick={() => viewSpell(spell)}>{spell.spell_range}</td>
+                                                <td className="centered"><input name="prepared" type="checkbox" checked={spell.spell_prepared} onChange={createCheckedListenerSpell(spell, "spell_prepared")}/></td>
                                             </tr>;
                                         })}
                                     </tbody>
@@ -416,9 +442,9 @@ export default function CharView(props) {
                                             return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
                                                 <td onClick={() => viewItem(item)}>{item.item_name}</td>
                                                 <td onClick={() => viewItem(item)}>{item.item_type}</td>
-                                                <td className="centered"><input type="number" value={item.item_amount} onChange={createListener(item, "item_amount")}/></td>
-                                                <td className="centered"><input type="checkbox" value={item.item_equiped} onChange={createListener(item, "item_equiped")}/></td>
-                                                <td className="centered"><input type="checkbox" value={item.item_attuned} onChange={createListener(item, "item_attuned")}/></td>
+                                                <td className="centered"><input type="number" value={item.item_amount} onChange={createValueListenerItem(item, "item_amount")}/></td>
+                                                <td className="centered"><input name="equiped" type="checkbox" checked={item.item_equiped} onChange={createCheckedListenerItem(item, "item_equiped")}/></td>
+                                                <td className="centered"><input name="attuned" type="checkbox" checked={item.item_attuned} onChange={createCheckedListenerItem(item, "item_attuned")}/></td>
                                             </tr>;
                                         })}
                                     </tbody>
