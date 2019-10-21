@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import '../../assets/css/char/CharView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
+import StatChart from './StatChart';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -234,6 +235,28 @@ export default function CharView(props) {
         backgroundRepeat: 'no-repeat'
     };
 
+    const data = [
+        {
+            subject: 'Str', A: str, fullMark: 40,
+        },
+        {
+            subject: 'Dex', A: dex, fullMark: 40,
+        },
+        {
+            subject: 'Con', A: con, fullMark: 40,
+        },
+        {
+            subject: 'Int', A: int, fullMark: 40,
+        },
+        {
+            subject: 'Wis', A: wis, fullMark: 40,
+        },
+        {
+            subject: 'Cha', A: cha, fullMark: 40,
+        },
+    ];
+    
+
     return (
         <div id="overview">
             <div id="char">
@@ -249,6 +272,9 @@ export default function CharView(props) {
                     <label>Race:<input name="race" type="text" value={race} onChange={e => setRace(e.target.value)} /></label><br />
                     <label>Background:<input name="background" type="text" value={background} onChange={e => setBackground(e.target.value)} /></label><br />
                     <label>Proficiency:<input name="level" type="number" value={prof} onChange={e => setProf(e.target.value)} /></label>
+                </div>
+                <div className="smallLabelGroup">
+                    <StatChart data={data} />
                 </div>
                 <button onClick={saveChar}><FontAwesomeIcon icon={faSave} /> Save</button>
                 <div className="tabComponent">
