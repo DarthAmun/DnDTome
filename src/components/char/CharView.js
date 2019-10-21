@@ -463,9 +463,9 @@ export default function CharView(props) {
                             </div>
                         </div>
                         <div className="tabContent" style={{ display: tabs.notes ? "flex" : "none" }}>
-                            <textarea value={notesOne} onChange={e => setNotesOne(e.target.value)} placeholder="Notes..."></textarea>
-                            <textarea value={notesTwo} onChange={e => setNotesTwo(e.target.value)} placeholder="Notes..."></textarea>
-                            <textarea value={notesThree} onChange={e => setNotesThree(e.target.value)} placeholder="Notes..."></textarea>
+                            <textarea className="big" value={notesOne} onChange={e => setNotesOne(e.target.value)} placeholder="Notes..."></textarea>
+                            <textarea className="big" value={notesTwo} onChange={e => setNotesTwo(e.target.value)} placeholder="Notes..."></textarea>
+                            <textarea className="big" value={notesThree} onChange={e => setNotesThree(e.target.value)} placeholder="Notes..."></textarea>
                         </div>
                     </div>
                 </div>

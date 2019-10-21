@@ -86,7 +86,7 @@ export default function ItemView() {
             <div className="top">
                 <label>Rarity:<input name="rarity" type="text" value={rarity} onChange={e => setRarity(e.target.value)} /></label>
                 <label>Type:<input name="type" type="text" value={type} onChange={e => setType(e.target.value)} /></label>
-                <label>Chars:<select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
+                <label>Char:<select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
                     {chars.map((char, index) => {
                         return <option key={index} value={char.id}>{char.char_name}</option>;
                     })}

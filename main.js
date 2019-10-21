@@ -479,7 +479,7 @@ const saveSpell = (spell) => {
       if (err) {
         return console.error(err.message);
       }
-      console.log(`${spell.name} updated successfull`);
+      console.log(`====> ${spell.name} updated successfull`);
       mainWindow.webContents.send('spellsUpdated', { spellStep, spellStart });
       mainWindow.webContents.send('displayMessage', { type: `Saved spell`, message: `Saved ${spell.name} successful` });
     });
@@ -496,7 +496,7 @@ const saveItem = (item) => {
       if (err) {
         return console.error(err.message);
       }
-      console.log(`${item.name} updated successfull`);
+      console.log(`====> ${item.name} updated successfull`);
       mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
       mainWindow.webContents.send('displayMessage', { type: `Saved item`, message: `Saved ${item.name} successful` });
     });
@@ -520,7 +520,7 @@ const saveMonster = (monster) => {
       if (err) {
         return console.error(err.message);
       }
-      console.log(`${monster.name} updated successfull`);
+      console.log(`====> ${monster.name} updated successfull`);
       mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
       mainWindow.webContents.send('displayMessage', { type: `Saved monster`, message: `Saved ${monster.name} successful` });
     });
@@ -548,7 +548,7 @@ const saveChar = (char) => {
       if (err) {
         return console.error(err.message);
       }
-      console.log(`${char.name} updated successfull`);
+      console.log(`====> ${char.name} updated successfull`);
       mainWindow.webContents.send('displayMessage', { type: `Saved character`, message: `Saved ${char.name} successful` });
     });
   });
@@ -564,13 +564,12 @@ const saveCharItems = (items) => {
         if (err) {
           return console.error(err.message);
         }
-        console.log(`${item.item_name} updated successfull`);
+        console.log(`====> ${item.item_name} updated successfull`);
       });
     });
   });
 }
 const saveCharSpells = (spells) => {
-  console.log(spells);
   spells.forEach(spell => {
     let data = [spell.spell_prepared, spell.id];
     let sql = `UPDATE 'main'.'tab_characters_spells'
@@ -581,7 +580,7 @@ const saveCharSpells = (spells) => {
         if (err) {
           return console.error(err.message);
         }
-        console.log(`${spell.spell_name} updated successfull`);
+        console.log(`====> ${spell.spell_name} updated successfull`);
       });
     });
   });
@@ -896,12 +895,31 @@ const reciveChars = () => {
 
 const deleteAll = (tab) => {
   db.serialize(function () {
+    db.run(`DELETE FROM tab_characters_${tab}`, function (err) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log(`====> All from characters_${tab} successful deleted`);
+      mainWindow.webContents.send('displayMessage', { type: `Delete All ${tab}`, message: "delete all successful" });
+    });
+    db.run(`DELETE FROM sqlite_sequence WHERE name='tab_characters_${tab}'`, function (err) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log(`====> characters_${tab} autoincreasement reseted successful`);
+    });
     db.run(`DELETE FROM tab_${tab}`, function (err) {
       if (err != null) {
         console.log("====>" + err);
       }
-      console.log(`====> All ${tab} successfull`);
+      console.log(`====> All from ${tab} successful deleted`);
       mainWindow.webContents.send('displayMessage', { type: `Delete All ${tab}`, message: "delete all successful" });
+    });
+    db.run(`DELETE FROM sqlite_sequence WHERE name='tab_${tab}'`, function (err) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log(`====> ${tab} autoincreasement reseted successful`);
     });
   });
 }

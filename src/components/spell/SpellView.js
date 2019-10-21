@@ -93,7 +93,7 @@ export default function SpellView() {
                 <label>Sources:<input name="sources" type="text" value={sources} onChange={e => setSources(e.target.value)} placeholder="Sources..." /></label>
             </div>
             <textarea value={text} onChange={e => setText(e.target.value)} placeholder="Describtion..."></textarea>
-            <label>Chars:
+            <label>Char:
                 <select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
                     {chars.map((char, index) => {
                         return <option key={index} value={char.id}>{char.char_name}</option>;

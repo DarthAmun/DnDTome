@@ -59,16 +59,16 @@ export default function Options() {
       // fileName is a string that contains the path and filename created in the save file dialog.  
       fs.writeFile(path, content, (err) => {
         if (err) {
-          ipcRenderer.send('displayMessage', {type: `Spells exported`, message: `Spell export failed`});
+          ipcRenderer.send('displayMessage', { type: `Spells exported`, message: `Spell export failed` });
         }
-        ipcRenderer.send('displayMessage', {type: `Spells exported`, message: `Spell export successful`});
+        ipcRenderer.send('displayMessage', { type: `Spells exported`, message: `Spell export successful` });
       });
     });
   }
 
   const exportItems = (e) => {
     let content = JSON.stringify(items);
-    
+
     options.defaultPath = options.defaultPath + '/items_export.json';
     dialog.showSaveDialog(null, options, (path) => {
       console.log(path);
@@ -76,9 +76,9 @@ export default function Options() {
       // fileName is a string that contains the path and filename created in the save file dialog.  
       fs.writeFile(path, content, (err) => {
         if (err) {
-          ipcRenderer.send('displayMessage', {type: `Items exported`, message: `Item export failed`});
+          ipcRenderer.send('displayMessage', { type: `Items exported`, message: `Item export failed` });
         }
-        ipcRenderer.send('displayMessage', {type: `Items exported`, message: `Item export successful`});
+        ipcRenderer.send('displayMessage', { type: `Items exported`, message: `Item export successful` });
       });
     });
   }
@@ -93,9 +93,9 @@ export default function Options() {
       // fileName is a string that contains the path and filename created in the save file dialog.  
       fs.writeFile(path, content, (err) => {
         if (err) {
-          ipcRenderer.send('displayMessage', {type: `Monsters exported`, message: `Monster export failed`});
+          ipcRenderer.send('displayMessage', { type: `Monsters exported`, message: `Monster export failed` });
         }
-        ipcRenderer.send('displayMessage', {type: `Monsters exported`, message: `Monster export successful`});
+        ipcRenderer.send('displayMessage', { type: `Monsters exported`, message: `Monster export successful` });
       });
     });
   }
@@ -164,13 +164,49 @@ export default function Options() {
   }
 
   const deleteAllItems = () => {
-    ipcRenderer.send('deleteAllItems');
+    const options = {
+      type: 'question',
+      buttons: ['Cancel', 'Yes, please', 'No, thanks'],
+      defaultId: 2,
+      title: `Delete all items?`,
+      message: 'All items will be deleted and removed from all characters!'
+    };
+
+    dialog.showMessageBox(null, options, (response) => {
+      if (response == 1) {
+        ipcRenderer.send('deleteAllItems');
+      }
+    });
   }
   const deleteAllSpells = () => {
-    ipcRenderer.send('deleteAllSpells');
+    const options = {
+      type: 'question',
+      buttons: ['Cancel', 'Yes, please', 'No, thanks'],
+      defaultId: 2,
+      title: `Delete all spells?`,
+      message: 'All spells will be deleted and removed from all characters!'
+    };
+
+    dialog.showMessageBox(null, options, (response) => {
+      if (response == 1) {
+        ipcRenderer.send('deleteAllSpells');
+      }
+    });
   }
   const deleteAllMonsters = () => {
-    ipcRenderer.send('deleteAllMonsters');
+    const options = {
+      type: 'question',
+      buttons: ['Cancel', 'Yes, please', 'No, thanks'],
+      defaultId: 2,
+      title: `Delete all monsters?`,
+      message: 'All monsters will be deleted!'
+    };
+
+    dialog.showMessageBox(null, options, (response) => {
+      if (response == 1) {
+        ipcRenderer.send('deleteAllMonsters');
+      }
+    });
   }
 
   return (
