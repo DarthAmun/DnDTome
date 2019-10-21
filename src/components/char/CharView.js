@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import '../../assets/css/char/CharView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
@@ -217,15 +217,15 @@ export default function CharView(props) {
         }
     }
 
-    const createListener = (item, fieldName) => e => {
+    const createListener = useCallback((item, fieldName) => e => {
         const allItemsWithChangedSingleItem = items.map(editItem => {
             if(item === editItem) {
                 return {...item, [fieldName]: e.target.value};
             }
             return editItem;
-        });
+        })
         setItems(allItemsWithChangedSingleItem);
-    }
+    },[items, setItems]);
     
     const style = {
         backgroundImage: `url(${pic})`,
