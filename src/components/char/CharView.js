@@ -106,7 +106,7 @@ export default function CharView(props) {
         setBonusActions(result.char_bonusActions);
         setReactions(result.char_reactions);
 
-        setClassFeatures(result.char_clasFeatures);
+        setClassFeatures(result.char_classFeatures);
         setRacialFeatures(result.char_racialFeatures);
         setFeatures(result.char_features);
 
@@ -192,7 +192,7 @@ export default function CharView(props) {
             char: {
                 id, name, player, prof, exp, pic, classes, race, background, ac, hp, currentHp,
                 init, str, dex, con, int, wis, cha, strSave, dexSave, conSave, intSave, wisSave, chaSave,
-                actions, bonusActions, reactions, classFeatures, racialFeatures, features, profsLangs, 
+                actions, bonusActions, reactions, features, classFeatures, racialFeatures, profsLangs, 
                 notesOne, notesTwo, notesThree, acrobatics, animalHandling, arcana,
                 athletics, deception, history, insight, intimidation, investigation, medicine, nature,
                 perception, performance, persuasion, religion, sleightOfHand, stealth, survival, spellNotes
