@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../assets/css/spell/SpellView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -20,6 +20,9 @@ export default function SpellView() {
     const [classes, setClasses] = useState("");
     const [sources, setSources] = useState("");
 
+    const [chars, setChars] = useState([]);
+    const [selectedChar, setSelectedChar] = useState(0);
+
     const receiveSpell = (event, result) => {
         const text = result.spell_text.replace(/\\n/gm, "\r\n");
         const sources = result.spell_sources.replace(/\\n/gm, "\r\n");
@@ -37,10 +40,18 @@ export default function SpellView() {
         setId(result.spell_id);
     }
 
+    const receiveChars = (event, result) => {
+        setChars(result);
+        setSelectedChar(result[0].char_id);
+    }
+
     useEffect(() => {
         ipcRenderer.on("onViewSpell", receiveSpell);
+        ipcRenderer.send('getChars');
+        ipcRenderer.on("getCharsResult", receiveChars);
         return () => {
             ipcRenderer.removeListener("onViewSpell", receiveSpell);
+            ipcRenderer.removeListener("getCharsResult", receiveChars);
         }
     }, []);
 
@@ -49,7 +60,7 @@ export default function SpellView() {
     }
 
     const addSpellToChar = (e) => {
-
+        ipcRenderer.send('addSpellToChar', { char: { selectedChar }, spell: { id, name } });
     }
 
     const deleteSpell = (e) => {
@@ -82,9 +93,16 @@ export default function SpellView() {
                 <label>Sources:<input name="sources" type="text" value={sources} onChange={e => setSources(e.target.value)} placeholder="Sources..." /></label>
             </div>
             <textarea value={text} onChange={e => setText(e.target.value)} placeholder="Describtion..."></textarea>
-            <button className="delete" onClick={deleteSpell}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
-            <button onClick={saveSpell}><FontAwesomeIcon icon={faSave} /> Save</button>
+            <label>Chars:
+                <select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
+                    {chars.map((char, index) => {
+                        return <option key={index} value={char.id}>{char.char_name}</option>;
+                    })}
+                </select>
+            </label>
             <button onClick={addSpellToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
+            <button onClick={saveSpell}><FontAwesomeIcon icon={faSave} /> Save</button>
+            <button onClick={deleteSpell} className="delete" style={{float: "right"}}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
         </div>
     )
 }

@@ -16,6 +16,9 @@ export default function ItemView() {
     const [type, setType] = useState("");
     const [source, setSource] = useState("");
 
+    const [chars, setChars] = useState([]);
+    const [selectedChar, setSelectedChar] = useState(0);
+
     const receiveItem = (event, result) => {
         const text = result.item_description.replace(/\\n/gm, "\r\n");
         setName(result.item_name);
@@ -27,15 +30,27 @@ export default function ItemView() {
         setSource(result.item_source);
     }
 
+    const receiveChars = (event, result) => {
+        setChars(result);
+        setSelectedChar(result[0].char_id);
+    }
+
     useEffect(() => {
         ipcRenderer.on("onViewItem", receiveItem);
+        ipcRenderer.send('getChars');
+        ipcRenderer.on("getCharsResult", receiveChars);
         return () => {
             ipcRenderer.removeListener("onViewItem", receiveItem);
+            ipcRenderer.removeListener("getCharsResult", receiveChars);
         }
     }, []);
 
     const saveItem = (e) => {
         ipcRenderer.send('saveItem', { item: { id, name, pic, type, rarity, source, description } });
+    }
+
+    const addItemToChar = (e) => {
+        ipcRenderer.send('addItemToChar', { char: { selectedChar }, item: { id, name } });
     }
 
     const deleteItem = (e) => {
@@ -52,10 +67,6 @@ export default function ItemView() {
                 ipcRenderer.send('deleteItem', { item: { id, name, pic, type, rarity, source, description } });
             }
         });
-    }
-
-    const addItemToChar = (e) => {
-
     }
 
     const style = {
@@ -75,6 +86,13 @@ export default function ItemView() {
             <div className="top">
                 <label>Rarity:<input name="rarity" type="text" value={rarity} onChange={e => setRarity(e.target.value)} /></label>
                 <label>Type:<input name="type" type="text" value={type} onChange={e => setType(e.target.value)} /></label>
+                <label>Chars:<select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
+                    {chars.map((char, index) => {
+                        return <option key={index} value={char.id}>{char.char_name}</option>;
+                    })}
+                </select></label>
+            </div>
+            <div className="top" style={{ width: "120px" }}>
                 <button className="delete" onClick={deleteItem}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                 <button onClick={saveItem}><FontAwesomeIcon icon={faSave} /> Save</button>
                 <button onClick={addItemToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>

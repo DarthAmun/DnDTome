@@ -19,7 +19,7 @@ body {
     font-family: 'Quicksand', sans-serif;
 }
 
-#itemView input {
+#itemView input, #itemView select {
     height: 30px;
     width: 200px;
     border: none;
@@ -36,9 +36,13 @@ body {
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
 }
 
+#itemView select {
+    width: 220px;
+}
+
 #itemView button {
     height: 32px;
-    width: 110px;
+    width: 120px;
     border: none;
     border-radius: 5px;
     padding-left: 10px;
@@ -93,14 +97,15 @@ body {
 
 #itemView label {
     display: inline-block;
-    width: 320px;
+    width: 290px;
     text-align: right;
     line-height: 30px;
 }
 
 #itemView .top {
     float: left;
-    width: 320px;
+    width: 290px;
+    height: 110px;
     margin-right: 10px;
 }
 

@@ -310,7 +310,7 @@ export default function CharView(props) {
                 <button onClick={saveChar}><FontAwesomeIcon icon={faSave} /> Save</button>
                 <div className="tabComponent">
                     <div className="tabSelector">
-                        <div className={`tabName ${tabs.skills ? "active" : ""}`} onClick={e => showTab(0)}>Skills</div>
+                        <div className={`tabName ${tabs.skills ? "active" : ""}`} onClick={e => showTab(0)}>Attributes/Skills</div>
                         <div className={`tabName ${tabs.combat ? "active" : ""}`} onClick={e => showTab(1)}>Combat</div>
                         <div className={`tabName ${tabs.actions ? "active" : ""}`} onClick={e => showTab(2)}>Actions</div>
                         <div className={`tabName ${tabs.features ? "active" : ""}`} onClick={e => showTab(3)}>Features</div>

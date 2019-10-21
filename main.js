@@ -887,6 +887,8 @@ const reciveChars = () => {
         console.log("====>" + err);
       }
       mainWindow.webContents.send('getCharsResult', rows);
+      itemWindow.webContents.send('getCharsResult', rows);
+      spellWindow.webContents.send('getCharsResult', rows);
       console.log("====>" + `getCharsResult successfull`)
     });
   });
@@ -929,6 +931,36 @@ const deleteCharItem = (item) => {
       console.log(`====>Removed ${item.item_name} successfull`);
       mainWindow.webContents.send('displayMessage', { type: `Removed item`, message: `Removed ${item.item_name} successful` });
       reciveCharItems(item.char_id);
+    });
+  });
+}
+
+const addSpellToChar = (char, spell) => {
+  let data = [char.selectedChar, spell.id, false];
+  let sql = `INSERT INTO 'main'.'tab_characters_spells' (char_id, spell_id, spell_prepared)
+              VALUES  (?, ?, ?)`;
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`====>Added ${spell.name} to character successfull`);
+      mainWindow.webContents.send('displayMessage', { type: `Added spell to character`, message: `Added ${spell.name} to character successful` });
+    });
+  });
+}
+
+const addItemToChar = (char, item) => {
+  let data = [char.selectedChar, item.id, 1, false, false];
+  let sql = `INSERT INTO 'main'.'tab_characters_items' (char_id, item_id, item_amount, item_equiped, item_attuned)
+              VALUES  (?, ?, ?, ?, ?)`;
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`====>Added ${item.name} to character successfull`);
+      mainWindow.webContents.send('displayMessage', { type: `Added item to character`, message: `Added ${item.name} to character successful` });
     });
   });
 }
@@ -1148,4 +1180,14 @@ ipcMain.on('deleteAllMonsters', (event) => {
 
 ipcMain.on('displayMessage', (event, m) => {
   mainWindow.webContents.send('displayMessage', { type: m.type, message: m.message });
+});
+
+ipcMain.on('addItemToChar', (event, arg) => {
+  const { char, item } = arg;
+  addItemToChar(char, item);
+});
+
+ipcMain.on('addSpellToChar', (event, arg) => {
+  const { char, spell } = arg;
+  addSpellToChar(char, spell);
 });
