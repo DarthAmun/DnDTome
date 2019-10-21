@@ -217,16 +217,15 @@ export default function CharView(props) {
         }
     }
 
-    const setItemAmount = (id, amount) => {
-        setItems(...items, items[])
+    const createListener = (item, fieldName) => e => {
+        const allItemsWithChangedSingleItem = items.map(editItem => {
+            if(item === editItem) {
+                return {...item, [fieldName]: e.target.value};
+            }
+            return editItem;
+        });
+        setItems(allItemsWithChangedSingleItem);
     }
-    const setItemEquiped = (id, amount) => {
-
-    }
-    const setItemAttuned = (id, amount) => {
-
-    }
-
     
     const style = {
         backgroundImage: `url(${pic})`,
@@ -391,9 +390,9 @@ export default function CharView(props) {
                                             return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
                                                 <td onClick={() => viewItem(item)}>{item.item_name}</td>
                                                 <td onClick={() => viewItem(item)}>{item.item_type}</td>
-                                                <td className="centered"><input type="number" value={item.item_amount} onChange={e => setItemAmount(item.id, e.target.value)}/></td>
-                                                <td className="centered"><input type="checkbox" value={item.item_equiped} onChange={e => setItemEquiped(item.id, e.target.value)}/></td>
-                                                <td className="centered"><input type="checkbox" value={item.item_attuned} onChange={e => setItemAttuned(item.id, e.target.value)}/></td>
+                                                <td className="centered"><input type="number" value={item.item_amount} onChange={createListener(item, "item_amount")}/></td>
+                                                <td className="centered"><input type="checkbox" value={item.item_equiped} onChange={createListener(item, "item_equiped")}/></td>
+                                                <td className="centered"><input type="checkbox" value={item.item_attuned} onChange={createListener(item, "item_attuned")}/></td>
                                             </tr>;
                                         })}
                                     </tbody>
