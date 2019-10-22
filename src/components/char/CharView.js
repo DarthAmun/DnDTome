@@ -454,7 +454,7 @@ export default function CharView(props) {
                                                 <td onClick={() => viewItem(item)}>{item.item_type}</td>
                                                 <td className="centered"><input type="number" value={item.item_amount} onChange={createValueListenerItem(item, "item_amount")} /></td>
                                                 <td className="centered"><input name="equiped" type="checkbox" checked={item.item_equiped} onChange={createCheckedListenerItem(item, "item_equiped")} /></td>
-                                                <td className="centered"><input name="attuned" type="checkbox" checked={item.item_attuned} onChange={createCheckedListenerItem(item, "item_attuned")} /></td>
+                                                <td className="centered">{item.item_attunment === 1 ? <input name="attuned" type="checkbox" checked={item.item_attuned} onChange={createCheckedListenerItem(item, "item_attuned")} /> : ""}</td>
                                                 <td onClick={() => deleteCharItem(item)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
                                             </tr>;
                                         })}
