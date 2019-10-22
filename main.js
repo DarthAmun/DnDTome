@@ -130,7 +130,7 @@ function createWindow() {
   itemWindow = new BrowserWindow({
     parent: mainWindow,
     width: 800,
-    height: 480,
+    height: 520,
     show: false,
     resizable: false,
     frame: true,
@@ -487,9 +487,9 @@ const saveSpell = (spell) => {
 }
 
 const saveItem = (item) => {
-  let data = [item.name, item.type, item.rarity, item.description, item.pic, item.source, item.id];
+  let data = [item.name, item.type, item.rarity, item.description, item.pic, item.source, item.attunment, item.id];
   let sql = `UPDATE 'main'.'tab_items'
-              SET item_name = ?, item_type = ?, item_rarity = ?, item_description = ?, item_pic = ?, item_source = ?
+              SET item_name = ?, item_type = ?, item_rarity = ?, item_description = ?, item_pic = ?, item_source = ?, item_attunment = ?
               WHERE item_id = ?`;
   db.serialize(function () {
     db.run(sql, data, function (err) {

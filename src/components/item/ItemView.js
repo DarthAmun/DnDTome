@@ -15,6 +15,7 @@ export default function ItemView() {
     const [rarity, setRarity] = useState("");
     const [type, setType] = useState("");
     const [source, setSource] = useState("");
+    const [attunment, setAttunment] = useState("");
 
     const [chars, setChars] = useState([]);
     const [selectedChar, setSelectedChar] = useState(0);
@@ -28,6 +29,7 @@ export default function ItemView() {
         setRarity(result.item_rarity);
         setType(result.item_type);
         setSource(result.item_source);
+        setAttunment(result.item_attunment);
     }
 
     const receiveChars = (event, result) => {
@@ -46,7 +48,7 @@ export default function ItemView() {
     }, []);
 
     const saveItem = (e) => {
-        ipcRenderer.send('saveItem', { item: { id, name, pic, type, rarity, source, description } });
+        ipcRenderer.send('saveItem', { item: { id, name, pic, type, rarity, source, attunment, description } });
     }
 
     const addItemToChar = (e) => {
@@ -82,20 +84,22 @@ export default function ItemView() {
                 <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} /></label>
                 <label>Sources:<input name="source" type="text" value={source} onChange={e => setSource(e.target.value)} /></label>
                 <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label>
-            </div>
-            <div className="top">
-                <label>Rarity:<input name="rarity" type="text" value={rarity} onChange={e => setRarity(e.target.value)} /></label>
-                <label>Type:<input name="type" type="text" value={type} onChange={e => setType(e.target.value)} /></label>
-                <label>Char:<select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
+                <label className="left">Char:<select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
                     {chars.map((char, index) => {
                         return <option key={index} value={char.id}>{char.char_name}</option>;
                     })}
                 </select></label>
             </div>
+            <div className="top">
+                <label>Rarity:<input name="rarity" type="text" value={rarity} onChange={e => setRarity(e.target.value)} /></label>
+                <label>Type:<input name="type" type="text" value={type} onChange={e => setType(e.target.value)} /></label>
+                <label><div className="labelText">Attuned:</div><input name="type" type="checkbox" checked={attunment} onChange={e => setAttunment(e.target.checked)} /></label>
+                <button onClick={addItemToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
+            </div>
             <div className="top" style={{ width: "120px" }}>
                 <button className="delete" onClick={deleteItem}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                 <button onClick={saveItem}><FontAwesomeIcon icon={faSave} /> Save</button>
-                <button onClick={addItemToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
+                
             </div>
             <div className="image" style={style}></div>
             <textarea value={description} onChange={e => setDescription(e.target.value)}></textarea>

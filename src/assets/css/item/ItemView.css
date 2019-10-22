@@ -50,7 +50,7 @@ body {
     margin-bottom: 5px;
     margin-left: 5px;
     text-align: center;
-    float: right;
+    float: left;
     font-family: inherit;
     font-size: 14px;
     background-color: #8000ff;
@@ -101,11 +101,23 @@ body {
     text-align: right;
     line-height: 30px;
 }
+#itemView label .labelText{
+    float: left;
+    height: 30px;
+    line-height: 33px;
+}
+#itemView label input[type=checkbox]{
+    width: 15px;
+    background: none;
+    box-shadow: none;
+    float: left;
+    margin-bottom: 0px;
+}
 
 #itemView .top {
     float: left;
     width: 290px;
-    height: 110px;
+    height: 150px;
     margin-right: 10px;
 }
 
