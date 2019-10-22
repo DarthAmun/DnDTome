@@ -188,10 +188,10 @@ export default function CharView(props) {
     }
 
     const deleteCharSpell = (spell) => {
-        ipcRenderer.send('deleteCharSpell', {spell: spell});
+        ipcRenderer.send('deleteCharSpell', { spell: spell });
     }
     const deleteCharItem = (item) => {
-        ipcRenderer.send('deleteCharItem', {item: item});
+        ipcRenderer.send('deleteCharItem', { item: item });
     }
 
     const saveChar = (spell) => {
@@ -418,8 +418,8 @@ export default function CharView(props) {
                                             <th>Name</th>
                                             <th>Casting Time</th>
                                             <th>Range</th>
-                                            <th>Prepared?</th>
-                                            <th>Remove</th>
+                                            <th className="centered">Prepared?</th>
+                                            <th className="centered">Remove</th>
                                         </tr>
                                         {spells.map((spell, index) => {
                                             return <tr className="charSpell" key={spell.spell_id} style={{ cursor: 'pointer' }}>
@@ -427,7 +427,12 @@ export default function CharView(props) {
                                                 <td onClick={() => viewSpell(spell)}>{spell.spell_name}</td>
                                                 <td onClick={() => viewSpell(spell)}>{formatCastingTime(spell.spell_time)}</td>
                                                 <td onClick={() => viewSpell(spell)}>{spell.spell_range}</td>
-                                                <td className="centered"><input name="prepared" type="checkbox" checked={spell.spell_prepared} onChange={createCheckedListenerSpell(spell, "spell_prepared")} /></td>
+                                                <td className="centered">
+                                                    <label className="checkbox-label">
+                                                        <input name="prepared" type="checkbox" checked={spell.spell_prepared} onChange={createCheckedListenerSpell(spell, "spell_prepared")} />
+                                                        <span className="checkbox-custom circular"></span>
+                                                    </label>
+                                                </td>
                                                 <td onClick={() => deleteCharSpell(spell)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
                                             </tr>;
                                         })}
@@ -443,18 +448,32 @@ export default function CharView(props) {
                                         <tr>
                                             <th>Name</th>
                                             <th>Type</th>
-                                            <th>Amount</th>
-                                            <th>Equiped?</th>
-                                            <th>Attuned?</th>
-                                            <th>Remove</th>
+                                            <th className="centered">Amount</th>
+                                            <th className="centered">Equiped?</th>
+                                            <th className="centered">Attuned?</th>
+                                            <th className="centered">Remove</th>
                                         </tr>
                                         {items.map((item, index) => {
                                             return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
                                                 <td onClick={() => viewItem(item)}>{item.item_name}</td>
                                                 <td onClick={() => viewItem(item)}>{item.item_type}</td>
-                                                <td className="centered"><input type="number" value={item.item_amount} onChange={createValueListenerItem(item, "item_amount")} /></td>
-                                                <td className="centered"><input name="equiped" type="checkbox" checked={item.item_equiped} onChange={createCheckedListenerItem(item, "item_equiped")} /></td>
-                                                <td className="centered">{item.item_attunment === 1 ? <input name="attuned" type="checkbox" checked={item.item_attuned} onChange={createCheckedListenerItem(item, "item_attuned")} /> : ""}</td>
+                                                <td className="centered">
+                                                    <input type="number" value={item.item_amount} onChange={createValueListenerItem(item, "item_amount")} />
+                                                </td>
+                                                <td className="centered">
+                                                    <label className="checkbox-label">
+                                                        <input name="equiped" type="checkbox" checked={item.item_equiped} onChange={createCheckedListenerItem(item, "item_equiped")} />
+                                                        <span className="checkbox-custom circular"></span>
+                                                    </label>
+                                                </td>
+                                                <td className="centered">
+                                                    {item.item_attunment === 1 ?
+                                                        <label className="checkbox-label">
+                                                            <input name="attuned" type="checkbox" checked={item.item_attuned} onChange={createCheckedListenerItem(item, "item_attuned")} />
+                                                            <span className="checkbox-custom circular"></span>
+                                                        </label> : ""}
+
+                                                </td>
                                                 <td onClick={() => deleteCharItem(item)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
                                             </tr>;
                                         })}

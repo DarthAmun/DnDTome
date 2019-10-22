@@ -93,13 +93,17 @@ export default function ItemView() {
             <div className="top">
                 <label>Rarity:<input name="rarity" type="text" value={rarity} onChange={e => setRarity(e.target.value)} /></label>
                 <label>Type:<input name="type" type="text" value={type} onChange={e => setType(e.target.value)} /></label>
-                <label><div className="labelText">Attuned:</div><input name="type" type="checkbox" checked={attunment} onChange={e => setAttunment(e.target.checked)} /></label>
+                <label className="checkbox-label">
+                    <div className="labelText">Attuned:</div>
+                    <input name="type" type="checkbox" checked={attunment} onChange={e => setAttunment(e.target.checked)} />
+                    <span className="checkbox-custom circular"></span>
+                </label>
                 <button onClick={addItemToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
             </div>
             <div className="top" style={{ width: "120px" }}>
                 <button className="delete" onClick={deleteItem}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                 <button onClick={saveItem}><FontAwesomeIcon icon={faSave} /> Save</button>
-                
+
             </div>
             <div className="image" style={style}></div>
             <textarea value={description} onChange={e => setDescription(e.target.value)}></textarea>

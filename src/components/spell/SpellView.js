@@ -87,7 +87,11 @@ export default function SpellView() {
                 <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Name..." /></label>
                 <label>School:<input name="school" type="text" value={school} onChange={e => setSchool(e.target.value)} placeholder="School..." /></label>
                 <label className="small">Level:<input name="level" type="number" value={level} onChange={e => setLevel(e.target.value)} /></label>
-                <label className="small left"><div className="labelText">Ritual:</div><input name="ritual" type="checkbox" checked={ritual} onChange={e => setRitual(e.target.checked)} /></label>
+                <label className="small left checkbox-label">
+                    <div className="labelText">Ritual:</div>
+                    <input name="ritual" type="checkbox" checked={ritual} onChange={e => setRitual(e.target.checked)} />
+                    <span className="checkbox-custom circular"></span>
+                </label>
                 <label>Casting Time:<input name="time" type="text" value={time} onChange={e => setTime(e.target.value)} placeholder="Casting Time..." /></label>
                 <label>Range:<input name="range" type="text" value={range} onChange={e => setRange(e.target.value)} placeholder="Range..." /></label>
                 <label>Duration:<input name="duration" type="text" value={duration} onChange={e => setDuration(e.target.value)} placeholder="Duration..." /></label>
@@ -105,7 +109,7 @@ export default function SpellView() {
             </label>
             <button onClick={addSpellToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
             <button onClick={saveSpell}><FontAwesomeIcon icon={faSave} /> Save</button>
-            <button onClick={deleteSpell} className="delete" style={{float: "right"}}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+            <button onClick={deleteSpell} className="delete" style={{ float: "right" }}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
         </div>
     )
 }
