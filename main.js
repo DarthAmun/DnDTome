@@ -470,9 +470,9 @@ const reciveCharItems = (id) => {
 }
 
 const saveSpell = (spell) => {
-  let data = [spell.name, spell.school, spell.level, spell.time, spell.duration, spell.range, spell.components, spell.text, spell.classes, spell.sources, spell.id];
+  let data = [spell.name, spell.school, spell.level, spell.ritual, spell.time, spell.duration, spell.range, spell.components, spell.text, spell.classes, spell.sources, spell.id];
   let sql = `UPDATE 'main'.'tab_spells'
-              SET spell_name = ?, spell_school = ?, spell_level = ?, spell_time = ?, spell_duration = ?, spell_range = ?, spell_components = ?, spell_text = ?, spell_classes = ?, spell_sources = ?
+              SET spell_name = ?, spell_school = ?, spell_level = ?, spell_ritual = ?, spell_time = ?, spell_duration = ?, spell_range = ?, spell_components = ?, spell_text = ?, spell_classes = ?, spell_sources = ?
               WHERE spell_id = ?`;
   db.serialize(function () {
     db.run(sql, data, function (err) {

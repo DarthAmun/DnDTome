@@ -12,6 +12,7 @@ export default function SpellView() {
     const [name, setName] = useState("");
     const [school, setSchool] = useState("");
     const [level, setLevel] = useState("");
+    const [ritual, setRitual] = useState(0);
     const [time, setTime] = useState("");
     const [range, setRange] = useState("");
     const [duration, setDuration] = useState("");
@@ -30,6 +31,7 @@ export default function SpellView() {
         setName(result.spell_name);
         setSchool(result.spell_school);
         setLevel(result.spell_level);
+        setRitual(result.spell_ritual);
         setTime(result.spell_time);
         setRange(result.spell_range);
         setDuration(result.spell_duration);
@@ -56,7 +58,7 @@ export default function SpellView() {
     }, []);
 
     const saveSpell = (e) => {
-        ipcRenderer.send('saveSpell', { spell: { id, name, school, level, time, range, duration, components, text, classes, sources } });
+        ipcRenderer.send('saveSpell', { spell: { id, name, school, level, ritual, time, range, duration, components, text, classes, sources } });
     }
 
     const addSpellToChar = (e) => {
@@ -74,7 +76,7 @@ export default function SpellView() {
 
         dialog.showMessageBox(null, options, (response) => {
             if (response == 1) {
-                ipcRenderer.send('deleteSpell', { spell: { id, name, school, level, time, range, duration, components, text, classes, sources } });
+                ipcRenderer.send('deleteSpell', { spell: { id, name, school, ritual, level, time, range, duration, components, text, classes, sources } });
             }
         });
     }
@@ -84,7 +86,8 @@ export default function SpellView() {
             <div className="top">
                 <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Name..." /></label>
                 <label>School:<input name="school" type="text" value={school} onChange={e => setSchool(e.target.value)} placeholder="School..." /></label>
-                <label>Level:<input name="level" type="number" value={level} onChange={e => setLevel(e.target.value)} /></label>
+                <label className="small">Level:<input name="level" type="number" value={level} onChange={e => setLevel(e.target.value)} /></label>
+                <label className="small left"><div className="labelText">Ritual:</div><input name="ritual" type="checkbox" checked={ritual} onChange={e => setRitual(e.target.checked)} /></label>
                 <label>Casting Time:<input name="time" type="text" value={time} onChange={e => setTime(e.target.value)} placeholder="Casting Time..." /></label>
                 <label>Range:<input name="range" type="text" value={range} onChange={e => setRange(e.target.value)} placeholder="Range..." /></label>
                 <label>Duration:<input name="duration" type="text" value={duration} onChange={e => setDuration(e.target.value)} placeholder="Duration..." /></label>

@@ -69,7 +69,7 @@ body {
 }
 
 #spellView textarea {
-    height: 308px;
+    height: 309px;
     width: 444px;
     float: left;
     resize: none;
@@ -91,6 +91,32 @@ body {
     text-align: right;
     line-height: 30px;
     float:left;
+}
+#spellView label .labelText{
+    float: left;
+    height: 37px;
+    line-height: 33px;
+}
+#spellView label.small {
+    width: 225px;
+}
+#spellView label.left {
+    width: 215px;
+    float:left;
+    text-align: left;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#spellView label.small input{
+    width: 75px;
+}
+#spellView label.left input{
+    float: left;
+}
+#spellView label.small input[type=checkbox]{
+    width: 15px;
+    background: none;
+    box-shadow: none;
 }
 
 #spellView .top {

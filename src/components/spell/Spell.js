@@ -16,7 +16,7 @@ class Spell extends Component {
     }
 
     hasRitual = (value) => {
-        if (value) {
+        if (value === 1) {
             return <div className="icon">R</div>;
         }
         return "";
