@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import '../../assets/css/char/CharView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTimes, faAngleUp, faAngleDoubleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
 import StatChart from './StatChart';
 
 const electron = window.require('electron');
