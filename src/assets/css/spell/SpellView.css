@@ -228,7 +228,7 @@ body {
   /* Style for Circular Checkbox */
   .checkbox-label .checkbox-custom.circular {
     border-radius: 50%;
-    border: 2px solid #FFFFFF;
+    border: 2px solid #8000ff;
   }
   
   .checkbox-label input:checked ~ .checkbox-custom.circular {
