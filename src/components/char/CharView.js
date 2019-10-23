@@ -410,7 +410,7 @@ export default function CharView(props) {
                                         {items.map((item, index) => {
                                             if ((item.item_equiped || (item.item_amount && item.item_attunment)) && item.item_type.includes("Weapon")) {
                                                 return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
-                                                    <td>{item.item_name}</td>
+                                                    <td onClick={() => viewItem(item)}>{item.item_name}</td>
                                                     <td className="centered"><input type="text" style={{ width: "50px" }} value={item.item_hit} onChange={createValueListenerItem(item, "item_hit")} /></td>
                                                     <td className="centered"><input type="text" style={{ width: "200px" }} value={item.item_damage} onChange={createValueListenerItem(item, "item_damage")} /></td>
                                                     <td className="centered"><input type="text" style={{ width: "100px" }} value={item.item_range} onChange={createValueListenerItem(item, "item_range")} /></td>
