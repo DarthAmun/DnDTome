@@ -177,6 +177,9 @@
     width: 40px;
     margin-right: 5px;
 }
+#char .skills input {
+    margin-left: 30px;
+}
 #char .abilityScores .score label, #char .savingThrows label, #char .skills label {
     float: left;
     width: 180px;
@@ -207,6 +210,7 @@
 #char .skills label {
     float: left;
     width: 270px;
+    position: relative;
 }
 
 #char .abilityScores .score .abilityBonus {
@@ -371,7 +375,17 @@
     align-content: flex-start;
 }
 
-
+#char .profToggler {
+    top: 7px;
+    margin-left: 5px;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #FFFFFF;
+    color: #8000ff;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
 
 .checkbox-label {
     display: block;
