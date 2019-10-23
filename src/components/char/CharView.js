@@ -397,6 +397,30 @@ export default function CharView(props) {
                                 <div className="deathSave">Sucesses: <input type="radio" /><input type="radio" /><input type="radio" /></div>
                                 <div className="deathSave">Failures: <input type="radio" /><input type="radio" /><input type="radio" /></div>
                             </div>
+                            <div className="charItems" style={{ width: "auto" }}>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Hit</th>
+                                            <th>Damage</th>
+                                            <th>Range</th>
+                                            <th>Properties</th>
+                                        </tr>
+                                        {items.map((item, index) => {
+                                            if ((item.item_equiped || (item.item_amount && item.item_attunment)) && item.item_type.includes("Weapon")) {
+                                                return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
+                                                    <td>{item.item_name}</td>
+                                                    <td className="centered"><input type="text" style={{ width: "50px" }} value={item.item_hit} onChange={createValueListenerItem(item, "item_hit")} /></td>
+                                                    <td className="centered"><input type="text" style={{ width: "200px" }} value={item.item_damage} onChange={createValueListenerItem(item, "item_damage")} /></td>
+                                                    <td className="centered"><input type="text" style={{ width: "100px" }} value={item.item_range} onChange={createValueListenerItem(item, "item_range")} /></td>
+                                                    <td className="centered"><input type="text" style={{ width: "200px" }} value={item.item_properties} onChange={createValueListenerItem(item, "item_properties")} /></td>
+                                                </tr>;
+                                            }
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <div className="tabContent" style={{ display: tabs.skills ? "flex" : "none" }}>
                             <div className="abilityScores">

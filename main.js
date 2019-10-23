@@ -562,9 +562,9 @@ const saveChar = (char) => {
 }
 const saveCharItems = (items) => {
   items.forEach(item => {
-    let data = [item.item_amount, item.item_equiped, item.item_attuned, item.id];
+    let data = [item.item_amount, item.item_equiped, item.item_attuned, item.item_damage, item.item_hit, item.item_range, item.item_properties, item.id];
     let sql = `UPDATE 'main'.'tab_characters_items'
-              SET item_amount = ?, item_equiped = ?, item_attuned = ?
+              SET item_amount = ?, item_equiped = ?, item_attuned = ?, item_damage = ?, item_hit = ?, item_range = ?, item_properties = ?
               WHERE id = ?`;
     db.serialize(function () {
       db.run(sql, data, function (err) {
