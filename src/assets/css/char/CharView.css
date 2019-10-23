@@ -379,12 +379,14 @@
     top: 7px;
     margin-left: 5px;
     position: absolute;
-    width: 20px;
-    height: 20px;
+    padding: 3px;
+    width: 15px;
+    height: 15px;
     background-color: #FFFFFF;
     color: #8000ff;
     border-radius: 20px;
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    cursor: pointer;
 }
 
 .checkbox-label {
