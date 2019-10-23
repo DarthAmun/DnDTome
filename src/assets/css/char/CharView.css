@@ -94,6 +94,15 @@
     color: dimgrey;
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
 }
+#char textarea.small {
+    height: 28px;
+    width: 310px; 
+    margin: 0px;
+    line-height: 15px;
+}
+#char textarea.slim {
+    width: 210px;
+}
 
 #char .image {
     float: left;
@@ -108,7 +117,8 @@
     margin: 5px;
 }
 
-#char .smallLabelGroup label, #char .abilityScores label {
+#char .smallLabelGroup label, #char .abilityScores label, 
+#char .savingThrows label, #char .skills label {
     display: inline-block;
     width: auto;
     text-align: right;

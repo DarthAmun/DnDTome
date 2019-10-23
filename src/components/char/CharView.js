@@ -22,7 +22,9 @@ export default function CharView(props) {
     const [ac, setAc] = useState(0);
     const [hp, setHp] = useState(0);
     const [currentHp, setCurrentHp] = useState(0);
+    const [hitDice, setHitDice] = useState("");
     const [init, setInit] = useState(0);
+    const [speed, setSpeed] = useState("");
 
     const [str, setStr] = useState(0);
     const [dex, setDex] = useState(0);
@@ -46,6 +48,10 @@ export default function CharView(props) {
     const [features, setFeatures] = useState("");
 
     const [profsLangs, setProfsLangs] = useState("");
+    const [senses, setSenses] = useState("");
+    const [passivPerception, setPassivPerception] = useState(0);
+    const [passivInsight, setPassivInsight] = useState(0);
+    const [passivInvestigation, setPassivInvestigation] = useState(0);
 
     const [notesOne, setNotesOne] = useState("");
     const [notesTwo, setNotesTwo] = useState("");
@@ -87,7 +93,9 @@ export default function CharView(props) {
         setAc(result.char_ac);
         setHp(result.char_hp);
         setCurrentHp(result.char_hp_current);
+        setHitDice(result.char_hitDice);
         setInit(result.char_init);
+        setSpeed(result.char_speed);
 
         setStr(result.char_str);
         setDex(result.char_dex);
@@ -111,6 +119,10 @@ export default function CharView(props) {
         setFeatures(result.char_features);
 
         setProfsLangs(result.char_profs_langs);
+        setSenses(result.char_senses);
+        setPassivPerception(result.char_passivPerception);
+        setPassivInsight(result.char_passivInsight);
+        setPassivInvestigation(result.char_passivInvestigation);
 
         setNotesOne(result.char_notesOne);
         setNotesTwo(result.char_notesTwo);
@@ -194,12 +206,13 @@ export default function CharView(props) {
         ipcRenderer.send('deleteCharItem', { item: item });
     }
 
-    const saveChar = (spell) => {
+    const saveChar = () => {
         ipcRenderer.send('saveChar', {
             char: {
-                id, name, player, prof, exp, pic, classes, race, background, ac, hp, currentHp,
-                init, str, dex, con, int, wis, cha, strSave, dexSave, conSave, intSave, wisSave, chaSave,
+                id, name, player, prof, exp, pic, classes, race, background, ac, hp, currentHp, hitDice,
+                init, speed, str, dex, con, int, wis, cha, strSave, dexSave, conSave, intSave, wisSave, chaSave,
                 actions, bonusActions, reactions, features, classFeatures, racialFeatures, profsLangs,
+                senses, passivPerception, passivInsight, passivInvestigation,
                 notesOne, notesTwo, notesThree, acrobatics, animalHandling, arcana,
                 athletics, deception, history, insight, intimidation, investigation, medicine, nature,
                 perception, performance, persuasion, religion, sleightOfHand, stealth, survival, spellNotes
@@ -323,8 +336,12 @@ export default function CharView(props) {
                             <div className="smallLabelGroup">
                                 <label>HP:<input name="hp" type="number" value={hp} onChange={e => setHp(e.target.value)} /></label><br />
                                 <label>Current Hp:<input name="currentHP" type="number" value={currentHp} onChange={e => setCurrentHp(e.target.value)} /></label><br />
+                                <label>Hit Dice:<input name="hitDice" type="text" value={hitDice} onChange={e => setHitDice(e.target.value)} /></label>
+                            </div>
+                            <div className="smallLabelGroup">
                                 <label>Armor Class:<input name="ac" type="number" value={ac} onChange={e => setAc(e.target.value)} /></label><br />
-                                <label>Initiative:<input name="initiativ" type="number" value={init} onChange={e => setInit(e.target.value)} /></label>
+                                <label>Initiative:<input name="initiativ" type="number" value={init} onChange={e => setInit(e.target.value)} /></label><br />
+                                <textarea className="small slim" value={speed} onChange={e => setSpeed(e.target.value)} placeholder="Speed..."></textarea>
                             </div>
                             <div className="deathSaves">
                                 <b>Death Saves:</b>
@@ -396,6 +413,12 @@ export default function CharView(props) {
                                     <label>Stealth (Dex): <input type="number" value={stealth} onChange={e => setStealth(e.target.value)}></input><input type="radio" /></label>
                                     <label>Survival (Wis): <input type="number" value={survival} onChange={e => setSurvival(e.target.value)}></input><input type="radio" /></label>
                                 </div>
+                            </div>
+                            <div className="smallLabelGroup">
+                                <label>Passive Perception:<input name="passivPerception" type="number" value={passivPerception} onChange={e => setPassivPerception(e.target.value)} /></label><br />
+                                <label>Passive Insight:<input name="passivInsight" type="number" value={passivInsight} onChange={e => setPassivInsight(e.target.value)} /></label><br />
+                                <label>Passive Invenstigation:<input name="passivInvestigation" type="number" value={passivInvestigation} onChange={e => setPassivInvestigation(e.target.value)} /></label><br />
+                                <textarea className="small" value={senses} onChange={e => setSenses(e.target.value)} placeholder="Senses..."></textarea>
                             </div>
                             <textarea value={profsLangs} onChange={e => setProfsLangs(e.target.value)} placeholder="Proficiencies & Languages..."></textarea>
                         </div>

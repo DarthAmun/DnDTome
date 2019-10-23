@@ -84,6 +84,7 @@ body {
 #monsterView textarea.small {
     height: 28px;
     width: 300px; 
+    line-height: 15px;
 }
 
 #monsterView label {
