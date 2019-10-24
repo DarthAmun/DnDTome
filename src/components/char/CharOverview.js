@@ -33,7 +33,7 @@ class SpellOverview extends Component {
         return (
             <div id="overview">
                 <div id="chars">
-                    <Link to="/">
+                    <Link to="/add-char">
                         <div className="add">
                             <div className="addIcon"><FontAwesomeIcon icon={faUserPlus} /></div><br />Add new Charakter
                         </div>
