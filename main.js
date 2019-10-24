@@ -529,7 +529,9 @@ const saveMonster = (monster) => {
 
 const saveChar = (char) => {
   let data = [char.name, char.player, char.prof, char.exp, char.pic, char.classes, char.race, char.background, char.ac, char.hp, char.currentHp, char.hitDice,
-  char.init, char.speed, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.actions, char.bonusActions, char.reactions, char.features, char.classFeatures, char.racialFeatures,
+  char.init, char.speed, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.strSave, char.dexSave, char.conSave, char.intSave, char.wisSave, char.chaSave,
+  char.strSaveProf, char.dexSaveProf, char.conSaveProf, char.intSaveProf, char.wisSaveProf, char.chaSaveProf,
+  char.actions, char.bonusActions, char.reactions, char.features, char.classFeatures, char.racialFeatures,
   char.profsLangs, char.senses, char.passivPerception, char.passivInsight, char.passivInvestigation, char.notesOne, char.notesTwo, char.notesThree, 
   char.acrobatics, char.animalHandling, char.arcana, char.athletics, char.deception, char.history, char.insight, char.intimidation,
   char.investigation, char.medicine, char.nature, char.perception, char.performance, char.persuasion, char.religion, char.sleightOfHand,
@@ -539,8 +541,10 @@ const saveChar = (char) => {
   char.stealthProf, char.survivalProf, char.spellNotes, char.id];
   let sql = `UPDATE 'main'.'tab_characters'
               SET char_name = ?, char_player = ?, char_prof = ?, char_exp = ?, char_pic = ?, char_classes = ?, char_race = ?, char_background = ?, 
-              char_ac = ?, char_hp = ?, char_hp_current = ?, char_hitDice = ?, char_init = ?, char_speed = ?, char_str = ?, char_dex = ?, char_con = ?, char_int = ?, char_wis = ?, 
-              char_cha = ?, char_actions = ?, char_bonusActions = ?, char_reactions = ?, char_features = ?, char_classFeatures = ?, char_racialFeatures = ?, 
+              char_ac = ?, char_hp = ?, char_hp_current = ?, char_hitDice = ?, char_init = ?, char_speed = ?, 
+              char_str = ?, char_dex = ?, char_con = ?, char_int = ?, char_wis = ?, char_cha = ?, char_strSave = ?, char_dexSave = ?, char_conSave = ?, char_intSave = ?, char_wisSave = ?, char_chaSave = ?, 
+              char_strSaveProf = ?, char_dexSaveProf = ?, char_conSaveProf = ?, char_intSaveProf = ?, char_wisSaveProf = ?, char_chaSaveProf = ?, 
+              char_actions = ?, char_bonusActions = ?, char_reactions = ?, char_features = ?, char_classFeatures = ?, char_racialFeatures = ?, 
               char_profs_langs = ?, char_senses = ?, char_passivPerception = ?, char_passivInsight = ?, char_passivInvestigation = ?, char_notesOne = ?, 
               char_notesTwo = ?, char_notesThree = ?, char_acrobatics = ?,   char_animalHandling = ?, 
               char_arcana = ?, char_athletics = ?, char_deception = ?, char_history = ?, char_insight = ?, char_intimidation = ?, char_investigation = ?, 
@@ -960,6 +964,34 @@ const deleteCharItem = (item) => {
   });
 }
 
+const deleteChar = (id) => {
+  let data = [id.id];
+  let sql1 = `DELETE FROM 'main'.'tab_characters_items' WHERE char_id = ?`;
+  let sql2 = `DELETE FROM 'main'.'tab_characters_spells' WHERE char_id = ?`;
+  let sql3 = `DELETE FROM 'main'.'tab_characters' WHERE char_id = ?`;
+  db.serialize(function () {
+    db.run(sql1, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`====>Removed items from character successful`);
+    });
+    db.run(sql2, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`====>Removed spells from character successful`);
+    });
+    db.run(sql3, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`====>Removed character successfull`);
+      mainWindow.webContents.send('displayMessage', { type: `Deleted character`, message: `Deleted character successful` });
+    });
+  });
+}
+
 const addSpellToChar = (char, spell) => {
   let data = [char.selectedChar, spell.id, false];
   let sql = `INSERT INTO 'main'.'tab_characters_spells' (char_id, spell_id, spell_prepared)
@@ -1156,6 +1188,10 @@ ipcMain.on('deleteCharSpell', (event, arg) => {
 ipcMain.on('deleteCharItem', (event, arg) => {
   const { item } = arg;
   deleteCharItem(item);
+});
+ipcMain.on('deleteChar', (event, arg) => {
+  const { id } = arg;
+  deleteChar(id);
 });
 
 ipcMain.on('closeMainWindow', (event) => {

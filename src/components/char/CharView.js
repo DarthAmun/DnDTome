@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import '../../assets/css/char/CharView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTimes, faAngleUp, faAngleDoubleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTimes, faAngleUp, faAngleDoubleUp, faMinus, faHeartBroken, faHeartbeat, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import StatChart from './StatChart';
 
 const electron = window.require('electron');
@@ -33,11 +33,17 @@ export default function CharView(props) {
     const [wis, setWis] = useState(0);
     const [cha, setCha] = useState(0);
     const [strSave, setStrSave] = useState(0);
+    const [strSaveProf, setStrSaveProf] = useState(0);
     const [dexSave, setDexSave] = useState(0);
+    const [dexSaveProf, setDexSaveProf] = useState(0);
     const [conSave, setConSave] = useState(0);
+    const [conSaveProf, setConSaveProf] = useState(0);
     const [intSave, setIntSave] = useState(0);
+    const [intSaveProf, setIntSaveProf] = useState(0);
     const [wisSave, setWisSave] = useState(0);
+    const [wisSaveProf, setWisSaveProf] = useState(0);
     const [chaSave, setChaSave] = useState(0);
+    const [chaSaveProf, setChaSaveProf] = useState(0);
 
     const [actions, setActions] = useState("");
     const [bonusActions, setBonusActions] = useState("");
@@ -98,6 +104,13 @@ export default function CharView(props) {
     const [spells, setSpells] = useState([]);
     const [items, setItems] = useState([]);
 
+    const [lifeOne, setLifeOne] = useState(0);
+    const [lifeTwo, setLifeTwo] = useState(0);
+    const [lifeThree, setLifeThree] = useState(0);
+    const [deathOne, setDeathOne] = useState(0);
+    const [deathTwo, setDeathTwo] = useState(0);
+    const [deathThree, setDeathThree] = useState(0);
+
     const receiveChar = (event, result) => {
         setName(result.char_name);
         setId(result.char_id);
@@ -122,11 +135,17 @@ export default function CharView(props) {
         setWis(result.char_wis);
         setCha(result.char_cha);
         setStrSave(result.char_strSave);
+        setStrSaveProf(result.char_strSaveProf);
         setDexSave(result.char_dexSave);
+        setDexSaveProf(result.char_dexSaveProf);
         setConSave(result.char_conSave);
+        setConSaveProf(result.char_conSaveProf);
         setIntSave(result.char_intSave);
+        setIntSaveProf(result.char_intSaveProf);
         setWisSave(result.char_wisSave);
+        setWisSaveProf(result.char_wisSaveProf);
         setChaSave(result.char_chaSave);
+        setChaSaveProf(result.char_chaSaveProf);
 
         setActions(result.char_actions);
         setBonusActions(result.char_bonusActions);
@@ -184,13 +203,16 @@ export default function CharView(props) {
         setSurvivalProf(result.char_survivalProf);
 
         setSpellNotes(result.char_spellNotes);
+        console.log("char done");
     }
 
     const receiveSpells = (event, result) => {
         setSpells(result);
+        console.log("spells done");
     }
     const receiveItems = (event, result) => {
         setItems(result);
+        console.log("items done");
     }
 
     useEffect(() => {
@@ -247,6 +269,7 @@ export default function CharView(props) {
             char: {
                 id, name, player, prof, exp, pic, classes, race, background, ac, hp, currentHp, hitDice,
                 init, speed, str, dex, con, int, wis, cha, strSave, dexSave, conSave, intSave, wisSave, chaSave,
+                strSaveProf, dexSaveProf, conSaveProf, intSaveProf, wisSaveProf, chaSaveProf,
                 actions, bonusActions, reactions, features, classFeatures, racialFeatures, profsLangs,
                 senses, passivPerception, passivInsight, passivInvestigation,
                 notesOne, notesTwo, notesThree, acrobatics, animalHandling, arcana,
@@ -263,6 +286,10 @@ export default function CharView(props) {
         ipcRenderer.send('saveCharSpells', {
             spells: spells
         });
+    }
+
+    const deleteChar = () => {
+        ipcRenderer.send('deleteChar', {id: id});
     }
 
     const showTab = (tab) => {
@@ -320,6 +347,20 @@ export default function CharView(props) {
             return faAngleDoubleUp;
         }
     }
+    const changeDeathIcon = (value) => {
+        if (value === undefined || value === 0) {
+            return faMinus;
+        } else {
+            return faHeartBroken;
+        }
+    }
+    const changeLifeIcon = (value) => {
+        if (value === undefined || value === 0) {
+            return faMinus;
+        } else {
+            return faHeartbeat;
+        }
+    }
 
     const style = {
         backgroundImage: `url(${pic})`,
@@ -370,6 +411,7 @@ export default function CharView(props) {
                     <StatChart data={data} />
                 </div>
                 <button onClick={saveChar}><FontAwesomeIcon icon={faSave} /> Save</button>
+                <button className="delete" onClick={deleteChar}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                 <div className="tabComponent">
                     <div className="tabSelector">
                         <div className={`tabName ${tabs.skills ? "active" : ""}`} onClick={e => showTab(0)}>Attributes/Skills</div>
@@ -394,8 +436,16 @@ export default function CharView(props) {
                             </div>
                             <div className="deathSaves">
                                 <b>Death Saves:</b>
-                                <div className="deathSave">Sucesses: <input type="radio" /><input type="radio" /><input type="radio" /></div>
-                                <div className="deathSave">Failures: <input type="radio" /><input type="radio" /><input type="radio" /></div>
+                                <div className="deathSave">Sucesses:
+                                    <FontAwesomeIcon className="profToggler" icon={changeLifeIcon(lifeOne)} onClick={e => setLifeOne((lifeOne + 1) % 2)} />
+                                    <FontAwesomeIcon className="profToggler" style={{ marginLeft: "30px" }} icon={changeLifeIcon(lifeTwo)} onClick={e => setLifeTwo((lifeTwo + 1) % 2)} />
+                                    <FontAwesomeIcon className="profToggler" style={{ marginLeft: "55px" }} icon={changeLifeIcon(lifeThree)} onClick={e => setLifeThree((lifeThree + 1) % 2)} />
+                                </div>
+                                <div className="deathSave">Failures:
+                                    <FontAwesomeIcon className="profToggler" icon={changeDeathIcon(deathOne)} onClick={e => setDeathOne((deathOne + 1) % 2)} />
+                                    <FontAwesomeIcon className="profToggler" style={{ marginLeft: "30px" }} icon={changeDeathIcon(deathTwo)} onClick={e => setDeathTwo((deathTwo + 1) % 2)} />
+                                    <FontAwesomeIcon className="profToggler" style={{ marginLeft: "55px" }} icon={changeDeathIcon(deathThree)} onClick={e => setDeathThree((deathThree + 1) % 2)} />
+                                </div>
                             </div>
                             <div className="charItems" style={{ width: "auto" }}>
                                 <table>
@@ -450,12 +500,18 @@ export default function CharView(props) {
                                 </div>
                             </div>
                             <div className="savingThrows">
-                                <label>Str Save: <input type="number" value={strSave} onChange={e => setStrSave(e.target.value)}></input><input type="radio" /></label>
-                                <label>Dex Save: <input type="number" value={dexSave} onChange={e => setDexSave(e.target.value)}></input><input type="radio" /></label>
-                                <label>Con Save: <input type="number" value={conSave} onChange={e => setConSave(e.target.value)}></input><input type="radio" /></label>
-                                <label>Int Save: <input type="number" value={intSave} onChange={e => setIntSave(e.target.value)}></input><input type="radio" /></label>
-                                <label>Wis Save: <input type="number" value={wisSave} onChange={e => setWisSave(e.target.value)}></input><input type="radio" /></label>
-                                <label>Cha Save: <input type="number" value={chaSave} onChange={e => setCha(e.target.value)}></input><input type="radio" /></label>
+                                <label>Str Save: <input type="number" value={strSave} onChange={e => setStrSave(e.target.value)} />
+                                    <FontAwesomeIcon className="profToggler" icon={changeIcon(strSaveProf)} onClick={e => setStrSaveProf((strSaveProf + 1) % 2)} /></label>
+                                <label>Dex Save: <input type="number" value={dexSave} onChange={e => setDexSave(e.target.value)} />
+                                    <FontAwesomeIcon className="profToggler" icon={changeIcon(dexSaveProf)} onClick={e => setDexSaveProf((dexSaveProf + 1) % 2)} /></label>
+                                <label>Con Save: <input type="number" value={conSave} onChange={e => setConSave(e.target.value)} />
+                                    <FontAwesomeIcon className="profToggler" icon={changeIcon(conSaveProf)} onClick={e => setConSaveProf((conSaveProf + 1) % 2)} /></label>
+                                <label>Int Save: <input type="number" value={intSave} onChange={e => setIntSave(e.target.value)} />
+                                    <FontAwesomeIcon className="profToggler" icon={changeIcon(intSaveProf)} onClick={e => setIntSaveProf((intSaveProf + 1) % 2)} /></label>
+                                <label>Wis Save: <input type="number" value={wisSave} onChange={e => setWisSave(e.target.value)} />
+                                    <FontAwesomeIcon className="profToggler" icon={changeIcon(wisSaveProf)} onClick={e => setWisSaveProf((wisSaveProf + 1) % 2)} /></label>
+                                <label>Cha Save: <input type="number" value={chaSave} onChange={e => setChaSave(e.target.value)} />
+                                    <FontAwesomeIcon className="profToggler" icon={changeIcon(chaSaveProf)} onClick={e => setChaSaveProf((chaSaveProf + 1) % 2)} /></label>
                             </div>
                             <div className="skills">
                                 <div classame="skillRow">

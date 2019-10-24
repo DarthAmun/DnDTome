@@ -154,6 +154,7 @@
     height: 45px;
     width: 150px;
     line-height: 45px;
+    position: relative;
 }
 #char .deathSaves .deathSave input{
     height: 15px;
@@ -177,7 +178,7 @@
     width: 40px;
     margin-right: 5px;
 }
-#char .skills input {
+#char .skills input, #char .savingThrows input {
     margin-left: 30px;
 }
 #char .abilityScores .score label, #char .savingThrows label, #char .skills label {
@@ -187,16 +188,6 @@
 
 #char .savingThrows{
     width: 180px;
-}
-#char .savingThrows input[type=radio], #char .skills input[type=radio] { 
-    width: 15px;
-    height: 15px;
-    margin-top: 8px;
-    margin-right: 0px;
-    float: right;
-
-    background-color: white;
-    border: none;
 }
 
 #char .skills{
@@ -210,6 +201,11 @@
 #char .skills label {
     float: left;
     width: 270px;
+    position: relative;
+}
+#char .savingThrows label {
+    float: left;
+    width: 180px;
     position: relative;
 }
 
