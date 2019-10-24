@@ -980,7 +980,7 @@ const deleteCharItem = (item) => {
 }
 
 const deleteChar = (id) => {
-  let data = [id.id];
+  let data = [id];
   let sql1 = `DELETE FROM 'main'.'tab_characters_items' WHERE char_id = ?`;
   let sql2 = `DELETE FROM 'main'.'tab_characters_spells' WHERE char_id = ?`;
   let sql3 = `DELETE FROM 'main'.'tab_characters' WHERE char_id = ?`;
