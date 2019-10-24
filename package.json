@@ -48,7 +48,6 @@
     "@fortawesome/free-regular-svg-icons": "^5.11.1",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.7",
-    "kex": "^2.1.5",
     "node-gyp": "^6.0.0",
     "react-particles-js": "^2.7.0",
     "recharts": "^1.8.5",
