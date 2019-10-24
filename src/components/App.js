@@ -24,9 +24,14 @@ import Notification from './Notification';
 import packageJson from '../../package.json'
 
 class PageLayout extends Component {
+
+  catchDrop = (e) => {
+    e.preventDefault();
+  }
+
   render() {
     return (
-      <div className="App">
+      <div className="App" onDrop={e => catchDrop}>
         <Notification />
         <LeftNav />
         <div id="content">
@@ -57,7 +62,7 @@ class App extends Component {
             return <PageLayout><CharOverview /></PageLayout>
           }} />
           <Route path="/char/:id" render={props => {
-            return <PageLayout><CharView {...props}/></PageLayout>
+            return <PageLayout><CharView {...props} /></PageLayout>
           }} />
           <Route path="/add-spell" render={() => {
             return <PageLayout><AddSpell /></PageLayout>
