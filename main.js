@@ -33,7 +33,11 @@ function createWindow() {
     minWidth: 660,
     show: false,
     frame: false,
-    icon: __dirname + './src/assets/img/dice_icon.ico'
+    icon: __dirname + './src/assets/img/dice_icon.ico',
+    //The lines below solved the issue
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
 
   // and load the index.html of the app.
@@ -117,7 +121,11 @@ function createWindow() {
     show: false,
     resizable: false,
     frame: true,
-    icon: __dirname + './src/assets/img/dice_icon.ico'
+    icon: __dirname + './src/assets/img/dice_icon.ico',
+    //The lines below solved the issue
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
   spellWindow.setMenu(null);
   spellWindow.loadURL(spellPath);
@@ -134,7 +142,11 @@ function createWindow() {
     show: false,
     resizable: false,
     frame: true,
-    icon: __dirname + './src/assets/img/dice_icon.ico'
+    icon: __dirname + './src/assets/img/dice_icon.ico',
+    //The lines below solved the issue
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
   itemWindow.setMenu(null);
   itemWindow.loadURL(itemPath);
@@ -151,7 +163,10 @@ function createWindow() {
     show: false,
     resizable: true,
     frame: true,
-    icon: __dirname + './src/assets/img/dice_icon.ico'
+    icon: __dirname + './src/assets/img/dice_icon.ico',
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
   monsterWindow.setMenu(null);
   monsterWindow.loadURL(monsterPath);
@@ -532,7 +547,7 @@ const saveChar = (char) => {
   char.init, char.speed, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.strSave, char.dexSave, char.conSave, char.intSave, char.wisSave, char.chaSave,
   char.strSaveProf, char.dexSaveProf, char.conSaveProf, char.intSaveProf, char.wisSaveProf, char.chaSaveProf,
   char.actions, char.bonusActions, char.reactions, char.features, char.classFeatures, char.racialFeatures,
-  char.profsLangs, char.senses, char.passivPerception, char.passivInsight, char.passivInvestigation, char.notesOne, char.notesTwo, char.notesThree, 
+  char.profsLangs, char.senses, char.passivPerception, char.passivInsight, char.passivInvestigation, char.notesOne, char.notesTwo, char.notesThree,
   char.acrobatics, char.animalHandling, char.arcana, char.athletics, char.deception, char.history, char.insight, char.intimidation,
   char.investigation, char.medicine, char.nature, char.perception, char.performance, char.persuasion, char.religion, char.sleightOfHand,
   char.stealth, char.survival,
