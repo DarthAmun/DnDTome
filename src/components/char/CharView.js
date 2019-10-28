@@ -568,7 +568,7 @@ export default function CharView(props) {
                             <div className="smallLabelGroup">
                                 <label>Passive Perception:<input name="passivPerception" type="number" value={passivPerception} onChange={e => setPassivPerception(e.target.value)} /></label><br />
                                 <label>Passive Insight:<input name="passivInsight" type="number" value={passivInsight} onChange={e => setPassivInsight(e.target.value)} /></label><br />
-                                <label>Passive Invenstigation:<input name="passivInvestigation" type="number" value={passivInvestigation} onChange={e => setPassivInvestigation(e.target.value)} /></label><br />
+                                <label>Passive Investigation:<input name="passivInvestigation" type="number" value={passivInvestigation} onChange={e => setPassivInvestigation(e.target.value)} /></label><br />
                                 <textarea className="small" value={senses} onChange={e => setSenses(e.target.value)} placeholder="Senses..."></textarea>
                             </div>
                             <textarea value={profsLangs} onChange={e => setProfsLangs(e.target.value)} placeholder="Proficiencies & Languages..."></textarea>
