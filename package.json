@@ -1,6 +1,6 @@
 {
   "name": "dndtome",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Program to learn react and electron on the subject of pen and paper",
   "author": "DarthAmun",
   "homepage": "https://github.com/DarthAmun/dndtome",
@@ -15,7 +15,7 @@
     "dev": "webpack-dev-server --hot --host 0.0.0.0 --config=./webpack.dev.config.js",
     "package": "webpack --config webpack.build.config.js",
     "postpackage": "npm run package-win && npm run package-linux",
-    "package-win": "electron-packager ./ --out=./builds -version='0.1.3' --icon=./src/assets/img/dice_icon.ico --overwrite --platform=win32 --arch=x64",
+    "package-win": "electron-packager ./ --out=./builds -version='0.1.4' --icon=./src/assets/img/dice_icon.ico --overwrite --platform=win32 --arch=x64",
     "package-linux": "electron-packager ./ --out=./builds --icon=./src/assets/img/dice_icon.png --overwrite --platform=linux --arch=x64",
     "postinstall": "npm run appDeps-win && npm run appDeps-linux",
     "appDeps-win": "electron-builder install-app-deps --platform=win32 --arch=x64 ",
