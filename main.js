@@ -714,9 +714,9 @@ const saveNewSpell = (spell) => {
 }
 const saveNewSpells = (spells) => {
   spells.forEach(spell => {
-    let data = [spell.spell_name, spell.spell_school, spell.spell_level, spell.spell_time, spell.spell_duration, spell.spell_range, spell.spell_components, spell.spell_text, spell.spell_classes, spell.spell_sources];
-    let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_school, spell_level, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources)
-                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    let data = [spell.spell_name, spell.spell_ritual, spell.spell_school, spell.spell_level, spell.spell_time, spell.spell_duration, spell.spell_range, spell.spell_components, spell.spell_text, spell.spell_classes, spell.spell_sources];
+    let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_ritual, spell_school, spell_level, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources)
+                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     db.serialize(function () {
       db.run(sql, data, function (err) {
         if (err) {
