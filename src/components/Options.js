@@ -13,6 +13,7 @@ export default function Options() {
   const [spells, setSpells] = useState([]);
   const [items, setItems] = useState([]);
   const [monsters, setMonsters] = useState([]);
+  const [chars, setChars] = useState([]);
 
   const receiveAllSpells = (evt, result) => {
     setSpells(result);
@@ -23,18 +24,25 @@ export default function Options() {
   const receiveAllMonsters = (evt, result) => {
     setMonsters(result);
   }
+  const receiveAllChars = (evt, result) => {
+    setChars(result);
+    console.log(result);
+  }
 
   useEffect(() => {
     ipcRenderer.send('getAllSpells');
     ipcRenderer.send('getAllItems');
     ipcRenderer.send('getAllMonsters');
+    ipcRenderer.send('getAllChars');
     ipcRenderer.on("getAllSpellsResult", receiveAllSpells);
     ipcRenderer.on("getAllItemsResult", receiveAllItems);
     ipcRenderer.on("getAllMonstersResult", receiveAllMonsters);
+    ipcRenderer.on("getAllCharsResult", receiveAllChars);
     return () => {
       ipcRenderer.removeListener("getAllSpellsResult", receiveAllSpells);
       ipcRenderer.removeListener("getAllItemsResult", receiveAllItems);
-      ipcRenderer.removeListener("getAllMonstersResult", receiveAllMonsters)
+      ipcRenderer.removeListener("getAllMonstersResult", receiveAllMonsters);
+      ipcRenderer.removeListener("getAllCharsResult", receiveAllChars);
     }
   }, []);
 
@@ -96,6 +104,23 @@ export default function Options() {
           ipcRenderer.send('displayMessage', { type: `Monsters exported`, message: `Monster export failed` });
         }
         ipcRenderer.send('displayMessage', { type: `Monsters exported`, message: `Monster export successful` });
+      });
+    });
+  }
+
+  const exportChars = (e) => {
+    let content = JSON.stringify(chars);
+
+    options.defaultPath = options.defaultPath + '/chars_export.json';
+    dialog.showSaveDialog(null, options, (path) => {
+      console.log(path);
+
+      // fileName is a string that contains the path and filename created in the save file dialog.  
+      fs.writeFile(path, content, (err) => {
+        if (err) {
+          ipcRenderer.send('displayMessage', { type: `Chars exported`, message: `Chars export failed` });
+        }
+        ipcRenderer.send('displayMessage', { type: `Chars exported`, message: `Chars export successful` });
       });
     });
   }
@@ -163,6 +188,27 @@ export default function Options() {
     });
   }
 
+  const importChars = (e) => {
+    dialog.showOpenDialog((fileNames) => {
+      // fileNames is an array that contains all the selected
+      if (fileNames === undefined) {
+        console.log("No file selected");
+        return;
+      }
+
+      fs.readFile(fileNames[0], 'utf-8', (err, data) => {
+        if (err) {
+          alert("An error ocurred reading the file :" + err.message);
+          return;
+        }
+
+        // Change how to handle the file content
+        let charsJson = JSON.parse(data);
+        ipcRenderer.send('saveNewChars', { chars: charsJson });
+      });
+    });
+  }
+
   const deleteAllItems = () => {
     const options = {
       type: 'question',
@@ -208,6 +254,21 @@ export default function Options() {
       }
     });
   }
+  const deleteAllChars = () => {
+    const options = {
+      type: 'question',
+      buttons: ['Cancel', 'Yes, please', 'No, thanks'],
+      defaultId: 2,
+      title: `Delete all characters?`,
+      message: 'All characters will be deleted!'
+    };
+
+    dialog.showMessageBox(null, options, (response) => {
+      if (response == 1) {
+        ipcRenderer.send('deleteAllChars');
+      }
+    });
+  }
 
   return (
     <div id="overview">
@@ -227,21 +288,21 @@ export default function Options() {
             <button onClick={exportSpells}>Export all Spells </button><br />
             <button onClick={exportItems}>Export all Items </button><br />
             <button onClick={exportMonsters}>Export all Monsters </button><br />
-            {/* <button onClick={exportItems}>Export all Charakters </button> */}
+            <button onClick={exportChars}>Export all Characters </button>
           </div>
           <div className="optionSection">
             <h3>Data Import</h3>
             <button onClick={importSpells}>Import Spells </button><br />
             <button onClick={importItems}>Import Items </button><br />
-            <button onClick={importMonsters}>Import Monsters </button>
-            {/* <button onClick={importItems}>Import Charakters </button> */}
+            <button onClick={importMonsters}>Import Monsters </button><br />
+            <button onClick={importChars}>Import Characters </button>
           </div>
           <div className="optionSection">
             <h3>Delete Data</h3>
             <button onClick={deleteAllSpells}>Delete all Spells </button><br />
             <button onClick={deleteAllItems}>Delete all Items </button><br />
-            <button onClick={deleteAllMonsters}>Delete all Monsters </button>
-            {/* <button onClick={importItems}>Delete all Charakters </button> */}
+            <button onClick={deleteAllMonsters}>Delete all Monsters </button><br />
+            <button onClick={deleteAllChars}>Delete all Characters </button>
           </div>
         </div>
       </div>

@@ -234,6 +234,18 @@ const reciveAllMonsters = () => {
     });
   });
 }
+const reciveAllChars = () => {
+  let q = "SELECT * FROM 'main'.'tab_characters'";
+  db.serialize(function () {
+    db.all(q, function (err, rows) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      mainWindow.webContents.send('getAllCharsResult', rows);
+      console.log("====>" + `getAllCharsResult successfull`)
+    });
+  });
+}
 
 let spellStep;
 let spellStart;
@@ -809,138 +821,44 @@ const saveNewMonsters = (monsters) => {
   });
 }
 
-const fomatSkills = (monster) => {
-  let skills = ""
-  if (monster.athletics !== undefined) {
-    skills += "Athletics +" + monster.athletics + ", "
-  }
-  if (monster.acrobatics !== undefined) {
-    skills += "Acrobatics +" + monster.acrobatics + ", "
-  }
-  if (monster.sleight_of_hand !== undefined) {
-    skills += "Sleight of Hand +" + monster.sleight_of_hand + ", "
-  }
-  if (monster.stealth !== undefined) {
-    skills += "Stealth +" + monster.stealth + ", "
-  }
-  if (monster.arcana !== undefined) {
-    skills += "Arcana +" + monster.arcana + ", "
-  }
-  if (monster.history !== undefined) {
-    skills += "History +" + monster.history + ", "
-  }
-  if (monster.investigation !== undefined) {
-    skills += "Investigation +" + monster.investigation + ", "
-  }
-  if (monster.nature !== undefined) {
-    skills += "Nature +" + monster.nature + ", "
-  }
-  if (monster.religion !== undefined) {
-    skills += "Religion +" + monster.religion + ", "
-  }
-  if (monster.animal_handling !== undefined) {
-    skills += "Animal Handling +" + monster.animal_handling + ", "
-  }
-  if (monster.insight !== undefined) {
-    skills += "Insight +" + monster.insight + ", "
-  }
-  if (monster.medicine !== undefined) {
-    skills += "Medicine +" + monster.medicine + ", "
-  }
-  if (monster.perception !== undefined) {
-    skills += "Perception +" + monster.perception + ", "
-  }
-  if (monster.survival !== undefined) {
-    skills += "Survival +" + monster.survival + ", "
-  }
-  if (monster.deception !== undefined) {
-    skills += "Deception +" + monster.deception + ", "
-  }
-  if (monster.intimidation !== undefined) {
-    skills += "Intimidation +" + monster.intimidation + ", "
-  }
-  if (monster.performance !== undefined) {
-    skills += "Performance +" + monster.performance + ", "
-  }
-  if (monster.persuasion !== undefined) {
-    skills += "Persuasion +" + monster.persuasion + ", "
-  }
-  return skills.substr(0, skills.length - 2);
-}
-
-const fomatSaves = (monster) => {
-  let saves = ""
-  if (monster.strength_save !== undefined) {
-    saves += "STR +" + monster.strength_save + ", "
-  }
-  if (monster.dexterity_save !== undefined) {
-    saves += "DEX +" + monster.dexterity_save + ", "
-  }
-  if (monster.constitution_save !== undefined) {
-    saves += "CON +" + monster.constitution_save + ", "
-  }
-  if (monster.intelligence_save !== undefined) {
-    saves += "INT +" + monster.intelligence_save + ", "
-  }
-  if (monster.wisdom_save !== undefined) {
-    saves += "WIS +" + monster.wisdom_save + ", "
-  }
-  if (monster.charisma_save !== undefined) {
-    saves += "CHA +" + monster.charisma_save + ", "
-  }
-  return saves.substr(0, saves.length - 2);
-}
-
-const saveNewMonstersSRD = (monsters) => {
-  monsters.forEach(monster => {
-    const hitPoints = monster.hit_points + " (" + monster.hit_dice + ")";
-
-    let sAblt = "";
-    if (monster.special_abilities !== undefined) {
-      monster.special_abilities.forEach(specialAbilities => {
-        sAblt += specialAbilities.name + "\r\n" + specialAbilities.desc + "\r\n";
-      });
-    }
-
-    let ablt = "";
-    if (monster.actions !== undefined) {
-      monster.actions.forEach(actions => {
-        ablt += actions.name + "\r\n" + actions.desc + "\r\n";
-      });
-    }
-
-    let lAblt = "";
-    if (monster.legendary_actions !== undefined) {
-      monster.legendary_actions.forEach(legendaryActions => {
-        lAblt += legendaryActions.name + "\r\n" + legendaryActions.desc + "\r\n";
-      });
-    }
-
-    let skills = fomatSkills(monster);
-    let saves = fomatSaves(monster);
-
-    let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment,
-    monster.armor_class, hitPoints, monster.speed, monster.strength, monster.dexterity,
-    monster.constitution, monster.intelligence, monster.wisdom, monster.charisma, monster.damage_vulnerabilities,
-    monster.damage_resistances, monster.damage_immunities, monster.condition_immunities, monster.senses, monster.languages, monster.challenge_rating,
-      sAblt, ablt, lAblt, skills, saves];
-    let sql = `INSERT INTO 'main'.'tab_monsters'
-                  (monster_name, monster_size, monster_type, monster_subtype, monster_alignment, monster_armorClass,
-                  monster_hitPoints, monster_speed, monster_strength, monster_dexterity, monster_constitution, 
-                  monster_intelligence, monster_wisdom, monster_charisma,
-                  monster_dmgVulnerabilities, monster_dmgResistance, monster_dmgImmunities, monster_conImmunities, monster_senses, monster_lang, 
-                  monster_cr, monster_sAblt, monster_ablt, monster_lAbtl, monster_skills, monster_savingThrows)
-                  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+const saveNewChars = (chars) => {
+  chars.forEach(char => {
+    let data = [char.char_name, char.char_player, char.char_prof, char.char_exp, char.char_pic, char.char_classes, char.char_race, char.char_background, char.char_ac, char.char_hp, char.char_hp_current, char.char_hitDice,
+    char.char_init, char.char_speed, char.char_str, char.char_dex, char.char_con, char.char_int, char.char_wis, char.char_cha, char.char_strSave, char.char_dexSave, char.char_conSave, char.char_intSave, char.char_wisSave, char.char_chaSave,
+    char.char_strSaveProf, char.char_dexSaveProf, char.char_conSaveProf, char.char_intSaveProf, char.char_wisSaveProf, char.char_chaSaveProf,
+    char.char_actions, char.char_bonusActions, char.char_reactions, char.char_features, char.char_classFeatures, char.char_racialFeatures,
+    char.char_profs_langs, char.char_senses, char.char_passivPerception, char.char_passivInsight, char.char_passivInvestigation, char.char_notesOne, char.char_notesTwo, char.char_notesThree,
+    char.char_acrobatics, char.char_animalHandling, char.char_arcana, char.char_athletics, char.char_deception, char.char_history, char.char_insight, char.char_intimidation,
+    char.char_investigation, char.char_medicine, char.char_nature, char.char_perception, char.char_performance, char.char_persuasion, char.char_religion, char.char_sleightOfHand,
+    char.char_stealth, char.char_survival,
+    char.char_acrobaticsProf, char.char_animalHandlingProf, char.char_arcanaProf, char.char_athleticsProf, char.char_deceptionProf, char.char_historyProf, char.char_insightProf, char.char_intimidationProf,
+    char.char_investigationProf, char.char_medicineProf, char.char_natureProf, char.char_perceptionProf, char.char_performanceProf, char.char_persuasionProf, char.char_religionProf, char.char_sleightOfHandProf,
+    char.char_stealthProf, char.char_survivalProf, char.char_spellNotes];
+    let sql = `INSERT INTO 'main'.'tab_characters'
+                  (char_name, char_player, char_prof, char_exp, char_pic, char_classes, char_race, char_background, 
+                  char_ac, char_hp, char_hp_current, char_hitDice, char_init, char_speed, 
+                  char_str, char_dex, char_con, char_int, char_wis, char_cha, char_strSave, char_dexSave, char_conSave, char_intSave, char_wisSave, char_chaSave, 
+                  char_strSaveProf, char_dexSaveProf, char_conSaveProf, char_intSaveProf, char_wisSaveProf, char_chaSaveProf, 
+                  char_actions, char_bonusActions, char_reactions, char_features, char_classFeatures, char_racialFeatures, 
+                  char_profs_langs, char_senses, char_passivPerception, char_passivInsight, char_passivInvestigation, char_notesOne, 
+                  char_notesTwo, char_notesThree, char_acrobatics,   char_animalHandling, 
+                  char_arcana, char_athletics, char_deception, char_history, char_insight, char_intimidation, char_investigation, 
+                  char_medicine, char_nature, char_perception, char_performance, char_persuasion, char_religion, 
+                  char_sleightOfHand, char_stealth, char_survival, char_acrobaticsProf,   char_animalHandlingProf, 
+                  char_arcanaProf, char_athleticsProf, char_deceptionProf, char_historyProf, char_insightProf, char_intimidationProf, char_investigationProf, 
+                  char_medicineProf, char_natureProf, char_perceptionProf, char_performanceProf, char_persuasionProf, char_religionProf, 
+                  char_sleightOfHandProf, char_stealthProf, char_survivalProf, char_spellNotes)
+                  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
     db.serialize(function () {
       db.run(sql, data, function (err) {
         if (err) {
           return console.error(err.message);
         }
-        console.log(`====>Added ${monster.name} successfull`);
+        console.log(`====>Added ${char.char_name} successfull`);
+        mainWindow.webContents.send('displayMessage', { type: `Added character`, message: `Added ${char.char_name} successful` });
       });
     });
   });
-  mainWindow.webContents.send('displayMessage', { type: `Added all monster`, message: "Added all successful" });
 }
 
 const reciveChars = () => {
@@ -1087,6 +1005,10 @@ ipcMain.on('getAllMonsters', (event) => {
   reciveAllMonsters();
 });
 
+ipcMain.on('getAllChars', (event) => {
+  reciveAllChars();
+});
+
 ipcMain.on('getSearchSpells', (event, arg) => {
   const { step, start } = arg;
   this.searchSpellStep = step;
@@ -1216,9 +1138,9 @@ ipcMain.on('saveNewMonsters', (event, arg) => {
   const { monsters } = arg;
   saveNewMonsters(monsters);
 });
-ipcMain.on('saveNewMonstersSRD', (event, arg) => {
-  const { monsters } = arg;
-  saveNewMonstersSRD(monsters);
+ipcMain.on('saveNewChars', (event, arg) => {
+  const { chars } = arg;
+  saveNewChars(chars);
 });
 
 ipcMain.on('getChars', (event, arg) => {
@@ -1294,6 +1216,9 @@ ipcMain.on('deleteAllItems', (event) => {
 });
 ipcMain.on('deleteAllMonsters', (event) => {
   deleteAll("monsters");
+});
+ipcMain.on('deleteAllChars', (event) => {
+  deleteAll("characters");
 });
 
 ipcMain.on('displayMessage', (event, m) => {
