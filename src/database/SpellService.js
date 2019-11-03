@@ -4,6 +4,7 @@ let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database(path.join(__dirname, '../assets/db/tab.db'));
 let spellStep;
 let spellStart;
+let searchSpellQuery;
 
 module.exports.reciveSpell = (id, mainWindow) => {
   db.serialize(function () {
@@ -30,40 +31,41 @@ module.exports.reciveAllSpells = (mainWindow) => {
   });
 }
 
-module.exports.reciveSpells = (step, start, mainWindow) => {
+module.exports.reciveSpells = (step, start, query, mainWindow) => {
   spellStep = step;
   spellStart = start;
+  searchSpellQuery = query;
   let q = "SELECT * FROM 'main'.'tab_spells' WHERE ";
-  if (this.searchSpellQuery != null) {
-    if (this.searchSpellQuery.name != null && typeof this.searchSpellQuery.name !== 'undefined' && this.searchSpellQuery.name != "") {
-      q += `spell_name like "%${this.searchSpellQuery.name}%" AND `;
+  if (searchSpellQuery != null) {
+    if (searchSpellQuery.name != null && typeof searchSpellQuery.name !== 'undefined' && searchSpellQuery.name != "") {
+      q += `spell_name like "%${searchSpellQuery.name}%" AND `;
     }
-    if (this.searchSpellQuery.time != null && typeof this.searchSpellQuery.time !== 'undefined' && this.searchSpellQuery.time != "") {
-      q += `spell_time like "%${this.searchSpellQuery.time}%" AND `;
+    if (searchSpellQuery.time != null && typeof searchSpellQuery.time !== 'undefined' && searchSpellQuery.time != "") {
+      q += `spell_time like "%${searchSpellQuery.time}%" AND `;
     }
-    if (this.searchSpellQuery.level != null && typeof this.searchSpellQuery.level !== 'undefined' && this.searchSpellQuery.level != "") {
-      q += `spell_level = "${this.searchSpellQuery.level}" AND `;
+    if (searchSpellQuery.level != null && typeof searchSpellQuery.level !== 'undefined' && searchSpellQuery.level != "") {
+      q += `spell_level = "${searchSpellQuery.level}" AND `;
     }
-    if (this.searchSpellQuery.school != null && typeof this.searchSpellQuery.school !== 'undefined' && this.searchSpellQuery.school != "") {
-      q += `spell_school like "%${this.searchSpellQuery.school}%" AND `;
+    if (searchSpellQuery.school != null && typeof searchSpellQuery.school !== 'undefined' && searchSpellQuery.school != "") {
+      q += `spell_school like "%${searchSpellQuery.school}%" AND `;
     }
-    if (this.searchSpellQuery.range != null && typeof this.searchSpellQuery.range !== 'undefined' && this.searchSpellQuery.range != "") {
-      q += `spell_range like "%${this.searchSpellQuery.range}%" AND `;
+    if (searchSpellQuery.range != null && typeof searchSpellQuery.range !== 'undefined' && searchSpellQuery.range != "") {
+      q += `spell_range like "%${searchSpellQuery.range}%" AND `;
     }
-    if (this.searchSpellQuery.components != null && typeof this.searchSpellQuery.components !== 'undefined' && this.searchSpellQuery.components != "") {
-      q += `spell_components like "%${this.searchSpellQuery.components}%" AND `;
+    if (searchSpellQuery.components != null && typeof searchSpellQuery.components !== 'undefined' && searchSpellQuery.components != "") {
+      q += `spell_components like "%${searchSpellQuery.components}%" AND `;
     }
-    if (this.searchSpellQuery.classes != null && typeof this.searchSpellQuery.classes !== 'undefined' && this.searchSpellQuery.classes != "") {
-      q += `spell_classes like "%${this.searchSpellQuery.classes}%" AND `;
+    if (searchSpellQuery.classes != null && typeof searchSpellQuery.classes !== 'undefined' && searchSpellQuery.classes != "") {
+      q += `spell_classes like "%${searchSpellQuery.classes}%" AND `;
     }
-    if (this.searchSpellQuery.text != null && typeof this.searchSpellQuery.text !== 'undefined' && this.searchSpellQuery.text != "") {
-      q += `spell_text like "%${this.searchSpellQuery.text}%" AND `;
+    if (searchSpellQuery.text != null && typeof searchSpellQuery.text !== 'undefined' && searchSpellQuery.text != "") {
+      q += `spell_text like "%${searchSpellQuery.text}%" AND `;
     }
-    if (this.searchSpellQuery.sources != null && typeof this.searchSpellQuery.sources !== 'undefined' && this.searchSpellQuery.sources != "") {
-      q += `spell_sources like "%${this.searchSpellQuery.sources}%" AND `;
+    if (searchSpellQuery.sources != null && typeof searchSpellQuery.sources !== 'undefined' && searchSpellQuery.sources != "") {
+      q += `spell_sources like "%${searchSpellQuery.sources}%" AND `;
     }
-    if (this.searchSpellQuery.duration != null && typeof this.searchSpellQuery.duration !== 'undefined' && this.searchSpellQuery.duration != "") {
-      q += `spell_duration like "%${this.searchSpellQuery.duration}%" AND `;
+    if (searchSpellQuery.duration != null && typeof searchSpellQuery.duration !== 'undefined' && searchSpellQuery.duration != "") {
+      q += `spell_duration like "%${searchSpellQuery.duration}%" AND `;
     }
     if (q.includes(" AND ")) {
       q = q.slice(0, -4);

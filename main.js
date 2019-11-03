@@ -254,19 +254,19 @@ ipcMain.on('getAllChars', (event) => {
 ipcMain.on('getSearchSpells', (event, arg) => {
   const { step, start } = arg;
   this.searchSpellStep = step;
-  SpellService.reciveSpells(step, start, mainWindow);
+  SpellService.reciveSpells(step, start, {}, mainWindow);
 });
 
 ipcMain.on('getSearchItems', (event, arg) => {
   const { step, start } = arg;
   this.searchItemStep = step;
-  ItemService.reciveItems(step, start, mainWindow);
+  ItemService.reciveItems(step, start, {}, mainWindow);
 });
 
 ipcMain.on('getSearchMonsters', (event, arg) => {
   const { step, start } = arg;
   this.searchMonsterStep = step;
-  MonsterService.reciveMonsters(step, start, mainWindow);
+  MonsterService.reciveMonsters(step, start, {}, mainWindow);
 });
 
 ipcMain.on('getSpellCount', (event, arg) => {
@@ -283,23 +283,20 @@ ipcMain.on('getMonsterCount', (event, arg) => {
 
 ipcMain.on('sendSpellSearchQuery', (event, arg) => {
   const { query } = arg;
-  this.searchSpellQuery = query;
-  const q = SpellService.reciveSpells(this.searchSpellStep, 0, mainWindow);
+  const q = SpellService.reciveSpells(this.searchSpellStep, 0, query, mainWindow);
   SpellService.reciveSpellCount(q.replace("SELECT * FROM 'main'.'tab_spells'", "SELECT count(*) AS count FROM 'main'.'tab_spells'"), mainWindow);
 });
 
 ipcMain.on('sendItemSearchQuery', (event, arg) => {
   const { query } = arg;
-  this.searchItemQuery = query;
-  const q = ItemService.reciveItems(this.searchItemStep, 0, mainWindow);
+  const q = ItemService.reciveItems(this.searchItemStep, 0, query, mainWindow);
   ItemService.reciveItemCount(q.replace("SELECT * FROM 'main'.'tab_items'", "SELECT count(*) AS count FROM 'main'.'tab_items'"), mainWindow);
 });
 
 ipcMain.on('sendMonsterSearchQuery', (event, arg) => {
   const { query } = arg;
-  this.searchMonsterQuery = query;
-  const q = MonsterService.reciveMonsters(this.searchMonsterStep, 0, mainWindow);
-  MonsterService.reciveMonsterCount(q.replace("SELECT * FROM 'main'.'tab_monsters'", "SELECT count(*) AS count FROM 'main'.'tab_monsters'", mainWindow));
+  const q = MonsterService.reciveMonsters(this.searchMonsterStep, 0, query, mainWindow);
+  MonsterService.reciveMonsterCount(q.replace("SELECT * FROM 'main'.'tab_monsters'", "SELECT count(*) AS count FROM 'main'.'tab_monsters'"), mainWindow);
 });
 
 ipcMain.on('getSpell', (event, arg) => {

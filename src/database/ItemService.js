@@ -4,6 +4,7 @@ let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database(path.join(__dirname, '../assets/db/tab.db'));
 let itemStep;
 let itemStart;
+let searchItemQuery;
 
 module.exports.reciveAllItems = (mainWindow) => {
     let q = "SELECT * FROM 'main'.'tab_items'";
@@ -18,25 +19,26 @@ module.exports.reciveAllItems = (mainWindow) => {
     });
 }
 
-module.exports.reciveItems = (step, start, mainWindow) => {
+module.exports.reciveItems = (step, start, query, mainWindow) => {
     itemStep = step;
     itemStart = start;
+    searchItemQuery = query;
     let q = "SELECT * FROM 'main'.'tab_items' WHERE ";
-    if (this.searchItemQuery != null) {
-        if (this.searchItemQuery.name != null && typeof this.searchItemQuery.name !== 'undefined' && this.searchItemQuery.name != "") {
-            q += `item_name like "%${this.searchItemQuery.name}%" AND `;
+    if (searchItemQuery != null) {
+        if (searchItemQuery.name != null && typeof searchItemQuery.name !== 'undefined' && searchItemQuery.name != "") {
+            q += `item_name like "%${searchItemQuery.name}%" AND `;
         }
-        if (this.searchItemQuery.description != null && typeof this.searchItemQuery.description !== 'undefined' && this.searchItemQuery.description != "") {
-            q += `item_description like "%${this.searchItemQuery.description}%" AND `;
+        if (searchItemQuery.description != null && typeof searchItemQuery.description !== 'undefined' && searchItemQuery.description != "") {
+            q += `item_description like "%${searchItemQuery.description}%" AND `;
         }
-        if (this.searchItemQuery.rarity != null && typeof this.searchItemQuery.rarity !== 'undefined' && this.searchItemQuery.rarity != "") {
-            q += `item_rarity like "%${this.searchItemQuery.rarity}%" AND `;
+        if (searchItemQuery.rarity != null && typeof searchItemQuery.rarity !== 'undefined' && searchItemQuery.rarity != "") {
+            q += `item_rarity like "%${searchItemQuery.rarity}%" AND `;
         }
-        if (this.searchItemQuery.type != null && typeof this.searchItemQuery.type !== 'undefined' && this.searchItemQuery.type != "") {
-            q += `item_type like "%${this.searchItemQuery.type}%" AND `;
+        if (searchItemQuery.type != null && typeof searchItemQuery.type !== 'undefined' && searchItemQuery.type != "") {
+            q += `item_type like "%${searchItemQuery.type}%" AND `;
         }
-        if (this.searchItemQuery.source != null && typeof this.searchItemQuery.source !== 'undefined' && this.searchItemQuery.source != "") {
-            q += `item_source like "%${this.searchItemQuery.source}%" AND `;
+        if (searchItemQuery.source != null && typeof searchItemQuery.source !== 'undefined' && searchItemQuery.source != "") {
+            q += `item_source like "%${searchItemQuery.source}%" AND `;
         }
         if (q.includes(" AND ")) {
             q = q.slice(0, -4);
