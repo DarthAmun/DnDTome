@@ -86,7 +86,7 @@ export default function ItemView() {
                 <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label>
                 <label className="left">Char:<select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
                     {chars.map((char, index) => {
-                        return <option key={index} value={char.id}>{char.char_name}</option>;
+                        return <option key={index} value={char.char_id}>{char.char_name}</option>;
                     })}
                 </select></label>
             </div>

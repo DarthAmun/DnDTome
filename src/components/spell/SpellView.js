@@ -103,7 +103,7 @@ export default function SpellView() {
             <label>Char:
                 <select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
                     {chars.map((char, index) => {
-                        return <option key={index} value={char.id}>{char.char_name}</option>;
+                        return <option key={index} value={char.char_id}>{char.char_name}</option>;
                     })}
                 </select>
             </label>
