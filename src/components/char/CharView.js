@@ -206,16 +206,13 @@ export default function CharView(props) {
         setSurvivalProf(result.char_survivalProf);
 
         setSpellNotes(result.char_spellNotes);
-        console.log("char done");
     }
 
     const receiveSpells = (event, result) => {
         setSpells(result);
-        console.log("spells done");
     }
     const receiveItems = (event, result) => {
         setItems(result);
-        console.log("items done");
     }
 
     useEffect(() => {
