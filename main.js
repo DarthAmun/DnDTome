@@ -5,6 +5,12 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path')
 const url = require('url')
 
+//Database Services
+const SpellService = require('./src/database/SpellService');
+const ItemService = require('./src/database/ItemService');
+const MonsterService = require('./src/database/MonsterService');
+const CharacterService = require('./src/database/CharacterService');
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -198,683 +204,6 @@ app.on('activate', () => {
   }
 });
 
-const reciveAllSpells = () => {
-  let q = "SELECT * FROM 'main'.'tab_spells'";
-  db.serialize(function () {
-    db.all(q, function (err, rows) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getAllSpellsResult', rows);
-      console.log("====>" + `getAllSpellsResult successfull`)
-    });
-  });
-}
-const reciveAllItems = () => {
-  let q = "SELECT * FROM 'main'.'tab_items'";
-  db.serialize(function () {
-    db.all(q, function (err, rows) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getAllItemsResult', rows);
-      console.log("====>" + `getAllItemsResult successfull`)
-    });
-  });
-}
-const reciveAllMonsters = () => {
-  let q = "SELECT * FROM 'main'.'tab_monsters'";
-  db.serialize(function () {
-    db.all(q, function (err, rows) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getAllMonstersResult', rows);
-      console.log("====>" + `getAllMonstersResult successfull`)
-    });
-  });
-}
-const reciveAllChars = () => {
-  let q = "SELECT * FROM 'main'.'tab_characters'";
-  db.serialize(function () {
-    db.all(q, function (err, rows) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getAllCharsResult', rows);
-      console.log("====>" + `getAllCharsResult successfull`)
-    });
-  });
-}
-
-let spellStep;
-let spellStart;
-const reciveSpells = (step, start) => {
-  spellStep = step;
-  spellStart = start;
-  let q = "SELECT * FROM 'main'.'tab_spells' WHERE ";
-  if (this.searchSpellQuery != null) {
-    if (this.searchSpellQuery.name != null && typeof this.searchSpellQuery.name !== 'undefined' && this.searchSpellQuery.name != "") {
-      q += `spell_name like "%${this.searchSpellQuery.name}%" AND `;
-    }
-    if (this.searchSpellQuery.time != null && typeof this.searchSpellQuery.time !== 'undefined' && this.searchSpellQuery.time != "") {
-      q += `spell_time like "%${this.searchSpellQuery.time}%" AND `;
-    }
-    if (this.searchSpellQuery.level != null && typeof this.searchSpellQuery.level !== 'undefined' && this.searchSpellQuery.level != "") {
-      q += `spell_level = "${this.searchSpellQuery.level}" AND `;
-    }
-    if (this.searchSpellQuery.school != null && typeof this.searchSpellQuery.school !== 'undefined' && this.searchSpellQuery.school != "") {
-      q += `spell_school like "%${this.searchSpellQuery.school}%" AND `;
-    }
-    if (this.searchSpellQuery.range != null && typeof this.searchSpellQuery.range !== 'undefined' && this.searchSpellQuery.range != "") {
-      q += `spell_range like "%${this.searchSpellQuery.range}%" AND `;
-    }
-    if (this.searchSpellQuery.components != null && typeof this.searchSpellQuery.components !== 'undefined' && this.searchSpellQuery.components != "") {
-      q += `spell_components like "%${this.searchSpellQuery.components}%" AND `;
-    }
-    if (this.searchSpellQuery.classes != null && typeof this.searchSpellQuery.classes !== 'undefined' && this.searchSpellQuery.classes != "") {
-      q += `spell_classes like "%${this.searchSpellQuery.classes}%" AND `;
-    }
-    if (this.searchSpellQuery.text != null && typeof this.searchSpellQuery.text !== 'undefined' && this.searchSpellQuery.text != "") {
-      q += `spell_text like "%${this.searchSpellQuery.text}%" AND `;
-    }
-    if (this.searchSpellQuery.sources != null && typeof this.searchSpellQuery.sources !== 'undefined' && this.searchSpellQuery.sources != "") {
-      q += `spell_sources like "%${this.searchSpellQuery.sources}%" AND `;
-    }
-    if (this.searchSpellQuery.duration != null && typeof this.searchSpellQuery.duration !== 'undefined' && this.searchSpellQuery.duration != "") {
-      q += `spell_duration like "%${this.searchSpellQuery.duration}%" AND `;
-    }
-    if (q.includes(" AND ")) {
-      q = q.slice(0, -4);
-    } else {
-      q = q.slice(0, -6);
-    }
-  } else {
-    q = q.slice(0, -6);
-  }
-  q += ` ORDER BY spell_name ASC LIMIT ${step} OFFSET ${start}`;
-  db.serialize(function () {
-    db.all(q, function (err, rows) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getSearchSpellsResult', rows);
-      console.log("====>" + `getSearchSpellsResult from ${start} to ${(start + step)} successfull`)
-    });
-  });
-  return q;
-}
-
-let itemStep;
-let itemStart;
-const reciveItems = (step, start) => {
-  itemStep = step;
-  itemStart = start;
-  let q = "SELECT * FROM 'main'.'tab_items' WHERE ";
-  if (this.searchItemQuery != null) {
-    if (this.searchItemQuery.name != null && typeof this.searchItemQuery.name !== 'undefined' && this.searchItemQuery.name != "") {
-      q += `item_name like "%${this.searchItemQuery.name}%" AND `;
-    }
-    if (this.searchItemQuery.description != null && typeof this.searchItemQuery.description !== 'undefined' && this.searchItemQuery.description != "") {
-      q += `item_description like "%${this.searchItemQuery.description}%" AND `;
-    }
-    if (this.searchItemQuery.rarity != null && typeof this.searchItemQuery.rarity !== 'undefined' && this.searchItemQuery.rarity != "") {
-      q += `item_rarity like "%${this.searchItemQuery.rarity}%" AND `;
-    }
-    if (this.searchItemQuery.type != null && typeof this.searchItemQuery.type !== 'undefined' && this.searchItemQuery.type != "") {
-      q += `item_type like "%${this.searchItemQuery.type}%" AND `;
-    }
-    if (this.searchItemQuery.source != null && typeof this.searchItemQuery.source !== 'undefined' && this.searchItemQuery.source != "") {
-      q += `item_source like "%${this.searchItemQuery.source}%" AND `;
-    }
-    if (q.includes(" AND ")) {
-      q = q.slice(0, -4);
-    } else {
-      q = q.slice(0, -6);
-    }
-  } else {
-    q = q.slice(0, -6);
-  }
-  q += ` ORDER BY item_name ASC LIMIT ${step} OFFSET ${start}`;
-  db.serialize(function () {
-    db.all(q, function (err, rows) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getSearchItemsResult', rows);
-      console.log("====>" + `getSearchItemsResult from ${start} to ${(start + step)} successfull`);
-    });
-  });
-  return q;
-}
-
-let monsterStep;
-let monsterStart;
-const reciveMonsters = (step, start) => {
-  monsterStep = step;
-  monsterStart = start;
-  let q = "SELECT * FROM 'main'.'tab_monsters' WHERE ";
-  if (this.searchMonsterQuery != null) {
-    if (this.searchMonsterQuery.name != null && typeof this.searchMonsterQuery.name !== 'undefined' && this.searchMonsterQuery.name != "") {
-      q += `monster_name like "%${this.searchMonsterQuery.name}%" AND `;
-    }
-    if (this.searchMonsterQuery.type != null && typeof this.searchMonsterQuery.type !== 'undefined' && this.searchMonsterQuery.type != "") {
-      q += `monster_type like "%${this.searchMonsterQuery.type}%" AND `;
-    }
-    if (this.searchMonsterQuery.subtype != null && typeof this.searchMonsterQuery.subtype !== 'undefined' && this.searchMonsterQuery.subtype != "") {
-      q += `monster_subtype like "%${this.searchMonsterQuery.subtype}%" AND `;
-    }
-    if (this.searchMonsterQuery.cr != null && typeof this.searchMonsterQuery.cr !== 'undefined' && this.searchMonsterQuery.cr != "") {
-      q += `monster_cr = "${this.searchMonsterQuery.cr}" AND `;
-    }
-    if (this.searchMonsterQuery.alignment != null && typeof this.searchMonsterQuery.alignment !== 'undefined' && this.searchMonsterQuery.alignment != "") {
-      q += `monster_alignment like "%${this.searchMonsterQuery.alignment}%" AND `;
-    }
-    if (this.searchMonsterQuery.speed != null && typeof this.searchMonsterQuery.speed !== 'undefined' && this.searchMonsterQuery.speed != "") {
-      q += `monster_speed like "%${this.searchMonsterQuery.speed}%" AND `;
-    }
-    if (this.searchMonsterQuery.senses != null && typeof this.searchMonsterQuery.senses !== 'undefined' && this.searchMonsterQuery.senses != "") {
-      q += `monster_senses like "%${this.searchMonsterQuery.senses}%" AND `;
-    }
-    if (this.searchMonsterQuery.senses != null && typeof this.searchMonsterQuery.senses !== 'undefined' && this.searchMonsterQuery.senses != "") {
-      q += `monster_senses like "%${this.searchMonsterQuery.senses}%" AND `;
-    }
-    if (this.searchMonsterQuery.ability != null && typeof this.searchMonsterQuery.ability !== 'undefined' && this.searchMonsterQuery.ability != "") {
-      q += `monster_sAblt like "%${this.searchMonsterQuery.ability}%" AND `;
-    }
-    if (this.searchMonsterQuery.action != null && typeof this.searchMonsterQuery.action !== 'undefined' && this.searchMonsterQuery.action != "") {
-      q += `(monster_ablt like "%${this.searchMonsterQuery.action}%" OR `;
-      q += `monster_lAbtl like "%${this.searchMonsterQuery.action}%") AND `;
-    }
-    if (this.searchMonsterQuery.damage != null && typeof this.searchMonsterQuery.damage !== 'undefined' && this.searchMonsterQuery.damage != "") {
-      q += `(monster_dmgVulnerabilities like "%${this.searchMonsterQuery.damage}%" OR `;
-      q += `monster_dmgResistance like "%${this.searchMonsterQuery.damage}%" OR `;
-      q += `monster_dmgImmunities like "%${this.searchMonsterQuery.damage}%") AND `;
-    }
-    if (q.includes(" AND ")) {
-      q = q.slice(0, -4);
-    } else {
-      q = q.slice(0, -6);
-    }
-  } else {
-    q = q.slice(0, -6);
-  }
-  q += ` ORDER BY monster_name ASC LIMIT ${step} OFFSET ${start}`;
-  db.serialize(function () {
-    db.all(q, function (err, rows) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getSearchMonstersResult', rows);
-      console.log("====>" + `getSearchMonstersResult from ${start} to ${(start + step)} successfull`)
-    });
-  });
-  return q;
-}
-
-const reciveSpellCount = (q) => {
-  db.serialize(function () {
-    db.all(q, function (err, rows) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getSpellCountResult', rows);
-      console.log("====>" + `getSpellCount successfull`)
-    });
-  });
-}
-
-const reciveItemCount = (q) => {
-  db.serialize(function () {
-    db.all(q, function (err, rows) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getItemCountResult', rows);
-      console.log("====>" + `getItemCount successfull`)
-    });
-  });
-}
-
-const reciveMonsterCount = (q) => {
-  db.serialize(function () {
-    db.all(q, function (err, rows) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getMonsterCountResult', rows);
-      console.log("====>" + `getMonsterCount successfull`)
-    });
-  });
-}
-
-const reciveSpell = (id) => {
-  db.serialize(function () {
-    db.get("SELECT * FROM 'main'.'tab_spells' WHERE spell_id=?", [id], function (err, row) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getSpellResult', row);
-      console.log("====>" + `getSpell successfull`)
-    });
-  });
-}
-
-const reciveChar = (id) => {
-  db.serialize(function () {
-    db.get("SELECT * FROM 'main'.'tab_characters' WHERE char_id=?", [id], function (err, row) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getCharResult', row);
-      console.log("====>" + `getCharResult successfull`)
-    });
-  });
-}
-
-const reciveCharSpells = (id) => {
-  db.serialize(function () {
-    db.all("SELECT * FROM 'main'.'tab_characters_spells' AS a LEFT JOIN 'main'.'tab_spells' AS b ON a.spell_id = b.spell_id WHERE char_id=? ORDER BY b.spell_level, b.spell_name", [id], function (err, rows) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getCharSpellsResult', rows);
-      console.log("====>" + `getCharSpellsResult successfull`)
-    });
-  });
-}
-
-const reciveCharItems = (id) => {
-  db.serialize(function () {
-    db.all("SELECT * FROM 'main'.'tab_characters_items' AS a LEFT JOIN 'main'.'tab_items' AS b ON a.item_id = b.item_id WHERE char_id=? ORDER BY b.item_name", [id], function (err, rows) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getCharItemsResult', rows);
-      console.log("====>" + `getCharItemsResult successfull`)
-    });
-  });
-}
-
-const saveSpell = (spell) => {
-  let data = [spell.name, spell.school, spell.level, spell.ritual, spell.time, spell.duration, spell.range, spell.components, spell.text, spell.classes, spell.sources, spell.id];
-  let sql = `UPDATE 'main'.'tab_spells'
-              SET spell_name = ?, spell_school = ?, spell_level = ?, spell_ritual = ?, spell_time = ?, spell_duration = ?, spell_range = ?, spell_components = ?, spell_text = ?, spell_classes = ?, spell_sources = ?
-              WHERE spell_id = ?`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====> ${spell.name} updated successfull`);
-      mainWindow.webContents.send('spellsUpdated', { spellStep, spellStart });
-      mainWindow.webContents.send('displayMessage', { type: `Saved spell`, message: `Saved ${spell.name} successful` });
-    });
-  });
-}
-
-const saveItem = (item) => {
-  let data = [item.name, item.type, item.rarity, item.description, item.pic, item.source, item.attunment, item.id];
-  let sql = `UPDATE 'main'.'tab_items'
-              SET item_name = ?, item_type = ?, item_rarity = ?, item_description = ?, item_pic = ?, item_source = ?, item_attunment = ?
-              WHERE item_id = ?`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====> ${item.name} updated successfull`);
-      mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
-      mainWindow.webContents.send('displayMessage', { type: `Saved item`, message: `Saved ${item.name} successful` });
-    });
-  });
-}
-
-const saveMonster = (monster) => {
-  let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment, monster.ac, monster.hp, monster.speed, monster.str,
-  monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.saveingThrows, monster.skills, monster.dmgVulnerabilitie,
-  monster.dmgResistance, monster.dmgImmunities, monster.senses, monster.lang, monster.cr, monster.sAblt, monster.ablt, monster.lAblt,
-  monster.source, monster.pic, monster.id];
-  let sql = `UPDATE 'main'.'tab_monsters'
-              SET monster_name = ?, monster_size = ?, monster_type = ?, monster_subtype = ?, monster_alignment = ?, monster_armorClass = ?,
-              monster_hitPoints = ?, monster_speed = ?, monster_strength = ?, monster_dexterity = ?, monster_constitution = ?, 
-              monster_intelligence = ?, monster_wisdom = ?, monster_charisma = ?, monster_savingThrows = ?, monster_skills = ?, 
-              monster_dmgVulnerabilities = ?, monster_dmgResistance = ?, monster_dmgImmunities = ?, monster_senses = ?, monster_lang = ?, 
-              monster_cr = ?, monster_sAblt = ?, monster_ablt = ?, monster_lAbtl = ?, monster_source = ?, monster_pic = ?
-              WHERE monster_id = ?`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====> ${monster.name} updated successfull`);
-      mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
-      mainWindow.webContents.send('displayMessage', { type: `Saved monster`, message: `Saved ${monster.name} successful` });
-    });
-  });
-}
-
-const saveNewChar = (char) => {
-  let data = [char.name, char.player, char.prof, char.exp, char.pic, char.classes, char.race, char.background, char.ac, char.hp, char.currentHp, char.hitDice,
-  char.init, char.speed, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.strSave, char.dexSave, char.conSave, char.intSave, char.wisSave, char.chaSave,
-  char.strSaveProf, char.dexSaveProf, char.conSaveProf, char.intSaveProf, char.wisSaveProf, char.chaSaveProf,
-  char.actions, char.bonusActions, char.reactions, char.features, char.classFeatures, char.racialFeatures,
-  char.profsLangs, char.senses, char.passivPerception, char.passivInsight, char.passivInvestigation, char.notesOne, char.notesTwo, char.notesThree,
-  char.acrobatics, char.animalHandling, char.arcana, char.athletics, char.deception, char.history, char.insight, char.intimidation,
-  char.investigation, char.medicine, char.nature, char.perception, char.performance, char.persuasion, char.religion, char.sleightOfHand,
-  char.stealth, char.survival,
-  char.acrobaticsProf, char.animalHandlingProf, char.arcanaProf, char.athleticsProf, char.deceptionProf, char.historyProf, char.insightProf, char.intimidationProf,
-  char.investigationProf, char.medicineProf, char.natureProf, char.perceptionProf, char.performanceProf, char.persuasionProf, char.religionProf, char.sleightOfHandProf,
-  char.stealthProf, char.survivalProf, char.spellNotes];
-  let sql = `INSERT INTO 'main'.'tab_characters'
-              (char_name, char_player, char_prof, char_exp, char_pic, char_classes, char_race, char_background, 
-              char_ac, char_hp, char_hp_current, char_hitDice, char_init, char_speed, 
-              char_str, char_dex, char_con, char_int, char_wis, char_cha, char_strSave, char_dexSave, char_conSave, char_intSave, char_wisSave, char_chaSave, 
-              char_strSaveProf, char_dexSaveProf, char_conSaveProf, char_intSaveProf, char_wisSaveProf, char_chaSaveProf, 
-              char_actions, char_bonusActions, char_reactions, char_features, char_classFeatures, char_racialFeatures, 
-              char_profs_langs, char_senses, char_passivPerception, char_passivInsight, char_passivInvestigation, char_notesOne, 
-              char_notesTwo, char_notesThree, char_acrobatics,   char_animalHandling, 
-              char_arcana, char_athletics, char_deception, char_history, char_insight, char_intimidation, char_investigation, 
-              char_medicine, char_nature, char_perception, char_performance, char_persuasion, char_religion, 
-              char_sleightOfHand, char_stealth, char_survival, char_acrobaticsProf,   char_animalHandlingProf, 
-              char_arcanaProf, char_athleticsProf, char_deceptionProf, char_historyProf, char_insightProf, char_intimidationProf, char_investigationProf, 
-              char_medicineProf, char_natureProf, char_perceptionProf, char_performanceProf, char_persuasionProf, char_religionProf, 
-              char_sleightOfHandProf, char_stealthProf, char_survivalProf, char_spellNotes)
-              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====> ${char.name} updated successfull`);
-      mainWindow.webContents.send('displayMessage', { type: `Saved character`, message: `Saved ${char.name} successful` });
-    });
-  });
-}
-
-const saveChar = (char) => {
-  let data = [char.name, char.player, char.prof, char.exp, char.pic, char.classes, char.race, char.background, char.ac, char.hp, char.currentHp, char.hitDice,
-  char.init, char.speed, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.strSave, char.dexSave, char.conSave, char.intSave, char.wisSave, char.chaSave,
-  char.strSaveProf, char.dexSaveProf, char.conSaveProf, char.intSaveProf, char.wisSaveProf, char.chaSaveProf,
-  char.actions, char.bonusActions, char.reactions, char.features, char.classFeatures, char.racialFeatures,
-  char.profsLangs, char.senses, char.passivPerception, char.passivInsight, char.passivInvestigation, char.notesOne, char.notesTwo, char.notesThree,
-  char.acrobatics, char.animalHandling, char.arcana, char.athletics, char.deception, char.history, char.insight, char.intimidation,
-  char.investigation, char.medicine, char.nature, char.perception, char.performance, char.persuasion, char.religion, char.sleightOfHand,
-  char.stealth, char.survival,
-  char.acrobaticsProf, char.animalHandlingProf, char.arcanaProf, char.athleticsProf, char.deceptionProf, char.historyProf, char.insightProf, char.intimidationProf,
-  char.investigationProf, char.medicineProf, char.natureProf, char.perceptionProf, char.performanceProf, char.persuasionProf, char.religionProf, char.sleightOfHandProf,
-  char.stealthProf, char.survivalProf, char.spellNotes, char.id];
-  let sql = `UPDATE 'main'.'tab_characters'
-              SET char_name = ?, char_player = ?, char_prof = ?, char_exp = ?, char_pic = ?, char_classes = ?, char_race = ?, char_background = ?, 
-              char_ac = ?, char_hp = ?, char_hp_current = ?, char_hitDice = ?, char_init = ?, char_speed = ?, 
-              char_str = ?, char_dex = ?, char_con = ?, char_int = ?, char_wis = ?, char_cha = ?, char_strSave = ?, char_dexSave = ?, char_conSave = ?, char_intSave = ?, char_wisSave = ?, char_chaSave = ?, 
-              char_strSaveProf = ?, char_dexSaveProf = ?, char_conSaveProf = ?, char_intSaveProf = ?, char_wisSaveProf = ?, char_chaSaveProf = ?, 
-              char_actions = ?, char_bonusActions = ?, char_reactions = ?, char_features = ?, char_classFeatures = ?, char_racialFeatures = ?, 
-              char_profs_langs = ?, char_senses = ?, char_passivPerception = ?, char_passivInsight = ?, char_passivInvestigation = ?, char_notesOne = ?, 
-              char_notesTwo = ?, char_notesThree = ?, char_acrobatics = ?,   char_animalHandling = ?, 
-              char_arcana = ?, char_athletics = ?, char_deception = ?, char_history = ?, char_insight = ?, char_intimidation = ?, char_investigation = ?, 
-              char_medicine = ?, char_nature = ?, char_perception = ?, char_performance = ?, char_persuasion = ?, char_religion = ?, 
-              char_sleightOfHand = ?, char_stealth = ?, char_survival = ?, char_acrobaticsProf = ?,   char_animalHandlingProf = ?, 
-              char_arcanaProf = ?, char_athleticsProf = ?, char_deceptionProf = ?, char_historyProf = ?, char_insightProf = ?, char_intimidationProf = ?, char_investigationProf = ?, 
-              char_medicineProf = ?, char_natureProf = ?, char_perceptionProf = ?, char_performanceProf = ?, char_persuasionProf = ?, char_religionProf = ?, 
-              char_sleightOfHandProf = ?, char_stealthProf = ?, char_survivalProf = ?, char_spellNotes = ?
-              WHERE char_id = ?`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====> ${char.name} updated successfull`);
-      mainWindow.webContents.send('displayMessage', { type: `Saved character`, message: `Saved ${char.name} successful` });
-    });
-  });
-}
-const saveCharItems = (items) => {
-  items.forEach(item => {
-    let data = [item.item_amount, item.item_equiped, item.item_attuned, item.item_damage, item.item_hit, item.item_range, item.item_properties, item.id];
-    let sql = `UPDATE 'main'.'tab_characters_items'
-              SET item_amount = ?, item_equiped = ?, item_attuned = ?, item_damage = ?, item_hit = ?, item_range = ?, item_properties = ?
-              WHERE id = ?`;
-    db.serialize(function () {
-      db.run(sql, data, function (err) {
-        if (err) {
-          return console.error(err.message);
-        }
-        console.log(`====> ${item.item_name} updated successfull`);
-      });
-    });
-  });
-}
-const saveCharSpells = (spells) => {
-  spells.forEach(spell => {
-    let data = [spell.spell_prepared, spell.id];
-    let sql = `UPDATE 'main'.'tab_characters_spells'
-              SET spell_prepared = ?
-              WHERE id = ?`;
-    db.serialize(function () {
-      db.run(sql, data, function (err) {
-        if (err) {
-          return console.error(err.message);
-        }
-        console.log(`====> ${spell.spell_name} updated successfull`);
-      });
-    });
-  });
-}
-
-const deleteSpell = (spell) => {
-  let data = [spell.id];
-  let sql = `DELETE FROM 'main'.'tab_spells' WHERE spell_id = ?`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====>Deleted ${spell.name} successfull`);
-      spellWindow.hide();
-      mainWindow.webContents.send('spellsUpdated', { spellStep, spellStart });
-      mainWindow.webContents.send('displayMessage', { type: `Deleted monster`, message: `Deleted ${spell.name} successful` });
-    });
-  });
-}
-
-const deleteItem = (item) => {
-  let data = [item.id];
-  let sql = `DELETE FROM 'main'.'tab_items' WHERE item_id = ?`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====>Deleted ${item.name} successfull`);
-      itemWindow.hide();
-      mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
-      mainWindow.webContents.send('displayMessage', { type: `Deleted item`, message: `Deleted ${item.name} successful` });
-    });
-  });
-}
-
-const deleteMonster = (monster) => {
-  let data = [monster.id];
-  let sql = `DELETE FROM 'main'.'tab_monsters' WHERE monster_id = ?`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====>Deleted ${monster.name} successfull`);
-      monsterWindow.hide();
-      mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
-      mainWindow.webContents.send('displayMessage', { type: `Deleted monster`, message: `Deleted ${monster.name} successful` });
-    });
-  });
-}
-
-const saveNewSpell = (spell) => {
-  let data = [spell.name, spell.school, spell.level, spell.time, spell.duration, spell.range, spell.components, spell.text, spell.classes, spell.sources];
-  let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_school, spell_level, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources)
-              VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====>Added ${spell.name} successfull`);
-      mainWindow.webContents.send('displayMessage', { type: `Added spell`, message: `Added ${spell.name} successful` });
-    });
-  });
-}
-const saveNewSpells = (spells) => {
-  spells.forEach(spell => {
-    let data = [spell.spell_name, spell.spell_ritual, spell.spell_school, spell.spell_level, spell.spell_time, spell.spell_duration, spell.spell_range, spell.spell_components, spell.spell_text, spell.spell_classes, spell.spell_sources];
-    let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_ritual, spell_school, spell_level, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources)
-                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    db.serialize(function () {
-      db.run(sql, data, function (err) {
-        if (err) {
-          return console.error(err.message);
-        }
-        console.log(`====>Added ${spell.spell_name} successfull`);
-        mainWindow.webContents.send('displayMessage', { type: `Added spell`, message: `Added ${spell.spell_name} successful` });
-      });
-    });
-  });
-}
-
-const saveNewItem = (item) => {
-  let data = [item.name, item.description, item.pic, item.rarity, item.type, item.source];
-  let sql = `INSERT INTO 'main'.'tab_items' (item_name, item_description, item_pic, item_rarity, item_type, item_source)
-              VALUES  (?, ?, ?, ?, ?, ?)`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====>Added ${item.name} successfull`);
-      mainWindow.webContents.send('displayMessage', { type: `Added item`, message: `Added ${item.name} successful` });
-    });
-  });
-}
-const saveNewItems = (items) => {
-  items.forEach(item => {
-    let data = [item.item_name, item.item_description, item.item_pic, item.item_rarity, item.item_type, item.item_source];
-    let sql = `INSERT INTO 'main'.'tab_items' (item_name, item_description, item_pic, item_rarity, item_type, item_source)
-              VALUES  (?, ?, ?, ?, ?, ?)`;
-    db.serialize(function () {
-      db.run(sql, data, function (err) {
-        if (err) {
-          return console.error(err.message);
-        }
-        console.log(`====>Added ${item.item_name} successfull`);
-        mainWindow.webContents.send('displayMessage', { type: `Added item`, message: `Added ${item.item_name} successful` });
-      });
-    });
-  });
-}
-
-const saveNewMonster = (monster) => {
-  let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment, monster.ac, monster.hp, monster.speed, monster.str,
-  monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.saveingThrows, monster.skills, monster.dmgVulnerabilitie,
-  monster.dmgResistance, monster.dmgImmunities, monster.monster_conImmunities, monster.senses, monster.lang, monster.cr, monster.sAblt, monster.ablt, monster.lAblt,
-  monster.source, monster.pic];
-  let sql = `INSERT INTO 'main'.'tab_monsters'
-              (monster_name, monster_size, monster_type, monster_subtype, monster_alignment, monster_armorClass,
-              monster_hitPoints, monster_speed, monster_strength, monster_dexterity, monster_constitution, 
-              monster_intelligence, monster_wisdom, monster_charisma, monster_savingThrows, monster_skills, 
-              monster_dmgVulnerabilities, monster_dmgResistance, monster_dmgImmunities, monster_conImmunities, monster_senses, monster_lang, 
-              monster_cr, monster_sAblt, monster_ablt, monster_lAbtl, monster_source, monster_pic)
-              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====>Added ${monster.name} successfull`);
-      mainWindow.webContents.send('displayMessage', { type: `Added monster`, message: `Added ${monster.name} successful` });
-    });
-  });
-}
-const saveNewMonsters = (monsters) => {
-  monsters.forEach(monster => {
-    let data = [monster.monster_name, monster.monster_size, monster.monster_type, monster.monster_subtype, monster.monster_alignment,
-    monster.monster_armorClass, monster.monster_hitPoints, monster.monster_speed, monster.monster_strength, monster.monster_dexterity,
-    monster.monster_constitution, monster.monster_intelligence, monster.monster_wisdom, monster.monster_charisma, monster.monster_savingThrows,
-    monster.monster_skills, monster.monster_dmgVulnerabilities, monster.monster_dmgResistance, monster.monster_dmgImmunities, monster.monster_conImmunities,
-    monster.monster_senses, monster.monster_lang, monster.monster_cr, monster.monster_sAblt, monster.monster_ablt, monster.monster_lAbtl,
-    monster.monster_source, monster.monster_pic];
-    let sql = `INSERT INTO 'main'.'tab_monsters'
-                (monster_name, monster_size, monster_type, monster_subtype, monster_alignment, monster_armorClass,
-                monster_hitPoints, monster_speed, monster_strength, monster_dexterity, monster_constitution, 
-                monster_intelligence, monster_wisdom, monster_charisma, monster_savingThrows, monster_skills, 
-                monster_dmgVulnerabilities, monster_dmgResistance, monster_dmgImmunities, monster_conImmunities, monster_senses, monster_lang, 
-                monster_cr, monster_sAblt, monster_ablt, monster_lAbtl, monster_source, monster_pic)
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-    db.serialize(function () {
-      db.run(sql, data, function (err) {
-        if (err) {
-          return console.error(err.message);
-        }
-        console.log(`====>Added ${monster.monster_name} successfull`);
-        mainWindow.webContents.send('displayMessage', { type: `Added monster`, message: `Added ${monster.monster_name} successful` });
-      });
-    });
-  });
-}
-
-const saveNewChars = (chars) => {
-  chars.forEach(char => {
-    let data = [char.char_name, char.char_player, char.char_prof, char.char_exp, char.char_pic, char.char_classes, char.char_race, char.char_background, char.char_ac, char.char_hp, char.char_hp_current, char.char_hitDice,
-    char.char_init, char.char_speed, char.char_str, char.char_dex, char.char_con, char.char_int, char.char_wis, char.char_cha, char.char_strSave, char.char_dexSave, char.char_conSave, char.char_intSave, char.char_wisSave, char.char_chaSave,
-    char.char_strSaveProf, char.char_dexSaveProf, char.char_conSaveProf, char.char_intSaveProf, char.char_wisSaveProf, char.char_chaSaveProf,
-    char.char_actions, char.char_bonusActions, char.char_reactions, char.char_features, char.char_classFeatures, char.char_racialFeatures,
-    char.char_profs_langs, char.char_senses, char.char_passivPerception, char.char_passivInsight, char.char_passivInvestigation, char.char_notesOne, char.char_notesTwo, char.char_notesThree,
-    char.char_acrobatics, char.char_animalHandling, char.char_arcana, char.char_athletics, char.char_deception, char.char_history, char.char_insight, char.char_intimidation,
-    char.char_investigation, char.char_medicine, char.char_nature, char.char_perception, char.char_performance, char.char_persuasion, char.char_religion, char.char_sleightOfHand,
-    char.char_stealth, char.char_survival,
-    char.char_acrobaticsProf, char.char_animalHandlingProf, char.char_arcanaProf, char.char_athleticsProf, char.char_deceptionProf, char.char_historyProf, char.char_insightProf, char.char_intimidationProf,
-    char.char_investigationProf, char.char_medicineProf, char.char_natureProf, char.char_perceptionProf, char.char_performanceProf, char.char_persuasionProf, char.char_religionProf, char.char_sleightOfHandProf,
-    char.char_stealthProf, char.char_survivalProf, char.char_spellNotes];
-    let sql = `INSERT INTO 'main'.'tab_characters'
-                  (char_name, char_player, char_prof, char_exp, char_pic, char_classes, char_race, char_background, 
-                  char_ac, char_hp, char_hp_current, char_hitDice, char_init, char_speed, 
-                  char_str, char_dex, char_con, char_int, char_wis, char_cha, char_strSave, char_dexSave, char_conSave, char_intSave, char_wisSave, char_chaSave, 
-                  char_strSaveProf, char_dexSaveProf, char_conSaveProf, char_intSaveProf, char_wisSaveProf, char_chaSaveProf, 
-                  char_actions, char_bonusActions, char_reactions, char_features, char_classFeatures, char_racialFeatures, 
-                  char_profs_langs, char_senses, char_passivPerception, char_passivInsight, char_passivInvestigation, char_notesOne, 
-                  char_notesTwo, char_notesThree, char_acrobatics,   char_animalHandling, 
-                  char_arcana, char_athletics, char_deception, char_history, char_insight, char_intimidation, char_investigation, 
-                  char_medicine, char_nature, char_perception, char_performance, char_persuasion, char_religion, 
-                  char_sleightOfHand, char_stealth, char_survival, char_acrobaticsProf,   char_animalHandlingProf, 
-                  char_arcanaProf, char_athleticsProf, char_deceptionProf, char_historyProf, char_insightProf, char_intimidationProf, char_investigationProf, 
-                  char_medicineProf, char_natureProf, char_perceptionProf, char_performanceProf, char_persuasionProf, char_religionProf, 
-                  char_sleightOfHandProf, char_stealthProf, char_survivalProf, char_spellNotes)
-                  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-    db.serialize(function () {
-      db.run(sql, data, function (err) {
-        if (err) {
-          return console.error(err.message);
-        }
-        console.log(`====>Added ${char.char_name} successfull`);
-        mainWindow.webContents.send('displayMessage', { type: `Added character`, message: `Added ${char.char_name} successful` });
-      });
-    });
-  });
-}
-
-const reciveChars = () => {
-  db.serialize(function () {
-    db.all("SELECT * FROM 'main'.'tab_characters' ORDER BY char_player ASC", function (err, rows) {
-      if (err != null) {
-        console.log("====>" + err);
-      }
-      mainWindow.webContents.send('getCharsResult', rows);
-      itemWindow.webContents.send('getCharsResult', rows);
-      spellWindow.webContents.send('getCharsResult', rows);
-      console.log("====>" + `getCharsResult successfull`)
-    });
-  });
-}
-
 const deleteAll = (tab) => {
   db.serialize(function () {
     db.run(`DELETE FROM tab_characters_${tab}`, function (err) {
@@ -906,272 +235,199 @@ const deleteAll = (tab) => {
   });
 }
 
-const deleteCharSpell = (spell) => {
-  let data = [spell.id];
-  let sql = `DELETE FROM 'main'.'tab_characters_spells' WHERE id = ?`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====>Removed ${spell.spell_name} successfull`);
-      mainWindow.webContents.send('displayMessage', { type: `Removed spell`, message: `Removed ${spell.spell_name} successful` });
-      reciveCharSpells(spell.char_id);
-    });
-  });
-}
-const deleteCharItem = (item) => {
-  let data = [item.id];
-  let sql = `DELETE FROM 'main'.'tab_characters_items' WHERE id = ?`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====>Removed ${item.item_name} successfull`);
-      mainWindow.webContents.send('displayMessage', { type: `Removed item`, message: `Removed ${item.item_name} successful` });
-      reciveCharItems(item.char_id);
-    });
-  });
-}
-
-const deleteChar = (id) => {
-  let data = [id];
-  let sql1 = `DELETE FROM 'main'.'tab_characters_items' WHERE char_id = ?`;
-  let sql2 = `DELETE FROM 'main'.'tab_characters_spells' WHERE char_id = ?`;
-  let sql3 = `DELETE FROM 'main'.'tab_characters' WHERE char_id = ?`;
-  db.serialize(function () {
-    db.run(sql1, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====>Removed items from character successful`);
-    });
-    db.run(sql2, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====>Removed spells from character successful`);
-    });
-    db.run(sql3, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====>Removed character successfull`);
-      mainWindow.webContents.send('displayMessage', { type: `Deleted character`, message: `Deleted character successful` });
-    });
-  });
-}
-
-const addSpellToChar = (char, spell) => {
-  let data = [char.selectedChar, spell.id, false];
-  let sql = `INSERT INTO 'main'.'tab_characters_spells' (char_id, spell_id, spell_prepared)
-              VALUES  (?, ?, ?)`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====>Added ${spell.name} to character successfull`);
-      mainWindow.webContents.send('displayMessage', { type: `Added spell to character`, message: `Added ${spell.name} to character successful` });
-    });
-  });
-}
-
-const addItemToChar = (char, item) => {
-  let data = [char.selectedChar, item.id, 1, false, false];
-  let sql = `INSERT INTO 'main'.'tab_characters_items' (char_id, item_id, item_amount, item_equiped, item_attuned)
-              VALUES  (?, ?, ?, ?, ?)`;
-  db.serialize(function () {
-    db.run(sql, data, function (err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`====>Added ${item.name} to character successfull`);
-      mainWindow.webContents.send('displayMessage', { type: `Added item to character`, message: `Added ${item.name} to character successful` });
-    });
-  });
-}
-
 ipcMain.on('getAllSpells', (event) => {
-  reciveAllSpells();
+  SpellService.reciveAllSpells(mainWindow);
 });
 
 ipcMain.on('getAllItems', (event) => {
-  reciveAllItems();
+  ItemService.reciveAllItems(mainWindow);
 });
 
 ipcMain.on('getAllMonsters', (event) => {
-  reciveAllMonsters();
+  MonsterService.reciveAllMonsters(mainWindow);
 });
 
 ipcMain.on('getAllChars', (event) => {
-  reciveAllChars();
+  CharacterService.reciveAllChars(mainWindow);
 });
 
 ipcMain.on('getSearchSpells', (event, arg) => {
   const { step, start } = arg;
   this.searchSpellStep = step;
-  reciveSpells(step, start);
+  SpellService.reciveSpells(step, start, mainWindow);
 });
 
 ipcMain.on('getSearchItems', (event, arg) => {
   const { step, start } = arg;
   this.searchItemStep = step;
-  reciveItems(step, start);
+  ItemService.reciveItems(step, start, mainWindow);
 });
 
 ipcMain.on('getSearchMonsters', (event, arg) => {
   const { step, start } = arg;
   this.searchMonsterStep = step;
-  reciveMonsters(step, start);
+  MonsterService.reciveMonsters(step, start, mainWindow);
 });
 
 ipcMain.on('getSpellCount', (event, arg) => {
-  reciveSpellCount(`SELECT count(*) AS count FROM 'main'.'tab_spells'`);
+  SpellService.reciveSpellCount(`SELECT count(*) AS count FROM 'main'.'tab_spells'`, mainWindow);
 });
 
 ipcMain.on('getItemCount', (event, arg) => {
-  reciveItemCount(`SELECT count(*) AS count FROM 'main'.'tab_items'`);
+  ItemService.reciveItemCount(`SELECT count(*) AS count FROM 'main'.'tab_items'`, mainWindow);
 });
 
 ipcMain.on('getMonsterCount', (event, arg) => {
-  reciveMonsterCount(`SELECT count(*) AS count FROM 'main'.'tab_monsters'`);
+  MonsterService.reciveMonsterCount(`SELECT count(*) AS count FROM 'main'.'tab_monsters'`, mainWindow);
 });
 
 ipcMain.on('sendSpellSearchQuery', (event, arg) => {
   const { query } = arg;
   this.searchSpellQuery = query;
-  const q = reciveSpells(this.searchSpellStep, 0);
-  reciveSpellCount(q.replace("SELECT * FROM 'main'.'tab_spells'", "SELECT count(*) AS count FROM 'main'.'tab_spells'"));
+  const q = SpellService.reciveSpells(this.searchSpellStep, 0, mainWindow);
+  SpellService.reciveSpellCount(q.replace("SELECT * FROM 'main'.'tab_spells'", "SELECT count(*) AS count FROM 'main'.'tab_spells'"), mainWindow);
 });
 
 ipcMain.on('sendItemSearchQuery', (event, arg) => {
   const { query } = arg;
   this.searchItemQuery = query;
-  const q = reciveItems(this.searchItemStep, 0);
-  reciveItemCount(q.replace("SELECT * FROM 'main'.'tab_items'", "SELECT count(*) AS count FROM 'main'.'tab_items'"));
+  const q = ItemService.reciveItems(this.searchItemStep, 0, mainWindow);
+  ItemService.reciveItemCount(q.replace("SELECT * FROM 'main'.'tab_items'", "SELECT count(*) AS count FROM 'main'.'tab_items'"), mainWindow);
 });
 
 ipcMain.on('sendMonsterSearchQuery', (event, arg) => {
   const { query } = arg;
   this.searchMonsterQuery = query;
-  const q = reciveMonsters(this.searchMonsterStep, 0);
-  reciveMonsterCount(q.replace("SELECT * FROM 'main'.'tab_monsters'", "SELECT count(*) AS count FROM 'main'.'tab_monsters'"));
+  const q = MonsterService.reciveMonsters(this.searchMonsterStep, 0, mainWindow);
+  MonsterService.reciveMonsterCount(q.replace("SELECT * FROM 'main'.'tab_monsters'", "SELECT count(*) AS count FROM 'main'.'tab_monsters'", mainWindow));
 });
 
 ipcMain.on('getSpell', (event, arg) => {
   const { id } = arg;
-  reciveSpell(id);
+  SpellService.reciveSpell(id, mainWindow);
 });
 
 ipcMain.on('saveSpell', (event, arg) => {
   const { spell } = arg;
-  saveSpell(spell);
+  SpellService.saveSpell(spell, mainWindow);
 });
 
 ipcMain.on('saveItem', (event, arg) => {
   const { item } = arg;
-  saveItem(item);
+  ItemService.saveItem(item, mainWindow);
 });
 
 ipcMain.on('saveMonster', (event, arg) => {
   const { monster } = arg;
-  saveMonster(monster);
+  MonsterService.saveMonster(monster, mainWindow);
 });
 
 ipcMain.on('saveChar', (event, arg) => {
   const { char } = arg;
-  saveChar(char);
+  CharacterService.saveChar(char, mainWindow);
 });
 ipcMain.on('saveNewChar', (event, arg) => {
   const { char } = arg;
-  saveNewChar(char);
+  CharacterService.saveNewChar(char, mainWindow);
 });
 ipcMain.on('saveCharItems', (event, arg) => {
   const { items } = arg;
-  saveCharItems(items);
+  CharacterService.saveCharItems(items);
 });
 ipcMain.on('saveCharSpells', (event, arg) => {
   const { spells } = arg;
-  saveCharSpells(spells);
+  CharacterService.saveCharSpells(spells);
 });
 
 ipcMain.on('deleteSpell', (event, arg) => {
   const { spell } = arg;
-  deleteSpell(spell);
+  SpellService.deleteSpell(spell, mainWindow, spellWindow);
 });
 
 ipcMain.on('deleteItem', (event, arg) => {
   const { item } = arg;
-  deleteItem(item);
+  ItemService.deleteItem(item, mainWindow, itemWindow);
 });
 
 ipcMain.on('deleteMonster', (event, arg) => {
   const { monster } = arg;
-  deleteMonster(monster);
+  MonsterService.deleteMonster(monster, mainWindow, monsterWindow);
 });
 
 ipcMain.on('saveNewSpell', (event, arg) => {
   const { spell } = arg;
-  saveNewSpell(spell);
+  SpellService.saveNewSpell(spell, mainWindow);
 });
 ipcMain.on('saveNewSpells', (event, arg) => {
   const { spells } = arg;
-  saveNewSpells(spells);
+  SpellService.saveNewSpells(spells, mainWindow);
 });
 
 ipcMain.on('saveNewItem', (event, arg) => {
   const { item } = arg;
-  saveNewItem(item);
+  ItemService.saveNewItem(item, mainWindow);
 });
 ipcMain.on('saveNewItems', (event, arg) => {
   const { items } = arg;
-  saveNewItems(items);
+  ItemService.saveNewItems(items, mainWindow);
 });
 
 ipcMain.on('saveNewMonster', (event, arg) => {
   const { monster } = arg;
-  saveNewMonster(monster);
+  MonsterService.saveNewMonster(monster, mainWindow);
 });
 ipcMain.on('saveNewMonsters', (event, arg) => {
   const { monsters } = arg;
-  saveNewMonsters(monsters);
+  MonsterService.saveNewMonsters(monsters, mainWindow);
 });
+
+
 ipcMain.on('saveNewChars', (event, arg) => {
   const { chars } = arg;
-  saveNewChars(chars);
+  CharacterService.saveNewChars(chars, mainWindow);
 });
 
 ipcMain.on('getChars', (event, arg) => {
-  reciveChars();
+  CharacterService.reciveChars(mainWindow, itemWindow, spellWindow);
 });
 
 ipcMain.on('getChar', (event, arg) => {
   const { id } = arg;
-  reciveChar(id);
+  CharacterService.reciveChar(id, mainWindow);
 });
 
 ipcMain.on('getCharSpells', (event, arg) => {
   const { id } = arg;
-  reciveCharSpells(id);
+  CharacterService.reciveCharSpells(id, mainWindow);
 });
 ipcMain.on('getCharItems', (event, arg) => {
   const { id } = arg;
-  reciveCharItems(id);
+  CharacterService.reciveCharItems(id, mainWindow);
 });
+
+ipcMain.on('addItemToChar', (event, arg) => {
+  const { char, item } = arg;
+  ItemService.addItemToChar(char, item, mainWindow);
+});
+ipcMain.on('addSpellToChar', (event, arg) => {
+  const { char, spell } = arg;
+  SpellService.addSpellToChar(char, spell, mainWindow);
+});
+
 ipcMain.on('deleteCharSpell', (event, arg) => {
   const { spell } = arg;
-  deleteCharSpell(spell);
+  CharacterService.deleteCharSpell(spell, mainWindow);
 });
 ipcMain.on('deleteCharItem', (event, arg) => {
   const { item } = arg;
-  deleteCharItem(item);
+  CharacterService.deleteCharItem(item, mainWindow);
 });
 ipcMain.on('deleteChar', (event, arg) => {
   const { id } = arg;
-  deleteChar(id);
+  CharacterService.deleteChar(id, mainWindow);
 });
+
+
 
 ipcMain.on('closeMainWindow', (event) => {
   mainWindow.close();
@@ -1223,14 +479,4 @@ ipcMain.on('deleteAllChars', (event) => {
 
 ipcMain.on('displayMessage', (event, m) => {
   mainWindow.webContents.send('displayMessage', { type: m.type, message: m.message });
-});
-
-ipcMain.on('addItemToChar', (event, arg) => {
-  const { char, item } = arg;
-  addItemToChar(char, item);
-});
-
-ipcMain.on('addSpellToChar', (event, arg) => {
-  const { char, spell } = arg;
-  addSpellToChar(char, spell);
 });
