@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import useKeyPress from './Hooks/useKeyPress';
+import useKeyPress from './hooks/useKeyPress';
 import '../assets/css/Pagination.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight, faPlus } from '@fortawesome/free-solid-svg-icons';
