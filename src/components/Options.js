@@ -2,6 +2,7 @@ import '../assets/css/Options.css';
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
+import { faFileExport, faFileImport, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const { shell } = window.require('electron');
@@ -285,24 +286,24 @@ export default function Options() {
           <div className="optionSection">
             <h3>Data Export</h3>
             <span>Path: {options.defaultPath}</span><br />
-            <button onClick={exportSpells}>Export all Spells </button><br />
-            <button onClick={exportItems}>Export all Items </button><br />
-            <button onClick={exportMonsters}>Export all Monsters </button><br />
-            <button onClick={exportChars}>Export all Characters </button>
+            <button onClick={exportSpells}><FontAwesomeIcon icon={faFileExport} /> Export all Spells </button><br />
+            <button onClick={exportItems}><FontAwesomeIcon icon={faFileExport} /> Export all Items </button><br />
+            <button onClick={exportMonsters}><FontAwesomeIcon icon={faFileExport} /> Export all Monsters </button><br />
+            <button onClick={exportChars}><FontAwesomeIcon icon={faFileExport} /> Export all Characters </button>
           </div>
           <div className="optionSection">
             <h3>Data Import</h3>
-            <button onClick={importSpells}>Import Spells </button><br />
-            <button onClick={importItems}>Import Items </button><br />
-            <button onClick={importMonsters}>Import Monsters </button><br />
-            <button onClick={importChars}>Import Characters </button>
+            <button onClick={importSpells}><FontAwesomeIcon icon={faFileImport} /> Import Spells </button><br />
+            <button onClick={importItems}><FontAwesomeIcon icon={faFileImport} /> Import Items </button><br />
+            <button onClick={importMonsters}><FontAwesomeIcon icon={faFileImport} /> Import Monsters </button><br />
+            <button onClick={importChars}><FontAwesomeIcon icon={faFileImport} /> Import Characters </button>
           </div>
           <div className="optionSection">
             <h3>Delete Data</h3>
-            <button onClick={deleteAllSpells}>Delete all Spells </button><br />
-            <button onClick={deleteAllItems}>Delete all Items </button><br />
-            <button onClick={deleteAllMonsters}>Delete all Monsters </button><br />
-            <button onClick={deleteAllChars}>Delete all Characters </button>
+            <button onClick={deleteAllSpells}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Spells </button><br />
+            <button onClick={deleteAllItems}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Items </button><br />
+            <button onClick={deleteAllMonsters}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Monsters </button><br />
+            <button onClick={deleteAllChars}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Characters </button>
           </div>
         </div>
       </div>

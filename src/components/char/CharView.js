@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../../assets/css/char/CharView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTimes, faAngleUp, faAngleDoubleUp, faMinus, faHeartBroken, faHeartbeat, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTimes, faAngleUp, faAngleDoubleUp, faMinus, faHeartBroken, faHeartbeat, faTrashAlt, faFileExport } from '@fortawesome/free-solid-svg-icons';
 import StatChart from './StatChart';
 
 const electron = window.require('electron');
@@ -234,28 +234,28 @@ export default function CharView(props) {
 
     const options = {
         defaultPath: app.getPath('documents')
-      }
+    }
 
     const makeCards = () => {
         let cards = `<html><head><title>Cards</title><style>@media print { div{ page-break-inside: avoid; }} .card { height: 88mm; width: 63mm; margin: 5px; border: 1px solid darkgrey; border-radius: 5px; float: left; font-family: Arial, Helvetica, sans-serif;} /* HEAD */ .head{ height: 15mm; width: 100%; float: left; margin-top: 1mm; position: relative; z-index: 1; } .level { width: 10mm; height: 10mm; float:left; margin-left: 1mm; margin-top: -1mm; line-height: 12mm; text-align: center; background-color: white; font-size: 20px; position: relative; box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.50); } .level:after { top: 100%; left: 50%; border: solid transparent; content: ' '; height: 0; width: 0; position: absolute; pointer-events: none; border-color: rgba(136, 183, 213, 0); border-top-color: white; border-width: 5mm; margin-left: -5mm; } .level:before { content: ''; position: absolute; transform: rotate(45deg); width: 7mm; height: 7mm; bottom: -15px; margin-left: -8px; z-index: -1; box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.50); } .name { float: left; width: calc(100% - 30mm); height: 10mm; padding-top: 2mm; padding-right: 2mm; padding-left: 2mm; background-color: white; text-align: center; font-size: 14px;} .school { float: right; height: 12mm; width: 12mm; margin-right: 1mm; background-color:white; border: 2px darkgrey; border-style: solid dashed solid dashed; border-radius: 8mm; line-height: 12mm; text-align: center; } /* ATTRIBUTES */ .spellAttributes { width: 100%; height: 5mm; float: left; font-size: 9px; text-align: center; line-height: 3mm;} .spellAttributes div { display: inline-block; } .spellAttributes div:after { white-space: pre; content: " | "; } .spellAttributes div:last-child:after { content: ''; } /* TEXT */ .text { width: calc(100% - 10px); height: auto; max-height: 62mm; float:left; padding-left: 5px; padding-right: 5px; overflow: hidden; font-size: 8px; } hr.seperator { border: 0; height: 1px; background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); float: left; width: calc(100% - 50px); margin-left: 25px; margin-right: 25px; } hr.seperatorSmall { border: 0; height: 1px; background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); float: left; width: calc(100% - 100px); margin-left: 50px; margin-right: 50px; margin-top: -11px; } .square { transform: rotate(45deg); width: 1mm; height: 1mm; background-color: lightgray; margin-bottom: 1mm; margin-left: auto; margin-right: auto; }</style></head><body>
         ${spells.map((spell, index) => {
-            return `<div class="card"><div class="head"><div class="level">${spell.spell_level}</div><div class="name">${spell.spell_name}</div><div class="school">${spell.spell_school.substring(0,3)}</div></div><hr class="seperatorSmall"><div class="spellAttributes"><div>${spell.spell_time}</div><div>${spell.spell_range}</div><div>${spell.spell_duration}</div><div>${spell.spell_components}</div></div><hr class="seperator"><div class="text"><p>${spell.spell_text.replace("\\n", "</p><p>")}</p><div class="square"></div></div></div>`;
+            return `<div class="card"><div class="head"><div class="level">${spell.spell_level}</div><div class="name">${spell.spell_name}</div><div class="school">${spell.spell_school.substring(0, 3)}</div></div><hr class="seperatorSmall"><div class="spellAttributes"><div>${spell.spell_time}</div><div>${spell.spell_range}</div><div>${spell.spell_duration}</div><div>${spell.spell_components}</div></div><hr class="seperator"><div class="text"><p>${spell.spell_text.replace("\\n", "</p><p>")}</p><div class="square"></div></div></div>`;
         })}</body></html>`;
         return cards;
     }
 
     const exportSpells = () => {
         let content = makeCards();
-        options.defaultPath = options.defaultPath + '/monsters_export.json';
+        options.defaultPath = options.defaultPath + `/${name}_spellCards.html`;
         dialog.showSaveDialog(null, options, (path) => {
             console.log(path);
 
             // fileName is a string that contains the path and filename created in the save file dialog.  
             fs.writeFile(path, content, (err) => {
                 if (err) {
-                    ipcRenderer.send('displayMessage', { type: `Monsters exported`, message: `Monster export failed` });
+                    ipcRenderer.send('displayMessage', { type: `Spellcards exported`, message: `Spellcards failed` });
                 }
-                ipcRenderer.send('displayMessage', { type: `Monsters exported`, message: `Monster export successful` });
+                ipcRenderer.send('displayMessage', { type: `Spellcards exported`, message: `Spellcards successful` });
             });
         });
     }
@@ -442,8 +442,10 @@ export default function CharView(props) {
                 <div className="smallLabelGroup">
                     <StatChart data={data} />
                 </div>
-                <button onClick={saveChar}><FontAwesomeIcon icon={faSave} /> Save</button>
-                <button className="delete" onClick={deleteChar}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                <div className="smallLabelGroup">
+                    <button onClick={saveChar}><FontAwesomeIcon icon={faSave} /> Save</button><br />
+                    <button className="delete" onClick={deleteChar}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                </div>
                 <div className="tabComponent">
                     <div className="tabSelector">
                         <div className={`tabName ${tabs.skills ? "active" : ""}`} onClick={e => showTab(0)}>Attributes/Skills</div>
@@ -613,7 +615,10 @@ export default function CharView(props) {
                         </div>
                         <div className="tabContent" style={{ display: tabs.spells ? "flex" : "none" }}>
                             <div className="charSpells">
-                                <table>
+                                <div style={{ width: "clacl(100% - 10px)", height: "30px", padding: "5px" }}>
+                                    <button onClick={exportSpells} style={{width: "150px"}}><FontAwesomeIcon icon={faFileExport} /> Export as cards</button>
+                                </div>
+                                <table style={{width: "100%"}}>
                                     <tbody>
                                         <tr>
                                             <th>Lvl</th>
@@ -640,7 +645,6 @@ export default function CharView(props) {
                                         })}
                                     </tbody>
                                 </table>
-                                <button onClick={exportSpells}><FontAwesomeIcon icon={faSave} /> Export</button>
                             </div>
                             <textarea className="big" value={spellNotes} onChange={e => setSpellNotes(e.target.value)} placeholder="Spell Notes..."></textarea>
                         </div>
