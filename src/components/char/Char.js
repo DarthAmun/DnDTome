@@ -23,3 +23,9 @@ export default function Char(props) {
             <div className="char" style={{ animationDelay: `${props.delay * 50}ms` }}>
                 <div className="charIcon" style={style}></div>
                 <div className="charComp">{props.char.char_name}</div>
+                <div className="charComp smallText">by {props.char.char_player}</div>
+            </div>
+        </Link>
+    )
+
+}
