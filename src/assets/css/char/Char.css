@@ -23,3 +23,26 @@
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
     cursor: pointer;
 }
+
+.char .charIcon {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 5px;
+    width: 76px;
+    height: 76px;
+    border-radius: 200px;
+    border: 2px solid #8000ff;
+    overflow: hidden;
+    float: left;
+}
+
+.char .charComp {
+    float: left;
+    height: 20px;
+    width: 100%;
+    line-height: 20px;
+}
+
+.char .smallText{
+    font-size: 10px;
+}
