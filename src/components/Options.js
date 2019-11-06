@@ -27,7 +27,6 @@ export default function Options() {
   }
   const receiveAllChars = (evt, result) => {
     setChars(result);
-    console.log(result);
   }
 
   useEffect(() => {
