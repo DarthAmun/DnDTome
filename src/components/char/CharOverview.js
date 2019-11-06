@@ -26,14 +26,14 @@ export default function SpellOverview() {
     return (
         <div id="overview">
             <div id="chars">
-                <Link to="/add-char">
-                    <div className="add">
-                        <div className="addIcon"><FontAwesomeIcon icon={faUserPlus} /></div><br />Add new Charakter
-                    </div>
-                </Link>
                 {currentCharList.map((char, index) => {
                     return <Char delay={index} char={char} key={char.char_id} />;
                 })}
+                <Link to="/add-char">
+                    <div className="add">
+                        <div className="addIcon"><FontAwesomeIcon icon={faUserPlus} /></div><br />Add new Character
+                    </div>
+                </Link>
             </div>
         </div>
     )

@@ -21,9 +21,17 @@ export default function Char(props) {
     return (
         <Link to={`/char/${props.char.char_id}`}>
             <div className="char" style={{ animationDelay: `${props.delay * 50}ms` }}>
-                <div className="charIcon" style={style}></div>
-                <div className="charComp">{props.char.char_name}</div>
-                <div className="charComp smallText">by {props.char.char_player}</div>
+                <div className="leftChar">
+                    <div className="charIcon" style={style}></div>
+                    <div className="charComp">{props.char.char_name}</div>
+                    <div className="charComp smallText">by {props.char.char_player}</div>
+                </div>
+                <div className="rightChar">
+                    <div className="charComp">{props.char.char_classes}</div>
+                    <div className="charComp">{props.char.char_race}</div>
+                    <div className="charComp">{props.char.char_background}</div>
+                    <div className="charComp">Exp: {props.char.char_exp}</div>
+                </div>
             </div>
         </Link>
     )

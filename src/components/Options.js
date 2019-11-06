@@ -62,7 +62,6 @@ export default function Options() {
 
     options.defaultPath = options.defaultPath + '/spells_export.json';
     dialog.showSaveDialog(null, options, (path) => {
-      console.log(path);
 
       // fileName is a string that contains the path and filename created in the save file dialog.  
       fs.writeFile(path, content, (err) => {
@@ -79,7 +78,6 @@ export default function Options() {
 
     options.defaultPath = options.defaultPath + '/items_export.json';
     dialog.showSaveDialog(null, options, (path) => {
-      console.log(path);
 
       // fileName is a string that contains the path and filename created in the save file dialog.  
       fs.writeFile(path, content, (err) => {
@@ -96,7 +94,6 @@ export default function Options() {
 
     options.defaultPath = options.defaultPath + '/monsters_export.json';
     dialog.showSaveDialog(null, options, (path) => {
-      console.log(path);
 
       // fileName is a string that contains the path and filename created in the save file dialog.  
       fs.writeFile(path, content, (err) => {
@@ -113,7 +110,6 @@ export default function Options() {
 
     options.defaultPath = options.defaultPath + '/chars_export.json';
     dialog.showSaveDialog(null, options, (path) => {
-      console.log(path);
 
       // fileName is a string that contains the path and filename created in the save file dialog.  
       fs.writeFile(path, content, (err) => {

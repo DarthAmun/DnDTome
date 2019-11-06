@@ -1,5 +1,5 @@
 .char {
-    width: 120px;
+    width: 300px;
     height: 120px;
     padding: 10px;
     text-align: center;
@@ -19,6 +19,20 @@
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
 }
 
+.char .rightChar, .char .leftChar {
+    width: 120px;
+    float: left;
+    height: 120px;
+}
+.char .leftChar {
+    border-right: 1px solid #8000ff;
+}
+.char .rightChar {
+    width: 169px;
+    text-align: left;
+    padding-left: 10px;
+}
+
 .char:hover {
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
     cursor: pointer;
@@ -36,13 +50,25 @@
     float: left;
 }
 
-.char .charComp {
+.char .leftChar .charComp {
     float: left;
     height: 20px;
     width: 100%;
     line-height: 20px;
 }
 
-.char .smallText{
+.char .rightChar .charComp {
+    float: left;
+    height: 30px;
+    width: 100%;
+    line-height: 30px;
+    border-bottom: 1px dashed #8000ff;
+    overflow: hidden;
+}
+.char .rightChar .charComp:last-child {
+    border-bottom: none;
+}
+
+.char .leftChar .smallText{
     font-size: 10px;
 }
