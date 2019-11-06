@@ -33,7 +33,6 @@ export default function ItemView() {
             setType(result.item_type);
             setSource(result.item_source);
             setAttunment(result.item_attunment);
-            setSpellNotes(result.char_spellNotes);
             console.timeEnd("receiveItem")
         })
     }
