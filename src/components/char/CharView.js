@@ -13,8 +13,6 @@ const fs = require('fs');
 
 
 export default function CharView(props) {
-    console.count("render")
-
     let historyRoute = useHistory();
 
     const [tabs, setTabs] = useState({ skills: true, combat: false, actions: false, features: false, spells: false, equipment: false, notes: false });
