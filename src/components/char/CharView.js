@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import * as ReactDOM from "react-dom"
+import * as ReactDOM from "react-dom";
 import { useHistory } from 'react-router-dom';
 import '../../assets/css/char/CharView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

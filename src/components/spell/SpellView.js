@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as ReactDOM from "react-dom";
 import '../../assets/css/spell/SpellView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -25,21 +26,25 @@ export default function SpellView() {
     const [selectedChar, setSelectedChar] = useState(0);
 
     const receiveSpell = (event, result) => {
-        const text = result.spell_text.replace(/\\n/gm, "\r\n");
-        const sources = result.spell_sources.replace(/\\n/gm, "\r\n");
+        ReactDOM.unstable_batchedUpdates(() => {
+            console.time("receiveSpell")
+            const text = result.spell_text.replace(/\\n/gm, "\r\n");
+            const sources = result.spell_sources.replace(/\\n/gm, "\r\n");
 
-        setName(result.spell_name);
-        setSchool(result.spell_school);
-        setLevel(result.spell_level);
-        setRitual(result.spell_ritual);
-        setTime(result.spell_time);
-        setRange(result.spell_range);
-        setDuration(result.spell_duration);
-        setComponents(result.spell_components);
-        setText(text);
-        setClasses(result.spell_classes);
-        setSources(sources);
-        setId(result.spell_id);
+            setName(result.spell_name);
+            setSchool(result.spell_school);
+            setLevel(result.spell_level);
+            setRitual(result.spell_ritual);
+            setTime(result.spell_time);
+            setRange(result.spell_range);
+            setDuration(result.spell_duration);
+            setComponents(result.spell_components);
+            setText(text);
+            setClasses(result.spell_classes);
+            setSources(sources);
+            setId(result.spell_id);
+            console.timeEnd("receiveSpell")
+        })
     }
 
     const receiveChars = (event, result) => {
