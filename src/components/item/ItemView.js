@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as ReactDOM from "react-dom";
 import '../../assets/css/item/ItemView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -21,15 +22,19 @@ export default function ItemView() {
     const [selectedChar, setSelectedChar] = useState(0);
 
     const receiveItem = (event, result) => {
-        const text = result.item_description.replace(/\\n/gm, "\r\n");
-        setName(result.item_name);
-        setId(result.item_id);
-        setDescription(text);
-        setPic(result.item_pic);
-        setRarity(result.item_rarity);
-        setType(result.item_type);
-        setSource(result.item_source);
-        setAttunment(result.item_attunment);
+        ReactDOM.unstable_batchedUpdates(() => {
+            console.time("receiveItem")
+            const text = result.item_description.replace(/\\n/gm, "\r\n");
+            setName(result.item_name);
+            setId(result.item_id);
+            setDescription(text);
+            setPic(result.item_pic);
+            setRarity(result.item_rarity);
+            setType(result.item_type);
+            setSource(result.item_source);
+            setAttunment(result.item_attunment);
+            console.timeEnd("receiveItem")
+        })
     }
 
     const receiveChars = (event, result) => {

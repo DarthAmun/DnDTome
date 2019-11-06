@@ -123,9 +123,9 @@ module.exports.saveNewItem = (item, mainWindow) => {
 
 module.exports.saveNewItems = (items, mainWindow) => {
     items.forEach(item => {
-        let data = [item.item_name, item.item_description, item.item_pic, item.item_rarity, item.item_type, item.item_source];
-        let sql = `INSERT INTO 'main'.'tab_items' (item_name, item_description, item_pic, item_rarity, item_type, item_source)
-                VALUES  (?, ?, ?, ?, ?, ?)`;
+        let data = [item.item_name, item.item_description, item.item_pic, item.item_rarity, item.item_type, item.item_source, item.item_attunment];
+        let sql = `INSERT INTO 'main'.'tab_items' (item_name, item_description, item_pic, item_rarity, item_type, item_source, item_attunment)
+                VALUES  (?, ?, ?, ?, ?, ?, ?)`;
         db.serialize(function () {
             db.run(sql, data, function (err) {
                 if (err) {

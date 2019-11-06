@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import * as ReactDOM from "react-dom";
 import { useHistory } from 'react-router-dom';
 import '../../assets/css/char/CharView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -118,97 +119,101 @@ export default function CharView(props) {
     const [deathThree, setDeathThree] = useState(0);
 
     const receiveChar = (event, result) => {
-        setName(result.char_name);
-        setId(result.char_id);
-        setPlayer(result.char_player);
-        setPic(result.char_pic);
-        setProf(result.char_prof);
-        setExp(result.char_exp);
-        setClasses(result.char_classes);
-        setRace(result.char_race);
-        setBackground(result.char_background);
-        setAc(result.char_ac);
-        setHp(result.char_hp);
-        setCurrentHp(result.char_hp_current);
-        setHitDice(result.char_hitDice);
-        setInit(result.char_init);
-        setSpeed(result.char_speed);
-
-        setStr(result.char_str);
-        setDex(result.char_dex);
-        setCon(result.char_con);
-        setInt(result.char_int);
-        setWis(result.char_wis);
-        setCha(result.char_cha);
-        setStrSave(result.char_strSave);
-        setStrSaveProf(result.char_strSaveProf);
-        setDexSave(result.char_dexSave);
-        setDexSaveProf(result.char_dexSaveProf);
-        setConSave(result.char_conSave);
-        setConSaveProf(result.char_conSaveProf);
-        setIntSave(result.char_intSave);
-        setIntSaveProf(result.char_intSaveProf);
-        setWisSave(result.char_wisSave);
-        setWisSaveProf(result.char_wisSaveProf);
-        setChaSave(result.char_chaSave);
-        setChaSaveProf(result.char_chaSaveProf);
-
-        setActions(result.char_actions);
-        setBonusActions(result.char_bonusActions);
-        setReactions(result.char_reactions);
-
-        setClassFeatures(result.char_classFeatures);
-        setRacialFeatures(result.char_racialFeatures);
-        setFeatures(result.char_features);
-
-        setProfsLangs(result.char_profs_langs);
-        setSenses(result.char_senses);
-        setPassivPerception(result.char_passivPerception);
-        setPassivInsight(result.char_passivInsight);
-        setPassivInvestigation(result.char_passivInvestigation);
-
-        setNotesOne(result.char_notesOne);
-        setNotesTwo(result.char_notesTwo);
-        setNotesThree(result.char_notesThree);
-
-        setAcrobatics(result.char_acrobatics);
-        setAcrobaticsProf(result.char_acrobaticsProf);
-        setAnimalHandling(result.char_animalHandling);
-        setAnimalHandlingProf(result.char_animalHandlingProf);
-        setArcana(result.char_arcana);
-        setArcanaProf(result.char_arcanaProf);
-        setAthletics(result.char_athletics);
-        setAthleticsProf(result.char_athleticsProf);
-        setDeception(result.char_deception);
-        setDeceptionProf(result.char_deceptionProf);
-        setHistory(result.char_history);
-        setHistoryProf(result.char_historyProf);
-        setInsight(result.char_insight);
-        setInsightProf(result.char_insightProf);
-        setIntimidation(result.char_intimidation);
-        setIntimidationProf(result.char_intimidationProf);
-        setInvestigation(result.char_investigation);
-        setInvestigationProf(result.char_investigationProf);
-        setMedicine(result.char_medicine);
-        setMedicineProf(result.char_medicineProf);
-        setNature(result.char_nature);
-        setNatureProf(result.char_natureProf);
-        setPerception(result.char_perception);
-        setPerceptionProf(result.char_perceptionProf);
-        setPerformance(result.char_performance);
-        setPerformanceProf(result.char_performanceProf);
-        setPersuasion(result.char_persuasion);
-        setPersuasionProf(result.char_persuasionProf);
-        setReligion(result.char_religion);
-        setReligionProf(result.char_religionProf);
-        setSleightOfHand(result.char_sleightOfHand);
-        setSleightOfHandProf(result.char_sleightOfHandProf);
-        setStealth(result.char_stealth);
-        setStealthProf(result.char_stealthProf);
-        setSurvival(result.char_survival);
-        setSurvivalProf(result.char_survivalProf);
-
-        setSpellNotes(result.char_spellNotes);
+        ReactDOM.unstable_batchedUpdates(() => { 
+            console.time("receiveChar")
+            setName(result.char_name);
+            setId(result.char_id);
+            setPlayer(result.char_player);
+            setPic(result.char_pic);
+            setProf(result.char_prof);
+            setExp(result.char_exp);
+            setClasses(result.char_classes);
+            setRace(result.char_race);
+            setBackground(result.char_background);
+            setAc(result.char_ac);
+            setHp(result.char_hp);
+            setCurrentHp(result.char_hp_current);
+            setHitDice(result.char_hitDice);
+            setInit(result.char_init);
+            setSpeed(result.char_speed);
+    
+            setStr(result.char_str);
+            setDex(result.char_dex);
+            setCon(result.char_con);
+            setInt(result.char_int);
+            setWis(result.char_wis);
+            setCha(result.char_cha);
+            setStrSave(result.char_strSave);
+            setStrSaveProf(result.char_strSaveProf);
+            setDexSave(result.char_dexSave);
+            setDexSaveProf(result.char_dexSaveProf);
+            setConSave(result.char_conSave);
+            setConSaveProf(result.char_conSaveProf);
+            setIntSave(result.char_intSave);
+            setIntSaveProf(result.char_intSaveProf);
+            setWisSave(result.char_wisSave);
+            setWisSaveProf(result.char_wisSaveProf);
+            setChaSave(result.char_chaSave);
+            setChaSaveProf(result.char_chaSaveProf);
+    
+            setActions(result.char_actions);
+            setBonusActions(result.char_bonusActions);
+            setReactions(result.char_reactions);
+    
+            setClassFeatures(result.char_classFeatures);
+            setRacialFeatures(result.char_racialFeatures);
+            setFeatures(result.char_features);
+    
+            setProfsLangs(result.char_profs_langs);
+            setSenses(result.char_senses);
+            setPassivPerception(result.char_passivPerception);
+            setPassivInsight(result.char_passivInsight);
+            setPassivInvestigation(result.char_passivInvestigation);
+    
+            setNotesOne(result.char_notesOne);
+            setNotesTwo(result.char_notesTwo);
+            setNotesThree(result.char_notesThree);
+    
+            setAcrobatics(result.char_acrobatics);
+            setAcrobaticsProf(result.char_acrobaticsProf);
+            setAnimalHandling(result.char_animalHandling);
+            setAnimalHandlingProf(result.char_animalHandlingProf);
+            setArcana(result.char_arcana);
+            setArcanaProf(result.char_arcanaProf);
+            setAthletics(result.char_athletics);
+            setAthleticsProf(result.char_athleticsProf);
+            setDeception(result.char_deception);
+            setDeceptionProf(result.char_deceptionProf);
+            setHistory(result.char_history);
+            setHistoryProf(result.char_historyProf);
+            setInsight(result.char_insight);
+            setInsightProf(result.char_insightProf);
+            setIntimidation(result.char_intimidation);
+            setIntimidationProf(result.char_intimidationProf);
+            setInvestigation(result.char_investigation);
+            setInvestigationProf(result.char_investigationProf);
+            setMedicine(result.char_medicine);
+            setMedicineProf(result.char_medicineProf);
+            setNature(result.char_nature);
+            setNatureProf(result.char_natureProf);
+            setPerception(result.char_perception);
+            setPerceptionProf(result.char_perceptionProf);
+            setPerformance(result.char_performance);
+            setPerformanceProf(result.char_performanceProf);
+            setPersuasion(result.char_persuasion);
+            setPersuasionProf(result.char_persuasionProf);
+            setReligion(result.char_religion);
+            setReligionProf(result.char_religionProf);
+            setSleightOfHand(result.char_sleightOfHand);
+            setSleightOfHandProf(result.char_sleightOfHandProf);
+            setStealth(result.char_stealth);
+            setStealthProf(result.char_stealthProf);
+            setSurvival(result.char_survival);
+            setSurvivalProf(result.char_survivalProf);
+    
+            setSpellNotes(result.char_spellNotes);
+            console.timeEnd("receiveChar")
+        })
     }
 
     const receiveSpells = (event, result) => {
@@ -428,7 +433,7 @@ export default function CharView(props) {
             <div id="char">
                 <div className="image" style={style}></div>
                 <div className="smallLabelGroup">
-                    <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label><br />
+                    <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setChar({...char, pic: e.target.value})} /></label><br />
                     <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} /></label><br />
                     <label>Player:<input name="player" type="text" value={player} onChange={e => setPlayer(e.target.value)} /></label><br />
                     <label>Class:<input name="class" type="text" value={classes} onChange={e => setClasses(e.target.value)} /></label>

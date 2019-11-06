@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as ReactDOM from "react-dom";
 import '../../assets/css/monster/MonsterView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -39,40 +40,44 @@ export default function MonsterView() {
     const [lAblt, setLAblt] = useState("");
 
     const receiveMonster = (event, result) => {
-        const text_sAblt = result.monster_sAblt.replace(/\\r\\n/gm, "\r\n");
-        const text_ablt = result.monster_ablt.replace(/\\r\\n/gm, "\r\n");
-        const text_lAbtl = result.monster_lAbtl.replace(/\\r\\n/gm, "\r\n");
+        ReactDOM.unstable_batchedUpdates(() => {
+            console.time("receiveMonster")
+            const text_sAblt = result.monster_sAblt.replace(/\\r\\n/gm, "\r\n");
+            const text_ablt = result.monster_ablt.replace(/\\r\\n/gm, "\r\n");
+            const text_lAbtl = result.monster_lAbtl.replace(/\\r\\n/gm, "\r\n");
 
-        setId(result.monster_id);
-        setName(result.monster_name);
-        setType(result.monster_type);
-        setSubtype(result.monster_subtype);
-        setPic(result.monster_pic);
-        setSize(result.monster_size);
-        setType(result.monster_type);
-        setAlignment(result.monster_alignment);
-        setAc(result.monster_armorClass);
-        setHp(result.monster_hitPoints);
-        setSpeed(result.monster_speed);
-        setCr(result.monster_cr);
-        setSource(result.monster_source);
-        setStr(result.monster_strength);
-        setDex(result.monster_dexterity);
-        setCon(result.monster_constitution);
-        setInt(result.monster_intelligence);
-        setWis(result.monster_wisdom);
-        setCha(result.monster_charisma);
-        setSavingThrows(result.monster_savingThrows);
-        setSkills(result.monster_skills);
-        setSenses(result.monster_senses);
-        setLang(result.monster_lang);
-        setDmgVulnerabilitie(result.monster_dmgVulnerabilities);
-        setDmgResistance(result.monster_dmgResistance);
-        setDmgImmunities(result.monster_dmgImmunities);
-        setConImmunities(result.monster_conImmunities);
-        setSAblt(text_sAblt);
-        setAblt(text_ablt);
-        setLAblt(text_lAbtl);
+            setId(result.monster_id);
+            setName(result.monster_name);
+            setType(result.monster_type);
+            setSubtype(result.monster_subtype);
+            setPic(result.monster_pic);
+            setSize(result.monster_size);
+            setType(result.monster_type);
+            setAlignment(result.monster_alignment);
+            setAc(result.monster_armorClass);
+            setHp(result.monster_hitPoints);
+            setSpeed(result.monster_speed);
+            setCr(result.monster_cr);
+            setSource(result.monster_source);
+            setStr(result.monster_strength);
+            setDex(result.monster_dexterity);
+            setCon(result.monster_constitution);
+            setInt(result.monster_intelligence);
+            setWis(result.monster_wisdom);
+            setCha(result.monster_charisma);
+            setSavingThrows(result.monster_savingThrows);
+            setSkills(result.monster_skills);
+            setSenses(result.monster_senses);
+            setLang(result.monster_lang);
+            setDmgVulnerabilitie(result.monster_dmgVulnerabilities);
+            setDmgResistance(result.monster_dmgResistance);
+            setDmgImmunities(result.monster_dmgImmunities);
+            setConImmunities(result.monster_conImmunities);
+            setSAblt(text_sAblt);
+            setAblt(text_ablt);
+            setLAblt(text_lAbtl);
+            console.timeEnd("receiveMonster")
+        })
     }
 
     useEffect(() => {
