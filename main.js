@@ -179,8 +179,8 @@ function createWindow() {
   //Mitem window
   mitemWindow = new BrowserWindow({
     parent: mainWindow,
-    width: 640,
-    height: 328,
+    width: 660,
+    height: 348,
     show: false,
     resizable: true,
     frame: true,
@@ -353,6 +353,12 @@ ipcMain.on('saveSpell', (event, arg) => {
 ipcMain.on('saveItem', (event, arg) => {
   const { item } = arg;
   ItemService.saveItem(item, mainWindow);
+});
+
+ipcMain.on('saveMitem', (event, arg) => {
+  console.log("save event");
+  const { mitem } = arg;
+  MitemService.saveMitem(mitem, mainWindow);
 });
 
 ipcMain.on('saveMonster', (event, arg) => {

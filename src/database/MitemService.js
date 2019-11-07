@@ -31,6 +31,18 @@ module.exports.reciveMitems = (step, start, query, mainWindow) => {
         if (searchMitemQuery.description != null && typeof searchMitemQuery.description !== 'undefined' && searchMitemQuery.description != "") {
             q += `mitem_description like "%${searchMitemQuery.description}%" AND `;
         }
+        if (searchMitemQuery.cost != null && typeof searchMitemQuery.cost !== 'undefined' && searchMitemQuery.cost != "") {
+            q += `mitem_cost like "%${searchMitemQuery.cost}%" AND `;
+        }
+        if (searchMitemQuery.weight != null && typeof searchMitemQuery.weight !== 'undefined' && searchMitemQuery.weight != "") {
+            q += `mitem_weight like "%${searchMitemQuery.weight}%" AND `;
+        }
+        if (searchMitemQuery.damage != null && typeof searchMitemQuery.damage !== 'undefined' && searchMitemQuery.damage != "") {
+            q += `mitem_damage like "%${searchMitemQuery.damage}%" AND `;
+        }
+        if (searchMitemQuery.properties != null && typeof searchMitemQuery.properties !== 'undefined' && searchMitemQuery.properties != "") {
+            q += `mitem_properties like "%${searchMitemQuery.properties}%" AND `;
+        }
         if (q.includes(" AND ")) {
             q = q.slice(0, -4);
         } else {
@@ -81,9 +93,10 @@ module.exports.deleteMitem = (mitem, mainWindow, mitemWindow) => {
 }
 
 module.exports.saveMitem = (mitem, mainWindow) => {
-    let data = [mitem.name, mitem.type, mitem.rarity, mitem.description, mitem.pic, mitem.source, mitem.attunment, mitem.id];
+    console.log("save function");
+    let data = [mitem.name, mitem.description, mitem.pic, mitem.cost, mitem.weight, mitem.damage, mitem.properties, mitem.id];
     let sql = `UPDATE 'main'.'tab_mitems'
-                SET mitem_name = ?, mitem_type = ?, mitem_rarity = ?, mitem_description = ?, mitem_pic = ?, mitem_source = ?, mitem_attunment = ?
+                SET mitem_name = ?, mitem_description = ?, mitem_pic = ?, mitem_cost= ?, mitem_weight= ?, mitem_damage= ?, mitem_properties= ?
                 WHERE mitem_id = ?`;
     db.serialize(function () {
         db.run(sql, data, function (err) {

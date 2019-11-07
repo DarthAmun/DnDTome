@@ -57,7 +57,8 @@ export default function MitemView() {
     }, []);
 
     const saveMitem = (e) => {
-        ipcRenderer.send('saveMitem', { mitem: { id, name, pic, description } });
+        console.log("save trigger");
+        ipcRenderer.send('saveMitem', { mitem: { id, name, pic, description, cost, weight, damage, properties } });
     }
 
     const addMitemToChar = (e) => {
@@ -75,7 +76,7 @@ export default function MitemView() {
 
         dialog.showMessageBox(null, options, (response) => {
             if (response == 1) {
-                ipcRenderer.send('deleteMitem', { mitem: { id, name, pic, description } });
+                ipcRenderer.send('deleteMitem', { mitem: { id, name, pic, description, cost, weight, damage, properties} });
             }
         });
     }
