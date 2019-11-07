@@ -4,7 +4,9 @@ import { withRouter } from "react-router"
 import '../assets/css/LeftNav.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMeteor, faIdCard, faShieldAlt, faDiceD20, faCog, faDragon } from '@fortawesome/free-solid-svg-icons';
+import { faSketch } from '@fortawesome/free-brands-svg-icons';
 import Particles from 'react-particles-js';
+
 
 class LeftNav extends Component {
   render() {
@@ -133,12 +135,17 @@ class LeftNav extends Component {
             <FontAwesomeIcon icon={faShieldAlt} /> Items
           </div>
         </Link>
-        <Link to="/char-overview" style={{ top: "170px" }} className={this.props.location.pathname == "/char-overview" ? "menuItemActiv" : ""}>
+        <Link to="/mitem-overview" style={{ top: "170px" }} className={this.props.location.pathname == "/mitem-overview" ? "menuItemActiv" : ""}>
+          <div className="menuItem">
+            <FontAwesomeIcon icon={faSketch} /> Equip
+          </div>
+        </Link>
+        <Link to="/char-overview" style={{ top: "220px" }} className={this.props.location.pathname == "/char-overview" ? "menuItemActiv" : ""}>
           <div className="menuItem">
             <FontAwesomeIcon icon={faIdCard} /> Chars
           </div>
         </Link>
-        <Link to="/monster-overview" style={{ top: "220px" }} className={this.props.location.pathname == "/monster-overview" ? "menuItemActiv" : ""}>
+        <Link to="/monster-overview" style={{ top: "270px" }} className={this.props.location.pathname == "/monster-overview" ? "menuItemActiv" : ""}>
           <div className="menuItem">
             <FontAwesomeIcon icon={faDragon} /> Monsters
           </div>

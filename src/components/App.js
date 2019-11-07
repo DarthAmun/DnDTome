@@ -5,6 +5,7 @@ import { MemoryRouter, Switch, Route } from 'react-router';
 import SpellOverview from './spell/SpellOverview';
 import CharOverview from './char/CharOverview';
 import ItemOverview from './item/ItemOverview';
+import MitemOverview from './mitem/MitemOverview';
 import MonsterOverview from './monster/MonsterOverview';
 
 import CharView from './char/CharView';
@@ -54,6 +55,9 @@ class App extends Component {
           }} />
           <Route path="/item-overview" render={() => {
             return <PageLayout><ItemOverview /></PageLayout>
+          }} />
+          <Route path="/mitem-overview" render={() => {
+            return <PageLayout><MitemOverview /></PageLayout>
           }} />
           <Route path="/monster-overview" render={() => {
             return <PageLayout><MonsterOverview /></PageLayout>
