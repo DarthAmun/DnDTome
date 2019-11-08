@@ -10,7 +10,7 @@
     overflow-x: hidden;
 }
 
-#items {
+#items_light {
     float: left;
     height: calc(100% - 60px);
     width: 100%;
@@ -19,13 +19,33 @@
     margin-bottom: 10px;
 }
 
-#items::-webkit-scrollbar {
+#items_light::-webkit-scrollbar {
     width: 6px;
     background-color: rgba(92, 102, 130, 1);
     border-radius: 5px;
 } 
 
-#items::-webkit-scrollbar-thumb {
+#items_light::-webkit-scrollbar-thumb {
+    background-color: #8000ff;
+    border-radius: 5px;
+}
+
+#items_dark {
+    float: left;
+    height: calc(100% - 60px);
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: 10px;
+}
+
+#items_dark::-webkit-scrollbar {
+    width: 6px;
+    background-color: rgba(0, 0, 0, 0.425);
+    border-radius: 5px;
+} 
+
+#items_dark::-webkit-scrollbar-thumb {
     background-color: #8000ff;
     border-radius: 5px;
 }

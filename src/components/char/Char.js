@@ -16,11 +16,12 @@ export default function Char(props) {
         backgroundImage: `url(${getPicture()})`,
         backgroundPosition: 'center',
         backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: 'white'
     };
     return (
         <Link to={`/char/${props.char.char_id}`}>
-            <div className="char" style={{ animationDelay: `${props.delay * 50}ms` }}>
+            <div className={`char_${props.theme}`} style={{ animationDelay: `${props.delay * 50}ms` }}>
                 <div className="leftChar">
                     <div className="charIcon" style={style}></div>
                     <div className="charComp">{props.char.char_name}</div>

@@ -26,20 +26,13 @@ import packageJson from '../../package.json'
 import OptionService from '../database/OptionService';
 
 export function PageLayout(props) {
-  const [theme, setTheme] = useState("");
-
-  useEffect(() => {
-    OptionService.get('theme', function (result) {
-      setTheme(result);
-    });
-  }, []);
 
   const catchDrop = (e) => {
     e.preventDefault();
   }
 
   return (
-    <div className={`App_${theme}`} onDrop={e => catchDrop}>
+    <div className={`App_${props.theme}`} onDrop={e => catchDrop}>
       <Notification />
       <LeftNav />
       <div id="content">
@@ -53,47 +46,54 @@ export function PageLayout(props) {
 }
 
 export default function App() {
+  const [theme, setTheme] = useState("");
+
+  useEffect(() => {
+    OptionService.get('theme', function (result) {
+      setTheme(result);
+    });
+  }, []);
 
   return (
     <MemoryRouter>
       <Switch>
         <Route path="/spell-overview" render={() => {
-          return <PageLayout><SpellOverview /></PageLayout>
+          return <PageLayout theme={theme}><SpellOverview theme={theme} /></PageLayout>
         }} />
         <Route path="/item-overview" render={() => {
-          return <PageLayout><ItemOverview /></PageLayout>
+          return <PageLayout theme={theme}><ItemOverview theme={theme} /></PageLayout>
         }} />
         <Route path="/mitem-overview" render={() => {
-          return <PageLayout><MitemOverview /></PageLayout>
+          return <PageLayout theme={theme}><MitemOverview theme={theme} /></PageLayout>
         }} />
         <Route path="/monster-overview" render={() => {
-          return <PageLayout><MonsterOverview /></PageLayout>
+          return <PageLayout theme={theme}><MonsterOverview theme={theme} /></PageLayout>
         }} />
         <Route path="/char-overview" render={() => {
-          return <PageLayout><CharOverview /></PageLayout>
+          return <PageLayout theme={theme}><CharOverview theme={theme} /></PageLayout>
         }} />
-        <Route path="/char/:id" render={props => {
-          return <PageLayout><CharView {...props} /></PageLayout>
+        <Route path="/char/:id" render={(props) => {
+          return <PageLayout theme={theme}><CharView theme={theme} {...props} /></PageLayout>
         }} />
         <Route path="/add-spell" render={() => {
-          return <PageLayout><AddSpell /></PageLayout>
+          return <PageLayout theme={theme}><AddSpell theme={theme} /></PageLayout>
         }} />
         <Route path="/add-item" render={() => {
-          return <PageLayout><AddItem /></PageLayout>
+          return <PageLayout theme={theme}><AddItem theme={theme} /></PageLayout>
         }} />
         <Route path="/add-monster" render={() => {
-          return <PageLayout><AddMonster /></PageLayout>
+          return <PageLayout theme={theme}><AddMonster theme={theme} /></PageLayout>
         }} />
         <Route path="/add-char" render={() => {
-          return <PageLayout><AddChar /></PageLayout>
+          return <PageLayout theme={theme}><AddChar theme={theme} /></PageLayout>
         }} />
         <Route path="/options" render={() => {
-          return <PageLayout><Options /></PageLayout>
+          return <PageLayout theme={theme}><Options theme={theme} /></PageLayout>
         }} />
         <Route path="/" render={() => {
           return <div className="App homeDrag">
             <div id="content">
-              <Home />
+              <Home/>
             </div>
             <div id="credits">v{packageJson.version} by DarthAmun</div>
           </div>

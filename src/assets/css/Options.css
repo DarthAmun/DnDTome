@@ -59,7 +59,7 @@
     cursor: pointer;
 }
 #options_light {
-    height: calc(100% - 20px);
+    height: calc(100% - 30px);
     width: calc(100% - 20px);
     padding: 10px;
     overflow-y: auto;
@@ -82,7 +82,7 @@
     height: auto;
     padding: 10px;
     background-color: #333d51;
-    color: lightgray;
+    color: lightslategray;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.425);
     word-wrap: break-word;
     margin-bottom: 10px;
@@ -105,7 +105,7 @@
     text-align: center;
     font-family: inherit;
     font-size: 14px;
-    color: white;
+    color: black;
     cursor: pointer;
 }
 #options_dark .optionSection button.patreon {
@@ -121,11 +121,11 @@
 }
 
 .optionSection button:hover {
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.425);
     cursor: pointer;
 }
 #options_dark {
-    height: calc(100% - 20px);
+    height: calc(100% - 30px);
     width: calc(100% - 20px);
     padding: 10px;
     overflow-y: auto;
@@ -133,7 +133,7 @@
 
 #options_dark::-webkit-scrollbar {
     width: 6px;
-    background-color: rgba(92, 102, 130, 1);
+    background-color: rgba(0, 0, 0, 0.425);
     border-radius: 5px;
 } 
 

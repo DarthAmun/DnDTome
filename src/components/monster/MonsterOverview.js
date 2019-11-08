@@ -7,7 +7,7 @@ import SearchBar from '../SearchBar';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
-export default function MonsterOverview() {
+export default function MonsterOverview(props) {
     const [currentMonsterList, setCurrentMonsterList] = useState({ monsters: [] });
     const monsters = useRef(null);
 
@@ -39,9 +39,9 @@ export default function MonsterOverview() {
         <div id="overview">
             <div id="monsterOverview">
                 <SearchBar inputs={["name", "type", "subtype", "cr", "alignment", "speed", "damage", "senses", "ability", "action"]} queryName="sendMonsterSearchQuery" />
-                <div id="monsters" ref={monsters}>
+                <div id={`monsters_${props.theme}`} ref={monsters}>
                     {currentMonsterList.monsters.map((monster, index) => {
-                        return <Monster delay={index} monster={monster} key={monster.monster_id} onClick={() => viewMonster(monster)} />;
+                        return <Monster delay={index} theme={props.theme} monster={monster} key={monster.monster_id} onClick={() => viewMonster(monster)} />;
                     })}
                 </div>
             </div>

@@ -11,13 +11,11 @@ const ipcRenderer = electron.ipcRenderer;
 const { dialog, app } = electron.remote;
 const fs = require('fs');
 
-export default function Options() {
+export default function Options(props) {
   const [spells, setSpells] = useState([]);
   const [items, setItems] = useState([]);
   const [monsters, setMonsters] = useState([]);
   const [chars, setChars] = useState([]);
-
-  const [theme, setTheme] = useState("");
 
   const receiveAllSpells = (evt, result) => {
     setSpells(result);
@@ -33,10 +31,6 @@ export default function Options() {
   }
 
   useEffect(() => {
-    OptionService.get('theme', function (result) {
-      setTheme(result);
-    });
-    console.log(theme);
     ipcRenderer.send('getAllSpells');
     ipcRenderer.send('getAllItems');
     ipcRenderer.send('getAllMonsters');
@@ -274,7 +268,7 @@ export default function Options() {
   }
 
   const darkMode = () => {
-    if (theme === 'light') {
+    if (props.theme === 'light') {
       OptionService.set('theme', 'dark');
     } else {
       OptionService.set('theme', 'light');
@@ -285,7 +279,7 @@ export default function Options() {
   return (
     <div id="overview">
       <div id="optionContent">
-        <div id={`options_${theme}`}>
+        <div id={`options_${props.theme}`}>
           <div className="optionSection">
             <h3>Darkmode</h3>
             <button className="patreon" onClick={darkMode}><FontAwesomeIcon icon={faPatreon} /> Change Theme</button>

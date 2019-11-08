@@ -22,11 +22,12 @@ export default function Item(props) {
         backgroundImage: `url(${getPicture()})`,
         backgroundPosition: 'center',
         backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: 'white'
     };
 
     return (
-        <div className="item" style={{ animationDelay: `${props.delay * 50}ms` }} onClick={props.onClick}>
+        <div className={`item_${props.theme}`} style={{ animationDelay: `${props.delay * 50}ms` }} onClick={props.onClick}>
             <div className={`itemIcon ${getRarityClass()}`} style={style}></div>
             <div className="itemComp">{props.item.item_name}</div>
             <div className="itemComp smallItemAttr">{props.item.item_type}</div>

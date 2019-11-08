@@ -6,7 +6,7 @@ import Pagination from '../Pagination';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
-export default function MitemOverview() {
+export default function MitemOverview(props) {
     const [currentMitemList, setCurrentMitemList] = useState({ mitems: [] });
     const mitems = useRef(null);
 
@@ -38,9 +38,9 @@ export default function MitemOverview() {
         <div id="overview">
             <div id="itemsOverview">
                 <SearchBar inputs={["name", "description", "cost", "damage", "properties", "weight"]} queryName="sendMitemSearchQuery" />
-                <div id="items" ref={mitems}>
+                <div id={`items_${props.theme}`} ref={mitems}>
                     {currentMitemList.mitems.map((mitem, index) => {
-                        return <Mitem delay={index} mitem={mitem} key={mitem.mitem_id} onClick={() => viewMitem(mitem)} />;
+                        return <Mitem delay={index} theme={props.theme} mitem={mitem} key={mitem.mitem_id} onClick={() => viewMitem(mitem)} />;
                     })}
                 </div>
             </div>

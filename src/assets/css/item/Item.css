@@ -1,4 +1,4 @@
-.item {
+.item_light {
     width: 200px;
     height: 260px;
     float: left;
@@ -17,8 +17,32 @@
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
 }
 
-.item:hover {
+.item_light:hover {
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    cursor: pointer;
+}
+
+.item_dark {
+    width: 200px;
+    height: 260px;
+    float: left;
+    color: lightslategray;
+    text-align: center;
+    margin: 5px;
+    border-radius: 3px;
+    overflow: hidden;
+    opacity: 0;
+    background-color: #333d51;
+    animation-name: zoomIn;
+    animation-duration: 500ms;
+    transition-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0, 0.2);
+}
+
+.item_dark:hover {
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
     cursor: pointer;
 }
 

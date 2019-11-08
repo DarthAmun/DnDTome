@@ -8,7 +8,7 @@ import Char from './Char';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
-export default function SpellOverview() {
+export default function SpellOverview(props) {
     const [currentCharList, setCurrentCharList] = useState([]);
 
     const receiveChars = (evt, result) => {
@@ -25,9 +25,9 @@ export default function SpellOverview() {
 
     return (
         <div id="overview">
-            <div id="chars">
+            <div id={`chars_${props.theme}`}>
                 {currentCharList.map((char, index) => {
-                    return <Char delay={index} char={char} key={char.char_id} />;
+                    return <Char delay={index} theme={props.theme} char={char} key={char.char_id} />;
                 })}
                 <Link to="/add-char">
                     <div className="add">

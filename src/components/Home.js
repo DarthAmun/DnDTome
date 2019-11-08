@@ -6,7 +6,7 @@ import Particles from 'react-particles-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiceD20 } from '@fortawesome/free-solid-svg-icons';
 
-export default function Home() {
+export default function Home(props) {
   let history = useHistory();
 
   useEffect(() => {

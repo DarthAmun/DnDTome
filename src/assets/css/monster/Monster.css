@@ -1,4 +1,4 @@
-.monster {
+.monster_light {
     width: 200px;
     height: 260px;
     float: left;
@@ -17,8 +17,32 @@
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
 }
 
-.monster:hover {
+.monster_light:hover {
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    cursor: pointer;
+}
+
+.monster_dark {
+    width: 200px;
+    height: 260px;
+    float: left;
+    color: lightslategray;
+    text-align: center;
+    margin: 5px;
+    border-radius: 3px;
+    overflow: hidden;
+    opacity: 0;
+    background-color: #333d51;
+    animation-name: zoomIn;
+    animation-duration: 500ms;
+    transition-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0, 0.2);
+}
+
+.monster_dark:hover {
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
     cursor: pointer;
 }
 
@@ -66,7 +90,7 @@
     font-size: 12px;
 }
 
-.monsterLevel {
+.monster_light .monsterLevel {
     width: 20px;
     height: 20px;
     line-height: 20px;
@@ -74,6 +98,17 @@
     text-align: center;
     border-top-right-radius: 3px;
     box-shadow: inset 0px 0px 10px -2px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    margin: 5px;
+}
+.monster_dark .monsterLevel {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    float: right;
+    text-align: center;
+    border-top-right-radius: 3px;
+    box-shadow: inset 0px 0px 10px -2px rgba(0, 0, 0, 0.4);
     border-radius: 30px;
     margin: 5px;
 }
@@ -86,12 +121,20 @@
     overflow: hidden;
 }
 
-.monsterName {
+.monster_light .monsterName {
     font-size: 14px;
     border-top: 1px dashed lightgray;
     border-bottom: 1px dashed lightgray;
     width: calc(100% - 20px);
     color: dimgray;
+}
+
+.monster_dark .monsterName {
+    font-size: 14px;
+    border-top: 1px dashed dimgray;
+    border-bottom: 1px dashed dimgray;
+    width: calc(100% - 20px);
+    color: lightslategray;
 }
 
 @keyframes zoomIn {

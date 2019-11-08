@@ -1,4 +1,4 @@
-#chars {
+#chars_light {
     float: left;
     height: calc(100% - 80px);
     width: calc(100% - 30px);
@@ -7,18 +7,18 @@
     margin-bottom: 10px;
 }
 
-#chars::-webkit-scrollbar {
+#chars_light::-webkit-scrollbar {
     width: 6px;
     background-color: rgba(92, 102, 130, 1);
     border-radius: 5px;
 } 
 
-#chars::-webkit-scrollbar-thumb {
+#chars_light::-webkit-scrollbar-thumb {
     background-color: deepskyblue;
     border-radius: 5px;
 }
 
-#chars .add {
+#chars_light .add {
     width: 120px;
     height: 120px;
     padding: 10px;
@@ -37,11 +37,55 @@
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
 }
 
-#chars .add:hover {
+#chars_light .add:hover {
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
     cursor: pointer;
 }
 
 .addIcon {
     font-size: 40px;
+}
+
+#chars_dark {
+    float: left;
+    height: calc(100% - 80px);
+    width: calc(100% - 30px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-bottom: 10px;
+}
+
+#chars_dark::-webkit-scrollbar {
+    width: 6px;
+    background-color: rgba(0, 0, 0, 0.425);
+    border-radius: 5px;
+} 
+
+#chars_dark::-webkit-scrollbar-thumb {
+    background-color: deepskyblue;
+    border-radius: 5px;
+}
+
+#chars_dark .add {
+    width: 120px;
+    height: 120px;
+    padding: 10px;
+    float: left;
+    text-align: center;
+    color: lightslategray;
+    margin: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #333d51;
+    animation-name: zoomIn;
+    animation-duration: 500ms;
+    transition-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0, 0.2);
+}
+
+#chars_dark .add:hover {
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
+    cursor: pointer;
 }

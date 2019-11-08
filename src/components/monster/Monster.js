@@ -26,11 +26,12 @@ export default function Monster(props) {
         backgroundImage: `url(${getPicture()})`,
         backgroundPosition: 'center',
         backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: 'white'
     };
 
     return (
-        <div className="monster" style={{ animationDelay: `${props.delay * 50}ms` }} onClick={props.onClick}>
+        <div className={`monster_${props.theme}`} style={{ animationDelay: `${props.delay * 50}ms` }} onClick={props.onClick}>
             <div className="monsterAttr monsterType">
                 <b>{formatType(props.monster.monster_type)}</b>
                 {formatSubType(props.monster.monster_subtype)}

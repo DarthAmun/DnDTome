@@ -7,7 +7,7 @@ import SearchBar from '../SearchBar';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
-export default function SpellOverview() {
+export default function SpellOverview(props) {
     const [currentSpellList, setCurrentSpellList] = useState({ spells: [] });
     const spells = useRef(null);
 
@@ -39,9 +39,9 @@ export default function SpellOverview() {
         <div id="overview">
             <div id="spellOverview">
                 <SearchBar inputs={["name", "school", "level", "duration", "time", "range", "components", "text", "classes", "sources"]} queryName="sendSpellSearchQuery" />
-                <div id="spells" ref={spells}>
+                <div id={`spells_${props.theme}`} ref={spells}>
                     {currentSpellList.spells.map((spell, index) => {
-                        return <Spell delay={index} spell={spell} key={spell.spell_id} onClick={() => viewSpell(spell)} />;
+                        return <Spell delay={index} theme={props.theme} spell={spell} key={spell.spell_id} onClick={() => viewSpell(spell)} />;
                     })}
                 </div>
             </div>
