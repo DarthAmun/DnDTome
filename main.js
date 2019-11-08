@@ -2,8 +2,8 @@
 
 // Import parts of electron to use
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
-const path = require('path')
-const url = require('url')
+const path = require('path');
+const url = require('url');
 
 //Database Services
 const SpellService = require('./src/database/SpellService');
@@ -532,4 +532,12 @@ ipcMain.on('deleteAllChars', (event) => {
 
 ipcMain.on('displayMessage', (event, m) => {
   mainWindow.webContents.send('displayMessage', { type: m.type, message: m.message });
+});
+
+ipcMain.on('reloadWindows', (event) => {
+  itemWindow.reload();
+  mitemWindow.reload();
+  spellWindow.reload();
+  monsterWindow.reload();
+  mainWindow.reload();
 });

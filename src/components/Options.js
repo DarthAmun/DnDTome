@@ -1,5 +1,6 @@
 import '../assets/css/Options.css';
 import React, { useState, useEffect } from 'react';
+import OptionService from '../database/OptionService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { faFileExport, faFileImport, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -16,6 +17,8 @@ export default function Options() {
   const [monsters, setMonsters] = useState([]);
   const [chars, setChars] = useState([]);
 
+  const [theme, setTheme] = useState("");
+
   const receiveAllSpells = (evt, result) => {
     setSpells(result);
   }
@@ -30,6 +33,10 @@ export default function Options() {
   }
 
   useEffect(() => {
+    OptionService.get('theme', function (result) {
+      setTheme(result);
+    });
+    console.log(theme);
     ipcRenderer.send('getAllSpells');
     ipcRenderer.send('getAllItems');
     ipcRenderer.send('getAllMonsters');
@@ -266,10 +273,23 @@ export default function Options() {
     });
   }
 
+  const darkMode = () => {
+    if (theme === 'light') {
+      OptionService.set('theme', 'dark');
+    } else {
+      OptionService.set('theme', 'light');
+    }
+    ipcRenderer.send('reloadWindows');
+  }
+
   return (
     <div id="overview">
       <div id="optionContent">
-        <div id="options">
+        <div id={`options_${theme}`}>
+          <div className="optionSection">
+            <h3>Darkmode</h3>
+            <button className="patreon" onClick={darkMode}><FontAwesomeIcon icon={faPatreon} /> Change Theme</button>
+          </div>
           <div className="optionSection">
             <h3>Want to support me?</h3>
             <button className="patreon" onClick={toPatreon}><FontAwesomeIcon icon={faPatreon} /> Become a patron</button>
