@@ -1,4 +1,4 @@
-#pagination {
+#pagination_light {
     height: 30px;
     width: 100%;
     float: left;
@@ -6,7 +6,7 @@
     line-height: 30px;
 }
 
-#pagination .delimiter  {
+#pagination_light .delimiter  {
     height: 30px;
     width: auto;
     margin-left: 10px;
@@ -16,7 +16,25 @@
     float: left;
 }
 
-.pageDown, .pageUp {
+#pagination_dark {
+    height: 30px;
+    width: 100%;
+    float: left;
+    color: darkgray;
+    line-height: 30px;
+}
+
+#pagination_dark .delimiter  {
+    height: 30px;
+    width: auto;
+    margin-left: 10px;
+    margin-right: 5px;
+    text-align: center;
+    line-height: 30px;
+    float: left;
+}
+
+#pagination_light .pageDown, #pagination_light .pageUp {
     height: 30px;
     width: 30px;
     float: left;
@@ -29,7 +47,20 @@
     color: white;
 }
 
-#pagination .button {
+#pagination_dark .pageDown, #pagination_dark .pageUp {
+    height: 30px;
+    width: 30px;
+    float: left;
+    display: block;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    background-color: #8000ff;
+    color: black;
+}
+
+#pagination_light .button {
     height: 30px;
     padding-right: 10px;
     padding-left: 10px;
@@ -41,6 +72,21 @@
     cursor: pointer;
     background-color: #8000ff;
     color: white;
+    margin-left: 5px;
+}
+
+#pagination_dark .button {
+    height: 30px;
+    padding-right: 10px;
+    padding-left: 10px;
+    float: left;
+    display: block;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    background-color: #8000ff;
+    color: black;
     margin-left: 5px;
 }
 
@@ -62,7 +108,7 @@
     float: left;
 }
 
-#pages input {
+#pagination_light #pages input {
     height: 28px;
     width: 50px;
     border-radius: 5px;
@@ -74,10 +120,30 @@
     float: left;
 }
 
+
+#pagination_dark #pages input {
+    height: 30px;
+    width: 50px;
+    border-radius: 5px;
+    box-shadow: none;
+    border: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-right: 5px;
+    float: left;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    background-color: #475062;
+    color: lightgrey;
+}
+
 #step select{
     height: 30px;
     width: 50px;
     float: left;
+    border: none;
     border-radius: 5px;
     margin-left: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    background-color: #475062;
+    color: lightgrey;
 }

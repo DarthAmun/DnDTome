@@ -8,7 +8,7 @@ import { faAngleLeft, faAngleRight, faPlus } from '@fortawesome/free-solid-svg-i
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
-export default function Pagination({ name }) {
+export default function Pagination({ name, theme }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageStep, setPageStep] = useState(10);
     const [count, setCount] = useState(0);
@@ -73,7 +73,7 @@ export default function Pagination({ name }) {
     }
 
     return (
-        <div id="pagination">
+        <div id={`pagination_${theme}`}>
             <div className="pageDown" onClick={pageDown}>
                 <FontAwesomeIcon icon={faAngleLeft}></FontAwesomeIcon>
             </div>

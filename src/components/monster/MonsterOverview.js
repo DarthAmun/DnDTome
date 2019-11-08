@@ -38,14 +38,14 @@ export default function MonsterOverview(props) {
     return (
         <div id="overview">
             <div id="monsterOverview">
-                <SearchBar inputs={["name", "type", "subtype", "cr", "alignment", "speed", "damage", "senses", "ability", "action"]} queryName="sendMonsterSearchQuery" />
+                <SearchBar theme={props.theme} inputs={["name", "type", "subtype", "cr", "alignment", "speed", "damage", "senses", "ability", "action"]} queryName="sendMonsterSearchQuery" />
                 <div id={`monsters_${props.theme}`} ref={monsters}>
                     {currentMonsterList.monsters.map((monster, index) => {
                         return <Monster delay={index} theme={props.theme} monster={monster} key={monster.monster_id} onClick={() => viewMonster(monster)} />;
                     })}
                 </div>
             </div>
-            <Pagination name="Monster" />
+            <Pagination theme={props.theme} name="Monster" />
         </div >
     )
 

@@ -1,4 +1,4 @@
-#searchBar {
+#searchBar_light {
     width: 100%;
     overflow: hidden;
     float: left;
@@ -7,12 +7,12 @@
     transition: max-height 0.5s ease-out;
 }
 
-#searchBar:hover {
+#searchBar_light:hover {
     max-height: 500px;
     transition: max-height 0.5s ease-in;
 }
 
-#searchBar input {
+#searchBar_light input {
     height: 40px;
     border-radius: 3px;
     border: none;
@@ -23,7 +23,7 @@
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
 }
 
-#searchBar button {
+#searchBar_light button {
     height: 40px;
     float: left;
     display: block;
@@ -39,6 +39,53 @@
     margin: 5px;
 }
 
-#searchBar button:hover {
+#searchBar_light button:hover {
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
+}
+
+#searchBar_dark {
+    width: 100%;
+    overflow: hidden;
+    float: left;
+    z-index: 100;
+    max-height: 50px;
+    transition: max-height 0.5s ease-out;
+}
+
+#searchBar_dark:hover {
+    max-height: 500px;
+    transition: max-height 0.5s ease-in;
+}
+
+#searchBar_dark input {
+    height: 40px;
+    border-radius: 3px;
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 5px;
+    float: left;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    background-color: #475062;
+    color: lightgrey;
+}
+
+#searchBar_dark button {
+    height: 40px;
+    float: left;
+    display: block;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    background-color: #8000ff;
+    color: black;
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 5px;
+}
+
+#searchBar_dark button:hover {
     box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
 }

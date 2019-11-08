@@ -38,14 +38,14 @@ export default function SpellOverview(props) {
     return (
         <div id="overview">
             <div id="spellOverview">
-                <SearchBar inputs={["name", "school", "level", "duration", "time", "range", "components", "text", "classes", "sources"]} queryName="sendSpellSearchQuery" />
+                <SearchBar theme={props.theme} inputs={["name", "school", "level", "duration", "time", "range", "components", "text", "classes", "sources"]} queryName="sendSpellSearchQuery" />
                 <div id={`spells_${props.theme}`} ref={spells}>
                     {currentSpellList.spells.map((spell, index) => {
                         return <Spell delay={index} theme={props.theme} spell={spell} key={spell.spell_id} onClick={() => viewSpell(spell)} />;
                     })}
                 </div>
             </div>
-            <Pagination name="Spell" />
+            <Pagination theme={props.theme} name="Spell" />
         </div>
     )
 

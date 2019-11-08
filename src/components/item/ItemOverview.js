@@ -37,14 +37,14 @@ export default function ItemOverview(props) {
     return (
         <div id="overview">
             <div id="itemsOverview">
-                <SearchBar inputs={["name", "description", "rarity", "type", "source"]} queryName="sendItemSearchQuery" />
+                <SearchBar theme={props.theme} inputs={["name", "description", "rarity", "type", "source"]} queryName="sendItemSearchQuery" />
                 <div id={`items_${props.theme}`} ref={items}>
                     {currentItemList.items.map((item, index) => {
                         return <Item delay={index} theme={props.theme} item={item} key={item.item_id} onClick={() => viewItem(item)} />;
                     })}
                 </div>
             </div>
-            <Pagination name="Item" />
+            <Pagination theme={props.theme} name="Item" />
         </div>
     )
 

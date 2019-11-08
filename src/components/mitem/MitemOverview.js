@@ -37,14 +37,14 @@ export default function MitemOverview(props) {
     return (
         <div id="overview">
             <div id="itemsOverview">
-                <SearchBar inputs={["name", "description", "cost", "damage", "properties", "weight"]} queryName="sendMitemSearchQuery" />
+                <SearchBar theme={props.theme} inputs={["name", "description", "cost", "damage", "properties", "weight"]} queryName="sendMitemSearchQuery" />
                 <div id={`items_${props.theme}`} ref={mitems}>
                     {currentMitemList.mitems.map((mitem, index) => {
                         return <Mitem delay={index} theme={props.theme} mitem={mitem} key={mitem.mitem_id} onClick={() => viewMitem(mitem)} />;
                     })}
                 </div>
             </div>
-            <Pagination name="Mitem" />
+            <Pagination theme={props.theme} name="Mitem" />
         </div>
     )
 
