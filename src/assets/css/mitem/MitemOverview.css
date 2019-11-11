@@ -21,31 +21,11 @@
 
 #mitems_light::-webkit-scrollbar {
     width: 6px;
-    background-color: rgba(92, 102, 130, 1);
+    background-color: var(--scrollbar);
     border-radius: 5px;
 } 
 
 #mitems_light::-webkit-scrollbar-thumb {
-    background-color: #8000ff;
-    border-radius: 5px;
-}
-
-#mitems_dark {
-    float: left;
-    height: calc(100% - 60px);
-    width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    margin-bottom: 10px;
-}
-
-#mitems_dark::-webkit-scrollbar {
-    width: 6px;
-    background-color: rgba(0, 0, 0, 0.425);
-    border-radius: 5px;
-} 
-
-#mitems_dark::-webkit-scrollbar-thumb {
-    background-color: #8000ff;
+    background-color: var(--scrollbar-thumb);
     border-radius: 5px;
 }

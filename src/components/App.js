@@ -48,6 +48,27 @@ export function PageLayout(props) {
 export default function App() {
   const [theme, setTheme] = useState("");
 
+  const lightTheme = {
+    "--scrollbar-thumb": "#8000ff",
+    "--scrollbar": "rgba(92, 102, 130, 1)",
+    "--boxshadow": "0px 0px 10px 0px rgba(172, 172, 172, 0.2)",
+    "--boxshadow-hover": "0px 0px 10px 0px rgba(172, 172, 172, 1)",
+    "--character-add-color": "dimgrey",
+    "--character-add-background-color": "white",
+    "--card-color": "darkgrey",
+    "--card-background-color": "white",
+  };
+  const darkTheme = {
+    "--scrollbar-thumb": "#8000ff",
+    "--scrollbar": "rgba(0, 0, 0, 0.425)",
+    "--boxshadow": "0px 0px 10px 0px rgba(0,0,0, 0.2)",
+    "--boxshadow-hover": "0px 0px 10px 0px rgba(0, 0, 0, 0.7)",
+    "--character-add-color": "lightslategray",
+    "--character-add-background-color": "#333d51",
+    "--card-color": "lightslategray",
+    "--card-background-color": "#333d51",
+  };
+
   useEffect(() => {
     OptionService.get('theme', function (result) {
       setTheme(result);
@@ -58,37 +79,37 @@ export default function App() {
     <MemoryRouter>
       <Switch>
         <Route path="/spell-overview" render={() => {
-          return <PageLayout theme={theme}><SpellOverview theme={theme} /></PageLayout>
+          return <PageLayout><SpellOverview /></PageLayout>
         }} />
         <Route path="/item-overview" render={() => {
-          return <PageLayout theme={theme}><ItemOverview theme={theme} /></PageLayout>
+          return <PageLayout><ItemOverview /></PageLayout>
         }} />
         <Route path="/mitem-overview" render={() => {
-          return <PageLayout theme={theme}><MitemOverview theme={theme} /></PageLayout>
+          return <PageLayout><MitemOverview /></PageLayout>
         }} />
         <Route path="/monster-overview" render={() => {
-          return <PageLayout theme={theme}><MonsterOverview theme={theme} /></PageLayout>
+          return <PageLayout><MonsterOverview /></PageLayout>
         }} />
         <Route path="/char-overview" render={() => {
-          return <PageLayout theme={theme}><CharOverview theme={theme} /></PageLayout>
+          return <PageLayout><CharOverview /></PageLayout>
         }} />
         <Route path="/char/:id" render={(props) => {
-          return <PageLayout theme={theme}><CharView theme={theme} {...props} /></PageLayout>
+          return <PageLayout><CharView {...props} /></PageLayout>
         }} />
         <Route path="/add-spell" render={() => {
-          return <PageLayout theme={theme}><AddSpell theme={theme} /></PageLayout>
+          return <PageLayout><AddSpell /></PageLayout>
         }} />
         <Route path="/add-item" render={() => {
-          return <PageLayout theme={theme}><AddItem theme={theme} /></PageLayout>
+          return <PageLayout><AddItem /></PageLayout>
         }} />
         <Route path="/add-monster" render={() => {
-          return <PageLayout theme={theme}><AddMonster theme={theme} /></PageLayout>
+          return <PageLayout><AddMonster /></PageLayout>
         }} />
         <Route path="/add-char" render={() => {
-          return <PageLayout theme={theme}><AddChar theme={theme} /></PageLayout>
+          return <PageLayout><AddChar /></PageLayout>
         }} />
         <Route path="/options" render={() => {
-          return <PageLayout theme={theme}><Options theme={theme} /></PageLayout>
+          return <PageLayout><Options /></PageLayout>
         }} />
         <Route path="/" render={() => {
           return <div className="App homeDrag">
