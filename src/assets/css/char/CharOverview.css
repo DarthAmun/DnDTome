@@ -24,11 +24,11 @@
     padding: 10px;
     float: left;
     text-align: center;
-    color: dimgrey;
+    color: var(--card-color);;
     margin: 5px;
     border-radius: 5px;
     overflow: hidden;
-    background-color: white;
+    background-color: var(--card-background-color);
     animation-name: zoomIn;
     animation-duration: 500ms;
     transition-duration: 500ms;

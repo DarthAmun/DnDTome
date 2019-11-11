@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import * as ReactDOM from "react-dom";
 import '../../assets/css/mitem/MitemView.css';
+import OptionService from '../../database/OptionService';
+import ThemeService from '../../services/ThemeService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -47,6 +49,10 @@ export default function MitemView() {
     }
 
     useEffect(() => {
+        OptionService.get('theme', function (result) {
+            ThemeService.setTheme(result);
+            ThemeService.applyTheme(result);
+        });
         ipcRenderer.on("onViewMitem", receiveMitem);
         ipcRenderer.send('getChars');
         ipcRenderer.on("getCharsResult", receiveChars);

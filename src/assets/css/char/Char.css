@@ -5,7 +5,7 @@
     text-align: center;
     line-height: 45px;
     float: left;
-    color:  var(--card-color);
+    color: var(--card-color);
     margin: 5px;
     border-radius: 5px;
     overflow: hidden;

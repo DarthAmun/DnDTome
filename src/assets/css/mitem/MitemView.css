@@ -1,7 +1,7 @@
 body {
     height: 100%;
     margin: 0px;
-    background-color: rgb(248, 248, 248);
+    background-color: var(--app-background-color);
     overflow: hidden;
 }
 
@@ -14,7 +14,7 @@ body {
     height: calc(100% - 20px);
     width: calc(100% - 20px);
     overflow: hidden;
-    color: dimgrey;
+    color: var(--card-title-color);
     padding: 10px;
     font-family: 'Quicksand', sans-serif;
 }
@@ -31,9 +31,10 @@ body {
     float: right;
     font-family: inherit;
     font-size: 14px;
-    background-color: white;
-    color: dimgrey;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    border: var(--pagination-input-border);
+    box-shadow: var(--pagination-input-boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
 }
 
 #mitemView select {
@@ -52,13 +53,13 @@ body {
     float: right;
     font-family: inherit;
     font-size: 14px;
-    background-color: #8000ff;
-    color: white;
+    background-color: var(--button-background-color);
+    color: var(--button-color);
     cursor: pointer;
 }
 
 #mitemView button:hover {
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    box-shadow: var(--button-boxshadow);
     cursor: pointer;
 }
 
@@ -78,9 +79,10 @@ body {
     font-family: inherit;
     font-size: 14px;
     margin-bottom: 5px;
-    background-color: white;
-    color: dimgrey;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    border: var(--pagination-input-border);
+    box-shadow: var(--pagination-input-boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
 }
 
 #mitemView .image {
@@ -123,17 +125,17 @@ body {
 #mitemView img {
     width: 320px;
     margin-left: 5px;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    box-shadow: var(--boxshadow);
 }
 
 #mitemView::-webkit-scrollbar, #mitemView textarea::-webkit-scrollbar {
     width: 6px;
-    background-color: rgba(92, 102, 130, 1);
+    background-color: var(--scrollbar);
     border-radius: 5px;
 }
 
 #mitemView::-webkit-scrollbar-thumb, #mitemView textarea::-webkit-scrollbar-thumb {
-    background-color: #8000ff;
+    background-color: var(--scrollbar-thumb);
     border-radius: 5px;
 }
 
@@ -231,9 +233,9 @@ body {
   }
   
   .checkbox-label input:checked ~ .checkbox-custom.circular {
-    background-color: #FFFFFF;
+    background-color: var(--pagination-input-background-color);
     border-radius: 50%;
-    border: 2px solid #FFFFFF;
+    border: 2px solid var(--pagination-input-background-color);
   }
   .checkbox-label input:checked ~ .checkbox-custom.circular::after {
     border: solid #8000ff;

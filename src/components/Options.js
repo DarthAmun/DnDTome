@@ -285,16 +285,16 @@ export default function Options() {
       <div id="optionContent">
         <div id="options">
           <div className="optionSection">
-            <h3>Theme</h3>
-            <button className="patreon" onClick={darkMode}><FontAwesomeIcon icon={faPalette} /> Change Theme</button>
-          </div>
-          <div className="optionSection">
             <h3>Want to support me?</h3>
             <button className="patreon" onClick={toPatreon}><FontAwesomeIcon icon={faPatreon} /> Become a patron</button>
           </div>
           <div className="optionSection">
             <h3>Found some bugs? Or have some feedback?</h3>
             <button className="discord" onClick={toDiscord}><FontAwesomeIcon icon={faDiscord} /> Join the discord</button>
+          </div>
+          <div className="optionSection">
+            <h3>Theme</h3>
+            <button onClick={darkMode}><FontAwesomeIcon icon={faPalette} /> Change Theme</button>
           </div>
           <div className="optionSection">
             <h3>Data Export</h3>

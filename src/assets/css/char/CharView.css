@@ -7,7 +7,7 @@
     height: calc(100% - 20px);
     width: calc(100% - 20px);
     overflow: hidden;
-    color: dimgrey;
+    color: var(--card-title-color);
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 10px;
@@ -30,9 +30,10 @@
     float: right;
     font-family: inherit;
     font-size: 14px;
-    background-color: white;
-    color: dimgrey;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    border: var(--pagination-input-border);
+    box-shadow: var(--pagination-input-boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
 }
 
 #char button {
@@ -48,13 +49,13 @@
     float: right;
     font-family: inherit;
     font-size: 14px;
-    background-color: #8000ff;
-    color: white;
+    background-color: var(--button-background-color);
+    color: var(--button-color);
     cursor: pointer;
 }
 
 #char button:hover {
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    box-shadow: var(--boxshadow-hover);
     cursor: pointer;
 }
 
@@ -74,9 +75,10 @@
     font-family: inherit;
     font-size: 14px;
     margin: 5px;
-    background-color: white;
-    color: dimgrey;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    border: var(--pagination-input-border);
+    box-shadow: var(--pagination-input-boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
 }
 #char textarea.big {
     height: 400px;
@@ -90,9 +92,10 @@
     font-family: inherit;
     font-size: 14px;
     margin: 5px;
-    background-color: white;
-    color: dimgrey;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    border: var(--pagination-input-border);
+    box-shadow: var(--pagination-input-boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
 }
 #char textarea.small {
     height: 28px;
@@ -146,9 +149,10 @@
     border: none;
     padding: 10px;
     font-size: 14px;
-    background-color: white;
-    color: dimgrey;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    border: var(--pagination-input-border);
+    box-shadow: var(--pagination-input-boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
 }
 #char .deathSaves .deathSave {
     height: 45px;
@@ -216,9 +220,10 @@
     float: right;
     text-align: center;
     border-top-right-radius: 3px;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
     border-radius: 30px;
-    background-color: white;
+    box-shadow: var(--pagination-input-boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
 }
 
 #char .charSpells {
@@ -230,9 +235,9 @@
     border-radius: 3px;
     border: none;
     margin: 5px;
-    background-color: white;
-    color: dimgrey;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    box-shadow: var(--pagination-input-boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
     overflow-y: auto;
 }
 #char .charItems {
@@ -242,9 +247,9 @@
     border-radius: 3px;
     border: none;
     margin: 5px;
-    background-color: white;
-    color: dimgrey;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    box-shadow: var(--pagination-input-boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
     overflow-y: auto;
 }
 
@@ -257,7 +262,7 @@
 
 #char .charSpells .charSpell:hover, #char .charItems .charItem:hover {
     font-weight: bold;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    box-shadow: var(--boxshadow-hover);
 }
 
 #char .charSpells td, #char .charSpells th, #char .charItems td, #char .charItems th {
@@ -301,12 +306,12 @@
 
 #char::-webkit-scrollbar, #char textarea::-webkit-scrollbar, #char .charSpells::-webkit-scrollbar {
     width: 6px;
-    background-color: rgba(92, 102, 130, 1);
+    background-color: var(--scrollbar);
     border-radius: 5px;
 }
 
 #char::-webkit-scrollbar-thumb, #char textarea::-webkit-scrollbar-thumb, #char .charSpells::-webkit-scrollbar-thumb {
-    background-color: #8000ff;
+    background-color: var(--scrollbar-thumb);
     border-radius: 5px;
 }
 
@@ -321,7 +326,7 @@
     width: calc(100% - 10px);
     float:left;
     padding: 10px;
-    background-color: white;
+    background-color: var(--card-background-color);
     margin-left: -10px;
 }
 #char .tabComponent .tabSelector .tabName {
@@ -337,8 +342,8 @@
     float: left;
     font-family: inherit;
     font-size: 14px;
-    background-color: #8000ff;
-    color: white;
+    background-color: var(--button-background-color);
+    color: var(--button-color);
     cursor: pointer;
     position: relative;
 }
@@ -352,7 +357,7 @@
 	position: absolute;
 	pointer-events: none;
 	border-color: rgba(128, 0, 255, 0);
-	border-top-color: #8000ff;
+	border-top-color: var(--button-background-color);
 	border-width: 10px;
 	margin-left: -10px;
 }
@@ -378,10 +383,11 @@
     padding: 3px;
     width: 15px;
     height: 15px;
-    background-color: #FFFFFF;
-    color: #8000ff;
     border-radius: 20px;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+     border: var(--pagination-input-border);
+    box-shadow: var(--pagination-input-boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
     cursor: pointer;
 }
 

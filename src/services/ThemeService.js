@@ -21,6 +21,7 @@ const lightTheme = {
     "--pagination-input-boxshadow": "none",
     "--pagination-input-background-color": "white",
     "--pagination-input-color": "inherit",
+    "--gradient": "linear-gradient(180deg, rgba(59,37,80,1) 0%, rgba(102,71,159,1) 100%)",
 };
 const darkTheme = {
     "--app-background-color": "#1f2532",
@@ -35,18 +36,18 @@ const darkTheme = {
     "--card-background-color": "#333d51",
     "--boxshadow-inset": "inset 0px 0px 10px -2px rgba(0, 0, 0, 0.4)",
     "--card-seperator-line": "1px dashed dimgray",
-    "--button-color": "black",
-    "--button-background-color": "#8000ff",
+    "--button-color": "#cfc8d8",
+    "--button-background-color": "#522a82",
     "--pagination-input-height": "30px",
     "--pagination-input-border": "none",
     "--pagination-input-boxshadow": "0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
     "--pagination-input-background-color": "#475062",
     "--pagination-input-color": "lightgrey",
+    "--gradient": "linear-gradient(180deg, rgba(41,26,56,1) 0%, rgba(59,37,80,1) 100%)",
 };
 
 
 module.exports.applyTheme = nextTheme => {
-    console.log(nextTheme);
     const themeClass = nextTheme === "dark" ? lightTheme : darkTheme;
     Object.keys(themeClass).map(key => {
         const value = themeClass[key];
