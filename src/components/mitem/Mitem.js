@@ -20,7 +20,7 @@ export default function Mitem(props) {
     };
 
     return (
-        <div className={`mitem_${props.theme}`} style={{ animationDelay: `${props.delay * 50}ms` }} onClick={props.onClick}>
+        <div className="mitem" style={{ animationDelay: `${props.delay * 50}ms` }} onClick={props.onClick}>
             <div className="mitemIcon" style={style}></div>
             <div className="mitemComp">{props.mitem.mitem_name}</div>
             <div className="mitemComp smallMitemAttr">{props.mitem.mitem_cost}</div>

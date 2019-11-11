@@ -6,7 +6,7 @@ import { faUndo } from '@fortawesome/free-solid-svg-icons';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
-export default function SearchBar({ inputs, queryName, theme }) {
+export default function SearchBar({ inputs, queryName }) {
     const initialState = () => inputs.reduce((acc, curr) => ((acc[curr] = ''), acc), {});
     const [query, setQuery] = useState(initialState());
 
@@ -24,7 +24,7 @@ export default function SearchBar({ inputs, queryName, theme }) {
     };
 
     return (
-        <div id={`searchBar_${theme}`} onKeyDown={sendQuery}>
+        <div id="searchBar" onKeyDown={sendQuery}>
             {inputs.map(item => (
                 <input type="text" key={item} name={item} placeholder={item} value={query[item]} onChange={handleChange} />
             ))}

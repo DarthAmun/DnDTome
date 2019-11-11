@@ -1,9 +1,10 @@
 import '../assets/css/Options.css';
 import React, { useState, useEffect } from 'react';
 import OptionService from '../database/OptionService';
+import ThemeService from '../services/ThemeService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { faFileExport, faFileImport, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faFileExport, faFileImport, faTrashAlt, faPalette } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const { shell } = window.require('electron');
@@ -11,7 +12,7 @@ const ipcRenderer = electron.ipcRenderer;
 const { dialog, app } = electron.remote;
 const fs = require('fs');
 
-export default function Options(props) {
+export default function Options() {
   const [spells, setSpells] = useState([]);
   const [items, setItems] = useState([]);
   const [monsters, setMonsters] = useState([]);
@@ -268,21 +269,24 @@ export default function Options(props) {
   }
 
   const darkMode = () => {
-    if (props.theme === 'light') {
+    if (ThemeService.getTheme() === 'light') {
       OptionService.set('theme', 'dark');
+      ThemeService.applyTheme('dark');
+      ThemeService.setTheme('dark');
     } else {
       OptionService.set('theme', 'light');
+      ThemeService.applyTheme('light');
+      ThemeService.setTheme('light');
     }
-    ipcRenderer.send('reloadWindows');
   }
 
   return (
     <div id="overview">
       <div id="optionContent">
-        <div id={`options_${props.theme}`}>
+        <div id="options">
           <div className="optionSection">
-            <h3>Darkmode</h3>
-            <button className="patreon" onClick={darkMode}><FontAwesomeIcon icon={faPatreon} /> Change Theme</button>
+            <h3>Theme</h3>
+            <button className="patreon" onClick={darkMode}><FontAwesomeIcon icon={faPalette} /> Change Theme</button>
           </div>
           <div className="optionSection">
             <h3>Want to support me?</h3>

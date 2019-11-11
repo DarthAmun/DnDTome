@@ -17,19 +17,8 @@ html, body, #root {
   font-family: 'Quicksand', sans-serif;
 }
 
-.App_light {
-  background: rgb(248, 248, 248); ;
-  text-shadow: none;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: 'Quicksand', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  text-shadow: none;
-}
-
-.App_dark {
-  background-color: #1f2532;
+.App {
+  background: var(--app-background-color);
   text-shadow: none;
   width: 100%;
   height: 100%;

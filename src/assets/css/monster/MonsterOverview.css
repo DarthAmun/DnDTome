@@ -10,7 +10,7 @@
     overflow-x: hidden;
 }
 
-#monsters_light {
+#monsters {
     float: left;
     height: calc(100% - 60px);
     width: 100%;
@@ -19,13 +19,13 @@
     margin-bottom: 10px;
 }
 
-#monsters_light::-webkit-scrollbar {
+#monsters::-webkit-scrollbar {
     width: 6px;
     background-color: var(--scrollbar);
     border-radius: 5px;
 } 
 
-#monsters_light::-webkit-scrollbar-thumb {
+#monsters::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb);
     border-radius: 5px;
 }

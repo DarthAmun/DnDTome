@@ -1,120 +1,44 @@
-.char_light {
+.char {
     width: 300px;
     height: 120px;
     padding: 10px;
     text-align: center;
     line-height: 45px;
     float: left;
-    color: dimgrey;
+    color:  var(--card-color);
     margin: 5px;
     border-radius: 5px;
     overflow: hidden;
     opacity: 0;
-    background: white;
+    background: var(--card-background-color);
     animation-name: zoomIn;
     animation-duration: 500ms;
     transition-duration: 500ms;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    box-shadow: var(--boxshadow);
 }
 
-.char_light .rightChar, .char_light .leftChar {
+.char .rightChar, .char .leftChar {
     width: 120px;
     float: left;
     height: 120px;
 }
-.char_light .leftChar {
+.char .leftChar {
     border-right: 1px solid #8000ff;
 }
-.char_light .rightChar {
-    width: 169px;
-    text-align: left;
-    padding-left: 10px;
-}
-
-.char_light:hover {
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
-    cursor: pointer;
-}
-
-.char_light .charIcon {
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 5px;
-    width: 76px;
-    height: 76px;
-    border-radius: 200px;
-    border: 2px solid #8000ff;
-    overflow: hidden;
-    float: left;
-}
-
-.char_light .leftChar .charComp {
-    float: left;
-    height: 20px;
-    width: 100%;
-    line-height: 20px;
-}
-
-.char_light .rightChar .charComp {
-    float: left;
-    height: 30px;
-    width: 100%;
-    line-height: 30px;
-    border-bottom: 1px dashed #8000ff;
-    overflow: hidden;
-}
-.char_light .rightChar .charComp:last-child {
-    border-bottom: none;
-}
-
-.char_light .leftChar .smallText{
-    font-size: 10px;
-}
-
-
-.char_dark {
-    width: 300px;
-    height: 120px;
-    padding: 10px;
-    text-align: center;
-    line-height: 45px;
-    float: left;
-    color: lightslategray;
-    margin: 5px;
-    border-radius: 5px;
-    overflow: hidden;
-    opacity: 0;
-    background: #333d51;
-    animation-name: zoomIn;
-    animation-duration: 500ms;
-    transition-duration: 500ms;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0, 0.2);
-}
-
-.char_dark .rightChar, .char_dark .leftChar {
-    width: 120px;
-    float: left;
-    height: 120px;
-}
-.char_dark .leftChar {
-    border-right: 1px solid #8000ff;
-}
-.char_dark .rightChar {
+.char .rightChar {
     width: 169px;
     text-align: left;
     padding-left: 10px;
 }
 
 .char:hover {
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
+    box-shadow: var(--boxshadow-hover);
     cursor: pointer;
 }
 
-.char_dark .charIcon {
+.char .charIcon {
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 5px;
@@ -126,14 +50,14 @@
     float: left;
 }
 
-.char_dark .leftChar .charComp {
+.char .leftChar .charComp {
     float: left;
     height: 20px;
     width: 100%;
     line-height: 20px;
 }
 
-.char_dark .rightChar .charComp {
+.char .rightChar .charComp {
     float: left;
     height: 30px;
     width: 100%;
@@ -141,10 +65,10 @@
     border-bottom: 1px dashed #8000ff;
     overflow: hidden;
 }
-.char_dark .rightChar .charComp:last-child {
+.char .rightChar .charComp:last-child {
     border-bottom: none;
 }
 
-.char_dark .leftChar .smallText{
+.char .leftChar .smallText{
     font-size: 10px;
 }

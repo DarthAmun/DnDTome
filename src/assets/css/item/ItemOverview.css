@@ -10,7 +10,7 @@
     overflow-x: hidden;
 }
 
-#items_light {
+#items {
     float: left;
     height: calc(100% - 60px);
     width: 100%;
@@ -19,13 +19,13 @@
     margin-bottom: 10px;
 }
 
-#items_light::-webkit-scrollbar {
+#items::-webkit-scrollbar {
     width: 6px;
     background-color: var(--scrollbar);
     border-radius: 5px;
 } 
 
-#items_light::-webkit-scrollbar-thumb {
+#items::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb);
     border-radius: 5px;
 }

@@ -6,7 +6,7 @@
     line-height: 25px;
     left: calc(50% - 150px);
     border-radius: 5px;
-    background-color: white;
+    background-color: var(--card-background-color);
     color:  #8000ff;
     padding: 10px;
     display: none;

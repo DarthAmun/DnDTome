@@ -1,4 +1,4 @@
-#chars_light {
+#chars {
     float: left;
     height: calc(100% - 80px);
     width: calc(100% - 30px);
@@ -7,18 +7,18 @@
     margin-bottom: 10px;
 }
 
-#chars_light::-webkit-scrollbar {
+#chars::-webkit-scrollbar {
     width: 6px;
     background-color: var(--scrollbar);
     border-radius: 5px;
 } 
 
-#chars_light::-webkit-scrollbar-thumb {
+#chars::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb);
     border-radius: 5px;
 }
 
-#chars_light .add {
+#chars .add {
     width: 120px;
     height: 120px;
     padding: 10px;
@@ -37,7 +37,7 @@
     box-shadow: var(--boxshadow);
 }
 
-#chars_light .add:hover {
+#chars .add:hover {
     box-shadow: var(--boxshadow-hover);
     cursor: pointer;
 }

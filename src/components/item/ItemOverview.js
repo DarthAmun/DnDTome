@@ -6,7 +6,7 @@ import Pagination from '../Pagination';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
-export default function ItemOverview(props) {
+export default function ItemOverview() {
     const [currentItemList, setCurrentItemList] = useState({ items: [] });
     const items = useRef(null);
 
@@ -37,14 +37,14 @@ export default function ItemOverview(props) {
     return (
         <div id="overview">
             <div id="itemsOverview">
-                <SearchBar theme={props.theme} inputs={["name", "description", "rarity", "type", "source"]} queryName="sendItemSearchQuery" />
-                <div id={`items_${props.theme}`} ref={items}>
+                <SearchBar inputs={["name", "description", "rarity", "type", "source"]} queryName="sendItemSearchQuery" />
+                <div id="items" ref={items}>
                     {currentItemList.items.map((item, index) => {
-                        return <Item delay={index} theme={props.theme} item={item} key={item.item_id} onClick={() => viewItem(item)} />;
+                        return <Item delay={index} item={item} key={item.item_id} onClick={() => viewItem(item)} />;
                     })}
                 </div>
             </div>
-            <Pagination theme={props.theme} name="Item" />
+            <Pagination name="Item" />
         </div>
     )
 

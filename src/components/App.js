@@ -22,8 +22,9 @@ import LeftNav from './LeftNav';
 import TopNav from './TopNav';
 import Notification from './Notification';
 
-import packageJson from '../../package.json'
+import packageJson from '../../package.json';
 import OptionService from '../database/OptionService';
+import ThemeService from '../services/ThemeService';
 
 export function PageLayout(props) {
 
@@ -32,7 +33,7 @@ export function PageLayout(props) {
   }
 
   return (
-    <div className={`App_${props.theme}`} onDrop={e => catchDrop}>
+    <div className="App" onDrop={e => catchDrop}>
       <Notification />
       <LeftNav />
       <div id="content">
@@ -46,32 +47,11 @@ export function PageLayout(props) {
 }
 
 export default function App() {
-  const [theme, setTheme] = useState("");
-
-  const lightTheme = {
-    "--scrollbar-thumb": "#8000ff",
-    "--scrollbar": "rgba(92, 102, 130, 1)",
-    "--boxshadow": "0px 0px 10px 0px rgba(172, 172, 172, 0.2)",
-    "--boxshadow-hover": "0px 0px 10px 0px rgba(172, 172, 172, 1)",
-    "--character-add-color": "dimgrey",
-    "--character-add-background-color": "white",
-    "--card-color": "darkgrey",
-    "--card-background-color": "white",
-  };
-  const darkTheme = {
-    "--scrollbar-thumb": "#8000ff",
-    "--scrollbar": "rgba(0, 0, 0, 0.425)",
-    "--boxshadow": "0px 0px 10px 0px rgba(0,0,0, 0.2)",
-    "--boxshadow-hover": "0px 0px 10px 0px rgba(0, 0, 0, 0.7)",
-    "--character-add-color": "lightslategray",
-    "--character-add-background-color": "#333d51",
-    "--card-color": "lightslategray",
-    "--card-background-color": "#333d51",
-  };
 
   useEffect(() => {
     OptionService.get('theme', function (result) {
-      setTheme(result);
+      ThemeService.setTheme(result);
+      ThemeService.applyTheme(result);
     });
   }, []);
 
