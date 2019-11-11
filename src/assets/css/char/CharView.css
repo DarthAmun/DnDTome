@@ -236,7 +236,7 @@
     border: none;
     margin: 5px;
     box-shadow: var(--pagination-input-boxshadow);
-    background-color: var(--pagination-input-background-color);
+    background-color: var(--card-background-color);
     color: var(--pagination-input-color);
     overflow-y: auto;
 }
@@ -248,7 +248,7 @@
     border: none;
     margin: 5px;
     box-shadow: var(--pagination-input-boxshadow);
-    background-color: var(--pagination-input-background-color);
+    background-color: var(--card-background-color);
     color: var(--pagination-input-color);
     overflow-y: auto;
 }
@@ -510,4 +510,8 @@
   
   .checkbox-label input:checked ~ .checkbox-custom.circular::before {
     border-radius: 50%;
+  }
+
+  .recharts-polar-angle-axis-tick-value {
+    line-height: 20px;
   }

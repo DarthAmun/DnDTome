@@ -22,6 +22,7 @@ const lightTheme = {
     "--pagination-input-background-color": "white",
     "--pagination-input-color": "inherit",
     "--gradient": "linear-gradient(180deg, rgba(59,37,80,1) 0%, rgba(102,71,159,1) 100%)",
+    "--notification-color": "#8000ff",
 };
 const darkTheme = {
     "--app-background-color": "#1f2532",
@@ -44,6 +45,7 @@ const darkTheme = {
     "--pagination-input-background-color": "#475062",
     "--pagination-input-color": "lightgrey",
     "--gradient": "linear-gradient(180deg, rgba(41,26,56,1) 0%, rgba(59,37,80,1) 100%)",
+    "--notification-color": "lightslategray",
 };
 
 
