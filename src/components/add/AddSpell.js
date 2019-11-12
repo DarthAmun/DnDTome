@@ -10,7 +10,7 @@ class AddSpell extends Component {
     state = {
         name: "",
         school: "",
-        level: "",
+        level: 0,
         time: "",
         range: "",
         duration: "",
@@ -94,7 +94,7 @@ class AddSpell extends Component {
                     <div className="top">
                         <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label>
                         <label>School:<input name="school" type="text" value={this.state.school} onChange={this.handleSchoolChange} /></label>
-                        <label>Level:<input name="level" type="text" value={this.state.level} onChange={this.handleLevelChange} /></label>
+                        <label>Level:<input name="level" type="number" value={this.state.level} onChange={this.handleLevelChange} /></label>
                         <label>Casting Time:<input name="time" type="text" value={this.state.time} onChange={this.handleTimeChange} /></label>
                         <label>Range:<input name="range" type="text" value={this.state.range} onChange={this.handleRangeChange} /></label>
                         <label>Duration:<input name="duration" type="text" value={this.state.duration} onChange={this.handleDurationChange} /></label>
