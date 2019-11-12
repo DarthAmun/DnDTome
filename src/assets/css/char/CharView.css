@@ -30,8 +30,7 @@
     float: right;
     font-family: inherit;
     font-size: 14px;
-    border: var(--pagination-input-border);
-    box-shadow: var(--pagination-input-boxshadow);
+    box-shadow: var(--boxshadow);
     background-color: var(--pagination-input-background-color);
     color: var(--pagination-input-color);
 }
@@ -75,8 +74,7 @@
     font-family: inherit;
     font-size: 14px;
     margin: 5px;
-    border: var(--pagination-input-border);
-    box-shadow: var(--pagination-input-boxshadow);
+    box-shadow: var(--boxshadow);
     background-color: var(--pagination-input-background-color);
     color: var(--pagination-input-color);
 }
@@ -92,8 +90,7 @@
     font-family: inherit;
     font-size: 14px;
     margin: 5px;
-    border: var(--pagination-input-border);
-    box-shadow: var(--pagination-input-boxshadow);
+    box-shadow: var(--boxshadow);
     background-color: var(--pagination-input-background-color);
     color: var(--pagination-input-color);
 }
@@ -149,8 +146,7 @@
     border: none;
     padding: 10px;
     font-size: 14px;
-    border: var(--pagination-input-border);
-    box-shadow: var(--pagination-input-boxshadow);
+    box-shadow: var(--boxshadow);
     background-color: var(--pagination-input-background-color);
     color: var(--pagination-input-color);
 }
@@ -221,7 +217,7 @@
     text-align: center;
     border-top-right-radius: 3px;
     border-radius: 30px;
-    box-shadow: var(--pagination-input-boxshadow);
+    box-shadow: var(--boxshadow);
     background-color: var(--pagination-input-background-color);
     color: var(--pagination-input-color);
 }
@@ -235,7 +231,7 @@
     border-radius: 3px;
     border: none;
     margin: 5px;
-    box-shadow: var(--pagination-input-boxshadow);
+    box-shadow: var(--boxshadow);
     background-color: var(--card-background-color);
     color: var(--pagination-input-color);
     overflow-y: auto;
@@ -247,7 +243,7 @@
     border-radius: 3px;
     border: none;
     margin: 5px;
-    box-shadow: var(--pagination-input-boxshadow);
+    box-shadow: var(--boxshadow);
     background-color: var(--card-background-color);
     color: var(--pagination-input-color);
     overflow-y: auto;
@@ -384,8 +380,7 @@
     width: 15px;
     height: 15px;
     border-radius: 20px;
-     border: var(--pagination-input-border);
-    box-shadow: var(--pagination-input-boxshadow);
+    box-shadow: var(--boxshadow);
     background-color: var(--pagination-input-background-color);
     color: var(--pagination-input-color);
     cursor: pointer;

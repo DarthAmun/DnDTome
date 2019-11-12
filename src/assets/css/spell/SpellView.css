@@ -31,8 +31,7 @@ body {
     float: right;
     font-family: inherit;
     font-size: 14px;
-    border: var(--pagination-input-border);
-    box-shadow: var(--pagination-input-boxshadow);
+    box-shadow: var(--boxshadow);
     background-color: var(--pagination-input-background-color);
     color: var(--pagination-input-color);
 }
@@ -81,8 +80,7 @@ body {
     font-family: inherit;
     font-size: 14px;
     margin-bottom: 5px;
-    border: var(--pagination-input-border);
-    box-shadow: var(--pagination-input-boxshadow);
+    box-shadow: var(--boxshadow);
     background-color: var(--pagination-input-background-color);
     color: var(--pagination-input-color);
 }

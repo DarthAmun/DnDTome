@@ -20,7 +20,6 @@
     padding-right: 10px;
     margin: 5px;
     float: left;
-    border: var(--pagination-input-border);
     box-shadow: var(--boxshadow);
     background-color: var(--pagination-input-background-color);
     color: var(--pagination-input-color);
