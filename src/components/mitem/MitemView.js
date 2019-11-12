@@ -48,6 +48,10 @@ export default function MitemView() {
         })
     }
 
+    const changeTheme = (event, result) => {
+        ThemeService.applyTheme(result.theme);
+    }
+
     useEffect(() => {
         OptionService.get('theme', function (result) {
             ThemeService.setTheme(result);
@@ -56,9 +60,11 @@ export default function MitemView() {
         ipcRenderer.on("onViewMitem", receiveMitem);
         ipcRenderer.send('getChars');
         ipcRenderer.on("getCharsResult", receiveChars);
+        ipcRenderer.on("changeTheme", changeTheme);
         return () => {
             ipcRenderer.removeListener("onViewMitem", receiveMitem);
             ipcRenderer.removeListener("getCharsResult", receiveChars);
+            ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
 

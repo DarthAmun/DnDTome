@@ -44,6 +44,10 @@ export default function ItemView() {
         setSelectedChar(result[0].char_id);
     }
 
+    const changeTheme = (event, result) => {
+        ThemeService.applyTheme(result.theme);
+    }
+
     useEffect(() => {
         OptionService.get('theme', function (result) {
             ThemeService.setTheme(result);
@@ -52,9 +56,11 @@ export default function ItemView() {
         ipcRenderer.on("onViewItem", receiveItem);
         ipcRenderer.send('getChars');
         ipcRenderer.on("getCharsResult", receiveChars);
+        ipcRenderer.on("changeTheme", changeTheme);
         return () => {
             ipcRenderer.removeListener("onViewItem", receiveItem);
             ipcRenderer.removeListener("getCharsResult", receiveChars);
+            ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
 

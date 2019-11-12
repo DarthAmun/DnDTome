@@ -81,6 +81,10 @@ export default function MonsterView() {
             console.timeEnd("receiveMonster")
         })
     }
+    
+    const changeTheme = (event, result) => {
+        ThemeService.applyTheme(result.theme);
+    }
 
     useEffect(() => {
         OptionService.get('theme', function (result) {
@@ -88,8 +92,10 @@ export default function MonsterView() {
             ThemeService.applyTheme(result);
         });
         ipcRenderer.on("onViewMonster", receiveMonster);
+        ipcRenderer.on("changeTheme", changeTheme);
         return () => {
             ipcRenderer.removeListener("onViewMonster", receiveMonster);
+            ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
 

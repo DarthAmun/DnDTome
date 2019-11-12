@@ -54,6 +54,10 @@ export default function SpellView() {
         setSelectedChar(result[0].char_id);
     }
 
+    const changeTheme = (event, result) => {
+        ThemeService.applyTheme(result.theme);
+    }
+
     useEffect(() => {
         OptionService.get('theme', function (result) {
             ThemeService.setTheme(result);
@@ -62,9 +66,11 @@ export default function SpellView() {
         ipcRenderer.on("onViewSpell", receiveSpell);
         ipcRenderer.send('getChars');
         ipcRenderer.on("getCharsResult", receiveChars);
+        ipcRenderer.on("changeTheme", changeTheme);
         return () => {
             ipcRenderer.removeListener("onViewSpell", receiveSpell);
             ipcRenderer.removeListener("getCharsResult", receiveChars);
+            ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
 

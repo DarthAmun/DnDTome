@@ -541,3 +541,10 @@ ipcMain.on('reloadWindows', (event) => {
   monsterWindow.reload();
   mainWindow.reload();
 });
+
+ipcMain.on('changeTheme', (event, theme) => {
+  itemWindow.webContents.send('changeTheme', { theme: theme });
+  mitemWindow.webContents.send('changeTheme',  { theme: theme });
+  spellWindow.webContents.send('changeTheme',  { theme: theme });
+  monsterWindow.webContents.send('changeTheme',  { theme: theme });
+});

@@ -278,6 +278,7 @@ export default function Options() {
       ThemeService.applyTheme('light');
       ThemeService.setTheme('light');
     }
+    ipcRenderer.send('changeTheme', ThemeService.getTheme());
   }
 
   return (
