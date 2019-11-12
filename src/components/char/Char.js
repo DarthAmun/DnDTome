@@ -16,7 +16,8 @@ export default function Char(props) {
         backgroundImage: `url(${getPicture()})`,
         backgroundPosition: 'center',
         backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: 'white'
     };
     return (
         <Link to={`/char/${props.char.char_id}`}>

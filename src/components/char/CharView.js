@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import * as ReactDOM from "react-dom";
 import { useHistory } from 'react-router-dom';
 import '../../assets/css/char/CharView.css';
+import OptionService from '../../database/OptionService';
+import ThemeService from '../../services/ThemeService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes, faAngleUp, faAngleDoubleUp, faMinus, faHeartBroken, faHeartbeat, faTrashAlt, faFileExport } from '@fortawesome/free-solid-svg-icons';
 import StatChart from './StatChart';
@@ -224,6 +226,10 @@ export default function CharView(props) {
     }
 
     useEffect(() => {
+        OptionService.get('theme', function (result) {
+            ThemeService.setTheme(result);
+            ThemeService.applyTheme(result);
+        });
         ipcRenderer.send('getChar', { id: props.match.params.id });
         ipcRenderer.on("getCharResult", receiveChar);
         ipcRenderer.send('getCharSpells', { id: props.match.params.id });

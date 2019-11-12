@@ -1,8 +1,10 @@
 import '../assets/css/Options.css';
 import React, { useState, useEffect } from 'react';
+import OptionService from '../database/OptionService';
+import ThemeService from '../services/ThemeService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { faFileExport, faFileImport, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faFileExport, faFileImport, faTrashAlt, faPalette } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const { shell } = window.require('electron');
@@ -266,6 +268,19 @@ export default function Options() {
     });
   }
 
+  const darkMode = () => {
+    if (ThemeService.getTheme() === 'light') {
+      OptionService.set('theme', 'dark');
+      ThemeService.applyTheme('dark');
+      ThemeService.setTheme('dark');
+    } else {
+      OptionService.set('theme', 'light');
+      ThemeService.applyTheme('light');
+      ThemeService.setTheme('light');
+    }
+    ipcRenderer.send('changeTheme', ThemeService.getTheme());
+  }
+
   return (
     <div id="overview">
       <div id="optionContent">
@@ -277,6 +292,10 @@ export default function Options() {
           <div className="optionSection">
             <h3>Found some bugs? Or have some feedback?</h3>
             <button className="discord" onClick={toDiscord}><FontAwesomeIcon icon={faDiscord} /> Join the discord</button>
+          </div>
+          <div className="optionSection">
+            <h3>Theme</h3>
+            <button onClick={darkMode}><FontAwesomeIcon icon={faPalette} /> Change Theme</button>
           </div>
           <div className="optionSection">
             <h3>Data Export</h3>

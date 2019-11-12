@@ -1,7 +1,7 @@
 body {
     height: 100%;
     margin: 0px;
-    background-color: rgb(248, 248, 248);
+    background-color: var(--app-background-color);
     overflow: hidden;
 }
 
@@ -14,7 +14,7 @@ body {
     height: calc(100% - 20px);
     width: calc(100% - 20px);
     overflow: hidden;
-    color: dimgrey;
+    color: var(--card-title-color);
     padding: 10px;
     font-family: 'Quicksand', sans-serif;
 }
@@ -31,9 +31,9 @@ body {
     float: right;
     font-family: inherit;
     font-size: 14px;
-    background-color: white;
-    color: dimgrey;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    box-shadow: var(--boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
 }
 
 #monsterView button {
@@ -49,13 +49,13 @@ body {
     float: right;
     font-family: inherit;
     font-size: 14px;
-    background-color: #8000ff;
-    color: white;
+    background-color: var(--button-background-color);
+    color: var(--button-color);
     cursor: pointer;
 }
 
 #monsterView button:hover {
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    box-shadow: var(--button-boxshadow);
     cursor: pointer;
 }
 
@@ -76,9 +76,9 @@ body {
     font-size: 14px;
     margin-right: 5px;
     margin-bottom: 5px;
-    background-color: white;
-    color: dimgrey;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    box-shadow: var(--boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
 }
 
 #monsterView textarea.small {
@@ -142,20 +142,20 @@ body {
     float: right;
     text-align: center;
     border-top-right-radius: 3px;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    box-shadow: var(--boxshadow);
     border-radius: 30px;
-    background-color: white;
+    background-color: var(--pagination-input-background-color);
 }
 
 #monsterView::-webkit-scrollbar,
 #monsterView textarea::-webkit-scrollbar {
     width: 6px;
-    background-color: rgba(92, 102, 130, 1);
+    background-color: var(--scrollbar);
     border-radius: 5px;
 }
 
 #monsterView::-webkit-scrollbar-thumb,
 #monsterView textarea::-webkit-scrollbar-thumb {
-    background-color: #8000ff;
+    background-color: var(--scrollbar-thumb);
     border-radius: 5px;
 }

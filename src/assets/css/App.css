@@ -14,12 +14,11 @@ html, body, #root {
 }
 
 #root {
-  /*background-color: #333d51;*/
   font-family: 'Quicksand', sans-serif;
-  background: rgb(248, 248, 248);
 }
 
 .App {
+  background: var(--app-background-color);
   text-shadow: none;
   width: 100%;
   height: 100%;

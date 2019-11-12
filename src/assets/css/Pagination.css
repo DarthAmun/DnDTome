@@ -16,7 +16,7 @@
     float: left;
 }
 
-.pageDown, .pageUp {
+#pagination .pageDown, #pagination .pageUp {
     height: 30px;
     width: 30px;
     float: left;
@@ -25,8 +25,8 @@
     text-align: center;
     line-height: 30px;
     cursor: pointer;
-    background-color: #8000ff;
-    color: white;
+    background-color: var(--button-background-color);
+    color: var(--button-color);
 }
 
 #pagination .button {
@@ -39,8 +39,8 @@
     text-align: center;
     line-height: 30px;
     cursor: pointer;
-    background-color: #8000ff;
-    color: white;
+    background-color: var(--button-background-color);
+    color: var(--button-color);
     margin-left: 5px;
 }
 
@@ -53,7 +53,7 @@
 }
 
 .pageDown:hover, .pageUp:hover {
-    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: var(--button-boxshadow);
 }
 
 #pages {
@@ -62,22 +62,30 @@
     float: left;
 }
 
-#pages input {
-    height: 28px;
+#pagination #pages input {
+    height: var(--pagination-input-height);
     width: 50px;
     border-radius: 5px;
     box-shadow: none;
-    border: 1px solid lightgray;
+    border: var(--pagination-input-border);
     padding-left: 5px;
     padding-right: 5px;
     margin-right: 5px;
     float: left;
+    box-shadow: var(--pagination-input-boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
 }
 
 #step select{
     height: 30px;
     width: 50px;
     float: left;
+    border: none;
     border-radius: 5px;
     margin-left: 5px;
+    border: var(--pagination-input-border);
+    box-shadow: var(--boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
 }

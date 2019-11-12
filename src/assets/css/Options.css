@@ -5,33 +5,30 @@
 
 #optionContent {
     float: left;
-    height: calc(100% - 20px);
-    width: calc(100% - 20px);
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 20px;
+    height: 100%;
+    width: 100%;
     overflow-y: hidden;
     overflow-x: hidden;
 }
 
-.optionSection {
+#options .optionSection {
     width: calc(100% - 30px);
     height: auto;
     padding: 10px;
-    background-color: white;
-    color: darkgrey;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    background-color: var(--card-background-color);
+    color: var(--card-color);
+    box-shadow: var(--boxshadow);
     word-wrap: break-word;
     margin-bottom: 10px;
     margin-top: 10px;
 }
 
-.optionSection span {
+#options .optionSection span {
     font-size: 12px;
 }
 
 #options button {
-    background-color: #8000ff;
+    background-color: var(--button-background-color);
     height: 28px;
     width: auto;
     border: none;
@@ -42,7 +39,7 @@
     text-align: center;
     font-family: inherit;
     font-size: 14px;
-    color: white;
+    color: var(--button-color);
     cursor: pointer;
 }
 #options .optionSection button.patreon {
@@ -53,27 +50,28 @@
 }
 
 #options .optionSection button {
-    background-color: #8000ff;
+    background-color: var(--button-background-color);
     border-bottom: 2px solid transparent;
 }
 
 .optionSection button:hover {
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    box-shadow: var(--boxshadow-hover);
     cursor: pointer;
 }
 #options {
-    height: 100%;
-    width: 100%;
+    height: calc(100% - 30px);
+    width: calc(100% - 20px);
+    padding: 10px;
     overflow-y: auto;
 }
 
 #options::-webkit-scrollbar {
     width: 6px;
-    background-color: rgba(92, 102, 130, 1);
+    background-color: var(--scrollbar);
     border-radius: 5px;
 } 
 
 #options::-webkit-scrollbar-thumb {
-    background-color: #8000ff;
+    background-color: var(--scrollbar-thumb);
     border-radius: 5px;
 }

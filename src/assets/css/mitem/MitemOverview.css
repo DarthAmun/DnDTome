@@ -3,14 +3,14 @@
     width: 100%;
 }
 
-#monsterOverview {
+#mitemsOverview {
     height: calc(100% - 20px);
     float: left;
     overflow-y: hidden;
     overflow-x: hidden;
 }
 
-#monsters {
+#mitems {
     float: left;
     height: calc(100% - 60px);
     width: 100%;
@@ -19,13 +19,13 @@
     margin-bottom: 10px;
 }
 
-#monsters::-webkit-scrollbar {
+#mitems::-webkit-scrollbar {
     width: 6px;
     background-color: var(--scrollbar);
     border-radius: 5px;
 } 
 
-#monsters::-webkit-scrollbar-thumb {
+#mitems::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb);
     border-radius: 5px;
 }

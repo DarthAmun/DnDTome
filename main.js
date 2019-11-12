@@ -2,12 +2,13 @@
 
 // Import parts of electron to use
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
-const path = require('path')
-const url = require('url')
+const path = require('path');
+const url = require('url');
 
 //Database Services
 const SpellService = require('./src/database/SpellService');
 const ItemService = require('./src/database/ItemService');
+const MitemService = require('./src/database/MitemService');
 const MonsterService = require('./src/database/MonsterService');
 const CharacterService = require('./src/database/CharacterService');
 
@@ -18,6 +19,8 @@ let spellWindow;
 let spellPath;
 let itemWindow;
 let itemPath;
+let mitemWindow;
+let mitemPath;
 let monsterWindow;
 let monsterPath;
 // Keep a reference for dev mode
@@ -67,6 +70,12 @@ function createWindow() {
       pathname: 'item.html',
       slashes: true
     });
+    mitemPath = url.format({
+      protocol: 'http:',
+      host: 'localhost:8080',
+      pathname: 'mitem.html',
+      slashes: true
+    });
     monsterPath = url.format({
       protocol: 'http:',
       host: 'localhost:8080',
@@ -87,6 +96,11 @@ function createWindow() {
     itemPath = url.format({
       protocol: 'file:',
       pathname: path.join(__dirname, 'dist', 'item.html'),
+      slashes: true
+    });
+    mitemPath = url.format({
+      protocol: 'file:',
+      pathname: path.join(__dirname, 'dist', 'mitem.html'),
       slashes: true
     });
     monsterPath = url.format({
@@ -116,6 +130,7 @@ function createWindow() {
     mainWindow = null;
     spellWindow = null;
     itemWindow = null;
+    mitemWindow = null;
     monsterWindow = null;
   });
 
@@ -123,7 +138,7 @@ function createWindow() {
   spellWindow = new BrowserWindow({
     parent: mainWindow,
     width: 950,
-    height: 430,
+    height: 410,
     show: false,
     resizable: false,
     frame: true,
@@ -159,6 +174,27 @@ function createWindow() {
   itemWindow.on('close', (e) => {
     e.preventDefault();
     itemWindow.hide();
+  });
+
+  //Mitem window
+  mitemWindow = new BrowserWindow({
+    parent: mainWindow,
+    width: 660,
+    height: 365,
+    show: false,
+    resizable: true,
+    frame: true,
+    icon: __dirname + './src/assets/img/dice_icon.ico',
+    //The lines below solved the issue
+    webPreferences: {
+      nodeIntegration: true
+    }
+  });
+  mitemWindow.setMenu(null);
+  mitemWindow.loadURL(mitemPath);
+  mitemWindow.on('close', (e) => {
+    e.preventDefault();
+    mitemWindow.hide();
   });
 
   //Monster window
@@ -254,19 +290,24 @@ ipcMain.on('getAllChars', (event) => {
 ipcMain.on('getSearchSpells', (event, arg) => {
   const { step, start } = arg;
   this.searchSpellStep = step;
-  SpellService.reciveSpells(step, start, {}, mainWindow);
+  SpellService.reciveSpells(step, start, null, mainWindow);
 });
 
 ipcMain.on('getSearchItems', (event, arg) => {
   const { step, start } = arg;
   this.searchItemStep = step;
-  ItemService.reciveItems(step, start, {}, mainWindow);
+  ItemService.reciveItems(step, start, null, mainWindow);
+});
+ipcMain.on('getSearchMitems', (event, arg) => {
+  const { step, start } = arg;
+  this.searchMitemStep = step;
+  MitemService.reciveMitems(step, start, null, mainWindow);
 });
 
 ipcMain.on('getSearchMonsters', (event, arg) => {
   const { step, start } = arg;
   this.searchMonsterStep = step;
-  MonsterService.reciveMonsters(step, start, {}, mainWindow);
+  MonsterService.reciveMonsters(step, start, null, mainWindow);
 });
 
 ipcMain.on('getSpellCount', (event, arg) => {
@@ -312,6 +353,12 @@ ipcMain.on('saveSpell', (event, arg) => {
 ipcMain.on('saveItem', (event, arg) => {
   const { item } = arg;
   ItemService.saveItem(item, mainWindow);
+});
+
+ipcMain.on('saveMitem', (event, arg) => {
+  console.log("save event");
+  const { mitem } = arg;
+  MitemService.saveMitem(mitem, mainWindow);
 });
 
 ipcMain.on('saveMonster', (event, arg) => {
@@ -385,7 +432,7 @@ ipcMain.on('saveNewChars', (event, arg) => {
 });
 
 ipcMain.on('getChars', (event, arg) => {
-  CharacterService.reciveChars(mainWindow, itemWindow, spellWindow);
+  CharacterService.reciveChars(mainWindow, itemWindow, mitemWindow, spellWindow);
 });
 
 ipcMain.on('getChar', (event, arg) => {
@@ -452,6 +499,15 @@ ipcMain.on('openItemView', (event, item) => {
   itemWindow.webContents.send('onViewItem', item);
 });
 
+ipcMain.on('openMitemView', (event, mitem) => {
+  mitemWindow.show();
+  if (dev) {
+    mitemWindow.webContents.openDevTools();
+  }
+  mitemWindow.setTitle("DnD Tome - " + mitem.mitem_name);
+  mitemWindow.webContents.send('onViewMitem', mitem);
+});
+
 ipcMain.on('openMonsterView', (event, monster) => {
   monsterWindow.show();
   if (dev) {
@@ -476,4 +532,19 @@ ipcMain.on('deleteAllChars', (event) => {
 
 ipcMain.on('displayMessage', (event, m) => {
   mainWindow.webContents.send('displayMessage', { type: m.type, message: m.message });
+});
+
+ipcMain.on('reloadWindows', (event) => {
+  itemWindow.reload();
+  mitemWindow.reload();
+  spellWindow.reload();
+  monsterWindow.reload();
+  mainWindow.reload();
+});
+
+ipcMain.on('changeTheme', (event, theme) => {
+  itemWindow.webContents.send('changeTheme', { theme: theme });
+  mitemWindow.webContents.send('changeTheme',  { theme: theme });
+  spellWindow.webContents.send('changeTheme',  { theme: theme });
+  monsterWindow.webContents.send('changeTheme',  { theme: theme });
 });

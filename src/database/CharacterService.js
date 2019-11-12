@@ -202,7 +202,7 @@ module.exports.saveNewChars = (chars, mainWindow) => {
     });
 }
 
-module.exports.reciveChars = (mainWindow, itemWindow, spellWindow) => {
+module.exports.reciveChars = (mainWindow, itemWindow, mitemWindow, spellWindow) => {
     db.serialize(function () {
         db.all("SELECT * FROM 'main'.'tab_characters' ORDER BY char_player ASC", function (err, rows) {
             if (err != null) {
@@ -210,6 +210,7 @@ module.exports.reciveChars = (mainWindow, itemWindow, spellWindow) => {
             }
             mainWindow.webContents.send('getCharsResult', rows);
             itemWindow.webContents.send('getCharsResult', rows);
+            mitemWindow.webContents.send('getCharsResult', rows);
             spellWindow.webContents.send('getCharsResult', rows);
             console.log("====>" + `getCharsResult successfull`)
         });

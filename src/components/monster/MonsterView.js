@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import * as ReactDOM from "react-dom";
 import '../../assets/css/monster/MonsterView.css';
+import OptionService from '../../database/OptionService';
+import ThemeService from '../../services/ThemeService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -79,11 +81,21 @@ export default function MonsterView() {
             console.timeEnd("receiveMonster")
         })
     }
+    
+    const changeTheme = (event, result) => {
+        ThemeService.applyTheme(result.theme);
+    }
 
     useEffect(() => {
+        OptionService.get('theme', function (result) {
+            ThemeService.setTheme(result);
+            ThemeService.applyTheme(result);
+        });
         ipcRenderer.on("onViewMonster", receiveMonster);
+        ipcRenderer.on("changeTheme", changeTheme);
         return () => {
             ipcRenderer.removeListener("onViewMonster", receiveMonster);
+            ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
 

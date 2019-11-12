@@ -6,7 +6,7 @@
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 20px;
-    color: dimgrey;
+    color: var(--card-title-color);
     float:left;
 }
 
@@ -22,9 +22,9 @@
     float: right;
     font-family: inherit;
     font-size: 14px;
-    background-color: white;
-    color: dimgrey;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    box-shadow: var(--boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
 }
 
 #newSpell button {
@@ -39,14 +39,14 @@
     float: left;
     font-family: inherit;
     font-size: 14px;
-    background-color: #8000ff;
-    color: white;
+    background-color: var(--button-background-color);
+    color: var(--button-color);
     border-bottom: 2px solid transparent;
     cursor: pointer;
 }
 
 #newSpell button:hover {
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    box-shadow: var(--button-boxshadow);
     cursor: pointer;
 }
 
@@ -67,9 +67,9 @@
     font-family: inherit;
     font-size: 14px;
     margin-bottom: 5px;
-    background-color: white;
-    color: dimgrey;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    box-shadow: var(--boxshadow);
+    background-color: var(--pagination-input-background-color);
+    color: var(--pagination-input-color);
 }
 
 #newSpell label {
@@ -93,11 +93,11 @@
 
 #newSpell::-webkit-scrollbar, #newSpell textarea::-webkit-scrollbar {
     width: 6px;
-    background-color: rgba(92, 102, 130, 1);
+    background-color: var(--scrollbar);
     border-radius: 5px;
 }
 
 #newSpell::-webkit-scrollbar-thumb, #newSpell textarea::-webkit-scrollbar-thumb {
-    background-color: #8000ff;
+    background-color: var(--scrollbar-thumb);
     border-radius: 5px;
 }

@@ -21,6 +21,9 @@ module.exports = {
     item: [
       SRC_DIR + '/item.js',
     ],
+    mitem: [
+      SRC_DIR + '/mitem.js',
+    ],
     main: [
       SRC_DIR + '/index.js',
     ]
@@ -70,6 +73,11 @@ module.exports = {
       filename: 'item.html',
       template: 'src/index.html',
       chunks: ['item']
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'mitem.html',
+      template: 'src/index.html',
+      chunks: ['mitem']
     }),
     new HtmlWebpackPlugin({
       filename: 'monster.html',

@@ -10,7 +10,7 @@ body {
     src: url('../../font/Quicksand-Medium.ttf') format('truetype');
 }
 
-#spellView {
+#mitemView {
     height: calc(100% - 20px);
     width: calc(100% - 20px);
     overflow: hidden;
@@ -19,9 +19,9 @@ body {
     font-family: 'Quicksand', sans-serif;
 }
 
-#spellView input, #spellView select {
+#mitemView input, #mitemView select {
     height: 30px;
-    width: 300px;
+    width: 200px;
     border: none;
     border-radius: 3px;
     padding-left: 10px;
@@ -36,41 +36,39 @@ body {
     color: var(--pagination-input-color);
 }
 
-#spellView select {
-    width: 320px;
+#mitemView select {
+    width: 220px;
 }
 
-#spellView button {
-    height: 28px;
-    width: auto;
+#mitemView button {
+    height: 32px;
+    width: 120px;
     border: none;
     border-radius: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    margin-left: 10px;
-    margin-bottom: 5px;
+    margin-right: 10px;
     text-align: center;
-    float: left;
+    float: right;
     font-family: inherit;
     font-size: 14px;
     background-color: var(--button-background-color);
     color: var(--button-color);
-    border-bottom: 2px solid transparent;
     cursor: pointer;
 }
 
-#spellView button:hover {
-    box-shadow: var(--boxshadow-hover);
+#mitemView button:hover {
+    box-shadow: var(--button-boxshadow);
     cursor: pointer;
 }
 
-#spellView button.delete {
+#mitemView button.delete {
     background-color: darkred;
 }
 
-#spellView textarea {
-    height: 309px;
-    width: 444px;
+#mitemView textarea {
+    height: 100px;
+    width: 464px;
     float: left;
     resize: none;
     border-radius: 3px;
@@ -85,55 +83,56 @@ body {
     color: var(--pagination-input-color);
 }
 
-#spellView label {
+#mitemView .image {
+    float: left;
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    background-color: white;
+}
+
+#mitemView label {
     display: inline-block;
-    width: 450px;
+    width: 300px;
     text-align: right;
     line-height: 30px;
-    float: left;
 }
-#spellView label .labelText{
+#mitemView label .labelText{
     float: left;
-    height: 37px;
+    height: 30px;
     line-height: 33px;
 }
-#spellView label.small {
-    width: 225px;
-}
-#spellView label.left {
-    width: 215px;
-    float:left;
-    text-align: left;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-#spellView label.small input{
-    width: 75px;
-}
-#spellView label.left input{
-    float: left;
-}
-#spellView label.small input[type=checkbox]{
+#mitemView label input[type=checkbox]{
     width: 15px;
     background: none;
     box-shadow: none;
+    float: left;
+    margin-bottom: 0px;
 }
 
-#spellView .top {
+#mitemView .top {
     float: left;
-    width: 450px;
+    width: 300px;
+    height: 150px;
     margin-right: 10px;
 }
 
-#spellView::-webkit-scrollbar,
-#spellView textarea::-webkit-scrollbar {
+#mitemView img {
+    width: 320px;
+    margin-left: 5px;
+    box-shadow: var(--boxshadow);
+}
+
+#mitemView::-webkit-scrollbar, #mitemView textarea::-webkit-scrollbar {
     width: 6px;
     background-color: var(--scrollbar);
     border-radius: 5px;
 }
 
-#spellView::-webkit-scrollbar-thumb,
-#spellView textarea::-webkit-scrollbar-thumb {
+#mitemView::-webkit-scrollbar-thumb, #mitemView textarea::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb);
     border-radius: 5px;
 }
@@ -153,7 +152,7 @@ body {
   .checkbox-label .checkbox-custom {
     position: absolute;
     top: 2px;
-    left: 60px;
+    left: 70px;
     height: 24px;
     width: 24px;
     background-color: transparent;
@@ -169,13 +168,13 @@ body {
   
   
   .checkbox-label input:checked ~ .checkbox-custom {
+    background-color: #FFFFFF;
     border-radius: 5px;
     -webkit-transform: rotate(0deg) scale(1);
     -ms-transform: rotate(0deg) scale(1);
     transform: rotate(0deg) scale(1);
     opacity:1;
     border: 2px solid #FFFFFF;
-    background-color: var(--pagination-input-background-color);
   }
   
   

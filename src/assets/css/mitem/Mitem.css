@@ -1,6 +1,6 @@
-.item {
-    width: 200px;
-    height: 260px;
+.mitem {
+    width: 140px;
+    height: 170px;
     float: left;
     color: var(--card-color);
     text-align: center;
@@ -17,65 +17,46 @@
     box-shadow: var(--boxshadow);
 }
 
-.item:hover {
+.mitem:hover {
     box-shadow: var(--boxshadow-hover);
     cursor: pointer;
 }
 
-.itemIcon img {
-    max-width: 120px;
-    max-height: 120px;
+.mitemIcon img {
+    max-width: 60px;
+    max-height: 60px;
 }
 
-.itemIcon {
+.mitemIcon {
     margin: 15px;
-    margin-left: 36px;
-    margin-right: 36px;
-    width: 120px;
-    height: 120px;
+    margin-left: 40px;
+    margin-right: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 200px;
     border: 2px solid #8000ff;
     overflow: hidden;
     float: left;
 }
 
-.itemAttr {
+.mitemAttr {
     height: auto;
     float: left;
     padding: 10px;
 }
 
-.itemComp {
+.mitemComp {
     padding: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
 }
 
-.smallItemAttr {
+.smallMitemAttr {
     height: auto;
     width: calc(100% - 20px);
     float: left;
     line-height: 10px;
     font-size: 12px;
-}
-
-.Common {
-    border: 3px solid rgba(92, 102, 130, 1);
-}
-.Uncommon {
-    border: 3px solid rgb(77, 189, 86);
-}
-.Rare {
-    border: 3px solid rgb(70, 117, 247);
-}
-.VeryRare {
-    border: 3px solid rgb(161, 70, 247);
-}
-.Legendary {
-    border: 3px solid rgb(247, 206, 70);
-}
-.Artifact {
-    border: 3px solid rgb(247, 70, 70);
 }
 
 @keyframes zoomIn {

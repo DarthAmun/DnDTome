@@ -5,18 +5,18 @@
     text-align: center;
     line-height: 45px;
     float: left;
-    color: dimgrey;
+    color: var(--card-color);
     margin: 5px;
     border-radius: 5px;
     overflow: hidden;
     opacity: 0;
-    background: white;
+    background: var(--card-background-color);
     animation-name: zoomIn;
     animation-duration: 500ms;
     transition-duration: 500ms;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    box-shadow: var(--boxshadow);
 }
 
 .char .rightChar, .char .leftChar {
@@ -34,7 +34,7 @@
 }
 
 .char:hover {
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 1);
+    box-shadow: var(--boxshadow-hover);
     cursor: pointer;
 }
 

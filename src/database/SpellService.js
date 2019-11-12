@@ -34,7 +34,9 @@ module.exports.reciveAllSpells = (mainWindow) => {
 module.exports.reciveSpells = (step, start, query, mainWindow) => {
   spellStep = step;
   spellStart = start;
-  searchSpellQuery = query;
+  if (query !== null) {
+    searchSpellQuery = query;
+  }
   let q = "SELECT * FROM 'main'.'tab_spells' WHERE ";
   if (searchSpellQuery != null) {
     if (searchSpellQuery.name != null && typeof searchSpellQuery.name !== 'undefined' && searchSpellQuery.name != "") {
