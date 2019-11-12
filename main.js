@@ -180,7 +180,7 @@ function createWindow() {
   mitemWindow = new BrowserWindow({
     parent: mainWindow,
     width: 660,
-    height: 348,
+    height: 365,
     show: false,
     resizable: true,
     frame: true,
