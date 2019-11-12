@@ -30,6 +30,9 @@ module.exports.reciveMitems = (step, start, query, mainWindow) => {
         if (searchMitemQuery.name != null && typeof searchMitemQuery.name !== 'undefined' && searchMitemQuery.name != "") {
             q += `mitem_name like "%${searchMitemQuery.name}%" AND `;
         }
+        if (searchMitemQuery.type != null && typeof searchMitemQuery.type !== 'undefined' && searchMitemQuery.type != "") {
+            q += `mitem_type like "%${searchMitemQuery.type}%" AND `;
+        }
         if (searchMitemQuery.description != null && typeof searchMitemQuery.description !== 'undefined' && searchMitemQuery.description != "") {
             q += `mitem_description like "%${searchMitemQuery.description}%" AND `;
         }
@@ -89,16 +92,16 @@ module.exports.deleteMitem = (mitem, mainWindow, mitemWindow) => {
             console.log(`====>Deleted ${mitem.name} successfull`);
             mitemWindow.hide();
             mainWindow.webContents.send('mitemsUpdated', { mitemStep, mitemStart });
-            mainWindow.webContents.send('displayMessage', { type: `Deleted mitem`, message: `Deleted ${mitem.name} successful` });
+            mainWindow.webContents.send('displayMessage', { type: `Deleted gear`, message: `Deleted ${mitem.name} successful` });
         });
     });
 }
 
 module.exports.saveMitem = (mitem, mainWindow) => {
     console.log("save function");
-    let data = [mitem.name, mitem.description, mitem.pic, mitem.cost, mitem.weight, mitem.damage, mitem.properties, mitem.id];
+    let data = [mitem.name, mitem.description, mitem.pic, mitem.cost, mitem.weight, mitem.damage, mitem.properties, mitem.mitem_type, mitem.id];
     let sql = `UPDATE 'main'.'tab_mitems'
-                SET mitem_name = ?, mitem_description = ?, mitem_pic = ?, mitem_cost= ?, mitem_weight= ?, mitem_damage= ?, mitem_properties= ?
+                SET mitem_name = ?, mitem_description = ?, mitem_pic = ?, mitem_cost= ?, mitem_weight= ?, mitem_damage= ?, mitem_properties= ?, mitem_type= ?
                 WHERE mitem_id = ?`;
     db.serialize(function () {
         db.run(sql, data, function (err) {
@@ -129,32 +132,32 @@ module.exports.saveNewMitem = (mitem, mainWindow) => {
 
 module.exports.saveNewMitems = (mitems, mainWindow) => {
     mitems.forEach(mitem => {
-        let data = [mitem.mitem_name, mitem.mitem_description, mitem.mitem_pic, mitem.mitem_rarity, mitem.mitem_type, mitem.mitem_source, mitem.mitem_attunment];
-        let sql = `INSERT INTO 'main'.'tab_mitems' (mitem_name, mitem_description, mitem_pic, mitem_rarity, mitem_type, mitem_source, mitem_attunment)
-                VALUES  (?, ?, ?, ?, ?, ?, ?)`;
+        let data = [mitem.mitem_name, mitem.mitem_description, mitem.mitem_pic, mitem.mitem_cost, mitem.mitem_damage, mitem.mitem_weight, mitem.mitem_properties, mitem.mitem_type];
+        let sql = `INSERT INTO 'main'.'tab_mitems' (mitem_name, mitem_description, mitem_pic, mitem_cost, mitem_damage, mitem_weight, mitem_properties, mitem_type)
+                VALUES  (?, ?, ?, ?, ?, ?, ?, ?)`;
         db.serialize(function () {
             db.run(sql, data, function (err) {
                 if (err) {
                     return console.error(err.message);
                 }
                 console.log(`====>Added ${mitem.mitem_name} successfull`);
-                mainWindow.webContents.send('displayMessage', { type: `Added mitem`, message: `Added ${mitem.mitem_name} successful` });
+                mainWindow.webContents.send('displayMessage', { type: `Added gear`, message: `Added ${mitem.mitem_name} successful` });
             });
         });
     });
 }
 
 module.exports.addMitemToChar = (char, mitem, mainWindow) => {
-    let data = [char.selectedChar, mitem.id, 1, false, false];
-    let sql = `INSERT INTO 'main'.'tab_characters_mitems' (char_id, mitem_id, mitem_amount, mitem_equiped, mitem_attuned)
-                VALUES  (?, ?, ?, ?, ?)`;
+    let data = [char.selectedChar, mitem.id, 1, false, false, mitem.damage, mitem.properties];
+    let sql = `INSERT INTO 'main'.'tab_characters_items' (char_id, mitem_id, item_amount, item_equiped, item_attuned, item_damage, item_properties)
+                VALUES  (?, ?, ?, ?, ?, ?, ?)`;
     db.serialize(function () {
         db.run(sql, data, function (err) {
             if (err) {
                 return console.error(err.message);
             }
             console.log(`====>Added ${mitem.name} to character successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Added mitem to character`, message: `Added ${mitem.name} to character successful` });
+            mainWindow.webContents.send('displayMessage', { type: `Added gear to character`, message: `Added ${mitem.name} to character successful` });
         });
     });
 }

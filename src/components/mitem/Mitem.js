@@ -23,8 +23,8 @@ export default function Mitem(props) {
         <div className="mitem" style={{ animationDelay: `${props.delay * 50}ms` }} onClick={props.onClick}>
             <div className="mitemIcon" style={style}></div>
             <div className="mitemComp">{props.mitem.mitem_name}</div>
+            <div className="mitemComp smallMitemAttr">{props.mitem.mitem_type}</div>
             <div className="mitemComp smallMitemAttr">{props.mitem.mitem_cost}</div>
-            <div className="mitemComp smallMitemAttr">{props.mitem.mitem_weight}</div>
         </div>
     )
 }

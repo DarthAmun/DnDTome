@@ -121,7 +121,7 @@ export default function CharView(props) {
     const [deathThree, setDeathThree] = useState(0);
 
     const receiveChar = (event, result) => {
-        ReactDOM.unstable_batchedUpdates(() => { 
+        ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveChar")
             setName(result.char_name);
             setId(result.char_id);
@@ -138,7 +138,7 @@ export default function CharView(props) {
             setHitDice(result.char_hitDice);
             setInit(result.char_init);
             setSpeed(result.char_speed);
-    
+
             setStr(result.char_str);
             setDex(result.char_dex);
             setCon(result.char_con);
@@ -157,25 +157,25 @@ export default function CharView(props) {
             setWisSaveProf(result.char_wisSaveProf);
             setChaSave(result.char_chaSave);
             setChaSaveProf(result.char_chaSaveProf);
-    
+
             setActions(result.char_actions);
             setBonusActions(result.char_bonusActions);
             setReactions(result.char_reactions);
-    
+
             setClassFeatures(result.char_classFeatures);
             setRacialFeatures(result.char_racialFeatures);
             setFeatures(result.char_features);
-    
+
             setProfsLangs(result.char_profs_langs);
             setSenses(result.char_senses);
             setPassivPerception(result.char_passivPerception);
             setPassivInsight(result.char_passivInsight);
             setPassivInvestigation(result.char_passivInvestigation);
-    
+
             setNotesOne(result.char_notesOne);
             setNotesTwo(result.char_notesTwo);
             setNotesThree(result.char_notesThree);
-    
+
             setAcrobatics(result.char_acrobatics);
             setAcrobaticsProf(result.char_acrobaticsProf);
             setAnimalHandling(result.char_animalHandling);
@@ -212,7 +212,7 @@ export default function CharView(props) {
             setStealthProf(result.char_stealthProf);
             setSurvival(result.char_survival);
             setSurvivalProf(result.char_survivalProf);
-    
+
             setSpellNotes(result.char_spellNotes);
             console.timeEnd("receiveChar")
         })
@@ -439,7 +439,7 @@ export default function CharView(props) {
             <div id="char">
                 <div className="image" style={style}></div>
                 <div className="smallLabelGroup">
-                    <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setChar({...char, pic: e.target.value})} /></label><br />
+                    <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setChar({ ...char, pic: e.target.value })} /></label><br />
                     <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} /></label><br />
                     <label>Player:<input name="player" type="text" value={player} onChange={e => setPlayer(e.target.value)} /></label><br />
                     <label>Class:<input name="class" type="text" value={classes} onChange={e => setClasses(e.target.value)} /></label>
@@ -503,14 +503,34 @@ export default function CharView(props) {
                                             <th>Properties</th>
                                         </tr>
                                         {items.map((item, index) => {
-                                            if ((item.item_equiped || (item.item_amount && item.item_attunment)) && item.item_type.includes("Weapon")) {
-                                                return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
-                                                    <td onClick={() => viewItem(item)}>{item.item_name}</td>
-                                                    <td className="centered"><input type="text" style={{ width: "50px" }} value={item.item_hit} onChange={createValueListenerItem(item, "item_hit")} /></td>
-                                                    <td className="centered"><input type="text" style={{ width: "200px" }} value={item.item_damage} onChange={createValueListenerItem(item, "item_damage")} /></td>
-                                                    <td className="centered"><input type="text" style={{ width: "100px" }} value={item.item_range} onChange={createValueListenerItem(item, "item_range")} /></td>
-                                                    <td className="centered"><input type="text" style={{ width: "200px" }} value={item.item_properties} onChange={createValueListenerItem(item, "item_properties")} /></td>
-                                                </tr>;
+                                            if (
+                                                (item.item_equiped
+                                                    || (item.item_amount && item.item_attunment)
+                                                )
+                                                && (
+                                                    (item.item_type !== null && item.item_type.includes("Weapon"))
+                                                    ||
+                                                    (item.mitem_type !== null && item.mitem_type.includes("Weapon"))
+                                                )
+                                            ) {
+                                                if (item.item_id === null) {
+                                                    return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
+                                                        <td onClick={() => viewItem(item)}>{item.mitem_name}</td>
+                                                        <td className="centered"><input type="text" style={{ width: "50px" }} value={item.item_hit} onChange={createValueListenerItem(item, "item_hit")} /></td>
+                                                        <td className="centered"><input type="text" style={{ width: "200px" }} value={item.item_damage} onChange={createValueListenerItem(item, "item_damage")} /></td>
+                                                        <td className="centered"><input type="text" style={{ width: "50px" }} value={item.item_range} onChange={createValueListenerItem(item, "item_range")} /></td>
+                                                        <td className="centered"><input type="text" style={{ width: "300px" }} value={item.item_properties} onChange={createValueListenerItem(item, "item_properties")} /></td>
+                                                    </tr>;
+                                                } else {
+                                                    return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
+                                                        <td onClick={() => viewItem(item)}>{item.item_name}</td>
+                                                        <td className="centered"><input type="text" style={{ width: "50px" }} value={item.item_hit} onChange={createValueListenerItem(item, "item_hit")} /></td>
+                                                        <td className="centered"><input type="text" style={{ width: "200px" }} value={item.item_damage} onChange={createValueListenerItem(item, "item_damage")} /></td>
+                                                        <td className="centered"><input type="text" style={{ width: "50px" }} value={item.item_range} onChange={createValueListenerItem(item, "item_range")} /></td>
+                                                        <td className="centered"><input type="text" style={{ width: "300px" }} value={item.item_properties} onChange={createValueListenerItem(item, "item_properties")} /></td>
+                                                    </tr>;
+                                                }
+
                                             }
                                         })}
                                     </tbody>
@@ -627,9 +647,9 @@ export default function CharView(props) {
                         <div className="tabContent" style={{ display: tabs.spells ? "flex" : "none" }}>
                             <div className="charSpells">
                                 <div style={{ width: "clacl(100% - 10px)", height: "30px", padding: "5px" }}>
-                                    <button onClick={exportSpells} style={{width: "150px"}}><FontAwesomeIcon icon={faFileExport} /> Export as cards</button>
+                                    <button onClick={exportSpells} style={{ width: "150px" }}><FontAwesomeIcon icon={faFileExport} /> Export as cards</button>
                                 </div>
-                                <table style={{width: "100%"}}>
+                                <table style={{ width: "100%" }}>
                                     <tbody>
                                         <tr>
                                             <th>Lvl</th>
@@ -672,28 +692,53 @@ export default function CharView(props) {
                                             <th className="centered">Remove</th>
                                         </tr>
                                         {items.map((item, index) => {
-                                            return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
-                                                <td onClick={() => viewItem(item)}>{item.item_name}</td>
-                                                <td onClick={() => viewItem(item)}>{item.item_type}</td>
-                                                <td className="centered">
-                                                    <input type="number" value={item.item_amount} onChange={createValueListenerItem(item, "item_amount")} />
-                                                </td>
-                                                <td className="centered">
-                                                    <label className="checkbox-label">
-                                                        <input name="equiped" type="checkbox" checked={item.item_equiped} onChange={createCheckedListenerItem(item, "item_equiped")} />
-                                                        <span className="checkbox-custom circular"></span>
-                                                    </label>
-                                                </td>
-                                                <td className="centered">
-                                                    {item.item_attunment === 1 ?
+                                            if (item.item_id === null) {
+                                                return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
+                                                    <td onClick={() => viewItem(item)}>{item.mitem_name}</td>
+                                                    <td onClick={() => viewItem(item)}>{item.mitem_type}</td>
+                                                    <td className="centered">
+                                                        <input type="number" value={item.item_amount} onChange={createValueListenerItem(item, "item_amount")} />
+                                                    </td>
+                                                    <td className="centered">
                                                         <label className="checkbox-label">
-                                                            <input name="attuned" type="checkbox" checked={item.item_attuned} onChange={createCheckedListenerItem(item, "item_attuned")} />
+                                                            <input name="equiped" type="checkbox" checked={item.item_equiped} onChange={createCheckedListenerItem(item, "item_equiped")} />
                                                             <span className="checkbox-custom circular"></span>
-                                                        </label> : ""}
+                                                        </label>
+                                                    </td>
+                                                    <td className="centered">
+                                                        {item.item_attunment === 1 ?
+                                                            <label className="checkbox-label">
+                                                                <input name="attuned" type="checkbox" checked={item.item_attuned} onChange={createCheckedListenerItem(item, "item_attuned")} />
+                                                                <span className="checkbox-custom circular"></span>
+                                                            </label> : ""}
 
-                                                </td>
-                                                <td onClick={() => deleteCharItem(item)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
-                                            </tr>;
+                                                    </td>
+                                                    <td onClick={() => deleteCharItem(item)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
+                                                </tr>;
+                                            } else {
+                                                return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
+                                                    <td onClick={() => viewItem(item)}>{item.item_name}</td>
+                                                    <td onClick={() => viewItem(item)}>{item.item_type}</td>
+                                                    <td className="centered">
+                                                        <input type="number" value={item.item_amount} onChange={createValueListenerItem(item, "item_amount")} />
+                                                    </td>
+                                                    <td className="centered">
+                                                        <label className="checkbox-label">
+                                                            <input name="equiped" type="checkbox" checked={item.item_equiped} onChange={createCheckedListenerItem(item, "item_equiped")} />
+                                                            <span className="checkbox-custom circular"></span>
+                                                        </label>
+                                                    </td>
+                                                    <td className="centered">
+                                                        {item.item_attunment === 1 ?
+                                                            <label className="checkbox-label">
+                                                                <input name="attuned" type="checkbox" checked={item.item_attuned} onChange={createCheckedListenerItem(item, "item_attuned")} />
+                                                                <span className="checkbox-custom circular"></span>
+                                                            </label> : ""}
+
+                                                    </td>
+                                                    <td onClick={() => deleteCharItem(item)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
+                                                </tr>;
+                                            }
                                         })}
                                     </tbody>
                                 </table>

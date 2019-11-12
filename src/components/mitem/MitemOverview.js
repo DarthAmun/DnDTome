@@ -37,7 +37,7 @@ export default function MitemOverview() {
     return (
         <div id="overview">
             <div id="itemsOverview">
-                <SearchBar inputs={["name", "description", "cost", "damage", "properties", "weight"]} queryName="sendMitemSearchQuery" />
+                <SearchBar inputs={["name", "type", "description", "cost", "damage", "properties", "weight"]} queryName="sendMitemSearchQuery" />
                 <div id="items" ref={mitems}>
                     {currentMitemList.mitems.map((mitem, index) => {
                         return <Mitem delay={index} mitem={mitem} key={mitem.mitem_id} onClick={() => viewMitem(mitem)} />;

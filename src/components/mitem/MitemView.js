@@ -19,6 +19,7 @@ export default function MitemView() {
     const [damage, setDamage] = useState("");
     const [weight, setWeight] = useState("");
     const [properties, setProperties] = useState("");
+    const [type, setType] = useState("");
 
     const [chars, setChars] = useState([]);
     const [selectedChar, setSelectedChar] = useState(0);
@@ -35,6 +36,7 @@ export default function MitemView() {
             setDamage(result.mitem_damage);
             setWeight(result.mitem_weight);
             setProperties(result.mitem_properties);
+            setType(result.mitem_type);
             console.timeEnd("receiveMitem")
         })
     }
@@ -70,11 +72,11 @@ export default function MitemView() {
 
     const saveMitem = (e) => {
         console.log("save trigger");
-        ipcRenderer.send('saveMitem', { mitem: { id, name, pic, description, cost, weight, damage, properties } });
+        ipcRenderer.send('saveMitem', { mitem: { id, name, pic, description, cost, weight, damage, properties, type } });
     }
 
     const addMitemToChar = (e) => {
-        ipcRenderer.send('addMitemToChar', { char: { selectedChar }, mitem: { id, name } });
+        ipcRenderer.send('addMitemToChar', { char: { selectedChar }, mitem: { id, name, damage, properties } });
     }
 
     const deleteMitem = (e) => {
@@ -104,8 +106,8 @@ export default function MitemView() {
         <div id="mitemView">
             <div className="top">
                 <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} /></label>
+                <label>Type:<input name="type" type="text" value={type} onChange={e => setType(e.target.value)} /></label>
                 <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label>
-                <label>Cost:<input name="cost" type="text" value={cost} onChange={e => setCost(e.target.value)} /></label>
                 <label className="left">Char:<select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
                     {chars.map((char, index) => {
                         return <option key={index} value={char.char_id}>{char.char_name}</option>;
@@ -115,9 +117,10 @@ export default function MitemView() {
             <div className="top">
                 <label>Weight:<input name="weight" type="weight" value={weight} onChange={e => setWeight(e.target.value)} /></label>
                 <label>Damage:<input name="damage" type="damage" value={damage} onChange={e => setDamage(e.target.value)} /></label>
-                <label>Props:<input name="props" type="text" value={properties} onChange={e => setProperties(e.target.value)} /></label>
+                <label>Cost:<input name="cost" type="text" value={cost} onChange={e => setCost(e.target.value)} /></label>
                 <button onClick={addMitemToChar} style={{float: "left"}}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
             </div>
+            <label style={{width: "100%"}}>Props:<input style={{width: "calc(100% - 113px)", marginRight: "13px"}} name="props" type="text" value={properties} onChange={e => setProperties(e.target.value)} /></label>
             <div className="image" style={style}></div>
             <textarea value={description} onChange={e => setDescription(e.target.value)}></textarea>
             <button className="delete" onClick={deleteMitem}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>

@@ -179,10 +179,10 @@ function createWindow() {
   //Mitem window
   mitemWindow = new BrowserWindow({
     parent: mainWindow,
-    width: 660,
-    height: 365,
+    width: 645,
+    height: 385,
     show: false,
-    resizable: true,
+    resizable: false,
     frame: true,
     icon: __dirname + './src/assets/img/dice_icon.ico',
     //The lines below solved the issue
@@ -277,6 +277,10 @@ ipcMain.on('getAllSpells', (event) => {
 
 ipcMain.on('getAllItems', (event) => {
   ItemService.reciveAllItems(mainWindow);
+});
+
+ipcMain.on('getAllMitems', (event) => {
+  MitemService.reciveAllMitems(mainWindow);
 });
 
 ipcMain.on('getAllMonsters', (event) => {
@@ -393,6 +397,11 @@ ipcMain.on('deleteItem', (event, arg) => {
   ItemService.deleteItem(item, mainWindow, itemWindow);
 });
 
+ipcMain.on('deleteMitem', (event, arg) => {
+  const { mitem } = arg;
+  MitemService.deleteMitem(mitem, mainWindow, mitemWindow);
+});
+
 ipcMain.on('deleteMonster', (event, arg) => {
   const { monster } = arg;
   MonsterService.deleteMonster(monster, mainWindow, monsterWindow);
@@ -414,6 +423,11 @@ ipcMain.on('saveNewItem', (event, arg) => {
 ipcMain.on('saveNewItems', (event, arg) => {
   const { items } = arg;
   ItemService.saveNewItems(items, mainWindow);
+});
+
+ipcMain.on('saveNewMitems', (event, arg) => {
+  const { mitems } = arg;
+  MitemService.saveNewMitems(mitems, mainWindow);
 });
 
 ipcMain.on('saveNewMonster', (event, arg) => {
@@ -452,6 +466,10 @@ ipcMain.on('getCharItems', (event, arg) => {
 ipcMain.on('addItemToChar', (event, arg) => {
   const { char, item } = arg;
   ItemService.addItemToChar(char, item, mainWindow);
+});
+ipcMain.on('addMitemToChar', (event, arg) => {
+  const { char, mitem } = arg;
+  MitemService.addMitemToChar(char, mitem, mainWindow);
 });
 ipcMain.on('addSpellToChar', (event, arg) => {
   const { char, spell } = arg;
@@ -522,6 +540,9 @@ ipcMain.on('deleteAllSpells', (event) => {
 });
 ipcMain.on('deleteAllItems', (event) => {
   deleteAll("items");
+});
+ipcMain.on('deleteAllMitems', (event) => {
+  deleteAll("mitems");
 });
 ipcMain.on('deleteAllMonsters', (event) => {
   deleteAll("monsters");
