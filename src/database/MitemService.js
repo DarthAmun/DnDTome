@@ -22,7 +22,9 @@ module.exports.reciveAllMitems = (mainWindow) => {
 module.exports.reciveMitems = (step, start, query, mainWindow) => {
     mitemStep = step;
     mitemStart = start;
-    searchMitemQuery = query;
+    if (query !== null) {
+        searchMitemQuery = query;
+    }
     let q = "SELECT * FROM 'main'.'tab_mitems' WHERE ";
     if (searchMitemQuery != null) {
         if (searchMitemQuery.name != null && typeof searchMitemQuery.name !== 'undefined' && searchMitemQuery.name != "") {

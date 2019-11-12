@@ -290,24 +290,24 @@ ipcMain.on('getAllChars', (event) => {
 ipcMain.on('getSearchSpells', (event, arg) => {
   const { step, start } = arg;
   this.searchSpellStep = step;
-  SpellService.reciveSpells(step, start, {}, mainWindow);
+  SpellService.reciveSpells(step, start, null, mainWindow);
 });
 
 ipcMain.on('getSearchItems', (event, arg) => {
   const { step, start } = arg;
   this.searchItemStep = step;
-  ItemService.reciveItems(step, start, {}, mainWindow);
+  ItemService.reciveItems(step, start, null, mainWindow);
 });
 ipcMain.on('getSearchMitems', (event, arg) => {
   const { step, start } = arg;
   this.searchMitemStep = step;
-  MitemService.reciveMitems(step, start, {}, mainWindow);
+  MitemService.reciveMitems(step, start, null, mainWindow);
 });
 
 ipcMain.on('getSearchMonsters', (event, arg) => {
   const { step, start } = arg;
   this.searchMonsterStep = step;
-  MonsterService.reciveMonsters(step, start, {}, mainWindow);
+  MonsterService.reciveMonsters(step, start, null, mainWindow);
 });
 
 ipcMain.on('getSpellCount', (event, arg) => {

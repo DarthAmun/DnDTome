@@ -22,7 +22,9 @@ module.exports.reciveAllMonsters = (mainWindow) => {
 module.exports.reciveMonsters = (step, start, query, mainWindow) => {
     monsterStep = step;
     monsterStart = start;
-    searchMonsterQuery = query;
+    if (query !== null) {
+        searchMonsterQuery = query;
+    }
     let q = "SELECT * FROM 'main'.'tab_monsters' WHERE ";
     if (searchMonsterQuery != null) {
         if (searchMonsterQuery.name != null && typeof searchMonsterQuery.name !== 'undefined' && searchMonsterQuery.name != "") {

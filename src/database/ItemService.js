@@ -22,7 +22,9 @@ module.exports.reciveAllItems = (mainWindow) => {
 module.exports.reciveItems = (step, start, query, mainWindow) => {
     itemStep = step;
     itemStart = start;
-    searchItemQuery = query;
+    if (query !== null) {
+        searchItemQuery = query;
+    }
     let q = "SELECT * FROM 'main'.'tab_items' WHERE ";
     if (searchItemQuery != null) {
         if (searchItemQuery.name != null && typeof searchItemQuery.name !== 'undefined' && searchItemQuery.name != "") {
