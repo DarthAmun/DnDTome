@@ -15,6 +15,7 @@ import Options from './Options';
 
 import AddSpell from './add/AddSpell';
 import AddItem from './add/AddItem';
+import AddGear from './add/AddGear';
 import AddMonster from './add/AddMonster';
 import AddChar from './add/AddChar';
 
@@ -81,6 +82,9 @@ export default function App() {
         }} />
         <Route path="/add-item" render={() => {
           return <PageLayout><AddItem /></PageLayout>
+        }} />
+        <Route path="/add-gear" render={() => {
+          return <PageLayout><AddGear /></PageLayout>
         }} />
         <Route path="/add-monster" render={() => {
           return <PageLayout><AddMonster /></PageLayout>

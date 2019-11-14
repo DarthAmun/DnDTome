@@ -686,6 +686,8 @@ export default function CharView(props) {
                                         <tr>
                                             <th>Name</th>
                                             <th>Type</th>
+                                            <th>Cost</th>
+                                            <th>Weight</th>
                                             <th className="centered">Amount</th>
                                             <th className="centered">Equiped?</th>
                                             <th className="centered">Attuned?</th>
@@ -696,6 +698,8 @@ export default function CharView(props) {
                                                 return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
                                                     <td onClick={() => viewItem(item)}>{item.gear_name}</td>
                                                     <td onClick={() => viewItem(item)}>{item.gear_type}</td>
+                                                    <td className="centered" onClick={() => viewItem(item)}>{item.gear_cost}</td>
+                                                    <td className="centered" onClick={() => viewItem(item)}>{item.gear_weight}</td>
                                                     <td className="centered">
                                                         <input type="number" value={item.item_amount} onChange={createValueListenerItem(item, "item_amount")} />
                                                     </td>
@@ -719,6 +723,8 @@ export default function CharView(props) {
                                                 return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
                                                     <td onClick={() => viewItem(item)}>{item.item_name}</td>
                                                     <td onClick={() => viewItem(item)}>{item.item_type}</td>
+                                                    <td className="centered" onClick={() => viewItem(item)}></td>
+                                                    <td className="centered" onClick={() => viewItem(item)}></td>
                                                     <td className="centered">
                                                         <input type="number" value={item.item_amount} onChange={createValueListenerItem(item, "item_amount")} />
                                                     </td>

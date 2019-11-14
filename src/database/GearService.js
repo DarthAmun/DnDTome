@@ -116,9 +116,9 @@ module.exports.saveGear = (gear, mainWindow) => {
 }
 
 module.exports.saveNewGear = (gear, mainWindow) => {
-    let data = [gear.name, gear.description, gear.pic, gear.rarity, gear.type, gear.source];
-    let sql = `INSERT INTO 'main'.'tab_gears' (gear_name, gear_description, gear_pic, gear_rarity, gear_type, gear_source)
-                VALUES  (?, ?, ?, ?, ?, ?)`;
+    let data = [gear.name, gear.description, gear.pic, gear.cost, gear.damage, gear.weight, gear.properties, gear.type];
+    let sql = `INSERT INTO 'main'.'tab_gears' (gear_name, gear_description, gear_pic, gear_cost, gear_damage, gear_weight, gear_properties, gear_type)
+                VALUES  (?, ?, ?, ?, ?, ?, ?, ?)`;
     db.serialize(function () {
         db.run(sql, data, function (err) {
             if (err) {

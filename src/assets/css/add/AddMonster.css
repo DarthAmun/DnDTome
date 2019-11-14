@@ -49,7 +49,7 @@
 }
 
 #monsterView button:hover {
-    box-shadow: var(--button-boxshadow);
+    box-shadow: var(--boxshadow-hover);
     cursor: pointer;
 }
 

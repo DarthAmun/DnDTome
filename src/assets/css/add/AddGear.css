@@ -10,7 +10,7 @@ body {
     src: url('../../font/Quicksand-Medium.ttf') format('truetype');
 }
 
-#itemView {
+#gearView {
     height: calc(100% - 20px);
     width: calc(100% - 20px);
     overflow: hidden;
@@ -19,7 +19,7 @@ body {
     font-family: 'Quicksand', sans-serif;
 }
 
-#itemView input, #itemView select {
+#gearView input, #gearView select {
     height: 30px;
     width: 200px;
     border: none;
@@ -36,19 +36,18 @@ body {
     color: var(--pagination-input-color);
 }
 
-#itemView select {
+#gearView select {
     width: 220px;
 }
 
-#itemView button {
-    height: 32px;
+#gearView button {
+    height: 30px;
     width: 120px;
     border: none;
     border-radius: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    margin-bottom: 5px;
-    margin-left: 5px;
+    margin-right: 10px;
     text-align: center;
     float: left;
     font-family: inherit;
@@ -58,18 +57,18 @@ body {
     cursor: pointer;
 }
 
-#itemView button:hover {
+#gearView button:hover {
     box-shadow: var(--boxshadow-hover);
     cursor: pointer;
 }
 
-#itemView button.delete {
+#gearView button.delete {
     background-color: darkred;
 }
 
-#itemView textarea {
-    height: 300px;
-    width: 428px;
+#gearView textarea {
+    height: 100px;
+    width: 464px;
     float: left;
     resize: none;
     border-radius: 3px;
@@ -84,10 +83,10 @@ body {
     color: var(--pagination-input-color);
 }
 
-#itemView .image {
+#gearView .image {
     float: left;
-    width: 320px;
-    height: 320px;
+    width: 120px;
+    height: 120px;
     overflow: hidden;
     margin-right: 5px;
     margin-bottom: 5px;
@@ -95,18 +94,18 @@ body {
     background-color: white;
 }
 
-#itemView label {
+#gearView label {
     display: inline-block;
-    width: 290px;
+    width: 300px;
     text-align: right;
     line-height: 30px;
 }
-#itemView label .labelText{
+#gearView label .labelText{
     float: left;
     height: 30px;
     line-height: 33px;
 }
-#itemView label input[type=checkbox]{
+#gearView label input[type=checkbox]{
     width: 15px;
     background: none;
     box-shadow: none;
@@ -114,43 +113,43 @@ body {
     margin-bottom: 0px;
 }
 
-#itemView .top {
+#gearView .top {
     float: left;
-    width: 290px;
-    height: 150px;
+    width: 300px;
+    height: 105px;
     margin-right: 10px;
 }
 
-#itemView img {
+#gearView img {
     width: 320px;
     margin-left: 5px;
     box-shadow: var(--boxshadow);
 }
 
-#itemView::-webkit-scrollbar, #itemView textarea::-webkit-scrollbar {
+#gearView::-webkit-scrollbar, #gearView textarea::-webkit-scrollbar {
     width: 6px;
     background-color: var(--scrollbar);
     border-radius: 5px;
 }
 
-#itemView::-webkit-scrollbar-thumb, #itemView textarea::-webkit-scrollbar-thumb {
+#gearView::-webkit-scrollbar-thumb, #gearView textarea::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb);
     border-radius: 5px;
 }
 
-.checkbox-label {
+#gearView .checkbox-label {
     display: block;
     position: relative;
     cursor: pointer;
   }
   
-  .checkbox-label input {
+  #gearView .checkbox-label input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
   }
   
-  .checkbox-label .checkbox-custom {
+  #gearView .checkbox-label .checkbox-custom {
     position: absolute;
     top: 2px;
     left: 70px;
@@ -168,7 +167,7 @@ body {
   }
   
   
-  .checkbox-label input:checked ~ .checkbox-custom {
+  #gearView .checkbox-label input:checked ~ .checkbox-custom {
     background-color: #FFFFFF;
     border-radius: 5px;
     -webkit-transform: rotate(0deg) scale(1);
@@ -179,7 +178,7 @@ body {
   }
   
   
-  .checkbox-label .checkbox-custom::after {
+  #gearView .checkbox-label .checkbox-custom::after {
     position: absolute;
     content: "";
     left: 12px;
@@ -201,7 +200,7 @@ body {
   }
   
   
-  .checkbox-label input:checked ~ .checkbox-custom::after {
+  #gearView .checkbox-label input:checked ~ .checkbox-custom::after {
   -webkit-transform: rotate(45deg) scale(1);
   -ms-transform: rotate(45deg) scale(1);
   transform: rotate(45deg) scale(1);
@@ -216,7 +215,7 @@ body {
   border-radius: 0;
   }
   
-  .checkbox-label input:checked ~ .checkbox-custom::before {
+  #gearView .checkbox-label input:checked ~ .checkbox-custom::before {
     transition: all 0.3s ease-out;
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
@@ -226,29 +225,29 @@ body {
   
   
   /* Style for Circular Checkbox */
-  .checkbox-label .checkbox-custom.circular {
+  #gearView .checkbox-label .checkbox-custom.circular {
     border-radius: 50%;
     border: 2px solid #8000ff;
   }
   
-  .checkbox-label input:checked ~ .checkbox-custom.circular {
+  #gearView .checkbox-label input:checked ~ .checkbox-custom.circular {
     background-color: var(--pagination-input-background-color);
     border-radius: 50%;
     border: 2px solid var(--pagination-input-background-color);
   }
-  .checkbox-label input:checked ~ .checkbox-custom.circular::after {
+  #gearView .checkbox-label input:checked ~ .checkbox-custom.circular::after {
     border: solid #8000ff;
     border-width: 0 2px 2px 0;
   }
-  .checkbox-label .checkbox-custom.circular::after {
+  #gearView .checkbox-label .checkbox-custom.circular::after {
     border-radius: 50%;
   }
   
-  .checkbox-label .checkbox-custom.circular::before {
+  #gearView .checkbox-label .checkbox-custom.circular::before {
     border-radius: 50%;
     border: 2px solid #FFFFFF;
   }
   
-  .checkbox-label input:checked ~ .checkbox-custom.circular::before {
+  #gearView .checkbox-label input:checked ~ .checkbox-custom.circular::before {
     border-radius: 50%;
   }

@@ -425,6 +425,10 @@ ipcMain.on('saveNewItems', (event, arg) => {
   ItemService.saveNewItems(items, mainWindow);
 });
 
+ipcMain.on('saveNewGear', (event, arg) => {
+  const { gear } = arg;
+  GearService.saveNewGear(gear, mainWindow);
+});
 ipcMain.on('saveNewGears', (event, arg) => {
   const { gears } = arg;
   GearService.saveNewGears(gears, mainWindow);

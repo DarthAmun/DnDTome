@@ -44,6 +44,11 @@
     margin-left: 5px;
 }
 
+#pagination .button:hover {
+    box-shadow: var(--boxshadow-hover);
+    cursor: pointer;
+}
+
 .pageDown {
     margin-right: 5px;
 }
@@ -53,7 +58,7 @@
 }
 
 .pageDown:hover, .pageUp:hover {
-    box-shadow: var(--button-boxshadow);
+    box-shadow: var(--boxshadow-hover);
 }
 
 #pages {

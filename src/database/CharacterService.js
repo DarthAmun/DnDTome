@@ -42,10 +42,11 @@ module.exports.reciveCharSpells = (id, mainWindow) => {
 
 module.exports.reciveCharItems = (id, mainWindow) => {
     db.serialize(function () {
-        db.all("SELECT * FROM 'main'.'tab_characters_items' AS a LEFT JOIN 'main'.'tab_items' AS b ON a.item_id = b.item_id LEFT JOIN 'main'.'tab_gears' AS c ON a.gear_id = c.gear_id WHERE char_id=? ORDER BY b.item_name", [id], function (err, rows) {
+        db.all("SELECT *, CASE WHEN b.item_name IS NOT NULL THEN b.item_name ELSE c.gear_name END as name FROM 'main'.'tab_characters_items' AS a LEFT JOIN 'main'.'tab_items' AS b ON a.item_id = b.item_id LEFT JOIN 'main'.'tab_gears' AS c ON a.gear_id = c.gear_id WHERE char_id=? ORDER BY name", [id], function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
+            console.log(rows);
             mainWindow.webContents.send('getCharItemsResult', rows);
             console.log("====>" + `getCharItemsResult successfull`)
         });
