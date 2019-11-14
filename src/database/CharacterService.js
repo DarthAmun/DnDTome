@@ -42,7 +42,7 @@ module.exports.reciveCharSpells = (id, mainWindow) => {
 
 module.exports.reciveCharItems = (id, mainWindow) => {
     db.serialize(function () {
-        db.all("SELECT * FROM 'main'.'tab_characters_items' AS a LEFT JOIN 'main'.'tab_items' AS b ON a.item_id = b.item_id LEFT JOIN 'main'.'tab_mitems' AS c ON a.mitem_id = c.mitem_id WHERE char_id=? ORDER BY b.item_name", [id], function (err, rows) {
+        db.all("SELECT * FROM 'main'.'tab_characters_items' AS a LEFT JOIN 'main'.'tab_items' AS b ON a.item_id = b.item_id LEFT JOIN 'main'.'tab_gears' AS c ON a.gear_id = c.gear_id WHERE char_id=? ORDER BY b.item_name", [id], function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
@@ -202,7 +202,7 @@ module.exports.saveNewChars = (chars, mainWindow) => {
     });
 }
 
-module.exports.reciveChars = (mainWindow, itemWindow, mitemWindow, spellWindow) => {
+module.exports.reciveChars = (mainWindow, itemWindow, gearWindow, spellWindow) => {
     db.serialize(function () {
         db.all("SELECT * FROM 'main'.'tab_characters' ORDER BY char_player ASC", function (err, rows) {
             if (err != null) {
@@ -210,7 +210,7 @@ module.exports.reciveChars = (mainWindow, itemWindow, mitemWindow, spellWindow) 
             }
             mainWindow.webContents.send('getCharsResult', rows);
             itemWindow.webContents.send('getCharsResult', rows);
-            mitemWindow.webContents.send('getCharsResult', rows);
+            gearWindow.webContents.send('getCharsResult', rows);
             spellWindow.webContents.send('getCharsResult', rows);
             console.log("====>" + `getCharsResult successfull`)
         });

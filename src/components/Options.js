@@ -15,7 +15,7 @@ const fs = require('fs');
 export default function Options() {
   const [spells, setSpells] = useState([]);
   const [items, setItems] = useState([]);
-  const [mitems, setMitems] = useState([]);
+  const [gears, setGears] = useState([]);
   const [monsters, setMonsters] = useState([]);
   const [chars, setChars] = useState([]);
 
@@ -25,8 +25,8 @@ export default function Options() {
   const receiveAllItems = (evt, result) => {
     setItems(result);
   }
-  const receiveAllMitems = (evt, result) => {
-    setMitems(result);
+  const receiveAllGears = (evt, result) => {
+    setGears(result);
   }
   const receiveAllMonsters = (evt, result) => {
     setMonsters(result);
@@ -38,18 +38,18 @@ export default function Options() {
   useEffect(() => {
     ipcRenderer.send('getAllSpells');
     ipcRenderer.send('getAllItems');
-    ipcRenderer.send('getAllMitems');
+    ipcRenderer.send('getAllGears');
     ipcRenderer.send('getAllMonsters');
     ipcRenderer.send('getAllChars');
     ipcRenderer.on("getAllSpellsResult", receiveAllSpells);
     ipcRenderer.on("getAllItemsResult", receiveAllItems);
-    ipcRenderer.on("getAllMitemsResult", receiveAllMitems);
+    ipcRenderer.on("getAllGearsResult", receiveAllGears);
     ipcRenderer.on("getAllMonstersResult", receiveAllMonsters);
     ipcRenderer.on("getAllCharsResult", receiveAllChars);
     return () => {
       ipcRenderer.removeListener("getAllSpellsResult", receiveAllSpells);
       ipcRenderer.removeListener("getAllItemsResult", receiveAllItems);
-      ipcRenderer.removeListener("getAllMitemsResult", receiveAllMitems);
+      ipcRenderer.removeListener("getAllGearsResult", receiveAllGears);
       ipcRenderer.removeListener("getAllMonstersResult", receiveAllMonsters);
       ipcRenderer.removeListener("getAllCharsResult", receiveAllChars);
     }
@@ -98,8 +98,8 @@ export default function Options() {
     });
   }
 
-  const exportMitems = (e) => {
-    let content = JSON.stringify(mitems);
+  const exportGears = (e) => {
+    let content = JSON.stringify(gears);
 
     options.defaultPath = options.defaultPath + '/gear_export.json';
     dialog.showSaveDialog(null, options, (path) => {
@@ -188,7 +188,7 @@ export default function Options() {
     });
   }
 
-  const importMitems = (e) => {
+  const importGears = (e) => {
     dialog.showOpenDialog((fileNames) => {
       // fileNames is an array that contains all the selected
       if (fileNames === undefined) {
@@ -203,8 +203,8 @@ export default function Options() {
         }
 
         // Change how to handle the file content
-        let mitemsJson = JSON.parse(data);
-        ipcRenderer.send('saveNewMitems', { mitems: mitemsJson }); // fehlt noch
+        let gearsJson = JSON.parse(data);
+        ipcRenderer.send('saveNewGears', { gears: gearsJson }); // fehlt noch
       });
     });
   }
@@ -266,7 +266,7 @@ export default function Options() {
       }
     });
   }
-  const deleteAllMitems = () => {
+  const deleteAllGears = () => {
     const options = {
       type: 'question',
       buttons: ['Cancel', 'Yes, please', 'No, thanks'],
@@ -277,7 +277,7 @@ export default function Options() {
 
     dialog.showMessageBox(null, options, (response) => {
       if (response == 1) {
-        ipcRenderer.send('deleteAllMitems');
+        ipcRenderer.send('deleteAllGears');
       }
     });
   }
@@ -361,7 +361,7 @@ export default function Options() {
             <span>Path: {options.defaultPath}</span><br />
             <button onClick={exportSpells}><FontAwesomeIcon icon={faFileExport} /> Export all Spells </button><br />
             <button onClick={exportItems}><FontAwesomeIcon icon={faFileExport} /> Export all Items </button><br />
-            <button onClick={exportMitems}><FontAwesomeIcon icon={faFileExport} /> Export all Gear </button><br />
+            <button onClick={exportGears}><FontAwesomeIcon icon={faFileExport} /> Export all Gear </button><br />
             <button onClick={exportMonsters}><FontAwesomeIcon icon={faFileExport} /> Export all Monsters </button><br />
             <button onClick={exportChars}><FontAwesomeIcon icon={faFileExport} /> Export all Characters </button>
           </div>
@@ -369,7 +369,7 @@ export default function Options() {
             <h3>Data Import</h3>
             <button onClick={importSpells}><FontAwesomeIcon icon={faFileImport} /> Import Spells </button><br />
             <button onClick={importItems}><FontAwesomeIcon icon={faFileImport} /> Import Items </button><br />
-            <button onClick={importMitems}><FontAwesomeIcon icon={faFileImport} /> Import Gear </button><br />
+            <button onClick={importGears}><FontAwesomeIcon icon={faFileImport} /> Import Gear </button><br />
             <button onClick={importMonsters}><FontAwesomeIcon icon={faFileImport} /> Import Monsters </button><br />
             <button onClick={importChars}><FontAwesomeIcon icon={faFileImport} /> Import Characters </button>
           </div>
@@ -377,7 +377,7 @@ export default function Options() {
             <h3>Delete Data</h3>
             <button onClick={deleteAllSpells}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Spells </button><br />
             <button onClick={deleteAllItems}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Items </button><br />
-            <button onClick={deleteAllMitems}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Gear </button><br />
+            <button onClick={deleteAllGears}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Gear </button><br />
             <button onClick={deleteAllMonsters}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Monsters </button><br />
             <button onClick={deleteAllChars}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Characters </button>
           </div>

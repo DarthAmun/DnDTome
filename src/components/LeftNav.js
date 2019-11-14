@@ -135,7 +135,7 @@ class LeftNav extends Component {
             <FontAwesomeIcon icon={faShieldAlt} /> Items
           </div>
         </Link>
-        <Link to="/mitem-overview" style={{ top: "170px" }} className={this.props.location.pathname == "/mitem-overview" ? "menuItemActiv" : ""}>
+        <Link to="/gear-overview" style={{ top: "170px" }} className={this.props.location.pathname == "/gear-overview" ? "menuItemActiv" : ""}>
           <div className="menuItem">
             <FontAwesomeIcon icon={faSketch} /> Equip
           </div>

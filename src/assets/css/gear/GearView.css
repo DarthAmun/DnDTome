@@ -10,7 +10,7 @@ body {
     src: url('../../font/Quicksand-Medium.ttf') format('truetype');
 }
 
-#mitemView {
+#gearView {
     height: calc(100% - 20px);
     width: calc(100% - 20px);
     overflow: hidden;
@@ -19,7 +19,7 @@ body {
     font-family: 'Quicksand', sans-serif;
 }
 
-#mitemView input, #mitemView select {
+#gearView input, #gearView select {
     height: 30px;
     width: 200px;
     border: none;
@@ -36,11 +36,11 @@ body {
     color: var(--pagination-input-color);
 }
 
-#mitemView select {
+#gearView select {
     width: 220px;
 }
 
-#mitemView button {
+#gearView button {
     height: 30px;
     width: 120px;
     border: none;
@@ -57,16 +57,16 @@ body {
     cursor: pointer;
 }
 
-#mitemView button:hover {
+#gearView button:hover {
     box-shadow: var(--button-boxshadow);
     cursor: pointer;
 }
 
-#mitemView button.delete {
+#gearView button.delete {
     background-color: darkred;
 }
 
-#mitemView textarea {
+#gearView textarea {
     height: 100px;
     width: 464px;
     float: left;
@@ -83,7 +83,7 @@ body {
     color: var(--pagination-input-color);
 }
 
-#mitemView .image {
+#gearView .image {
     float: left;
     width: 120px;
     height: 120px;
@@ -94,18 +94,18 @@ body {
     background-color: white;
 }
 
-#mitemView label {
+#gearView label {
     display: inline-block;
     width: 300px;
     text-align: right;
     line-height: 30px;
 }
-#mitemView label .labelText{
+#gearView label .labelText{
     float: left;
     height: 30px;
     line-height: 33px;
 }
-#mitemView label input[type=checkbox]{
+#gearView label input[type=checkbox]{
     width: 15px;
     background: none;
     box-shadow: none;
@@ -113,26 +113,26 @@ body {
     margin-bottom: 0px;
 }
 
-#mitemView .top {
+#gearView .top {
     float: left;
     width: 300px;
     height: 145px;
     margin-right: 10px;
 }
 
-#mitemView img {
+#gearView img {
     width: 320px;
     margin-left: 5px;
     box-shadow: var(--boxshadow);
 }
 
-#mitemView::-webkit-scrollbar, #mitemView textarea::-webkit-scrollbar {
+#gearView::-webkit-scrollbar, #gearView textarea::-webkit-scrollbar {
     width: 6px;
     background-color: var(--scrollbar);
     border-radius: 5px;
 }
 
-#mitemView::-webkit-scrollbar-thumb, #mitemView textarea::-webkit-scrollbar-thumb {
+#gearView::-webkit-scrollbar-thumb, #gearView textarea::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb);
     border-radius: 5px;
 }

@@ -8,7 +8,7 @@ const url = require('url');
 //Database Services
 const SpellService = require('./src/database/SpellService');
 const ItemService = require('./src/database/ItemService');
-const MitemService = require('./src/database/MitemService');
+const GearService = require('./src/database/GearService');
 const MonsterService = require('./src/database/MonsterService');
 const CharacterService = require('./src/database/CharacterService');
 
@@ -19,8 +19,8 @@ let spellWindow;
 let spellPath;
 let itemWindow;
 let itemPath;
-let mitemWindow;
-let mitemPath;
+let gearWindow;
+let gearPath;
 let monsterWindow;
 let monsterPath;
 // Keep a reference for dev mode
@@ -70,10 +70,10 @@ function createWindow() {
       pathname: 'item.html',
       slashes: true
     });
-    mitemPath = url.format({
+    gearPath = url.format({
       protocol: 'http:',
       host: 'localhost:8080',
-      pathname: 'mitem.html',
+      pathname: 'gear.html',
       slashes: true
     });
     monsterPath = url.format({
@@ -98,9 +98,9 @@ function createWindow() {
       pathname: path.join(__dirname, 'dist', 'item.html'),
       slashes: true
     });
-    mitemPath = url.format({
+    gearPath = url.format({
       protocol: 'file:',
-      pathname: path.join(__dirname, 'dist', 'mitem.html'),
+      pathname: path.join(__dirname, 'dist', 'gear.html'),
       slashes: true
     });
     monsterPath = url.format({
@@ -130,7 +130,7 @@ function createWindow() {
     mainWindow = null;
     spellWindow = null;
     itemWindow = null;
-    mitemWindow = null;
+    gearWindow = null;
     monsterWindow = null;
   });
 
@@ -176,8 +176,8 @@ function createWindow() {
     itemWindow.hide();
   });
 
-  //Mitem window
-  mitemWindow = new BrowserWindow({
+  //Gear window
+  gearWindow = new BrowserWindow({
     parent: mainWindow,
     width: 645,
     height: 385,
@@ -190,11 +190,11 @@ function createWindow() {
       nodeIntegration: true
     }
   });
-  mitemWindow.setMenu(null);
-  mitemWindow.loadURL(mitemPath);
-  mitemWindow.on('close', (e) => {
+  gearWindow.setMenu(null);
+  gearWindow.loadURL(gearPath);
+  gearWindow.on('close', (e) => {
     e.preventDefault();
-    mitemWindow.hide();
+    gearWindow.hide();
   });
 
   //Monster window
@@ -279,8 +279,8 @@ ipcMain.on('getAllItems', (event) => {
   ItemService.reciveAllItems(mainWindow);
 });
 
-ipcMain.on('getAllMitems', (event) => {
-  MitemService.reciveAllMitems(mainWindow);
+ipcMain.on('getAllGears', (event) => {
+  GearService.reciveAllGears(mainWindow);
 });
 
 ipcMain.on('getAllMonsters', (event) => {
@@ -302,10 +302,10 @@ ipcMain.on('getSearchItems', (event, arg) => {
   this.searchItemStep = step;
   ItemService.reciveItems(step, start, null, mainWindow);
 });
-ipcMain.on('getSearchMitems', (event, arg) => {
+ipcMain.on('getSearchGears', (event, arg) => {
   const { step, start } = arg;
-  this.searchMitemStep = step;
-  MitemService.reciveMitems(step, start, null, mainWindow);
+  this.searchGearStep = step;
+  GearService.reciveGears(step, start, null, mainWindow);
 });
 
 ipcMain.on('getSearchMonsters', (event, arg) => {
@@ -359,10 +359,10 @@ ipcMain.on('saveItem', (event, arg) => {
   ItemService.saveItem(item, mainWindow);
 });
 
-ipcMain.on('saveMitem', (event, arg) => {
+ipcMain.on('saveGear', (event, arg) => {
   console.log("save event");
-  const { mitem } = arg;
-  MitemService.saveMitem(mitem, mainWindow);
+  const { gear } = arg;
+  GearService.saveGear(gear, mainWindow);
 });
 
 ipcMain.on('saveMonster', (event, arg) => {
@@ -397,9 +397,9 @@ ipcMain.on('deleteItem', (event, arg) => {
   ItemService.deleteItem(item, mainWindow, itemWindow);
 });
 
-ipcMain.on('deleteMitem', (event, arg) => {
-  const { mitem } = arg;
-  MitemService.deleteMitem(mitem, mainWindow, mitemWindow);
+ipcMain.on('deleteGear', (event, arg) => {
+  const { gear } = arg;
+  GearService.deleteGear(gear, mainWindow, gearWindow);
 });
 
 ipcMain.on('deleteMonster', (event, arg) => {
@@ -425,9 +425,9 @@ ipcMain.on('saveNewItems', (event, arg) => {
   ItemService.saveNewItems(items, mainWindow);
 });
 
-ipcMain.on('saveNewMitems', (event, arg) => {
-  const { mitems } = arg;
-  MitemService.saveNewMitems(mitems, mainWindow);
+ipcMain.on('saveNewGears', (event, arg) => {
+  const { gears } = arg;
+  GearService.saveNewGears(gears, mainWindow);
 });
 
 ipcMain.on('saveNewMonster', (event, arg) => {
@@ -446,7 +446,7 @@ ipcMain.on('saveNewChars', (event, arg) => {
 });
 
 ipcMain.on('getChars', (event, arg) => {
-  CharacterService.reciveChars(mainWindow, itemWindow, mitemWindow, spellWindow);
+  CharacterService.reciveChars(mainWindow, itemWindow, gearWindow, spellWindow);
 });
 
 ipcMain.on('getChar', (event, arg) => {
@@ -467,9 +467,9 @@ ipcMain.on('addItemToChar', (event, arg) => {
   const { char, item } = arg;
   ItemService.addItemToChar(char, item, mainWindow);
 });
-ipcMain.on('addMitemToChar', (event, arg) => {
-  const { char, mitem } = arg;
-  MitemService.addMitemToChar(char, mitem, mainWindow);
+ipcMain.on('addGearToChar', (event, arg) => {
+  const { char, gear } = arg;
+  GearService.addGearToChar(char, gear, mainWindow);
 });
 ipcMain.on('addSpellToChar', (event, arg) => {
   const { char, spell } = arg;
@@ -517,13 +517,13 @@ ipcMain.on('openItemView', (event, item) => {
   itemWindow.webContents.send('onViewItem', item);
 });
 
-ipcMain.on('openMitemView', (event, mitem) => {
-  mitemWindow.show();
+ipcMain.on('openGearView', (event, gear) => {
+  gearWindow.show();
   if (dev) {
-    mitemWindow.webContents.openDevTools();
+    gearWindow.webContents.openDevTools();
   }
-  mitemWindow.setTitle("DnD Tome - " + mitem.mitem_name);
-  mitemWindow.webContents.send('onViewMitem', mitem);
+  gearWindow.setTitle("DnD Tome - " + gear.gear_name);
+  gearWindow.webContents.send('onViewGear', gear);
 });
 
 ipcMain.on('openMonsterView', (event, monster) => {
@@ -541,8 +541,8 @@ ipcMain.on('deleteAllSpells', (event) => {
 ipcMain.on('deleteAllItems', (event) => {
   deleteAll("items");
 });
-ipcMain.on('deleteAllMitems', (event) => {
-  deleteAll("mitems");
+ipcMain.on('deleteAllGears', (event) => {
+  deleteAll("gears");
 });
 ipcMain.on('deleteAllMonsters', (event) => {
   deleteAll("monsters");
@@ -557,7 +557,7 @@ ipcMain.on('displayMessage', (event, m) => {
 
 ipcMain.on('reloadWindows', (event) => {
   itemWindow.reload();
-  mitemWindow.reload();
+  gearWindow.reload();
   spellWindow.reload();
   monsterWindow.reload();
   mainWindow.reload();
@@ -565,7 +565,7 @@ ipcMain.on('reloadWindows', (event) => {
 
 ipcMain.on('changeTheme', (event, theme) => {
   itemWindow.webContents.send('changeTheme', { theme: theme });
-  mitemWindow.webContents.send('changeTheme',  { theme: theme });
+  gearWindow.webContents.send('changeTheme',  { theme: theme });
   spellWindow.webContents.send('changeTheme',  { theme: theme });
   monsterWindow.webContents.send('changeTheme',  { theme: theme });
 });

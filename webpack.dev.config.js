@@ -21,8 +21,8 @@ module.exports = {
     item: [
       SRC_DIR + '/item.js',
     ],
-    mitem: [
-      SRC_DIR + '/mitem.js',
+    gear: [
+      SRC_DIR + '/gear.js',
     ],
     main: [
       SRC_DIR + '/index.js',
@@ -75,9 +75,9 @@ module.exports = {
       chunks: ['item']
     }),
     new HtmlWebpackPlugin({
-      filename: 'mitem.html',
+      filename: 'gear.html',
       template: 'src/index.html',
-      chunks: ['mitem']
+      chunks: ['gear']
     }),
     new HtmlWebpackPlugin({
       filename: 'monster.html',

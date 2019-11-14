@@ -1,4 +1,4 @@
-.mitem {
+.gear {
     width: 140px;
     height: 170px;
     float: left;
@@ -17,17 +17,17 @@
     box-shadow: var(--boxshadow);
 }
 
-.mitem:hover {
+.gear:hover {
     box-shadow: var(--boxshadow-hover);
     cursor: pointer;
 }
 
-.mitemIcon img {
+.gearIcon img {
     max-width: 60px;
     max-height: 60px;
 }
 
-.mitemIcon {
+.gearIcon {
     margin: 15px;
     margin-left: 40px;
     margin-right: 40px;
@@ -39,19 +39,19 @@
     float: left;
 }
 
-.mitemAttr {
+.gearAttr {
     height: auto;
     float: left;
     padding: 10px;
 }
 
-.mitemComp {
+.gearComp {
     padding: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
 }
 
-.smallMitemAttr {
+.smallGearAttr {
     height: auto;
     width: calc(100% - 20px);
     float: left;
