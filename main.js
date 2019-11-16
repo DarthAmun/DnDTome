@@ -322,6 +322,11 @@ ipcMain.on('getItemCount', (event, arg) => {
   ItemService.reciveItemCount(`SELECT count(*) AS count FROM 'main'.'tab_items'`, mainWindow);
 });
 
+ipcMain.on('getGearCount', (event, arg) => {
+  GearService.reciveGearCount(`SELECT count(*) AS count FROM 'main'.'tab_gears'`, mainWindow);
+});
+
+
 ipcMain.on('getMonsterCount', (event, arg) => {
   MonsterService.reciveMonsterCount(`SELECT count(*) AS count FROM 'main'.'tab_monsters'`, mainWindow);
 });
