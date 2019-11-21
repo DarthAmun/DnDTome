@@ -1,6 +1,6 @@
 {
   "name": "dndtome",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Program to learn react and electron on the subject of pen and paper",
   "author": "DarthAmun",
   "homepage": "https://github.com/DarthAmun/dndtome",
@@ -49,6 +49,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.7",
     "node-gyp": "^6.0.0",
+    "rc-progress": "^2.5.2",
     "react-particles-js": "^2.7.0",
     "recharts": "^1.8.5",
     "sqlite3": "^4.1.0"

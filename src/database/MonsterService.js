@@ -144,6 +144,8 @@ module.exports.saveNewMonster = (monster, mainWindow) => {
 }
 
 module.exports.saveNewMonsters = (monsters, mainWindow) => {
+    let monsterImportLength = Object.keys(monsters).length;
+    let monsterImported = 0;
     monsters.forEach(monster => {
         let data = [monster.monster_name, monster.monster_size, monster.monster_type, monster.monster_subtype, monster.monster_alignment,
         monster.monster_armorClass, monster.monster_hitPoints, monster.monster_speed, monster.monster_strength, monster.monster_dexterity,
@@ -164,7 +166,8 @@ module.exports.saveNewMonsters = (monsters, mainWindow) => {
                     return console.error(err.message);
                 }
                 console.log(`====>Added ${monster.monster_name} successfull`);
-                mainWindow.webContents.send('displayMessage', { type: `Added monster`, message: `Added ${monster.monster_name} successful` });
+                monsterImported++;
+                mainWindow.webContents.send('updateMonsterImport', { now: monsterImported, full: monsterImportLength });
             });
         });
     });

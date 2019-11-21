@@ -2,6 +2,7 @@ import '../assets/css/Options.css';
 import React, { useState, useEffect } from 'react';
 import OptionService from '../database/OptionService';
 import ThemeService from '../services/ThemeService';
+import { Line } from 'rc-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { faFileExport, faFileImport, faTrashAlt, faPalette } from '@fortawesome/free-solid-svg-icons';
@@ -17,6 +18,7 @@ export default function Options() {
   const [items, setItems] = useState([]);
   const [gears, setGears] = useState([]);
   const [monsters, setMonsters] = useState([]);
+  const [monstersImported, setMonstersImported] = useState(0);
   const [chars, setChars] = useState([]);
 
   const receiveAllSpells = (evt, result) => {
@@ -34,6 +36,11 @@ export default function Options() {
   const receiveAllChars = (evt, result) => {
     setChars(result);
   }
+  const updateMonsterImport = (evt, result) => {
+    let percent = (result.now/result.full)*100;
+    console.log(percent);
+    setMonstersImported(percent);
+  }
 
   useEffect(() => {
     ipcRenderer.send('getAllSpells');
@@ -46,6 +53,8 @@ export default function Options() {
     ipcRenderer.on("getAllGearsResult", receiveAllGears);
     ipcRenderer.on("getAllMonstersResult", receiveAllMonsters);
     ipcRenderer.on("getAllCharsResult", receiveAllChars);
+
+    ipcRenderer.on("updateMonsterImport", updateMonsterImport);
     return () => {
       ipcRenderer.removeListener("getAllSpellsResult", receiveAllSpells);
       ipcRenderer.removeListener("getAllItemsResult", receiveAllItems);
@@ -371,6 +380,8 @@ export default function Options() {
             <button onClick={importItems}><FontAwesomeIcon icon={faFileImport} /> Import Items </button><br />
             <button onClick={importGears}><FontAwesomeIcon icon={faFileImport} /> Import Gear </button><br />
             <button onClick={importMonsters}><FontAwesomeIcon icon={faFileImport} /> Import Monsters </button><br />
+            <Line percent={monstersImported} strokeWidth="2" strokeColor="#8000ff" />
+            Imported {monstersImported}% of monsters. 
             <button onClick={importChars}><FontAwesomeIcon icon={faFileImport} /> Import Characters </button>
           </div>
           <div className="optionSection">
