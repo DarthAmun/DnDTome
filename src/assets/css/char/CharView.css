@@ -236,7 +236,7 @@
     color: var(--pagination-input-color);
     overflow-y: auto;
 }
-#char .charItems {
+#char .charItems, #char .charMonsters {
     width: 100%;
     height: 420px;
     float: left;
@@ -249,23 +249,24 @@
     overflow-y: auto;
 }
 
-#char .charSpells tr, #char .charItems tr {
+#char .charSpells tr, #char .charItems tr, #char .charMonsters tr {
     height: 20px;
     line-height: 20px;
     font-size: 12px;
     border-bottom: 1px dashed lightgray;
 }
 
-#char .charSpells .charSpell:hover, #char .charItems .charItem:hover {
+#char .charSpells .charSpell:hover, #char .charItems .charItem:hover, #char .charMonsters .charItem:hover {
     font-weight: bold;
     box-shadow: var(--boxshadow-hover);
 }
 
-#char .charSpells td, #char .charSpells th, #char .charItems td, #char .charItems th {
+#char .charSpells td, #char .charSpells th, #char .charItems td, #char .charItems th, #char .charMonsters td, #char .charMonsters th {
     padding: 5px;
     text-align: left;
 }
-#char .charItems td.centered, #char .charItems th.centered, #char .charSpells td.centered, #char .charSpells th.centered {
+#char .charItems td.centered, #char .charItems th.centered, #char .charSpells td.centered, #char .charSpells th.centered, 
+#char .charMonsters td.centered, #char .charMonsters th.centered {
     text-align: center;
 }
 #char .charItems td.centered input {

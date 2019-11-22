@@ -17,7 +17,7 @@ const fs = require('fs');
 export default function CharView(props) {
     let historyRoute = useHistory();
 
-    const [tabs, setTabs] = useState({ skills: true, combat: false, actions: false, features: false, spells: false, equipment: false, notes: false });
+    const [tabs, setTabs] = useState({ skills: true, combat: false, actions: false, features: false, spells: false, equipment: false, monsters: false, notes: false });
 
     const [id, setId] = useState(0);
     const [name, setName] = useState("");
@@ -112,6 +112,7 @@ export default function CharView(props) {
     const [spellNotes, setSpellNotes] = useState("");
     const [spells, setSpells] = useState([]);
     const [items, setItems] = useState([]);
+    const [monsters, setMonsters] = useState([]);
 
     const [lifeOne, setLifeOne] = useState(0);
     const [lifeTwo, setLifeTwo] = useState(0);
@@ -224,6 +225,10 @@ export default function CharView(props) {
     const receiveItems = (event, result) => {
         setItems(result);
     }
+    const reciveMonsters = (event, result) => {
+        console.log(result);
+        setMonsters(result);
+    }
 
     useEffect(() => {
         OptionService.get('theme', function (result) {
@@ -236,10 +241,13 @@ export default function CharView(props) {
         ipcRenderer.on("getCharSpellsResult", receiveSpells);
         ipcRenderer.send('getCharItems', { id: props.match.params.id });
         ipcRenderer.on("getCharItemsResult", receiveItems);
+        ipcRenderer.send('getCharMonsters', { id: props.match.params.id });
+        ipcRenderer.on("getCharMonstersResult", reciveMonsters);
         return () => {
             ipcRenderer.removeListener("getCharResult", receiveChar)
             ipcRenderer.removeListener("getCharSpellsResult", receiveSpells);
             ipcRenderer.removeListener("getCharItemsResult", receiveItems);
+            ipcRenderer.removeListener("getCharMonstersResult", reciveMonsters);
         }
     }, []);
 
@@ -305,6 +313,10 @@ export default function CharView(props) {
     const deleteCharItem = (item) => {
         ipcRenderer.send('deleteCharItem', { item: item });
     }
+    const deleteCharMonster = (monster) => {
+        ipcRenderer.send('deleteCharMonster', { monster: monster });
+    }
+
 
     const saveChar = () => {
         ipcRenderer.send('saveChar', {
@@ -337,19 +349,21 @@ export default function CharView(props) {
 
     const showTab = (tab) => {
         if (tab === 0) {
-            setTabs({ skills: true, combat: false, actions: false, features: false, spells: false, equipment: false, notes: false });
+            setTabs({ skills: true, combat: false, actions: false, features: false, spells: false, equipment: false, monsters: false, notes: false });
         } else if (tab === 1) {
-            setTabs({ skills: false, combat: true, actions: false, features: false, spells: false, equipment: false, notes: false });
+            setTabs({ skills: false, combat: true, actions: false, features: false, spells: false, equipment: false, monsters: false, notes: false });
         } else if (tab === 2) {
-            setTabs({ skills: false, combat: false, actions: true, features: false, spells: false, equipment: false, notes: false });
+            setTabs({ skills: false, combat: false, actions: true, features: false, spells: false, equipment: false, monsters: false, notes: false });
         } else if (tab === 3) {
-            setTabs({ skills: false, combat: false, actions: false, features: true, spells: false, equipment: false, notes: false });
+            setTabs({ skills: false, combat: false, actions: false, features: true, spells: false, equipment: false, monsters: false, notes: false });
         } else if (tab === 4) {
-            setTabs({ skills: false, combat: false, actions: false, features: false, spells: true, equipment: false, notes: false });
+            setTabs({ skills: false, combat: false, actions: false, features: false, spells: true, equipment: false, monsters: false, notes: false });
         } else if (tab === 5) {
-            setTabs({ skills: false, combat: false, actions: false, features: false, spells: false, equipment: true, notes: false });
+            setTabs({ skills: false, combat: false, actions: false, features: false, spells: false, equipment: true, monsters: false, notes: false });
         } else if (tab === 6) {
-            setTabs({ skills: false, combat: false, actions: false, features: false, spells: false, equipment: false, notes: true });
+            setTabs({ skills: false, combat: false, actions: false, features: false, spells: false, equipment: false, monsters: true, notes: false });
+        } else if (tab === 7) {
+            setTabs({ skills: false, combat: false, actions: false, features: false, spells: false, equipment: false, monsters: false, notes: true });
         }
     }
 
@@ -465,7 +479,8 @@ export default function CharView(props) {
                         <div className={`tabName ${tabs.features ? "active" : ""}`} onClick={e => showTab(3)}>Features</div>
                         <div className={`tabName ${tabs.spells ? "active" : ""}`} onClick={e => showTab(4)}>Spells</div>
                         <div className={`tabName ${tabs.equipment ? "active" : ""}`} onClick={e => showTab(5)}>Equipment</div>
-                        <div className={`tabName ${tabs.notes ? "active" : ""}`} onClick={e => showTab(6)}>Notes</div>
+                        <div className={`tabName ${tabs.monsters ? "active" : ""}`} onClick={e => showTab(6)}>Monsters</div>
+                        <div className={`tabName ${tabs.notes ? "active" : ""}`} onClick={e => showTab(7)}>Notes</div>
                     </div>
                     <div className="tabs">
                         <div className="tabContent" style={{ display: tabs.combat ? "flex" : "none" }}>
@@ -530,7 +545,6 @@ export default function CharView(props) {
                                                         <td className="centered"><input type="text" style={{ width: "300px" }} value={item.item_properties} onChange={createValueListenerItem(item, "item_properties")} /></td>
                                                     </tr>;
                                                 }
-
                                             }
                                         })}
                                     </tbody>
@@ -745,6 +759,32 @@ export default function CharView(props) {
                                                     <td onClick={() => deleteCharItem(item)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
                                                 </tr>;
                                             }
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div className="tabContent" style={{ display: tabs.monsters ? "flex" : "none" }}>
+                            <div className="charMonsters">
+                                <table style={{ width: "100%" }}>
+                                    <tbody>
+                                        <tr>
+                                            <th>CR</th>
+                                            <th>Name</th>
+                                            <th>AC</th>
+                                            <th>Hit Points</th>
+                                            <th>Speed</th>
+                                            <th className="centered">Remove</th>
+                                        </tr>
+                                        {monsters.map((monster, index) => {
+                                            return <tr className="charMonster" key={monster.monster_id} style={{ cursor: 'pointer' }}>
+                                                <td onClick={() => viewMonster(monster)}>{monster.monster_cr}</td>
+                                                <td onClick={() => viewMonster(monster)}>{monster.monster_name}</td>
+                                                <td onClick={() => viewMonster(monster)}>{monster.monster_armorClass}</td>
+                                                <td onClick={() => viewMonster(monster)}>{monster.monster_hitPoints}</td>
+                                                <td onClick={() => viewMonster(monster)}>{monster.monster_speed}</td>
+                                                <td onClick={() => deleteCharMonster(monster)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
+                                            </tr>;
                                         })}
                                     </tbody>
                                 </table>

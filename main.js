@@ -365,7 +365,6 @@ ipcMain.on('saveItem', (event, arg) => {
 });
 
 ipcMain.on('saveGear', (event, arg) => {
-  console.log("save event");
   const { gear } = arg;
   GearService.saveGear(gear, mainWindow);
 });
@@ -455,7 +454,7 @@ ipcMain.on('saveNewChars', (event, arg) => {
 });
 
 ipcMain.on('getChars', (event, arg) => {
-  CharacterService.reciveChars(mainWindow, itemWindow, gearWindow, spellWindow);
+  CharacterService.reciveChars(mainWindow, itemWindow, gearWindow, spellWindow, monsterWindow);
 });
 
 ipcMain.on('getChar', (event, arg) => {
@@ -471,6 +470,11 @@ ipcMain.on('getCharItems', (event, arg) => {
   const { id } = arg;
   CharacterService.reciveCharItems(id, mainWindow);
 });
+ipcMain.on('getCharMonsters', (event, arg) => {
+  const { id } = arg;
+  CharacterService.reciveCharMonsters(id, mainWindow);
+});
+
 
 ipcMain.on('addItemToChar', (event, arg) => {
   const { char, item } = arg;
@@ -483,6 +487,10 @@ ipcMain.on('addGearToChar', (event, arg) => {
 ipcMain.on('addSpellToChar', (event, arg) => {
   const { char, spell } = arg;
   SpellService.addSpellToChar(char, spell, mainWindow);
+});
+ipcMain.on('addMonsterToChar', (event, arg) => {
+  const { char, monster } = arg;
+  MonsterService.addMonsterToChar(char, monster, mainWindow);
 });
 
 ipcMain.on('deleteCharSpell', (event, arg) => {
@@ -497,7 +505,6 @@ ipcMain.on('deleteChar', (event, arg) => {
   const { id } = arg;
   CharacterService.deleteChar(id, mainWindow);
 });
-
 
 
 ipcMain.on('closeMainWindow', (event) => {

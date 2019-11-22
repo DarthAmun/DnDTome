@@ -188,3 +188,18 @@ module.exports.deleteMonster = (monster, mainWindow, monsterWindow) => {
         });
     });
 }
+
+module.exports.addMonsterToChar = (char, monster, mainWindow) => {
+    let data = [char.selectedChar, monster.id];
+    let sql = `INSERT INTO 'main'.'tab_characters_monsters' (char_id, monster_id)
+                VALUES  (?, ?)`;
+    db.serialize(function () {
+        db.run(sql, data, function (err) {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log(`====>Added ${monster.name} to character successfull`);
+            mainWindow.webContents.send('displayMessage', { type: `Added monster to character`, message: `Added ${monster.name} to character successful` });
+        });
+    });
+}

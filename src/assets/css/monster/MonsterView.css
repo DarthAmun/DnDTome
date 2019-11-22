@@ -19,7 +19,7 @@ body {
     font-family: 'Quicksand', sans-serif;
 }
 
-#monsterView input {
+#monsterView input, #monsterView select {
     height: 30px;
     width: 200px;
     border: none;
@@ -35,10 +35,17 @@ body {
     background-color: var(--pagination-input-background-color);
     color: var(--pagination-input-color);
 }
+#monsterView .smallLabel input {
+    width: 100px;
+}
+#monsterView select {
+    width: 220px;
+}
+
 
 #monsterView button {
     height: 32px;
-    width: 110px;
+    width: auto;
     border: none;
     border-radius: 5px;
     padding-left: 10px;
@@ -92,6 +99,14 @@ body {
     width: 320px;
     text-align: right;
     line-height: 30px;
+}
+
+#monsterView label.smallLabel {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    line-height: 30px;
+    margin-left: 10px;
 }
 
 #monsterView .top {

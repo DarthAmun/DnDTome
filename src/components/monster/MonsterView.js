@@ -4,7 +4,7 @@ import '../../assets/css/monster/MonsterView.css';
 import OptionService from '../../database/OptionService';
 import ThemeService from '../../services/ThemeService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -40,6 +40,9 @@ export default function MonsterView() {
     const [sAblt, setSAblt] = useState("");
     const [ablt, setAblt] = useState("");
     const [lAblt, setLAblt] = useState("");
+
+    const [chars, setChars] = useState([]);
+    const [selectedChar, setSelectedChar] = useState(0);
 
     const receiveMonster = (event, result) => {
         ReactDOM.unstable_batchedUpdates(() => {
@@ -82,6 +85,12 @@ export default function MonsterView() {
         })
     }
     
+    const receiveChars = (event, result) => {
+        console.log(result)
+        setChars(result);
+        setSelectedChar(result[0].char_id);
+    }
+
     const changeTheme = (event, result) => {
         ThemeService.applyTheme(result.theme);
     }
@@ -92,9 +101,12 @@ export default function MonsterView() {
             ThemeService.applyTheme(result);
         });
         ipcRenderer.on("onViewMonster", receiveMonster);
+        ipcRenderer.send('getChars');
+        ipcRenderer.on("getCharsResult", receiveChars);
         ipcRenderer.on("changeTheme", changeTheme);
         return () => {
             ipcRenderer.removeListener("onViewMonster", receiveMonster);
+            ipcRenderer.removeListener("getCharsResult", receiveChars);
             ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
@@ -106,6 +118,10 @@ export default function MonsterView() {
         } else {
             return mod;
         }
+    }
+
+    const addMonsterToChar = (e) => {
+        ipcRenderer.send('addMonsterToChar', { char: { selectedChar }, monster: { id, name } });
     }
 
     const saveMonster = (e) => {
@@ -152,20 +168,26 @@ export default function MonsterView() {
             <div className="image" style={style}></div>
             <div className="top">
                 <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} /></label>
-                <label>Size:<input name="size" type="text" value={size} onChange={e => setSize(e.target.value)} /></label>
                 <label>Type:<input name="type" type="text" value={type} onChange={e => setType(e.target.value)} /></label>
                 <label>Subtype:<input name="subtype" type="text" value={subtype} onChange={e => setSubtype(e.target.value)} /></label>
                 <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label>
                 <label>Source:<input name="source" type="text" value={source} onChange={e => setSource(e.target.value)} /></label>
+                <label className="left">Char:<select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
+                    {chars.map((char, index) => {
+                        return <option key={index} value={char.char_id}>{char.char_name}</option>;
+                    })}
+                </select></label>
             </div>
             <div className="top">
-                <label>Cr:<input name="cr" type="text" value={cr} onChange={e => setCr(e.target.value)} /></label>
+                <label className="smallLabel">Cr:<input name="cr" type="text" value={cr} onChange={e => setCr(e.target.value)} /></label>
+                <label className="smallLabel">AC:<input name="ac" type="number" value={ac} onChange={e => setAc(e.target.value)} /></label>
                 <label>Alignment:<input name="alignment" type="text" value={alignment} onChange={e => setAlignment(e.target.value)} /></label>
-                <label>AC:<input name="ac" type="number" value={ac} onChange={e => setAc(e.target.value)} /></label>
                 <label>Hit Points:<input name="hp" type="text" value={hp} onChange={e => setHp(e.target.value)} /></label>
                 <label>Speed:<input name="speed" type="text" value={speed} onChange={e => setSpeed(e.target.value)} /></label>
+                <label>Size:<input name="size" type="text" value={size} onChange={e => setSize(e.target.value)} /></label>
                 <button className="delete" onClick={deleteMonster}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                 <button onClick={saveMonster}><FontAwesomeIcon icon={faSave} /> Save</button>
+                <button onClick={addMonsterToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
             </div>
             <div className="abilityScores">
                 <div className="score">

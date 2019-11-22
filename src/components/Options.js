@@ -417,8 +417,8 @@ export default function Options() {
           </div>
         </div>
       </div>
-      <div class="loadingScreen" style={{display: importing}}>
-        <div class="loadingTab"> Please wait...
+      <div className="loadingScreen" style={{display: importing}}>
+        <div className="loadingTab"> Please wait...
           {spellsImported !== 0 && spellsImported !== 100 ?
             (<div><Line percent={spellsImported} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
               Imported {spellsImported}% of spells. <br /></div>) : (<div></div>)
