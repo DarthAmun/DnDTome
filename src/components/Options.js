@@ -15,8 +15,11 @@ const fs = require('fs');
 
 export default function Options() {
   const [spells, setSpells] = useState([]);
+  const [spellsImported, setSpellsImported] = useState(0);
   const [items, setItems] = useState([]);
+  const [itemsImported, setItemsImported] = useState(0);
   const [gears, setGears] = useState([]);
+  const [gearsImported, setGearsImported] = useState(0);
   const [monsters, setMonsters] = useState([]);
   const [monstersImported, setMonstersImported] = useState(0);
   const [chars, setChars] = useState([]);
@@ -36,11 +39,24 @@ export default function Options() {
   const receiveAllChars = (evt, result) => {
     setChars(result);
   }
+
+  const updateSpellImport = (evt, result) => {
+    let percent = Math.round((result.now / result.full) * 100);
+    setSpellsImported(percent);
+  }
+  const updateItemImport = (evt, result) => {
+    let percent = Math.round((result.now / result.full) * 100);
+    setItemsImported(percent);
+  }
+  const updateGearImport = (evt, result) => {
+    let percent = Math.round((result.now / result.full) * 100);
+    setGearsImported(percent);
+  }
   const updateMonsterImport = (evt, result) => {
-    let percent = (result.now/result.full)*100;
-    console.log(percent);
+    let percent = Math.round((result.now / result.full) * 100);
     setMonstersImported(percent);
   }
+
 
   useEffect(() => {
     ipcRenderer.send('getAllSpells');
@@ -55,6 +71,9 @@ export default function Options() {
     ipcRenderer.on("getAllCharsResult", receiveAllChars);
 
     ipcRenderer.on("updateMonsterImport", updateMonsterImport);
+    ipcRenderer.on("updateSpellImport", updateSpellImport);
+    ipcRenderer.on("updateItemImport", updateItemImport);
+    ipcRenderer.on("updateGearImport", updateGearImport);
     return () => {
       ipcRenderer.removeListener("getAllSpellsResult", receiveAllSpells);
       ipcRenderer.removeListener("getAllItemsResult", receiveAllItems);
@@ -377,11 +396,25 @@ export default function Options() {
           <div className="optionSection">
             <h3>Data Import</h3>
             <button onClick={importSpells}><FontAwesomeIcon icon={faFileImport} /> Import Spells </button><br />
+            {spellsImported !== 0 && spellsImported !== 100 ?
+              (<div><Line percent={spellsImported} strokeWidth="2" strokeColor="#8000ff" />
+                Imported {spellsImported}% of spells. <br /></div>) : (<div></div>)
+            }
             <button onClick={importItems}><FontAwesomeIcon icon={faFileImport} /> Import Items </button><br />
+            {itemsImported !== 0 && itemsImported !== 100 ?
+              (<div><Line percent={itemsImported} strokeWidth="2" strokeColor="#8000ff" />
+                Imported {itemsImported}% of items. <br /></div>) : (<div></div>)
+            }
             <button onClick={importGears}><FontAwesomeIcon icon={faFileImport} /> Import Gear </button><br />
+            {gearsImported !== 0 && gearsImported !== 100 ?
+              (<div><Line percent={gearsImported} strokeWidth="2" strokeColor="#8000ff" />
+                Imported {gearsImported}% of gear. <br /></div>) : (<div></div>)
+            }
             <button onClick={importMonsters}><FontAwesomeIcon icon={faFileImport} /> Import Monsters </button><br />
-            <Line percent={monstersImported} strokeWidth="2" strokeColor="#8000ff" />
-            Imported {monstersImported}% of monsters. 
+            {monstersImported !== 0 && monstersImported !== 100 ?
+              (<div><Line percent={monstersImported} strokeWidth="2" strokeColor="#8000ff" />
+                Imported {monstersImported}% of monsters. <br /></div>) : (<div></div>)
+            }
             <button onClick={importChars}><FontAwesomeIcon icon={faFileImport} /> Import Characters </button>
           </div>
           <div className="optionSection">
