@@ -136,6 +136,8 @@ module.exports.saveNewSpell = (spell, mainWindow) => {
 }
 
 module.exports.saveNewSpells = (spells, mainWindow) => {
+  let spellImportLength = Object.keys(spells).length;
+  let spellImported = 0;
   spells.forEach(spell => {
     let data = [spell.spell_name, spell.spell_ritual, spell.spell_school, spell.spell_level, spell.spell_time, spell.spell_duration, spell.spell_range, spell.spell_components, spell.spell_text, spell.spell_classes, spell.spell_sources];
     let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_ritual, spell_school, spell_level, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources)
@@ -146,7 +148,8 @@ module.exports.saveNewSpells = (spells, mainWindow) => {
           return console.error(err.message);
         }
         console.log(`====>Added ${spell.spell_name} successfull`);
-        mainWindow.webContents.send('displayMessage', { type: `Added spell`, message: `Added ${spell.spell_name} successful` });
+        spellImported++;
+        mainWindow.webContents.send('updateSpellImport', { now: spellImported, full: spellImportLength });
       });
     });
   });

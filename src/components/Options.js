@@ -24,6 +24,8 @@ export default function Options() {
   const [monstersImported, setMonstersImported] = useState(0);
   const [chars, setChars] = useState([]);
 
+  const [importing, setImporting] = useState("none");
+
   const receiveAllSpells = (evt, result) => {
     setSpells(result);
   }
@@ -42,18 +44,22 @@ export default function Options() {
 
   const updateSpellImport = (evt, result) => {
     let percent = Math.round((result.now / result.full) * 100);
+    percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
     setSpellsImported(percent);
   }
   const updateItemImport = (evt, result) => {
     let percent = Math.round((result.now / result.full) * 100);
+    percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
     setItemsImported(percent);
   }
   const updateGearImport = (evt, result) => {
     let percent = Math.round((result.now / result.full) * 100);
+    percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
     setGearsImported(percent);
   }
   const updateMonsterImport = (evt, result) => {
     let percent = Math.round((result.now / result.full) * 100);
+    percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
     setMonstersImported(percent);
   }
 
@@ -396,25 +402,9 @@ export default function Options() {
           <div className="optionSection">
             <h3>Data Import</h3>
             <button onClick={importSpells}><FontAwesomeIcon icon={faFileImport} /> Import Spells </button><br />
-            {spellsImported !== 0 && spellsImported !== 100 ?
-              (<div><Line percent={spellsImported} strokeWidth="2" strokeColor="#8000ff" />
-                Imported {spellsImported}% of spells. <br /></div>) : (<div></div>)
-            }
             <button onClick={importItems}><FontAwesomeIcon icon={faFileImport} /> Import Items </button><br />
-            {itemsImported !== 0 && itemsImported !== 100 ?
-              (<div><Line percent={itemsImported} strokeWidth="2" strokeColor="#8000ff" />
-                Imported {itemsImported}% of items. <br /></div>) : (<div></div>)
-            }
             <button onClick={importGears}><FontAwesomeIcon icon={faFileImport} /> Import Gear </button><br />
-            {gearsImported !== 0 && gearsImported !== 100 ?
-              (<div><Line percent={gearsImported} strokeWidth="2" strokeColor="#8000ff" />
-                Imported {gearsImported}% of gear. <br /></div>) : (<div></div>)
-            }
             <button onClick={importMonsters}><FontAwesomeIcon icon={faFileImport} /> Import Monsters </button><br />
-            {monstersImported !== 0 && monstersImported !== 100 ?
-              (<div><Line percent={monstersImported} strokeWidth="2" strokeColor="#8000ff" />
-                Imported {monstersImported}% of monsters. <br /></div>) : (<div></div>)
-            }
             <button onClick={importChars}><FontAwesomeIcon icon={faFileImport} /> Import Characters </button>
           </div>
           <div className="optionSection">
@@ -425,6 +415,26 @@ export default function Options() {
             <button onClick={deleteAllMonsters}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Monsters </button><br />
             <button onClick={deleteAllChars}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Characters </button>
           </div>
+        </div>
+      </div>
+      <div class="loadingScreen" style={{display: importing}}>
+        <div class="loadingTab"> Please wait...
+          {spellsImported !== 0 && spellsImported !== 100 ?
+            (<div><Line percent={spellsImported} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
+              Imported {spellsImported}% of spells. <br /></div>) : (<div></div>)
+          }
+          {itemsImported !== 0 && itemsImported !== 100 ?
+            (<div><Line percent={itemsImported} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
+              Imported {itemsImported}% of items. <br /></div>) : (<div></div>)
+          }
+          {gearsImported !== 0 && gearsImported !== 100 ?
+            (<div><Line percent={gearsImported} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
+              Imported {gearsImported}% of gear. <br /></div>) : (<div></div>)
+          }
+          {monstersImported !== 0 && monstersImported !== 100 ?
+            (<div><Line percent={monstersImported} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
+              Imported {monstersImported}% of monsters. <br /></div>) : (<div></div>)
+          }
         </div>
       </div>
     </div>

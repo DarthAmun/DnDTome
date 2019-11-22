@@ -131,6 +131,8 @@ module.exports.saveNewGear = (gear, mainWindow) => {
 }
 
 module.exports.saveNewGears = (gears, mainWindow) => {
+    let GearImportLength = Object.keys(gears).length;
+    let GearImported = 0;
     gears.forEach(gear => {
         let data = [gear.gear_name, gear.gear_description, gear.gear_pic, gear.gear_cost, gear.gear_damage, gear.gear_weight, gear.gear_properties, gear.gear_type];
         let sql = `INSERT INTO 'main'.'tab_gears' (gear_name, gear_description, gear_pic, gear_cost, gear_damage, gear_weight, gear_properties, gear_type)
@@ -141,7 +143,8 @@ module.exports.saveNewGears = (gears, mainWindow) => {
                     return console.error(err.message);
                 }
                 console.log(`====>Added ${gear.gear_name} successfull`);
-                mainWindow.webContents.send('displayMessage', { type: `Added gear`, message: `Added ${gear.gear_name} successful` });
+                GearImported++;
+                mainWindow.webContents.send('updateGearImport', { now: GearImported, full: GearImportLength });
             });
         });
     });
