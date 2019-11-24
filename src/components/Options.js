@@ -15,7 +15,7 @@ const fs = require('fs');
 
 export default function Options() {
   const [spells, setSpells] = useState([]);
-  const [spellsImported, setSpellsImported] = useState(0);
+  const [spellsImported, setSpellsImported] = useState({ percent: 0, now: 0, full: 0, name: "" });
   const [items, setItems] = useState([]);
   const [itemsImported, setItemsImported] = useState(0);
   const [gears, setGears] = useState([]);
@@ -45,7 +45,8 @@ export default function Options() {
   const updateSpellImport = (evt, result) => {
     let percent = Math.round((result.now / result.full) * 100);
     percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
-    setSpellsImported(percent);
+    console.log({ percent: percent, now: result.now, full: result.full, name: result.name });
+    setSpellsImported({ percent: percent, now: result.now, full: result.full, name: result.name });
   }
   const updateItemImport = (evt, result) => {
     let percent = Math.round((result.now / result.full) * 100);
@@ -417,11 +418,13 @@ export default function Options() {
           </div>
         </div>
       </div>
-      <div className="loadingScreen" style={{display: importing}}>
-        <div className="loadingTab"> Please wait...
-          {spellsImported !== 0 && spellsImported !== 100 ?
-            (<div><Line percent={spellsImported} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
-              Imported {spellsImported}% of spells. <br /></div>) : (<div></div>)
+      <div className="loadingScreen" style={{ display: importing }}>
+        <div className="loadingTab">
+          {spellsImported.percent !== 0 && spellsImported.percent !== 100 ?
+            (<div>Imported {spellsImported.percent}% ({spellsImported.now}/{spellsImported.full}) of spells.
+              <Line percent={spellsImported.percent} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
+              Importing {spellsImported.name} ...
+              </div>) : (<div></div>)
           }
           {itemsImported !== 0 && itemsImported !== 100 ?
             (<div><Line percent={itemsImported} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />

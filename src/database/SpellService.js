@@ -149,7 +149,7 @@ module.exports.saveNewSpells = (spells, mainWindow) => {
         }
         console.log(`====>Added ${spell.spell_name} successfull`);
         spellImported++;
-        mainWindow.webContents.send('updateSpellImport', { now: spellImported, full: spellImportLength });
+        mainWindow.webContents.send('updateSpellImport', { now: spellImported, full: spellImportLength, name: spell.spell_name });
       });
     });
   });

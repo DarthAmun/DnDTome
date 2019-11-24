@@ -89,8 +89,8 @@
 .loadingScreen .loadingTab {
     position: absolute;
     top: calc(50% - 50px);
-    left: calc(50% - 150px);
-    width: 300px;
+    left: calc(50% - 200px);
+    width: 400px;
     height: 100px;
     text-align: center;
     color: var(--card-color);
