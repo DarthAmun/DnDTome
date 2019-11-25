@@ -86,7 +86,7 @@ module.exports.deleteItem = (item, mainWindow, itemWindow) => {
             console.log(`====>Deleted ${item.name} successfull`);
             itemWindow.hide();
             mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
-            mainWindow.webContents.send('displayMessage', { type: `Deleted item`, message: `Deleted ${item.name} successful` });
+            mainWindow.webContents.send('displayMessage', { type: `Deleted magic item`, message: `Deleted ${item.name} successful` });
         });
     });
 }
@@ -103,7 +103,7 @@ module.exports.saveItem = (item, mainWindow) => {
             }
             console.log(`====> ${item.name} updated successfull`);
             mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
-            mainWindow.webContents.send('displayMessage', { type: `Saved item`, message: `Saved ${item.name} successful` });
+            mainWindow.webContents.send('displayMessage', { type: `Saved magic item`, message: `Saved ${item.name} successful` });
         });
     });
 }
@@ -118,7 +118,7 @@ module.exports.saveNewItem = (item, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Added ${item.name} successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Added item`, message: `Added ${item.name} successful` });
+            mainWindow.webContents.send('displayMessage', { type: `Added magic item`, message: `Added ${item.name} successful` });
         });
     });
 }
@@ -153,7 +153,7 @@ module.exports.addItemToChar = (char, item, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Added ${item.name} to character successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Added item to character`, message: `Added ${item.name} to character successful` });
+            mainWindow.webContents.send('displayMessage', { type: `Added magic item to character`, message: `Added ${item.name} to character successful` });
         });
     });
 }

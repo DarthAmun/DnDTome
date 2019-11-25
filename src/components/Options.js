@@ -17,11 +17,11 @@ export default function Options() {
   const [spells, setSpells] = useState([]);
   const [spellsImported, setSpellsImported] = useState({ percent: 0, now: 0, full: 0, name: "" });
   const [items, setItems] = useState([]);
-  const [itemsImported, setItemsImported] = useState(0);
+  const [itemsImported, setItemsImported] = useState({ percent: 0, now: 0, full: 0, name: "" });
   const [gears, setGears] = useState([]);
-  const [gearsImported, setGearsImported] = useState(0);
+  const [gearsImported, setGearsImported] = useState({ percent: 0, now: 0, full: 0, name: "" });
   const [monsters, setMonsters] = useState([]);
-  const [monstersImported, setMonstersImported] = useState(0);
+  const [monstersImported, setMonstersImported] = useState({ percent: 0, now: 0, full: 0, name: "" });
   const [chars, setChars] = useState([]);
 
   const [importing, setImporting] = useState("none");
@@ -51,17 +51,20 @@ export default function Options() {
   const updateItemImport = (evt, result) => {
     let percent = Math.round((result.now / result.full) * 100);
     percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
-    setItemsImported(percent);
+    console.log({ percent: percent, now: result.now, full: result.full, name: result.name });
+    setItemsImported({ percent: percent, now: result.now, full: result.full, name: result.name });
   }
   const updateGearImport = (evt, result) => {
     let percent = Math.round((result.now / result.full) * 100);
     percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
-    setGearsImported(percent);
+    console.log({ percent: percent, now: result.now, full: result.full, name: result.name });
+    setGearsImported({ percent: percent, now: result.now, full: result.full, name: result.name });
   }
   const updateMonsterImport = (evt, result) => {
     let percent = Math.round((result.now / result.full) * 100);
     percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
-    setMonstersImported(percent);
+    console.log({ percent: percent, now: result.now, full: result.full, name: result.name });
+    setMonstersImported({ percent: percent, now: result.now, full: result.full, name: result.name });
   }
 
 
@@ -291,8 +294,8 @@ export default function Options() {
       type: 'question',
       buttons: ['Cancel', 'Yes, please', 'No, thanks'],
       defaultId: 2,
-      title: `Delete all items?`,
-      message: 'All items will be deleted and removed from all characters!'
+      title: `Delete all magic items?`,
+      message: 'All magic items will be deleted and removed from all characters!'
     };
 
     dialog.showMessageBox(null, options, (response) => {
@@ -426,17 +429,23 @@ export default function Options() {
               Importing {spellsImported.name} ...
               </div>) : (<div></div>)
           }
-          {itemsImported !== 0 && itemsImported !== 100 ?
-            (<div><Line percent={itemsImported} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
-              Imported {itemsImported}% of items. <br /></div>) : (<div></div>)
+          {gearsImported.percent !== 0 && gearsImported.percent !== 100 ?
+            (<div>Imported {gearsImported.percent}% ({gearsImported.now}/{gearsImported.full}) of gear.
+              <Line percent={gearsImported.percent} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
+              Importing {gearsImported.name} ...
+              </div>) : (<div></div>)
           }
-          {gearsImported !== 0 && gearsImported !== 100 ?
-            (<div><Line percent={gearsImported} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
-              Imported {gearsImported}% of gear. <br /></div>) : (<div></div>)
+          {itemsImported.percent !== 0 && itemsImported.percent !== 100 ?
+            (<div>Imported {itemsImported.percent}% ({itemsImported.now}/{itemsImported.full}) of magic items.
+              <Line percent={itemsImported.percent} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
+              Importing {itemsImported.name} ...
+              </div>) : (<div></div>)
           }
-          {monstersImported !== 0 && monstersImported !== 100 ?
-            (<div><Line percent={monstersImported} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
-              Imported {monstersImported}% of monsters. <br /></div>) : (<div></div>)
+          {monstersImported.percent !== 0 && monstersImported.percent !== 100 ?
+            (<div>Imported {monstersImported.percent}% ({monstersImported.now}/{monstersImported.full}) of monsters.
+              <Line percent={monstersImported.percent} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
+              Importing {monstersImported.name} ...
+              </div>) : (<div></div>)
           }
         </div>
       </div>

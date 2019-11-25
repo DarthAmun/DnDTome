@@ -179,7 +179,7 @@ function createWindow() {
   //Gear window
   gearWindow = new BrowserWindow({
     parent: mainWindow,
-    width: 645,
+    width: 646,
     height: 385,
     show: false,
     resizable: false,

@@ -306,6 +306,9 @@ export default function CharView(props) {
     const viewItem = (item) => {
         ipcRenderer.send('openItemView', item);
     }
+    const viewGear = (gear) => {
+        ipcRenderer.send('openGearView', gear);
+    }
 
     const deleteCharSpell = (spell) => {
         ipcRenderer.send('deleteCharSpell', { spell: spell });
@@ -453,7 +456,7 @@ export default function CharView(props) {
             <div id="char">
                 <div className="image" style={style}></div>
                 <div className="smallLabelGroup">
-                    <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setChar({ ...char, pic: e.target.value })} /></label><br />
+                    <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label><br />
                     <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} /></label><br />
                     <label>Player:<input name="player" type="text" value={player} onChange={e => setPlayer(e.target.value)} /></label><br />
                     <label>Class:<input name="class" type="text" value={classes} onChange={e => setClasses(e.target.value)} /></label>
@@ -710,8 +713,8 @@ export default function CharView(props) {
                                         {items.map((item, index) => {
                                             if (item.item_id === null) {
                                                 return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
-                                                    <td onClick={() => viewItem(item)}>{item.gear_name}</td>
-                                                    <td onClick={() => viewItem(item)}>{item.gear_type}</td>
+                                                    <td onClick={() => viewGear(item)}>{item.gear_name}</td>
+                                                    <td onClick={() => viewGear(item)}>{item.gear_type}</td>
                                                     <td className="centered" onClick={() => viewItem(item)}>{item.gear_cost}</td>
                                                     <td className="centered" onClick={() => viewItem(item)}>{item.gear_weight}</td>
                                                     <td className="centered">
