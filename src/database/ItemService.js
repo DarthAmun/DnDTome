@@ -137,7 +137,7 @@ module.exports.saveNewItems = (items, mainWindow) => {
                 }
                 console.log(`====>Added ${item.item_name} successfull`);
                 ItemImported++;
-                mainWindow.webContents.send('updateItemImport', { now: ItemImported, full: ItemImportLength });
+                mainWindow.webContents.send('updateItemImport', { now: ItemImported, full: ItemImportLength, name: item.item_name });
             });
         });
     });

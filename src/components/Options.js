@@ -45,25 +45,21 @@ export default function Options() {
   const updateSpellImport = (evt, result) => {
     let percent = Math.round((result.now / result.full) * 100);
     percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
-    console.log({ percent: percent, now: result.now, full: result.full, name: result.name });
     setSpellsImported({ percent: percent, now: result.now, full: result.full, name: result.name });
   }
   const updateItemImport = (evt, result) => {
     let percent = Math.round((result.now / result.full) * 100);
     percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
-    console.log({ percent: percent, now: result.now, full: result.full, name: result.name });
     setItemsImported({ percent: percent, now: result.now, full: result.full, name: result.name });
   }
   const updateGearImport = (evt, result) => {
     let percent = Math.round((result.now / result.full) * 100);
     percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
-    console.log({ percent: percent, now: result.now, full: result.full, name: result.name });
     setGearsImported({ percent: percent, now: result.now, full: result.full, name: result.name });
   }
   const updateMonsterImport = (evt, result) => {
     let percent = Math.round((result.now / result.full) * 100);
     percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
-    console.log({ percent: percent, now: result.now, full: result.full, name: result.name });
     setMonstersImported({ percent: percent, now: result.now, full: result.full, name: result.name });
   }
 

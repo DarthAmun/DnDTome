@@ -167,7 +167,7 @@ module.exports.saveNewMonsters = (monsters, mainWindow) => {
                 }
                 console.log(`====>Added ${monster.monster_name} successfull`);
                 monsterImported++;
-                mainWindow.webContents.send('updateMonsterImport', { now: monsterImported, full: monsterImportLength });
+                mainWindow.webContents.send('updateMonsterImport', { now: monsterImported, full: monsterImportLength, name: monster.monster_name });
             });
         });
     });

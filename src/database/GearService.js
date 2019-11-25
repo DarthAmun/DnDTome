@@ -98,7 +98,6 @@ module.exports.deleteGear = (gear, mainWindow, gearWindow) => {
 }
 
 module.exports.saveGear = (gear, mainWindow) => {
-    console.log("save function");
     let data = [gear.name, gear.description, gear.pic, gear.cost, gear.weight, gear.damage, gear.properties, gear.gear_type, gear.id];
     let sql = `UPDATE 'main'.'tab_gears'
                 SET gear_name = ?, gear_description = ?, gear_pic = ?, gear_cost= ?, gear_weight= ?, gear_damage= ?, gear_properties= ?, gear_type= ?
@@ -144,7 +143,7 @@ module.exports.saveNewGears = (gears, mainWindow) => {
                 }
                 console.log(`====>Added ${gear.gear_name} successfull`);
                 GearImported++;
-                mainWindow.webContents.send('updateGearImport', { now: GearImported, full: GearImportLength });
+                mainWindow.webContents.send('updateGearImport', { now: GearImported, full: GearImportLength, name: gear.gear_name });
             });
         });
     });
