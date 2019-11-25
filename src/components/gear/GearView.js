@@ -71,7 +71,6 @@ export default function GearView() {
     }, []);
 
     const saveGear = (e) => {
-        console.log("save trigger");
         ipcRenderer.send('saveGear', { gear: { id, name, pic, description, cost, weight, damage, properties, type } });
     }
 

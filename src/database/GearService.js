@@ -98,7 +98,7 @@ module.exports.deleteGear = (gear, mainWindow, gearWindow) => {
 }
 
 module.exports.saveGear = (gear, mainWindow) => {
-    let data = [gear.name, gear.description, gear.pic, gear.cost, gear.weight, gear.damage, gear.properties, gear.gear_type, gear.id];
+    let data = [gear.name, gear.description, gear.pic, gear.cost, gear.weight, gear.damage, gear.properties, gear.type, gear.id];
     let sql = `UPDATE 'main'.'tab_gears'
                 SET gear_name = ?, gear_description = ?, gear_pic = ?, gear_cost= ?, gear_weight= ?, gear_damage= ?, gear_properties= ?, gear_type= ?
                 WHERE gear_id = ?`;
