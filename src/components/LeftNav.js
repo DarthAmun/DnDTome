@@ -132,7 +132,7 @@ class LeftNav extends Component {
         </Link>
         <Link to="/item-overview" style={{ top: "120px" }} className={this.props.location.pathname == "/item-overview" ? "menuItemActiv" : ""}>
           <div className="menuItem">
-            <FontAwesomeIcon icon={faShieldAlt} /> Items
+            <FontAwesomeIcon icon={faShieldAlt} /> Magic Items
           </div>
         </Link>
         <Link to="/gear-overview" style={{ top: "170px" }} className={this.props.location.pathname == "/gear-overview" ? "menuItemActiv" : ""}>
