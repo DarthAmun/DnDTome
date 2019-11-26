@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import '../../assets/css/char/CharView.css';
 import OptionService from '../../database/OptionService';
 import ThemeService from '../../services/ThemeService';
+import PdfFillerService from '../../services/PdfFillerService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes, faAngleUp, faAngleDoubleUp, faMinus, faHeartBroken, faHeartbeat, faTrashAlt, faFileExport } from '@fortawesome/free-solid-svg-icons';
 import StatChart from './StatChart';
@@ -279,6 +280,19 @@ export default function CharView(props) {
         });
     }
 
+    const printChar = () => {
+        let sourcePDF = app.getAppPath() + './src/assets/pdf/character_sheet_template.pdf';
+        console.log(sourcePDF);
+        let destinationPDF = options.defaultPath + `/${name}_character.pdf`;
+        let log = options.defaultPath + `/log.txt`;
+        let data = {
+            "CharacterName":  `${name}`,
+            "ClassLevel": `${classes}`
+        };
+
+        PdfFillerService.fillPdf(sourcePDF, destinationPDF, data, log);
+    }
+
     const formatScore = (score) => {
         let mod = Math.floor((score - 10) / 2);
         if (mod >= 0) {
@@ -473,6 +487,7 @@ export default function CharView(props) {
                 <div className="smallLabelGroup">
                     <button onClick={saveChar}><FontAwesomeIcon icon={faSave} /> Save</button><br />
                     <button className="delete" onClick={deleteChar}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                    <button onClick={printChar}><FontAwesomeIcon icon={faTrashAlt} /> Print</button>
                 </div>
                 <div className="tabComponent">
                     <div className="tabSelector">

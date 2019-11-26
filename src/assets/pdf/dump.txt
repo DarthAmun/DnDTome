@@ -1,0 +1,2105 @@
+---
+FieldType: Text
+FieldName: CharacterName
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: ClassLevel
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Background
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: PlayerName
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Race 
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Alignment
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: XP
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: STR
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: STRmod
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: DEX
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: DEXmod 
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: CON
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: CONmod
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: INT
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: INTmod
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: WIS
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: WISmod
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: CHA
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: CHamod
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: Inspiration
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: ProfBonus
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 11
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: ST Strength
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 18
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: ST Dexterity
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 19
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: ST Constitution
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 20
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: ST Intelligence
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 21
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: ST Wisdom
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 22
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: ST Charisma
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 23
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Acrobatics
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 24
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Animal
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 25
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Arcana
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 26
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Athletics
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 27
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Deception 
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 28
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: History 
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 29
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Insight
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 30
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Intimidation
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 31
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Investigation 
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 32
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Medicine
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 33
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Nature
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 34
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Perception 
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 35
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Performance
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 36
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Persuasion
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 37
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Religion
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 38
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: SleightofHand
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 39
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Stealth 
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 40
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Survival
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: Passive
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: ProficienciesLang
+FieldFlags: 8392704
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: AC
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: Initiative
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: Speed
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: HPMax
+FieldFlags: 12582912
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: HPCurrent
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: HPTemp
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: HDTotal
+FieldFlags: 12582912
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: HD
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 12
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Button
+FieldName: Check Box 13
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Button
+FieldName: Check Box 14
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Button
+FieldName: Check Box 15
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Button
+FieldName: Check Box 16
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Button
+FieldName: Check Box 17
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Wpn Name
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Wpn1 AtkBonus
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Wpn1 Damage
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Wpn Name 2
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Wpn2 AtkBonus 
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Wpn2 Damage 
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Wpn Name 3
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Wpn3 AtkBonus  
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Wpn3 Damage 
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: AttacksSpellcasting
+FieldFlags: 8392704
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: CP
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: SP
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: EP
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: GP
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: PP
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: Equipment
+FieldFlags: 8392704
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: PersonalityTraits 
+FieldFlags: 8392704
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Ideals
+FieldFlags: 8392704
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Bonds
+FieldFlags: 8392704
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Flaws
+FieldFlags: 8392704
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Features and Traits
+FieldFlags: 8392704
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: CharacterName 2
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: Age
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Height
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Weight
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Eyes
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Skin
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Hair
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: CHARACTER IMAGE
+FieldFlags: 65536
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Allies
+FieldFlags: 8392704
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: FactionName
+FieldFlags: 8388608
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Faction Symbol Image
+FieldFlags: 65536
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Backstory
+FieldFlags: 8392704
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Feat+Traits
+FieldFlags: 8392704
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Treasure
+FieldFlags: 8392704
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Spellcasting Class 2
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: SpellcastingAbility 2
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: SpellSaveDC  2
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: SpellAtkBonus 2
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: Spells 1014
+FieldFlags: 8388608
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Spells 1016
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Spells 1017
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Spells 1018
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Spells 1019
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Spells 1020
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Spells 1021
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Spells 1022
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: SlotsTotal 19
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: SlotsRemaining 19
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 251
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1015
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 309
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1023
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3010
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1024
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3011
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1025
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3012
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1026
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3013
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1027
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3014
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1028
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3015
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1029
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3016
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1030
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3017
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1031
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3018
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1032
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3019
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1033
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: SlotsTotal 20
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: SlotsRemaining 20
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 313
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1046
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 310
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1034
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3020
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1035
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3021
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1036
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3022
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1037
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3023
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1038
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3024
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1039
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3025
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1040
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3026
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1041
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3027
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1042
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3028
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1043
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3029
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1044
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3030
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1045
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: SlotsTotal 21
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: SlotsRemaining 21
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 315
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1048
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 314
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1047
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3031
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1049
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3032
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1050
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3033
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1051
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3034
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1052
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3035
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1053
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3036
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1054
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3037
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1055
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3038
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1056
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3039
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1057
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3040
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1058
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3041
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1059
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: SlotsTotal 22
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: SlotsRemaining 22
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 317
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1061
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 316
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1060
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3042
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1062
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3043
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1063
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3044
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1064
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3045
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1065
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3046
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1066
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3047
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1067
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3048
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1068
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3049
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1069
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3050
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1070
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3051
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1071
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3052
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1072
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: SlotsTotal 23
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: SlotsRemaining 23
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 319
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1074
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 318
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1073
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3053
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1075
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3054
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1076
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3055
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1077
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3056
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1078
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3057
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1079
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3058
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1080
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3059
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1081
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: SlotsTotal 24
+FieldFlags: 12582912
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: SlotsRemaining 24
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 321
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1083
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 320
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1082
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3060
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1084
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3061
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1085
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3062
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1086
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3063
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1087
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3064
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1088
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3065
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1089
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3066
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1090
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: SlotsTotal 25
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: SlotsRemaining 25
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 323
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1092
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 322
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1091
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3067
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1093
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3068
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1094
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3069
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1095
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3070
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1096
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3071
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1097
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3072
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1098
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3073
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 1099
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: SlotsTotal 26
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: SlotsRemaining 26
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 325
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 10101
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 324
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 10100
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3074
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 10102
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3075
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 10103
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3076
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 10104
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3077
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 10105
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3078
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 10106
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: SlotsTotal 27
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: SlotsRemaining 27
+FieldFlags: 12582912
+FieldValue: 
+FieldJustification: Center
+---
+FieldType: Button
+FieldName: Check Box 327
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 10108
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 326
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 10107
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3079
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 10109
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3080
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 101010
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3081
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 101011
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3082
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 101012
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box 3083
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: Yes
+---
+FieldType: Text
+FieldName: Spells 101013
+FieldFlags: 8388608
+FieldValue: 
+FieldJustification: Left
