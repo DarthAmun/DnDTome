@@ -343,6 +343,12 @@ ipcMain.on('sendItemSearchQuery', (event, arg) => {
   ItemService.reciveItemCount(q.replace("SELECT * FROM 'main'.'tab_items'", "SELECT count(*) AS count FROM 'main'.'tab_items'"), mainWindow);
 });
 
+ipcMain.on('sendGearSearchQuery', (event, arg) => {
+  const { query } = arg;
+  const q = GearService.reciveGears(this.searchGearStep, 0, query, mainWindow);
+  GearService.reciveGearCount(q.replace("SELECT * FROM 'main'.'tab_gears'", "SELECT count(*) AS count FROM 'main'.'tab_gears'"), mainWindow);
+});
+
 ipcMain.on('sendMonsterSearchQuery', (event, arg) => {
   const { query } = arg;
   const q = MonsterService.reciveMonsters(this.searchMonsterStep, 0, query, mainWindow);
