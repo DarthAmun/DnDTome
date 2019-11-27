@@ -140,7 +140,7 @@ function createWindow() {
     width: 950,
     height: 410,
     show: false,
-    resizable: false,
+    resizable: true,
     frame: true,
     icon: __dirname + './src/assets/img/dice_icon.ico',
     //The lines below solved the issue

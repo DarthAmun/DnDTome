@@ -6,10 +6,11 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // Config directories
 const SRC_DIR = path.resolve(__dirname, 'src');
+const NODE_MODULE = path.resolve(__dirname, 'node_module');
 const OUTPUT_DIR = path.resolve(__dirname, 'dist');
 
 // Any directories you will be adding code/files into, need to be added to this array so webpack will pick them up
-const defaultInclude = [SRC_DIR];
+const defaultInclude = [SRC_DIR, NODE_MODULE];
 
 module.exports = {
     entry: {

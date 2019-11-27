@@ -6,6 +6,9 @@ import ThemeService from '../../services/ThemeService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const { dialog } = electron.remote;
@@ -116,7 +119,7 @@ export default function SpellView() {
                 <label>Classes:<input name="classes" type="text" value={classes} onChange={e => setClasses(e.target.value)} placeholder="Classes..." /></label>
                 <label>Sources:<input name="sources" type="text" value={sources} onChange={e => setSources(e.target.value)} placeholder="Sources..." /></label>
             </div>
-            <textarea value={text} onChange={e => setText(e.target.value)} placeholder="Describtion..."></textarea>
+            <ReactQuill value={text} onChange={e => setText(e)} />
             <label>Char:
                 <select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
                     {chars.map((char, index) => {
