@@ -6,7 +6,7 @@ import OptionService from '../../database/OptionService';
 import ThemeService from '../../services/ThemeService';
 import PdfFillerService from '../../services/PdfFillerService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTimes, faAngleUp, faAngleDoubleUp, faMinus, faHeartBroken, faHeartbeat, faTrashAlt, faFileExport } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTimes, faAngleUp, faAngleDoubleUp, faMinus, faHeartBroken, faHeartbeat, faTrashAlt, faFileExport, faPrint } from '@fortawesome/free-solid-svg-icons';
 import StatChart from './StatChart';
 
 const electron = window.require('electron');
@@ -282,8 +282,7 @@ export default function CharView(props) {
 
     const printChar = () => {
         let sourcePDF = app.getAppPath() + './src/assets/pdf/character_sheet_template.pdf';
-        console.log(sourcePDF);
-        let destinationPDF = options.defaultPath + `/${name}_character.pdf`;
+        options.defaultPath = options.defaultPath + `/${name}_character.pdf`;
         let log = options.defaultPath + `/log.txt`;
         let data = {
             "CharacterName": `${name}`,
@@ -363,8 +362,8 @@ export default function CharView(props) {
             "HDTotal": `${hitDice}`,
             "Features and Traits": `${features + " " + racialFeatures + " " + classFeatures}`,
             "Speed": `${speed}`,
-            "Equipment": `${items.map(item => { 
-                if(item.item_id === null){
+            "Equipment": `${items.map(item => {
+                if (item.item_id === null) {
                     return item.gear_name + ", ";
                 } else {
                     return item.item_name + ", ";
@@ -372,7 +371,9 @@ export default function CharView(props) {
             })}`,
         };
 
-        PdfFillerService.fillPdf(sourcePDF, destinationPDF, data, log);
+        dialog.showSaveDialog(null, options, (path) => {
+            PdfFillerService.fillPdf(sourcePDF, path, data, log);
+        });
     }
 
     const formatScore = (score) => {
@@ -568,8 +569,8 @@ export default function CharView(props) {
                 </div>
                 <div className="smallLabelGroup">
                     <button onClick={saveChar}><FontAwesomeIcon icon={faSave} /> Save</button><br />
-                    <button className="delete" onClick={deleteChar}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
-                    <button onClick={printChar}><FontAwesomeIcon icon={faTrashAlt} /> Print</button>
+                    <button className="delete" onClick={deleteChar}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button><br />
+                    <button onClick={printChar}><FontAwesomeIcon icon={faPrint} /> Print</button>
                 </div>
                 <div className="tabComponent">
                     <div className="tabSelector">
