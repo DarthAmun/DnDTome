@@ -68,8 +68,7 @@ body {
     background-color: darkred;
 }
 
-#spellView textarea {
-    height: 309px;
+#spellView .quill {
     width: 444px;
     float: left;
     resize: none;
@@ -81,8 +80,6 @@ body {
     font-size: 14px;
     margin-bottom: 5px;
     box-shadow: var(--boxshadow);
-    background-color: var(--pagination-input-background-color);
-    color: var(--pagination-input-color);
 }
 
 #spellView label {

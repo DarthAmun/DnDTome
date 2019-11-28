@@ -1,5 +1,5 @@
 let hummus = window.require('hummus');
-let fillForm = window.require('C:/Users/Amon/Documents/GitHub/dndtome/src/services/pdf-form-fill.js').fillForm;
+//let fillForm = window.require('C:/Users/Amon/Documents/GitHub/dndtome/src/services/pdf-form-fill.js').fillForm;
 
 module.exports.fillPdf = (sourcePDF, destinationPDF, data, log) => {
 
@@ -7,6 +7,6 @@ module.exports.fillPdf = (sourcePDF, destinationPDF, data, log) => {
         modifiedFilePath: destinationPDF, 
         log: log
     });
-    fillForm(writer, data);
+    //fillForm(writer, data);
     writer.end();
 };

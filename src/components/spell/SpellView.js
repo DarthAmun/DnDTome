@@ -118,15 +118,15 @@ export default function SpellView() {
                 <label>Components:<input name="components" type="text" value={components} onChange={e => setComponents(e.target.value)} placeholder="Components..." /></label>
                 <label>Classes:<input name="classes" type="text" value={classes} onChange={e => setClasses(e.target.value)} placeholder="Classes..." /></label>
                 <label>Sources:<input name="sources" type="text" value={sources} onChange={e => setSources(e.target.value)} placeholder="Sources..." /></label>
+                <label>Char:
+                    <select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
+                        {chars.map((char, index) => {
+                            return <option key={index} value={char.char_id}>{char.char_name}</option>;
+                        })}
+                    </select>
+                </label>
             </div>
             <ReactQuill value={text} onChange={e => setText(e)} />
-            <label>Char:
-                <select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
-                    {chars.map((char, index) => {
-                        return <option key={index} value={char.char_id}>{char.char_name}</option>;
-                    })}
-                </select>
-            </label>
             <button onClick={addSpellToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
             <button onClick={saveSpell}><FontAwesomeIcon icon={faSave} /> Save</button>
             <button onClick={deleteSpell} className="delete" style={{ float: "right" }}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
