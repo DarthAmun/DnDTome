@@ -301,13 +301,13 @@
     height: 15px;
 }
 
-#char::-webkit-scrollbar, #char textarea::-webkit-scrollbar, #char .charSpells::-webkit-scrollbar {
+#char::-webkit-scrollbar, #char textarea::-webkit-scrollbar, #char .charSpells::-webkit-scrollbar, #char .charMonsters::-webkit-scrollbar, #char .charItems::-webkit-scrollbar {
     width: 6px;
     background-color: var(--scrollbar);
     border-radius: 5px;
 }
 
-#char::-webkit-scrollbar-thumb, #char textarea::-webkit-scrollbar-thumb, #char .charSpells::-webkit-scrollbar-thumb {
+#char::-webkit-scrollbar-thumb, #char textarea::-webkit-scrollbar-thumb, #char .charSpells::-webkit-scrollbar-thumb, #char .charMonsters::-webkit-scrollbar-thumb, #char .charItems::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb);
     border-radius: 5px;
 }

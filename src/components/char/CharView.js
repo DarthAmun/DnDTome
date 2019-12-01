@@ -284,6 +284,39 @@ export default function CharView(props) {
         let sourcePDF = app.getAppPath() + './src/assets/pdf/character_sheet_template.pdf';
         options.defaultPath = options.defaultPath + `/${name}_character.pdf`;
         let log = options.defaultPath + `/log.txt`;
+
+        let weapons = [{ wpn_Name: "", wpn_AtkBonus: "", wpn_Damage: "" },
+        { wpn_Name: "", wpn_AtkBonus: "", wpn_Damage: "" },
+        { wpn_Name: "", wpn_AtkBonus: "", wpn_Damage: "" }];
+        let wpnCount = 0;
+        {
+            items.map((item, index) => {
+                if (
+                    (item.item_equiped
+                        || (item.item_amount && item.item_attunment)
+                    )
+                    && (
+                        (item.item_type !== null && item.item_type.includes("Weapon"))
+                        ||
+                        (item.gear_type !== null && item.gear_type.includes("Weapon"))
+                    )
+                ) {
+                    if (wpnCount < 3) {
+                        if (item.item_id === null) {
+                            weapons[wpnCount].wpn_Name = item.gear_name;
+                            weapons[wpnCount].wpn_AtkBonus = item.item_hit;
+                            weapons[wpnCount].wpn_Damage = item.item_damage;
+                        } else {
+                            weapons[wpnCount].wpn_Name = item.item_name;
+                            weapons[wpnCount].wpn_AtkBonus = item.item_hit;
+                            weapons[wpnCount].wpn_Damage = item.item_damage;
+                        }
+                    }
+                    wpnCount++;
+                }
+            })
+        }
+
         let data = {
             "CharacterName": `${name}`,
             "ClassLevel": `${classes}`,
@@ -364,12 +397,23 @@ export default function CharView(props) {
             "Speed": `${speed}`,
             "Equipment": `${items.map(item => {
                 if (item.item_id === null) {
-                    return item.gear_name + ", ";
+                    return item.gear_name;
                 } else {
                     return item.item_name + ", ";
                 }
             })}`,
+            "Wpn Name 1": `${weapons[0].wpn_Name}`,
+            "Wpn1 AtkBonus": `${weapons[0].wpn_AtkBonus}`,
+            "Wpn1 Damage": `${weapons[0].wpn_Damage}`,
+            "Wpn Name 2": `${weapons[1].wpn_Name}`,
+            "Wpn2 AtkBonus": `${weapons[1].wpn_AtkBonus}`,
+            "Wpn2 Damage": `${weapons[1].wpn_Damage}`,
+            "Wpn Name 3": `${weapons[2].wpn_Name}`,
+            "Wpn3 AtkBonus": `${weapons[2].wpn_AtkBonus}`,
+            "Wpn3 Damage": `${weapons[2].wpn_Damage}`,
         };
+
+        console.log(data);
 
         dialog.showSaveDialog(null, options, (path) => {
             PdfFillerService.fillPdf(sourcePDF, path, data, log);
@@ -775,7 +819,7 @@ export default function CharView(props) {
                                             <th className="centered">Remove</th>
                                         </tr>
                                         {spells.map((spell, index) => {
-                                            return <tr className="charSpell" key={spell.spell_id} style={{ cursor: 'pointer' }}>
+                                            return <tr className="charSpell" key={spell.id} style={{ cursor: 'pointer' }}>
                                                 <td onClick={() => viewSpell(spell)}>{formatLevel(spell.spell_level)}</td>
                                                 <td onClick={() => viewSpell(spell)}>{spell.spell_name}</td>
                                                 <td onClick={() => viewSpell(spell)}>{formatCastingTime(spell.spell_time)}</td>
@@ -878,7 +922,7 @@ export default function CharView(props) {
                                             <th className="centered">Remove</th>
                                         </tr>
                                         {monsters.map((monster, index) => {
-                                            return <tr className="charMonster" key={monster.monster_id} style={{ cursor: 'pointer' }}>
+                                            return <tr className="charMonster" key={index} style={{ cursor: 'pointer' }}>
                                                 <td onClick={() => viewMonster(monster)}>{monster.monster_cr}</td>
                                                 <td onClick={() => viewMonster(monster)}>{monster.monster_name}</td>
                                                 <td onClick={() => viewMonster(monster)}>{monster.monster_armorClass}</td>

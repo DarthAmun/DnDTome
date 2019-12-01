@@ -54,7 +54,7 @@ module.exports.reciveCharItems = (id, mainWindow) => {
 
 module.exports.reciveCharMonsters = (id, mainWindow) => {
     db.serialize(function () {
-        db.all("SELECT * FROM 'main'.'tab_characters_monsters' AS a LEFT JOIN 'main'.'tab_monsters' AS b ON a.monster_id = b.monster_id WHERE char_id=? ORDER BY b.monster_cr, b.monster_name", [id], function (err, rows) {
+        db.all("SELECT * FROM 'main'.'tab_characters_monsters' AS a LEFT JOIN 'main'.'tab_monsters' AS b ON a.monster_id = b.monster_id WHERE char_id=? ORDER BY b.monster_name", [id], function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
