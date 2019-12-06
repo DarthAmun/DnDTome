@@ -349,7 +349,6 @@ export default function CharView(props) {
             "ST Wisdom": `${wisSave}`,
             "Check Box 22": `${chaSaveProf === 1 ? "Yes" : ""}`,
             "ST Charisma": `${chaSave}`,
-
             "Check Box 23": `${acrobaticsProf > 0 ? "Yes" : ""}`,
             "Acrobatics": `${acrobatics}`,
             "Check Box 24": `${animalHandlingProf > 0 ? "Yes" : ""}`,
@@ -394,6 +393,7 @@ export default function CharView(props) {
             "HPCurrent": `${currentHp}`,
             "HDTotal": `${hitDice}`,
             "Features and Traits": `${features + " " + racialFeatures + " " + classFeatures}`,
+            "AttacksSpellcasting": `${actions + " " + bonusActions + " " + reactions}`,
             "Speed": `${speed}`,
             "Equipment": `${items.map(item => {
                 if (item.item_id === null) {
@@ -411,6 +411,9 @@ export default function CharView(props) {
             "Wpn Name 3": `${weapons[2].wpn_Name}`,
             "Wpn3 AtkBonus": `${weapons[2].wpn_AtkBonus}`,
             "Wpn3 Damage": `${weapons[2].wpn_Damage}`,
+            "Backstory": `${notesOne}`,
+            "Feat+Traits": `${notesTwo}`,
+            "Treasure": `${notesThree}`,
         };
 
         console.log(data);

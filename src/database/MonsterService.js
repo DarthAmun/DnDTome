@@ -36,6 +36,9 @@ module.exports.reciveMonsters = (step, start, query, mainWindow) => {
         if (searchMonsterQuery.subtype != null && typeof searchMonsterQuery.subtype !== 'undefined' && searchMonsterQuery.subtype != "") {
             q += `monster_subtype like "%${searchMonsterQuery.subtype}%" AND `;
         }
+        if (searchMonsterQuery.source != null && typeof searchMonsterQuery.source !== 'undefined' && searchMonsterQuery.source != "") {
+            q += `monster_source like "%${searchMonsterQuery.source}%" AND `;
+        }
         if (searchMonsterQuery.cr != null && typeof searchMonsterQuery.cr !== 'undefined' && searchMonsterQuery.cr != "") {
             q += `monster_cr = "${searchMonsterQuery.cr}" AND `;
         }

@@ -38,7 +38,7 @@ export default function MonsterOverview() {
     return (
         <div id="overview">
             <div id="monsterOverview">
-                <SearchBar inputs={["name", "type", "subtype", "cr", "alignment", "speed", "damage", "senses", "ability", "action"]} queryName="sendMonsterSearchQuery" />
+                <SearchBar inputs={["name", "type", "subtype", "cr", "alignment", "speed", "source", "damage", "senses", "ability", "action"]} queryName="sendMonsterSearchQuery" />
                 <div id="monsters" ref={monsters}>
                     {currentMonsterList.monsters.map((monster, index) => {
                         return <Monster delay={index} monster={monster} key={monster.monster_id} onClick={() => viewMonster(monster)} />;
