@@ -394,7 +394,7 @@ export default function Options() {
             <h3>Data Export</h3>
             <span>Path: {options.defaultPath}</span><br />
             <button onClick={exportSpells}><FontAwesomeIcon icon={faFileExport} /> Export all Spells </button><br />
-            <button onClick={exportItems}><FontAwesomeIcon icon={faFileExport} /> Export all Items </button><br />
+            <button onClick={exportItems}><FontAwesomeIcon icon={faFileExport} /> Export all Magic Items </button><br />
             <button onClick={exportGears}><FontAwesomeIcon icon={faFileExport} /> Export all Gear </button><br />
             <button onClick={exportMonsters}><FontAwesomeIcon icon={faFileExport} /> Export all Monsters </button><br />
             <button onClick={exportChars}><FontAwesomeIcon icon={faFileExport} /> Export all Characters </button>
@@ -402,7 +402,7 @@ export default function Options() {
           <div className="optionSection">
             <h3>Data Import</h3>
             <button onClick={importSpells}><FontAwesomeIcon icon={faFileImport} /> Import Spells </button><br />
-            <button onClick={importItems}><FontAwesomeIcon icon={faFileImport} /> Import Items </button><br />
+            <button onClick={importItems}><FontAwesomeIcon icon={faFileImport} /> Import Magic Items </button><br />
             <button onClick={importGears}><FontAwesomeIcon icon={faFileImport} /> Import Gear </button><br />
             <button onClick={importMonsters}><FontAwesomeIcon icon={faFileImport} /> Import Monsters </button><br />
             <button onClick={importChars}><FontAwesomeIcon icon={faFileImport} /> Import Characters </button>
@@ -410,7 +410,7 @@ export default function Options() {
           <div className="optionSection">
             <h3>Delete Data</h3>
             <button onClick={deleteAllSpells}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Spells </button><br />
-            <button onClick={deleteAllItems}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Items </button><br />
+            <button onClick={deleteAllItems}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Magic Items </button><br />
             <button onClick={deleteAllGears}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Gear </button><br />
             <button onClick={deleteAllMonsters}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Monsters </button><br />
             <button onClick={deleteAllChars}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Characters </button>
