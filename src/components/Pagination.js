@@ -8,7 +8,7 @@ import { faAngleLeft, faAngleRight, faPlus } from '@fortawesome/free-solid-svg-i
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
-export default function Pagination({ name }) {
+export default function Pagination({ initCount }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageStep, setPageStep] = useState(10);
     const [count, setCount] = useState(0);
@@ -24,18 +24,13 @@ export default function Pagination({ name }) {
     },[left]);
 
     useEffect(() => {
-        ipcRenderer.send(`get${name}Count`);
-        ipcRenderer.on(`get${name}CountResult`, receiveCount);
-        return () => {
-            ipcRenderer.removeListener(`get${name}CountResult`, receiveCount);
-        }
-    }, []);
+        receiveCount(initCount);
+    }, [initCount]);
 
-    const receiveCount = (evt, result) => {
-        setCount(result[0].count);
+    const receiveCount = (result) => {
+        setCount(result);
         setCurrentPage(1);
-        setMaxPages(Math.ceil(result[0].count / pageStep));
-
+        setMaxPages(Math.ceil(result / pageStep));
     }
 
     const pageUp = () => {

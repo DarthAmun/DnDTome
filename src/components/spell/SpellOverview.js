@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../../assets/css/spell/SpellOverview.css';
 import Spell from './Spell';
+import { reciveSpells, reciveSpellCount } from '../../database/SpellService';
 import Pagination from '../Pagination';
 import SearchBar from '../SearchBar';
 
@@ -9,24 +10,30 @@ const ipcRenderer = electron.ipcRenderer;
 
 export default function SpellOverview() {
     const [currentSpellList, setCurrentSpellList] = useState({ spells: [] });
+    const [count, setCount] = useState(0);
     const spells = useRef(null);
 
-    const receiveSpells = (evt, result) => {
+    const receiveSpellsResult = (result) => {
         setCurrentSpellList({ spells: result });
         spells.current.scrollTop = 0;
     }
 
     const updateSpell = (evt, result) => {
         let { spellStep, spellStart } = result;
-        ipcRenderer.send('getSearchSpells', { step: spellStep, start: spellStart });
+        reciveSpells(spellStep, spellStart, null, function (result) {
+            receiveSpellsResult(result)
+        })
     }
 
     useEffect(() => {
-        ipcRenderer.send('getSearchSpells', { step: 10, start: 0 });
-        ipcRenderer.on("getSearchSpellsResult", receiveSpells);
+        reciveSpells(10, 0, null, function (result) {
+            receiveSpellsResult(result);
+        })
+        reciveSpellCount(function (result) {
+            setCount(result.count);
+        });
         ipcRenderer.on("spellsUpdated", updateSpell);
         return () => {
-            ipcRenderer.removeListener("getSearchSpellsResult", receiveSpells);
             ipcRenderer.removeListener("spellsUpdated", updateSpell);
         }
     }, []);
@@ -45,7 +52,7 @@ export default function SpellOverview() {
                     })}
                 </div>
             </div>
-            <Pagination name="Spell" />
+            <Pagination initCount={count} />
         </div>
     )
 

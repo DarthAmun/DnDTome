@@ -1,7 +1,8 @@
 import '../assets/css/Options.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import OptionService from '../database/OptionService';
 import ThemeService from '../services/ThemeService';
+import { reciveAllSpells, saveNewSpells } from '../database/SpellService';
 import { Line } from 'rc-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
@@ -14,80 +15,33 @@ const { dialog, app } = electron.remote;
 const fs = require('fs');
 
 export default function Options() {
-  const [spells, setSpells] = useState([]);
   const [spellsImported, setSpellsImported] = useState({ percent: 0, now: 0, full: 0, name: "" });
-  const [items, setItems] = useState([]);
   const [itemsImported, setItemsImported] = useState({ percent: 0, now: 0, full: 0, name: "" });
-  const [gears, setGears] = useState([]);
   const [gearsImported, setGearsImported] = useState({ percent: 0, now: 0, full: 0, name: "" });
-  const [monsters, setMonsters] = useState([]);
   const [monstersImported, setMonstersImported] = useState({ percent: 0, now: 0, full: 0, name: "" });
-  const [chars, setChars] = useState([]);
 
   const [importing, setImporting] = useState("none");
 
-  const receiveAllSpells = (evt, result) => {
-    setSpells(result);
-  }
-  const receiveAllItems = (evt, result) => {
-    setItems(result);
-  }
-  const receiveAllGears = (evt, result) => {
-    setGears(result);
-  }
-  const receiveAllMonsters = (evt, result) => {
-    setMonsters(result);
-  }
-  const receiveAllChars = (evt, result) => {
-    setChars(result);
-  }
-
-  const updateSpellImport = (evt, result) => {
+  const updateSpellImport = (result) => {
     let percent = Math.round((result.now / result.full) * 100);
     percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
     setSpellsImported({ percent: percent, now: result.now, full: result.full, name: result.name });
   }
-  const updateItemImport = (evt, result) => {
+  const updateItemImport = (result) => {
     let percent = Math.round((result.now / result.full) * 100);
     percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
     setItemsImported({ percent: percent, now: result.now, full: result.full, name: result.name });
   }
-  const updateGearImport = (evt, result) => {
+  const updateGearImport = (result) => {
     let percent = Math.round((result.now / result.full) * 100);
     percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
     setGearsImported({ percent: percent, now: result.now, full: result.full, name: result.name });
   }
-  const updateMonsterImport = (evt, result) => {
+  const updateMonsterImport = (result) => {
     let percent = Math.round((result.now / result.full) * 100);
     percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
     setMonstersImported({ percent: percent, now: result.now, full: result.full, name: result.name });
   }
-
-
-  useEffect(() => {
-    ipcRenderer.send('getAllSpells');
-    ipcRenderer.send('getAllItems');
-    ipcRenderer.send('getAllGears');
-    ipcRenderer.send('getAllMonsters');
-    ipcRenderer.send('getAllChars');
-    ipcRenderer.on("getAllSpellsResult", receiveAllSpells);
-    ipcRenderer.on("getAllItemsResult", receiveAllItems);
-    ipcRenderer.on("getAllGearsResult", receiveAllGears);
-    ipcRenderer.on("getAllMonstersResult", receiveAllMonsters);
-    ipcRenderer.on("getAllCharsResult", receiveAllChars);
-
-    ipcRenderer.on("updateMonsterImport", updateMonsterImport);
-    ipcRenderer.on("updateSpellImport", updateSpellImport);
-    ipcRenderer.on("updateItemImport", updateItemImport);
-    ipcRenderer.on("updateGearImport", updateGearImport);
-    return () => {
-      ipcRenderer.removeListener("getAllSpellsResult", receiveAllSpells);
-      ipcRenderer.removeListener("getAllItemsResult", receiveAllItems);
-      ipcRenderer.removeListener("getAllGearsResult", receiveAllGears);
-      ipcRenderer.removeListener("getAllMonstersResult", receiveAllMonsters);
-      ipcRenderer.removeListener("getAllCharsResult", receiveAllChars);
-    }
-  }, []);
 
   const toPatreon = () => {
     shell.openExternal("https://www.patreon.com/bePatron?u=25310394");
@@ -101,17 +55,20 @@ export default function Options() {
   }
 
   const exportSpells = (e) => {
-    let content = JSON.stringify(spells);
+    reciveAllSpells(function (result) {
+      console.log(result);
+      let content = JSON.stringify(result);
 
-    options.defaultPath = options.defaultPath + '/spells_export.json';
-    dialog.showSaveDialog(null, options, (path) => {
+      options.defaultPath = options.defaultPath + '/spells_export.json';
+      dialog.showSaveDialog(null, options, (path) => {
 
-      // fileName is a string that contains the path and filename created in the save file dialog.  
-      fs.writeFile(path, content, (err) => {
-        if (err) {
-          ipcRenderer.send('displayMessage', { type: `Spells exported`, message: `Spell export failed` });
-        }
-        ipcRenderer.send('displayMessage', { type: `Spells exported`, message: `Spell export successful` });
+        // fileName is a string that contains the path and filename created in the save file dialog.  
+        fs.writeFile(path, content, (err) => {
+          if (err) {
+            ipcRenderer.send('displayMessage', { type: `Spells exported`, message: `Spell export failed` });
+          }
+          ipcRenderer.send('displayMessage', { type: `Spells exported`, message: `Spell export successful` });
+        });
       });
     });
   }
@@ -196,7 +153,9 @@ export default function Options() {
 
         // Change how to handle the file content
         let spellsJson = JSON.parse(data);
-        ipcRenderer.send('saveNewSpells', { spells: spellsJson });
+        saveNewSpells(spellsJson , function (result){
+          updateSpellImport(result);
+        });
       });
     });
   }

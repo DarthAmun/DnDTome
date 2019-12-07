@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 import '../../assets/css/spell/SpellView.css';
 import OptionService from '../../database/OptionService';
 import ThemeService from '../../services/ThemeService';
+import { saveSpell, deleteSpell } from '../../database/SpellService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -74,15 +75,15 @@ export default function SpellView() {
         }
     }, []);
 
-    const saveSpell = (e) => {
-        ipcRenderer.send('saveSpell', { spell: { id, name, school, level, ritual, time, range, duration, components, text, classes, sources } });
+    const saveSpellAction = (e) => {
+        saveSpell({ id, name, school, level, ritual, time, range, duration, components, text, classes, sources });
     }
 
     const addSpellToChar = (e) => {
         ipcRenderer.send('addSpellToChar', { char: { selectedChar }, spell: { id, name } });
     }
 
-    const deleteSpell = (e) => {
+    const deleteSpellAction = (e) => {
         const options = {
             type: 'question',
             buttons: ['Cancel', 'Yes, please', 'No, thanks'],
@@ -93,7 +94,7 @@ export default function SpellView() {
 
         dialog.showMessageBox(null, options, (response) => {
             if (response == 1) {
-                ipcRenderer.send('deleteSpell', { spell: { id, name, school, ritual, level, time, range, duration, components, text, classes, sources } });
+                deleteSpell({ id, name, school, ritual, level, time, range, duration, components, text, classes, sources });
             }
         });
     }
@@ -125,8 +126,8 @@ export default function SpellView() {
                 </select>
             </label>
             <button onClick={addSpellToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
-            <button onClick={saveSpell}><FontAwesomeIcon icon={faSave} /> Save</button>
-            <button onClick={deleteSpell} className="delete" style={{ float: "right" }}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+            <button onClick={saveSpellAction}><FontAwesomeIcon icon={faSave} /> Save</button>
+            <button onClick={deleteSpellAction} className="delete" style={{ float: "right" }}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
         </div>
     )
 }
