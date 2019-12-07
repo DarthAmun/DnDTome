@@ -36,10 +36,6 @@ module.exports.reciveAllSpells = (callback) => {
 }
 
 module.exports.reciveSpells = (step, start, query, callback) => {
-  if (localStorage.getItem('spellStep') !== undefined) {
-    step =  parseInt(localStorage.getItem('spellStep'), 10);
-  }
-
   localStorage.setItem('spellStep', parseInt(step, 10));
   localStorage.setItem('spellStart', parseInt(start, 10));
 
