@@ -296,8 +296,7 @@ ipcMain.on('getMonsterCount', (event, arg) => {
 
 ipcMain.on('sendSpellSearchQuery', (event, arg) => {
   const { query } = arg;
-  const q = SpellService.reciveSpells(this.searchSpellStep, 0, query, mainWindow);
-  SpellService.reciveSpellCount(q.replace("SELECT * FROM 'main'.'tab_spells'", "SELECT count(*) AS count FROM 'main'.'tab_spells'"), mainWindow);
+  mainWindow.webContents.send('sendSpellSearchQuery', { query });
 });
 
 ipcMain.on('sendItemSearchQuery', (event, arg) => {

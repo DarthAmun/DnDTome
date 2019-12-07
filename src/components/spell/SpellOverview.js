@@ -12,6 +12,7 @@ export default function SpellOverview() {
     const spells = useRef(null);
     const [isFetching, setIsFetching] = useState(false);
     const [start, setStart] = useState(-10);
+    const [query, setQuery] = useState({});
 
     const receiveSpellsResult = (result) => {
         let newList = currentSpellList.spells
@@ -23,15 +24,26 @@ export default function SpellOverview() {
     const updateSpell = () => {
         spells.current.scrollTop = 0;
         setStart(10);
-        reciveSpells(10, 0, null, function (result) {
+        reciveSpells(10, 0, query, function (result) {
+            receiveSpellsResult(result)
+        })
+    }
+
+    const searchSpell = (evt, rquery) => {
+        setQuery(rquery.query);
+        spells.current.scrollTop = 0;
+        setStart(10);
+        reciveSpells(10, 0, rquery.query, function (result) {
             receiveSpellsResult(result)
         })
     }
 
     useEffect(() => {
         ipcRenderer.on("spellsUpdated", updateSpell);
+        ipcRenderer.on("sendSpellSearchQuery", searchSpell);
         return () => {
             ipcRenderer.removeListener("spellsUpdated", updateSpell);
+            ipcRenderer.removeListener("sendSpellSearchQuery", searchSpell);
         }
     }, []);
 
@@ -44,7 +56,7 @@ export default function SpellOverview() {
     useEffect(() => {
         setIsFetching(false);
         if (spells.current.scrollHeight == spells.current.clientHeight) {
-            reciveSpells(10, start + 10, null, function (result) {
+            reciveSpells(10, start + 10, query, function (result) {
                 receiveSpellsResult(result);
             })
         }
@@ -56,7 +68,7 @@ export default function SpellOverview() {
     }
 
     const fetchMoreListItems = () => {
-        reciveSpells(10, start + 10, null, function (result) {
+        reciveSpells(10, start + 10, query, function (result) {
             receiveSpellsResult(result);
         })
     }
