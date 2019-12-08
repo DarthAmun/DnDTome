@@ -128,7 +128,7 @@ module.exports.saveMonster = (monster) => {
     });
 }
 
-module.exports.saveNewMonster = (monster, mainWindow) => {
+module.exports.saveNewMonster = (monster) => {
     let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment, monster.ac, monster.hp, monster.speed, monster.str,
     monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.saveingThrows, monster.skills, monster.dmgVulnerabilitie,
     monster.dmgResistance, monster.dmgImmunities, monster.monster_conImmunities, monster.senses, monster.lang, monster.cr, monster.sAblt, monster.ablt, monster.lAblt,
@@ -146,7 +146,7 @@ module.exports.saveNewMonster = (monster, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Added ${monster.name} successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Added monster`, message: `Added ${monster.name} successful` });
+            ipcRenderer.send('displayMessage', { type: `Added monster`, message: `Added ${monster.name} successful` });
         });
     });
 }

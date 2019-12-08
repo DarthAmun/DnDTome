@@ -27,7 +27,10 @@ export default function ItemView() {
     const receiveItem = (event, result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveItem")
-            const text = result.item_description.replace(/\\n/gm, "\r\n");
+            let text = "";
+            if (result.item_description !== null) {
+                text = result.item_description.replace(/\\n/gm, "\r\n");
+            }
             setName(result.item_name);
             setId(result.item_id);
             setDescription(text);

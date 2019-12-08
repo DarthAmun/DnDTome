@@ -113,7 +113,7 @@ module.exports.saveItem = (item) => {
     });
 }
 
-module.exports.saveNewItem = (item, mainWindow) => {
+module.exports.saveNewItem = (item) => {
     let data = [item.name, item.description, item.pic, item.rarity, item.type, item.source];
     let sql = `INSERT INTO 'main'.'tab_items' (item_name, item_description, item_pic, item_rarity, item_type, item_source)
                 VALUES  (?, ?, ?, ?, ?, ?)`;
@@ -123,7 +123,7 @@ module.exports.saveNewItem = (item, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Added ${item.name} successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Added magic item`, message: `Added ${item.name} successful` });
+            ipcRenderer.send('displayMessage', { type: `Added magic item`, message: `Added ${item.name} successful` });
         });
     });
 }

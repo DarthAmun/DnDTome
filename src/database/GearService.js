@@ -119,7 +119,7 @@ module.exports.saveGear = (gear) => {
     });
 }
 
-module.exports.saveNewGear = (gear, mainWindow) => {
+module.exports.saveNewGear = (gear) => {
     let data = [gear.name, gear.description, gear.pic, gear.cost, gear.damage, gear.weight, gear.properties, gear.type];
     let sql = `INSERT INTO 'main'.'tab_gears' (gear_name, gear_description, gear_pic, gear_cost, gear_damage, gear_weight, gear_properties, gear_type)
                 VALUES  (?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -129,7 +129,7 @@ module.exports.saveNewGear = (gear, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Added ${gear.name} successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Added gear`, message: `Added ${gear.name} successful` });
+            ipcRenderer.send('displayMessage', { type: `Added gear`, message: `Added ${gear.name} successful` });
         });
     });
 }
