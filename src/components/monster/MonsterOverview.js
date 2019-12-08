@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../../assets/css/monster/MonsterOverview.css';
 import Monster from './Monster';
-import { reciveMonsters } from '../../database/MonsterService';
+import { reciveMonsters, reciveMonsterCount } from '../../database/MonsterService';
 import SearchBar from '../SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -65,8 +65,14 @@ export default function MonsterOverview() {
         }
         if (monsters.current.scrollHeight == monsters.current.clientHeight
             && currentMonsterList.monsters.length) {
-            reciveMonsters(10, start + 10, query, function (result) {
-                receiveMonstersResult(result);
+
+            reciveMonsterCount(query, function (result) {
+                let monsterCount = result.count;
+                if (monsterCount > currentMonsterList.monsters.length) {
+                    reciveMonsters(10, start + 10, query, function (monsters) {
+                        receiveMonstersResult(monsters);
+                    })
+                }
             })
         }
     }, [currentMonsterList]);

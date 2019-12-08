@@ -26,7 +26,7 @@ module.exports.reciveAllGears = (callback) => {
 module.exports.reciveGears = (step, start, query, callback) => {
     localStorage.setItem('gearStep', parseInt(step, 10));
     localStorage.setItem('gearStart', parseInt(start, 10));
-  
+
     if (query !== null) {
         searchGearQuery = query;
     }
@@ -74,13 +74,15 @@ module.exports.reciveGears = (step, start, query, callback) => {
     return q;
 }
 
-module.exports.reciveGearCount = (q, mainWindow) => {
+module.exports.reciveGearCount = (query, callback) => {
+    const q = this.reciveGears(10, 0, query, function (result) { });
+    const sql = q.replace("SELECT * FROM 'main'.'tab_gears'", "SELECT count(*) AS count FROM 'main'.'tab_gears'");
     db.serialize(function () {
-        db.all(q, function (err, rows) {
+        db.all(sql, function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getGearCountResult', rows);
+            callback(rows[0]);
             console.log("====>" + `getGearCount successfull`)
         });
     });

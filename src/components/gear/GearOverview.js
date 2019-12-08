@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../../assets/css/gear/GearOverview.css';
 import Gear from './Gear';
-import { reciveGears } from '../../database/GearService';
+import { reciveGears, reciveGearCount } from '../../database/GearService';
 import SearchBar from '../SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -65,8 +65,14 @@ export default function GearOverview() {
         }
         if (gears.current.scrollHeight == gears.current.clientHeight
             && currentGearList.gears.length) {
-            reciveGears(10, start + 10, query, function (result) {
-                receiveGearsResult(result);
+
+            reciveGearCount(query, function (result) {
+                let gearCount = result.count;
+                if (gearCount > currentGearList.gears.length) {
+                    reciveGears(10, start + 10, query, function (gears) {
+                        receiveGearsResult(gears);
+                    })
+                }
             })
         }
     }, [currentGearList]);

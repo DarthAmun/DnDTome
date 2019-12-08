@@ -92,13 +92,15 @@ module.exports.reciveMonsters = (step, start, query, callback) => {
     return q;
 }
 
-module.exports.reciveMonsterCount = (q, mainWindow) => {
+module.exports.reciveMonsterCount = (query, callback) => {
+    const q = this.reciveMonsters(10, 0, query, function (result) { });
+    const sql = q.replace("SELECT * FROM 'main'.'tab_monsters'", "SELECT count(*) AS count FROM 'main'.'tab_monsters'");
     db.serialize(function () {
-        db.all(q, function (err, rows) {
+        db.all(sql, function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getMonsterCountResult', rows);
+            callback(rows[0]);
             console.log("====>" + `getMonsterCount successfull`)
         });
     });

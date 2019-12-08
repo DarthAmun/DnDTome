@@ -95,8 +95,9 @@ module.exports.reciveSpells = (step, start, query, callback) => {
   return q;
 }
 
-module.exports.reciveSpellCount = (callback) => {
-  let sql = `SELECT count(*) AS count FROM 'main'.'tab_spells'`;
+module.exports.reciveSpellCount = (query, callback) => {
+  const q = this.reciveSpells(10, 0, query, function (result) {});
+  const sql = q.replace("SELECT * FROM 'main'.'tab_spells'", "SELECT count(*) AS count FROM 'main'.'tab_spells'");
   db.serialize(function () {
     db.all(sql, function (err, rows) {
       if (err != null) {

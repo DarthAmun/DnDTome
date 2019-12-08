@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../../assets/css/spell/SpellOverview.css';
 import Spell from './Spell';
-import { reciveSpells } from '../../database/SpellService';
+import { reciveSpells, reciveSpellCount } from '../../database/SpellService';
 import SearchBar from '../SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -58,6 +58,7 @@ export default function SpellOverview() {
 
     useEffect(() => {
         setIsFetching(false);
+
         if (!currentSpellList.spells.length) {
             reciveSpells(10, start, query, function (result) {
                 receiveSpellsResult(result);
@@ -65,8 +66,14 @@ export default function SpellOverview() {
         }
         if (spells.current.scrollHeight == spells.current.clientHeight
             && currentSpellList.spells.length) {
-            reciveSpells(10, start + 10, query, function (result) {
-                receiveSpellsResult(result);
+
+            reciveSpellCount(query, function (result) {
+                let spellCount = result.count;
+                if (spellCount > currentSpellList.spells.length) {
+                    reciveSpells(10, start + 10, query, function (spells) {
+                        receiveSpellsResult(spells);
+                    })
+                }
             })
         }
     }, [currentSpellList]);

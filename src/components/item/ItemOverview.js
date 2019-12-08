@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../../assets/css/item/ItemOverview.css';
 import Item from './Item';
-import { reciveItems } from '../../database/ItemService';
+import { reciveItems, reciveItemCount } from '../../database/ItemService';
 import SearchBar from '../SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -66,8 +66,16 @@ export default function ItemOverview() {
         }
         if (items.current.scrollHeight == items.current.clientHeight
             && currentItemList.items.length) {
-            reciveItems(10, start + 10, query, function (result) {
-                receiveItemsResult(result);
+
+            reciveItemCount(query, function (result) {
+                console.log(result)
+                let itemCount = result.count;
+                console.log(itemCount +">" + currentItemList.items.length)
+                if (itemCount > currentItemList.items.length) {
+                    reciveItems(10, start + 10, query, function (items) {
+                        receiveItemsResult(items);
+                    })
+                }
             })
         }
     }, [currentItemList]);

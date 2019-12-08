@@ -68,13 +68,15 @@ module.exports.reciveItems = (step, start, query, callback) => {
     return q;
 }
 
-module.exports.reciveItemCount = (q, mainWindow) => {
+module.exports.reciveItemCount = (query, callback) => {
+    const q = this.reciveItems(10, 0, query, function (result) { });
+    const sql = q.replace("SELECT * FROM 'main'.'tab_items'", "SELECT count(*) AS count FROM 'main'.'tab_items'");
     db.serialize(function () {
-        db.all(q, function (err, rows) {
+        db.all(sql, function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getItemCountResult', rows);
+            callback(rows[0]);
             console.log("====>" + `getItemCount successfull`)
         });
     });
