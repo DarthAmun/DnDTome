@@ -150,7 +150,7 @@ module.exports.saveNewItems = (items, callback) => {
     });
 }
 
-module.exports.addItemToChar = (char, item, mainWindow) => {
+module.exports.addItemToChar = (char, item) => {
     let data = [char.selectedChar, item.id, 1, false, false];
     let sql = `INSERT INTO 'main'.'tab_characters_items' (char_id, item_id, item_amount, item_equiped, item_attuned)
                 VALUES  (?, ?, ?, ?, ?)`;
@@ -160,7 +160,7 @@ module.exports.addItemToChar = (char, item, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Added ${item.name} to character successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Added magic item to character`, message: `Added ${item.name} to character successful` });
+            ipcRenderer.send('displayMessage', { type: `Added magic item to character`, message: `Added ${item.name} to character successful` });
         });
     });
 }

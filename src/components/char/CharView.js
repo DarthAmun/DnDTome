@@ -5,7 +5,7 @@ import '../../assets/css/char/CharView.css';
 import OptionService from '../../database/OptionService';
 import ThemeService from '../../services/ThemeService';
 import PdfFillerService from '../../services/PdfFillerService';
-import { saveChar, saveCharItems, saveCharSpells, deleteChar, reciveChar, reciveCharSpells, reciveCharMonsters, reciveCharItems, deleteCharSpell } from '../../database/CharacterService';
+import { saveChar, saveCharItems, saveCharSpells, deleteChar, deleteCharItem, deleteCharMonster, reciveChar, reciveCharSpells, reciveCharMonsters, reciveCharItems, deleteCharSpell } from '../../database/CharacterService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes, faAngleUp, faAngleDoubleUp, faMinus, faHeartBroken, faHeartbeat, faTrashAlt, faFileExport, faPrint } from '@fortawesome/free-solid-svg-icons';
 import StatChart from './StatChart';
@@ -452,15 +452,27 @@ export default function CharView(props) {
     const viewGear = (gear) => {
         ipcRenderer.send('openGearView', gear);
     }
+    const viewMonster = (monster) => {
+        ipcRenderer.send('openMonsterView', monster);
+    }
 
     const deleteCharSpellAction = (spell) => {
-        deleteCharSpell({ spell });
+        deleteCharSpell(spell);
+        reciveCharSpells(props.match.params.id, function (result) {
+            receiveSpellsResult(result);
+        })
     }
     const deleteCharItemAction = (item) => {
-        deleteCharItem({ item });
+        deleteCharItem(item);
+        reciveCharItems(props.match.params.id, function (result) {
+            receiveItemsResult(result);
+        })
     }
     const deleteCharMonsterAction = (monster) => {
-        deleteCharMonster({ monster });
+        deleteCharMonster(monster);
+        reciveCharMonsters(props.match.params.id, function (result) {
+            reciveMonstersResult(result);
+        })
     }
 
 

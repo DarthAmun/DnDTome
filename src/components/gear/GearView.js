@@ -3,7 +3,8 @@ import * as ReactDOM from "react-dom";
 import '../../assets/css/gear/GearView.css';
 import OptionService from '../../database/OptionService';
 import ThemeService from '../../services/ThemeService';
-import { saveGear, deleteGear } from '../../database/GearService';
+import { saveGear, deleteGear, addGearToChar } from '../../database/GearService';
+import { reciveAllChars } from '../../database/CharacterService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -42,7 +43,7 @@ export default function GearView() {
         })
     }
 
-    const receiveChars = (event, result) => {
+    const receiveChars = (result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveChars")
             setChars(result);
@@ -60,13 +61,14 @@ export default function GearView() {
             ThemeService.setTheme(result);
             ThemeService.applyTheme(result);
         });
+        reciveAllChars(function (result) {
+            receiveChars(result)
+        })
+
         ipcRenderer.on("onViewGear", receiveGear);
-        ipcRenderer.send('getChars');
-        ipcRenderer.on("getCharsResult", receiveChars);
         ipcRenderer.on("changeTheme", changeTheme);
         return () => {
             ipcRenderer.removeListener("onViewGear", receiveGear);
-            ipcRenderer.removeListener("getCharsResult", receiveChars);
             ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
@@ -75,8 +77,8 @@ export default function GearView() {
         saveGear({ id, name, pic, description, cost, weight, damage, properties, type });
     }
 
-    const addGearToChar = (e) => {
-        ipcRenderer.send('addGearToChar', { char: { selectedChar }, gear: { id, name, damage, properties } });
+    const addGearToCharAction = (e) => {
+        addGearToChar({ selectedChar }, { id, name, damage, properties });
     }
 
     const deleteGearAction = (e) => {
@@ -118,7 +120,7 @@ export default function GearView() {
                 <label>Weight:<input name="weight" type="weight" value={weight} onChange={e => setWeight(e.target.value)} /></label>
                 <label>Damage:<input name="damage" type="damage" value={damage} onChange={e => setDamage(e.target.value)} /></label>
                 <label>Cost:<input name="cost" type="text" value={cost} onChange={e => setCost(e.target.value)} /></label>
-                <button onClick={addGearToChar} style={{ float: "left" }}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
+                <button onClick={addGearToCharAction} style={{ float: "left" }}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
             </div>
             <label style={{ width: "100%" }}>Props:<input style={{ width: "calc(100% - 113px)", marginRight: "13px" }} name="props" type="text" value={properties} onChange={e => setProperties(e.target.value)} /></label>
             <div className="image" style={style}></div>

@@ -217,23 +217,7 @@ module.exports.saveNewChars = (chars, mainWindow) => {
     });
 }
 
-module.exports.reciveChars = (mainWindow, itemWindow, gearWindow, spellWindow, monsterWindow) => {
-    db.serialize(function () {
-        db.all("SELECT * FROM 'main'.'tab_characters' ORDER BY char_player ASC", function (err, rows) {
-            if (err != null) {
-                console.log("====>" + err);
-            }
-            mainWindow.webContents.send('getCharsResult', rows);
-            itemWindow.webContents.send('getCharsResult', rows);
-            gearWindow.webContents.send('getCharsResult', rows);
-            spellWindow.webContents.send('getCharsResult', rows);
-            monsterWindow.webContents.send('getCharsResult', rows);
-            console.log("====>" + `getCharsResult successfull`)
-        });
-    });
-}
-
-module.exports.deleteCharSpell = (spell, mainWindow) => {
+module.exports.deleteCharSpell = (spell) => {
     let data = [spell.id];
     let sql = `DELETE FROM 'main'.'tab_characters_spells' WHERE id = ?`;
     db.serialize(function () {
@@ -248,7 +232,7 @@ module.exports.deleteCharSpell = (spell, mainWindow) => {
 }
 
 
-module.exports.deleteCharItem = (item, mainWindow) => {
+module.exports.deleteCharItem = (item) => {
     let data = [item.id];
     let sql = `DELETE FROM 'main'.'tab_characters_items' WHERE id = ?`;
     db.serialize(function () {
@@ -258,6 +242,20 @@ module.exports.deleteCharItem = (item, mainWindow) => {
             }
             console.log(`====>Removed ${item.item_name} successfull`);
             ipcRenderer.send('displayMessage', { type: `Removed item`, message: `Removed ${item.item_name} successful` });
+        });
+    });
+}
+
+module.exports.deleteCharMonster = (monster) => {
+    let data = [monster.monster_id];
+    let sql = `DELETE FROM 'main'.'tab_characters_monsters' WHERE monster_id = ?`;
+    db.serialize(function () {
+        db.run(sql, data, function (err) {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log(`====>Removed ${monster.monster_name} successfull`);
+            ipcRenderer.send('displayMessage', { type: `Removed monster`, message: `Removed ${monster.monster_name} successful` });
         });
     });
 }

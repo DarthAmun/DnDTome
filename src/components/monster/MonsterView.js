@@ -3,7 +3,8 @@ import * as ReactDOM from "react-dom";
 import '../../assets/css/monster/MonsterView.css';
 import OptionService from '../../database/OptionService';
 import ThemeService from '../../services/ThemeService';
-import { saveMonster, deleteMonster } from '../../database/MonsterService';
+import { saveMonster, deleteMonster, addMonsterToChar } from '../../database/MonsterService';
+import { reciveAllChars } from '../../database/CharacterService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -86,7 +87,7 @@ export default function MonsterView() {
         })
     }
 
-    const receiveChars = (event, result) => {
+    const receiveChars = (result) => {
         console.log(result)
         setChars(result);
         setSelectedChar(result[0].char_id);
@@ -101,13 +102,14 @@ export default function MonsterView() {
             ThemeService.setTheme(result);
             ThemeService.applyTheme(result);
         });
+        reciveAllChars(function (result) {
+            receiveChars(result)
+        })
+
         ipcRenderer.on("onViewMonster", receiveMonster);
-        ipcRenderer.send('getChars');
-        ipcRenderer.on("getCharsResult", receiveChars);
         ipcRenderer.on("changeTheme", changeTheme);
         return () => {
             ipcRenderer.removeListener("onViewMonster", receiveMonster);
-            ipcRenderer.removeListener("getCharsResult", receiveChars);
             ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
@@ -121,8 +123,8 @@ export default function MonsterView() {
         }
     }
 
-    const addMonsterToChar = (e) => {
-        ipcRenderer.send('addMonsterToChar', { char: { selectedChar }, monster: { id, name } });
+    const addMonsterToCharAction = (e) => {
+        addMonsterToChar({ selectedChar }, { id, name });
     }
 
     const saveMonsterAction = (e) => {
@@ -184,7 +186,7 @@ export default function MonsterView() {
                 <label>Size:<input name="size" type="text" value={size} onChange={e => setSize(e.target.value)} /></label>
                 <button className="delete" onClick={deleteMonsterAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                 <button onClick={saveMonsterAction}><FontAwesomeIcon icon={faSave} /> Save</button>
-                <button onClick={addMonsterToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
+                <button onClick={addMonsterToCharAction}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
             </div>
             <div className="abilityScores">
                 <div className="score">

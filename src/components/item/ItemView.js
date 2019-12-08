@@ -3,7 +3,8 @@ import * as ReactDOM from "react-dom";
 import '../../assets/css/item/ItemView.css';
 import OptionService from '../../database/OptionService';
 import ThemeService from '../../services/ThemeService';
-import { saveItem, deleteItem } from '../../database/ItemService';
+import { saveItem, deleteItem, addItemToChar } from '../../database/ItemService';
+import { reciveAllChars } from '../../database/CharacterService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -43,7 +44,7 @@ export default function ItemView() {
         })
     }
 
-    const receiveChars = (event, result) => {
+    const receiveChars = (result) => {
         setChars(result);
         setSelectedChar(result[0].char_id);
     }
@@ -57,13 +58,14 @@ export default function ItemView() {
             ThemeService.setTheme(result);
             ThemeService.applyTheme(result);
         });
+        reciveAllChars(function (result) {
+            receiveChars(result)
+        })
+
         ipcRenderer.on("onViewItem", receiveItem);
-        ipcRenderer.send('getChars');
-        ipcRenderer.on("getCharsResult", receiveChars);
         ipcRenderer.on("changeTheme", changeTheme);
         return () => {
             ipcRenderer.removeListener("onViewItem", receiveItem);
-            ipcRenderer.removeListener("getCharsResult", receiveChars);
             ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
@@ -72,8 +74,8 @@ export default function ItemView() {
         saveItem({ id, name, pic, type, rarity, source, attunment, description });
     }
 
-    const addItemToChar = (e) => {
-        ipcRenderer.send('addItemToChar', { char: { selectedChar }, item: { id, name } });
+    const addItemToCharAction = (e) => {
+        addItemToChar({ selectedChar }, { id, name });
     }
 
     const deleteItemAction = (e) => {
@@ -119,7 +121,7 @@ export default function ItemView() {
                     <input name="type" type="checkbox" checked={attunment} onChange={e => setAttunment(e.target.checked)} />
                     <span className="checkbox-custom circular"></span>
                 </label>
-                <button onClick={addItemToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
+                <button onClick={addItemToCharAction}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
             </div>
             <div className="top" style={{ width: "120px" }}>
                 <button className="delete" onClick={deleteItemAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
