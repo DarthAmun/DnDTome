@@ -310,8 +310,7 @@ ipcMain.on('sendGearSearchQuery', (event, arg) => {
 
 ipcMain.on('sendMonsterSearchQuery', (event, arg) => {
   const { query } = arg;
-  const q = MonsterService.reciveMonsters(this.searchMonsterStep, 0, query, mainWindow);
-  MonsterService.reciveMonsterCount(q.replace("SELECT * FROM 'main'.'tab_monsters'", "SELECT count(*) AS count FROM 'main'.'tab_monsters'"), mainWindow);
+  mainWindow.webContents.send('sendMonsterSearchQuery', { query });  
 });
 
 ipcMain.on('getSpell', (event, arg) => {
@@ -468,6 +467,9 @@ ipcMain.on('closeSpellWindow', (event) => {
 ipcMain.on('closeItemWindow', (event) => {
   itemWindow.hide();
 });
+ipcMain.on('closeMonsterWindow', (event) => {
+  monsterWindow.hide();
+});
 
 ipcMain.on('minimizeMainWindow', (event) => {
   mainWindow.minimize();
@@ -537,6 +539,11 @@ ipcMain.on('gearsUpdated', (event, arg) => {
   const { gearStep, gearStart } = arg;
   mainWindow.webContents.send('gearsUpdated', { gearStep, gearStart });
 });
+ipcMain.on('monstersUpdated', (event, arg) => {
+  const { monsterStep, monsterStart } = arg;
+  mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
+});
+
 
 ipcMain.on('displayMessage', (event, m) => {
   mainWindow.webContents.send('displayMessage', { type: m.type, message: m.message });

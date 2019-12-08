@@ -5,6 +5,7 @@ import ThemeService from '../services/ThemeService';
 import { reciveAllSpells, saveNewSpells } from '../database/SpellService';
 import { reciveAllItems, saveNewItems } from '../database/ItemService';
 import { reciveAllGears, saveNewGears } from '../database/GearService';
+import { reciveAllMonsters, saveNewMonsters } from '../database/MonsterService';
 import { Line } from 'rc-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
@@ -111,17 +112,19 @@ export default function Options() {
   }
 
   const exportMonsters = (e) => {
-    let content = JSON.stringify(monsters);
+    reciveAllMonsters(function (result) {
+      let content = JSON.stringify(result);
 
-    options.defaultPath = options.defaultPath + '/monsters_export.json';
-    dialog.showSaveDialog(null, options, (path) => {
+      options.defaultPath = options.defaultPath + '/monsters_export.json';
+      dialog.showSaveDialog(null, options, (path) => {
 
-      // fileName is a string that contains the path and filename created in the save file dialog.  
-      fs.writeFile(path, content, (err) => {
-        if (err) {
-          ipcRenderer.send('displayMessage', { type: `Monsters exported`, message: `Monster export failed` });
-        }
-        ipcRenderer.send('displayMessage', { type: `Monsters exported`, message: `Monster export successful` });
+        // fileName is a string that contains the path and filename created in the save file dialog.  
+        fs.writeFile(path, content, (err) => {
+          if (err) {
+            ipcRenderer.send('displayMessage', { type: `Monsters exported`, message: `Monster export failed` });
+          }
+          ipcRenderer.send('displayMessage', { type: `Monsters exported`, message: `Monster export successful` });
+        });
       });
     });
   }
@@ -206,7 +209,7 @@ export default function Options() {
         let gearsJson = JSON.parse(data);
         saveNewGears(gearsJson, function (result) {
           updateGearImport(result);
-        });  
+        });
       });
     });
   }
@@ -227,7 +230,9 @@ export default function Options() {
 
         // Change how to handle the file content
         let monstersJson = JSON.parse(data);
-        ipcRenderer.send('saveNewMonsters', { monsters: monstersJson });
+        saveNewMonsters(monstersJson, function (result) {
+          updateMonsterImport(result);
+        });
       });
     });
   }

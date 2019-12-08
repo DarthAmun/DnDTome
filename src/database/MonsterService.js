@@ -1,27 +1,32 @@
-const path = require('path')
+const path = window.require('path')
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
+const { app } = electron.remote;
 
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database(path.join(__dirname, '../assets/db/tab.db'));
+let sqlite3 = window.require('sqlite3').verbose();
+let db = new sqlite3.Database(path.join(app.getAppPath(), './src/assets/db/tab.db'));
+
 let monsterStep;
 let monsterStart;
 let searchMonsterQuery;
 
-module.exports.reciveAllMonsters = (mainWindow) => {
+module.exports.reciveAllMonsters = (callback) => {
     let q = "SELECT * FROM 'main'.'tab_monsters'";
     db.serialize(function () {
         db.all(q, function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getAllMonstersResult', rows);
+            callback(rows);
             console.log("====>" + `getAllMonstersResult successfull`)
         });
     });
 }
 
-module.exports.reciveMonsters = (step, start, query, mainWindow) => {
-    monsterStep = step;
-    monsterStart = start;
+module.exports.reciveMonsters = (step, start, query, callback) => {
+    localStorage.setItem('monsterStep', parseInt(step, 10));
+    localStorage.setItem('monsterStart', parseInt(start, 10));
+  
     if (query !== null) {
         searchMonsterQuery = query;
     }
@@ -80,7 +85,7 @@ module.exports.reciveMonsters = (step, start, query, mainWindow) => {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getSearchMonstersResult', rows);
+            callback(rows);
             console.log("====>" + `getSearchMonstersResult from ${start} to ${(start + step)} successfull`)
         });
     });
@@ -99,7 +104,7 @@ module.exports.reciveMonsterCount = (q, mainWindow) => {
     });
 }
 
-module.exports.saveMonster = (monster, mainWindow) => {
+module.exports.saveMonster = (monster) => {
     let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment, monster.ac, monster.hp, monster.speed, monster.str,
     monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.saveingThrows, monster.skills, monster.dmgVulnerabilitie,
     monster.dmgResistance, monster.dmgImmunities, monster.senses, monster.lang, monster.cr, monster.sAblt, monster.ablt, monster.lAblt,
@@ -117,8 +122,8 @@ module.exports.saveMonster = (monster, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====> ${monster.name} updated successfull`);
-            mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
-            mainWindow.webContents.send('displayMessage', { type: `Saved monster`, message: `Saved ${monster.name} successful` });
+            ipcRenderer.send('monstersUpdated', { monsterStep: parseInt(localStorage.getItem('monsterStep'), 10), monterStart: parseInt(localStorage.getItem('monterStart'), 10) });
+            ipcRenderer.send('displayMessage', { type: `Saved monster`, message: `Saved ${monster.name} successful` });
         });
     });
 }
@@ -146,7 +151,7 @@ module.exports.saveNewMonster = (monster, mainWindow) => {
     });
 }
 
-module.exports.saveNewMonsters = (monsters, mainWindow) => {
+module.exports.saveNewMonsters = (monsters, callback) => {
     let monsterImportLength = Object.keys(monsters).length;
     let monsterImported = 0;
     monsters.forEach(monster => {
@@ -170,13 +175,13 @@ module.exports.saveNewMonsters = (monsters, mainWindow) => {
                 }
                 console.log(`====>Added ${monster.monster_name} successfull`);
                 monsterImported++;
-                mainWindow.webContents.send('updateMonsterImport', { now: monsterImported, full: monsterImportLength, name: monster.monster_name });
+                callback({ now: monsterImported, full: monsterImportLength, name: monster.monster_name });
             });
         });
     });
 }
 
-module.exports.deleteMonster = (monster, mainWindow, monsterWindow) => {
+module.exports.deleteMonster = (monster) => {
     let data = [monster.id];
     let sql = `DELETE FROM 'main'.'tab_monsters' WHERE monster_id = ?`;
     db.serialize(function () {
@@ -185,9 +190,9 @@ module.exports.deleteMonster = (monster, mainWindow, monsterWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Deleted ${monster.name} successfull`);
-            monsterWindow.hide();
-            mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
-            mainWindow.webContents.send('displayMessage', { type: `Deleted monster`, message: `Deleted ${monster.name} successful` });
+            ipcRenderer.send('closeMonsterWindow');
+            ipcRenderer.send('monstersUpdated', { monsterStep, monsterStart });
+            ipcRenderer.send('displayMessage', { type: `Deleted monster`, message: `Deleted ${monster.name} successful` });
         });
     });
 }

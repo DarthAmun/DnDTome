@@ -12,7 +12,7 @@ export default function Item(props) {
     }
 
     const getPicture = () => {
-        if (props.item.item_pic === "") {
+        if (props.item.item_pic === "" || props.item.item_pic === null) {
             return icon;
         }
         return props.item.item_pic;

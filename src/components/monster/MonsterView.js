@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 import '../../assets/css/monster/MonsterView.css';
 import OptionService from '../../database/OptionService';
 import ThemeService from '../../services/ThemeService';
+import { saveMonster, deleteMonster } from '../../database/MonsterService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -84,7 +85,7 @@ export default function MonsterView() {
             console.timeEnd("receiveMonster")
         })
     }
-    
+
     const receiveChars = (event, result) => {
         console.log(result)
         setChars(result);
@@ -124,17 +125,15 @@ export default function MonsterView() {
         ipcRenderer.send('addMonsterToChar', { char: { selectedChar }, monster: { id, name } });
     }
 
-    const saveMonster = (e) => {
-        ipcRenderer.send('saveMonster', {
-            monster: {
-                id, name, type, subtype, cr, ac, hp, str, dex, con,
-                int, wis, cha, senses, lang, speed, source, skills, savingThrows, dmgImmunities, dmgResistance,
-                dmgVulnerabilitie, conImmunities, sAblt, ablt, lAblt, pic, size, alignment
-            }
+    const saveMonsterAction = (e) => {
+        saveMonster({
+            id, name, type, subtype, cr, ac, hp, str, dex, con,
+            int, wis, cha, senses, lang, speed, source, skills, savingThrows, dmgImmunities, dmgResistance,
+            dmgVulnerabilitie, conImmunities, sAblt, ablt, lAblt, pic, size, alignment
         });
     }
 
-    const deleteMonster = (e) => {
+    const deleteMonsterAction = (e) => {
         const options = {
             type: 'question',
             buttons: ['Cancel', 'Yes, please', 'No, thanks'],
@@ -145,12 +144,10 @@ export default function MonsterView() {
 
         dialog.showMessageBox(null, options, (response) => {
             if (response == 1) {
-                ipcRenderer.send('deleteMonster', {
-                    monster: {
-                        id, name, type, subtype, cr, ac, hp, str, dex, con,
-                        int, wis, cha, senses, lang, speed, source, skills, savingThrows, dmgImmunities, dmgResistance,
-                        dmgVulnerabilitie, conImmunities, sAblt, ablt, lAblt, pic, size, alignment
-                    }
+                deleteMonster({
+                    id, name, type, subtype, cr, ac, hp, str, dex, con,
+                    int, wis, cha, senses, lang, speed, source, skills, savingThrows, dmgImmunities, dmgResistance,
+                    dmgVulnerabilitie, conImmunities, sAblt, ablt, lAblt, pic, size, alignment
                 });
             }
         });
@@ -185,8 +182,8 @@ export default function MonsterView() {
                 <label>Hit Points:<input name="hp" type="text" value={hp} onChange={e => setHp(e.target.value)} /></label>
                 <label>Speed:<input name="speed" type="text" value={speed} onChange={e => setSpeed(e.target.value)} /></label>
                 <label>Size:<input name="size" type="text" value={size} onChange={e => setSize(e.target.value)} /></label>
-                <button className="delete" onClick={deleteMonster}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
-                <button onClick={saveMonster}><FontAwesomeIcon icon={faSave} /> Save</button>
+                <button className="delete" onClick={deleteMonsterAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                <button onClick={saveMonsterAction}><FontAwesomeIcon icon={faSave} /> Save</button>
                 <button onClick={addMonsterToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
             </div>
             <div className="abilityScores">
