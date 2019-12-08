@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 import '../../assets/css/gear/GearView.css';
 import OptionService from '../../database/OptionService';
 import ThemeService from '../../services/ThemeService';
+import { saveGear, deleteGear } from '../../database/GearService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -70,15 +71,15 @@ export default function GearView() {
         }
     }, []);
 
-    const saveGear = (e) => {
-        ipcRenderer.send('saveGear', { gear: { id, name, pic, description, cost, weight, damage, properties, type } });
+    const saveGearAction = (e) => {
+        saveGear({ id, name, pic, description, cost, weight, damage, properties, type });
     }
 
     const addGearToChar = (e) => {
         ipcRenderer.send('addGearToChar', { char: { selectedChar }, gear: { id, name, damage, properties } });
     }
 
-    const deleteGear = (e) => {
+    const deleteGearAction = (e) => {
         const options = {
             type: 'question',
             buttons: ['Cancel', 'Yes, please', 'No, thanks'],
@@ -89,7 +90,7 @@ export default function GearView() {
 
         dialog.showMessageBox(null, options, (response) => {
             if (response == 1) {
-                ipcRenderer.send('deleteGear', { gear: { id, name, pic, description, cost, weight, damage, properties} });
+                deleteGear({ id, name, pic, description, cost, weight, damage, properties });
             }
         });
     }
@@ -117,13 +118,13 @@ export default function GearView() {
                 <label>Weight:<input name="weight" type="weight" value={weight} onChange={e => setWeight(e.target.value)} /></label>
                 <label>Damage:<input name="damage" type="damage" value={damage} onChange={e => setDamage(e.target.value)} /></label>
                 <label>Cost:<input name="cost" type="text" value={cost} onChange={e => setCost(e.target.value)} /></label>
-                <button onClick={addGearToChar} style={{float: "left"}}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
+                <button onClick={addGearToChar} style={{ float: "left" }}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
             </div>
-            <label style={{width: "100%"}}>Props:<input style={{width: "calc(100% - 113px)", marginRight: "13px"}} name="props" type="text" value={properties} onChange={e => setProperties(e.target.value)} /></label>
+            <label style={{ width: "100%" }}>Props:<input style={{ width: "calc(100% - 113px)", marginRight: "13px" }} name="props" type="text" value={properties} onChange={e => setProperties(e.target.value)} /></label>
             <div className="image" style={style}></div>
             <textarea value={description} onChange={e => setDescription(e.target.value)}></textarea>
-            <button className="delete" onClick={deleteGear}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
-            <button onClick={saveGear}><FontAwesomeIcon icon={faSave} /> Save</button>
+            <button className="delete" onClick={deleteGearAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+            <button onClick={saveGearAction}><FontAwesomeIcon icon={faSave} /> Save</button>
         </div>
     )
 

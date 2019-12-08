@@ -305,8 +305,7 @@ ipcMain.on('sendItemSearchQuery', (event, arg) => {
 
 ipcMain.on('sendGearSearchQuery', (event, arg) => {
   const { query } = arg;
-  const q = GearService.reciveGears(this.searchGearStep, 0, query, mainWindow);
-  GearService.reciveGearCount(q.replace("SELECT * FROM 'main'.'tab_gears'", "SELECT count(*) AS count FROM 'main'.'tab_gears'"), mainWindow);
+  mainWindow.webContents.send('sendGearSearchQuery', { query });
 });
 
 ipcMain.on('sendMonsterSearchQuery', (event, arg) => {
@@ -533,6 +532,10 @@ ipcMain.on('spellsUpdated', (event, arg) => {
 ipcMain.on('itemsUpdated', (event, arg) => {
   const { itemStep, itemStart } = arg;
   mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
+});
+ipcMain.on('gearsUpdated', (event, arg) => {
+  const { gearStep, gearStart } = arg;
+  mainWindow.webContents.send('gearsUpdated', { gearStep, gearStart });
 });
 
 ipcMain.on('displayMessage', (event, m) => {

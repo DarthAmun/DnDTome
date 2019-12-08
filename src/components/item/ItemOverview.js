@@ -14,7 +14,7 @@ export default function ItemOverview() {
     const [currentItemList, setCurrentItemList] = useState({ items: [] });
     const items = useRef(null);
     const [isFetching, setIsFetching] = useState(false);
-    const [start, setStart] = useState(-10);
+    const [start, setStart] = useState(0);
     const [query, setQuery] = useState({});
 
 
@@ -25,7 +25,7 @@ export default function ItemOverview() {
         setStart(start + 10);
     }
 
-    const updateItem = (evt, result) => {
+    const updateItem = () => {
         items.current.scrollTop = 0;
         setStart(10);
         reciveItems(10, 0, query, function (result) {
@@ -59,7 +59,13 @@ export default function ItemOverview() {
 
     useEffect(() => {
         setIsFetching(false);
-        if (items.current.scrollHeight == items.current.clientHeight) {
+        if (!currentItemList.items.length) {
+            reciveItems(10, start, query, function (result) {
+                receiveItemsResult(result);
+            })
+        }
+        if (items.current.scrollHeight == items.current.clientHeight
+            && currentItemList.items.length) {
             reciveItems(10, start + 10, query, function (result) {
                 receiveItemsResult(result);
             })

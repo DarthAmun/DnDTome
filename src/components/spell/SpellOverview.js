@@ -14,7 +14,7 @@ export default function SpellOverview() {
     const [currentSpellList, setCurrentSpellList] = useState({ spells: [] });
     const spells = useRef(null);
     const [isFetching, setIsFetching] = useState(false);
-    const [start, setStart] = useState(-10);
+    const [start, setStart] = useState(0);
     const [query, setQuery] = useState({});
 
     const receiveSpellsResult = (result) => {
@@ -58,13 +58,18 @@ export default function SpellOverview() {
 
     useEffect(() => {
         setIsFetching(false);
-        if (spells.current.scrollHeight == spells.current.clientHeight) {
+        if (!currentSpellList.spells.length) {
+            reciveSpells(10, start, query, function (result) {
+                receiveSpellsResult(result);
+            })
+        }
+        if (spells.current.scrollHeight == spells.current.clientHeight
+            && currentSpellList.spells.length) {
             reciveSpells(10, start + 10, query, function (result) {
                 receiveSpellsResult(result);
             })
         }
     }, [currentSpellList]);
-
 
     const viewSpell = (spell) => {
         ipcRenderer.send('openSpellView', spell);

@@ -107,7 +107,7 @@ module.exports.saveItem = (item) => {
                 return console.error(err.message);
             }
             console.log(`====> ${item.name} updated successfull`);
-            ipcRenderer.send('itemsUpdated', { itemStep, itemStart });
+            ipcRenderer.send('itemsUpdated', { itemStep: parseInt(localStorage.getItem('itemStep'), 10), itemStart: parseInt(localStorage.getItem('itemStart'), 10) });
             ipcRenderer.send('displayMessage', { type: `Saved magic item`, message: `Saved ${item.name} successful` });
         });
     });

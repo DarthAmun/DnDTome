@@ -4,6 +4,7 @@ import OptionService from '../database/OptionService';
 import ThemeService from '../services/ThemeService';
 import { reciveAllSpells, saveNewSpells } from '../database/SpellService';
 import { reciveAllItems, saveNewItems } from '../database/ItemService';
+import { reciveAllGears, saveNewGears } from '../database/GearService';
 import { Line } from 'rc-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
@@ -92,17 +93,19 @@ export default function Options() {
   }
 
   const exportGears = (e) => {
-    let content = JSON.stringify(gears);
+    reciveAllGears(function (result) {
+      let content = JSON.stringify(result);
 
-    options.defaultPath = options.defaultPath + '/gear_export.json';
-    dialog.showSaveDialog(null, options, (path) => {
+      options.defaultPath = options.defaultPath + '/gear_export.json';
+      dialog.showSaveDialog(null, options, (path) => {
 
-      // fileName is a string that contains the path and filename created in the save file dialog.  
-      fs.writeFile(path, content, (err) => {
-        if (err) {
-          ipcRenderer.send('displayMessage', { type: `Gear exported`, message: `Gear export failed` });
-        }
-        ipcRenderer.send('displayMessage', { type: `Gear exported`, message: `Gear export successful` });
+        // fileName is a string that contains the path and filename created in the save file dialog.  
+        fs.writeFile(path, content, (err) => {
+          if (err) {
+            ipcRenderer.send('displayMessage', { type: `Gear exported`, message: `Gear export failed` });
+          }
+          ipcRenderer.send('displayMessage', { type: `Gear exported`, message: `Gear export successful` });
+        });
       });
     });
   }
@@ -201,7 +204,9 @@ export default function Options() {
 
         // Change how to handle the file content
         let gearsJson = JSON.parse(data);
-        ipcRenderer.send('saveNewGears', { gears: gearsJson }); // fehlt noch
+        saveNewGears(gearsJson, function (result) {
+          updateGearImport(result);
+        });  
       });
     });
   }
