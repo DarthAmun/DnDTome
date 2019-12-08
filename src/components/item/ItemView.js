@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 import '../../assets/css/item/ItemView.css';
 import OptionService from '../../database/OptionService';
 import ThemeService from '../../services/ThemeService';
+import { saveItem, deleteItem } from '../../database/ItemService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -64,15 +65,15 @@ export default function ItemView() {
         }
     }, []);
 
-    const saveItem = (e) => {
-        ipcRenderer.send('saveItem', { item: { id, name, pic, type, rarity, source, attunment, description } });
+    const saveItemAction = (e) => {
+        saveItem({ id, name, pic, type, rarity, source, attunment, description });
     }
 
     const addItemToChar = (e) => {
         ipcRenderer.send('addItemToChar', { char: { selectedChar }, item: { id, name } });
     }
 
-    const deleteItem = (e) => {
+    const deleteItemAction = (e) => {
         const options = {
             type: 'question',
             buttons: ['Cancel', 'Yes, please', 'No, thanks'],
@@ -83,7 +84,7 @@ export default function ItemView() {
 
         dialog.showMessageBox(null, options, (response) => {
             if (response == 1) {
-                ipcRenderer.send('deleteItem', { item: { id, name, pic, type, rarity, source, description } });
+                deleteItem({ id, name, pic, type, rarity, source, description });
             }
         });
     }
@@ -118,8 +119,8 @@ export default function ItemView() {
                 <button onClick={addItemToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
             </div>
             <div className="top" style={{ width: "120px" }}>
-                <button className="delete" onClick={deleteItem}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
-                <button onClick={saveItem}><FontAwesomeIcon icon={faSave} /> Save</button>
+                <button className="delete" onClick={deleteItemAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                <button onClick={saveItemAction}><FontAwesomeIcon icon={faSave} /> Save</button>
 
             </div>
             <div className="image" style={style}></div>

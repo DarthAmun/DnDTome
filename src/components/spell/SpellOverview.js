@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import '../../assets/css/spell/SpellOverview.css';
 import Spell from './Spell';
 import { reciveSpells } from '../../database/SpellService';
 import SearchBar from '../SearchBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -74,7 +77,7 @@ export default function SpellOverview() {
     }
 
     const handleScroll = () => {
-        if (Math.round(spells.current.offsetHeight + spells.current.scrollTop) !== spells.current.scrollHeight) return;
+        if (Math.round(spells.current.offsetHeight + spells.current.scrollTop) < (spells.current.scrollHeight - 240)) return;
         setIsFetching(true);
     }
 
@@ -88,6 +91,9 @@ export default function SpellOverview() {
                     })}
                 </div>
             </div>
+            <Link to={`/add-spell`} className="button">
+                <FontAwesomeIcon icon={faPlus} /> Add new Spell
+            </Link>
         </div>
     )
 

@@ -1,27 +1,32 @@
-const path = require('path')
+const path = window.require('path')
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
+const { app } = electron.remote;
 
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database(path.join(__dirname, '../assets/db/tab.db'));
+let sqlite3 = window.require('sqlite3').verbose();
+let db = new sqlite3.Database(path.join(app.getAppPath(), './src/assets/db/tab.db'));
+
 let itemStep;
 let itemStart;
 let searchItemQuery;
 
-module.exports.reciveAllItems = (mainWindow) => {
+module.exports.reciveAllItems = (callback) => {
     let q = "SELECT * FROM 'main'.'tab_items'";
     db.serialize(function () {
         db.all(q, function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getAllItemsResult', rows);
+            callback(rows);
             console.log("====>" + `getAllItemsResult successfull`)
         });
     });
 }
 
-module.exports.reciveItems = (step, start, query, mainWindow) => {
-    itemStep = step;
-    itemStart = start;
+module.exports.reciveItems = (step, start, query, callback) => {
+    localStorage.setItem('itemStep', parseInt(step, 10));
+    localStorage.setItem('itemStart', parseInt(start, 10));
+  
     if (query !== null) {
         searchItemQuery = query;
     }
@@ -56,7 +61,7 @@ module.exports.reciveItems = (step, start, query, mainWindow) => {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getSearchItemsResult', rows);
+            callback(rows);
             console.log("====>" + `getSearchItemsResult from ${start} to ${(start + step)} successfull`);
         });
     });
@@ -75,7 +80,7 @@ module.exports.reciveItemCount = (q, mainWindow) => {
     });
 }
 
-module.exports.deleteItem = (item, mainWindow, itemWindow) => {
+module.exports.deleteItem = (item) => {
     let data = [item.id];
     let sql = `DELETE FROM 'main'.'tab_items' WHERE item_id = ?`;
     db.serialize(function () {
@@ -84,14 +89,14 @@ module.exports.deleteItem = (item, mainWindow, itemWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Deleted ${item.name} successfull`);
-            itemWindow.hide();
-            mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
-            mainWindow.webContents.send('displayMessage', { type: `Deleted magic item`, message: `Deleted ${item.name} successful` });
+            ipcRenderer.send('closeItemWindow');
+            ipcRenderer.send('itemsUpdated', { itemStep, itemStart });
+            ipcRenderer.send('displayMessage', { type: `Deleted magic item`, message: `Deleted ${item.name} successful` });
         });
     });
 }
 
-module.exports.saveItem = (item, mainWindow) => {
+module.exports.saveItem = (item) => {
     let data = [item.name, item.type, item.rarity, item.description, item.pic, item.source, item.attunment, item.id];
     let sql = `UPDATE 'main'.'tab_items'
                 SET item_name = ?, item_type = ?, item_rarity = ?, item_description = ?, item_pic = ?, item_source = ?, item_attunment = ?
@@ -102,8 +107,8 @@ module.exports.saveItem = (item, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====> ${item.name} updated successfull`);
-            mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
-            mainWindow.webContents.send('displayMessage', { type: `Saved magic item`, message: `Saved ${item.name} successful` });
+            ipcRenderer.send('itemsUpdated', { itemStep, itemStart });
+            ipcRenderer.send('displayMessage', { type: `Saved magic item`, message: `Saved ${item.name} successful` });
         });
     });
 }
@@ -123,7 +128,7 @@ module.exports.saveNewItem = (item, mainWindow) => {
     });
 }
 
-module.exports.saveNewItems = (items, mainWindow) => {
+module.exports.saveNewItems = (items, callback) => {
     let ItemImportLength = Object.keys(items).length;
     let ItemImported = 0;
     items.forEach(item => {
@@ -137,7 +142,7 @@ module.exports.saveNewItems = (items, mainWindow) => {
                 }
                 console.log(`====>Added ${item.item_name} successfull`);
                 ItemImported++;
-                mainWindow.webContents.send('updateItemImport', { now: ItemImported, full: ItemImportLength, name: item.item_name });
+                callback({ now: ItemImported, full: ItemImportLength, name: item.item_name });
             });
         });
     });

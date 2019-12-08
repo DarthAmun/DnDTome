@@ -298,11 +298,9 @@ ipcMain.on('sendSpellSearchQuery', (event, arg) => {
   const { query } = arg;
   mainWindow.webContents.send('sendSpellSearchQuery', { query });
 });
-
 ipcMain.on('sendItemSearchQuery', (event, arg) => {
   const { query } = arg;
-  const q = ItemService.reciveItems(this.searchItemStep, 0, query, mainWindow);
-  ItemService.reciveItemCount(q.replace("SELECT * FROM 'main'.'tab_items'", "SELECT count(*) AS count FROM 'main'.'tab_items'"), mainWindow);
+  mainWindow.webContents.send('sendItemSearchQuery', { query });
 });
 
 ipcMain.on('sendGearSearchQuery', (event, arg) => {
@@ -382,10 +380,6 @@ ipcMain.on('saveNewSpell', (event, arg) => {
 ipcMain.on('saveNewItem', (event, arg) => {
   const { item } = arg;
   ItemService.saveNewItem(item, mainWindow);
-});
-ipcMain.on('saveNewItems', (event, arg) => {
-  const { items } = arg;
-  ItemService.saveNewItems(items, mainWindow);
 });
 
 ipcMain.on('saveNewGear', (event, arg) => {
@@ -469,6 +463,12 @@ ipcMain.on('deleteChar', (event, arg) => {
 ipcMain.on('closeMainWindow', (event) => {
   mainWindow.close();
 });
+ipcMain.on('closeSpellWindow', (event) => {
+  spellWindow.hide();
+});
+ipcMain.on('closeItemWindow', (event) => {
+  itemWindow.hide();
+});
 
 ipcMain.on('minimizeMainWindow', (event) => {
   mainWindow.minimize();
@@ -529,6 +529,10 @@ ipcMain.on('deleteAllChars', (event) => {
 ipcMain.on('spellsUpdated', (event, arg) => {
   const { spellStep, spellStart } = arg;
   mainWindow.webContents.send('spellsUpdated', { spellStep, spellStart });
+});
+ipcMain.on('itemsUpdated', (event, arg) => {
+  const { itemStep, itemStart } = arg;
+  mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
 });
 
 ipcMain.on('displayMessage', (event, m) => {

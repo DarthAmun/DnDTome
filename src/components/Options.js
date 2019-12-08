@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import OptionService from '../database/OptionService';
 import ThemeService from '../services/ThemeService';
 import { reciveAllSpells, saveNewSpells } from '../database/SpellService';
+import { reciveAllItems, saveNewItems } from '../database/ItemService';
 import { Line } from 'rc-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
@@ -56,7 +57,6 @@ export default function Options() {
 
   const exportSpells = (e) => {
     reciveAllSpells(function (result) {
-      console.log(result);
       let content = JSON.stringify(result);
 
       options.defaultPath = options.defaultPath + '/spells_export.json';
@@ -74,17 +74,19 @@ export default function Options() {
   }
 
   const exportItems = (e) => {
-    let content = JSON.stringify(items);
+    reciveAllItems(function (result) {
+      let content = JSON.stringify(result);
 
-    options.defaultPath = options.defaultPath + '/items_export.json';
-    dialog.showSaveDialog(null, options, (path) => {
+      options.defaultPath = options.defaultPath + '/items_export.json';
+      dialog.showSaveDialog(null, options, (path) => {
 
-      // fileName is a string that contains the path and filename created in the save file dialog.  
-      fs.writeFile(path, content, (err) => {
-        if (err) {
-          ipcRenderer.send('displayMessage', { type: `Items exported`, message: `Item export failed` });
-        }
-        ipcRenderer.send('displayMessage', { type: `Items exported`, message: `Item export successful` });
+        // fileName is a string that contains the path and filename created in the save file dialog.  
+        fs.writeFile(path, content, (err) => {
+          if (err) {
+            ipcRenderer.send('displayMessage', { type: `Items exported`, message: `Item export failed` });
+          }
+          ipcRenderer.send('displayMessage', { type: `Items exported`, message: `Item export successful` });
+        });
       });
     });
   }
@@ -153,7 +155,7 @@ export default function Options() {
 
         // Change how to handle the file content
         let spellsJson = JSON.parse(data);
-        saveNewSpells(spellsJson , function (result){
+        saveNewSpells(spellsJson, function (result) {
           updateSpellImport(result);
         });
       });
@@ -176,7 +178,9 @@ export default function Options() {
 
         // Change how to handle the file content
         let itemsJson = JSON.parse(data);
-        ipcRenderer.send('saveNewItems', { items: itemsJson }); // fehlt noch
+        saveNewItems(itemsJson, function (result) {
+          updateItemImport(result);
+        });
       });
     });
   }
