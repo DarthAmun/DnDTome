@@ -58,23 +58,23 @@ export default function MonsterOverview() {
 
     useEffect(() => {
         setIsFetching(false);
-        if (!currentMonsterList.monsters.length) {
-            reciveMonsters(10, start, query, function (result) {
-                receiveMonstersResult(result);
-            })
-        }
-        if (monsters.current.scrollHeight == monsters.current.clientHeight
-            && currentMonsterList.monsters.length) {
 
-            reciveMonsterCount(query, function (result) {
-                let monsterCount = result.count;
-                if (monsterCount > currentMonsterList.monsters.length) {
+        reciveMonsterCount(query, function (result) {
+            let monsterCount = result.count;
+            if (monsterCount > currentMonsterList.monsters.length) {
+                if (!currentMonsterList.monsters.length) {
+                    reciveMonsters(10, start, query, function (result) {
+                        receiveMonstersResult(result);
+                    })
+                }
+                if (monsters.current.scrollHeight == monsters.current.clientHeight
+                    && currentMonsterList.monsters.length) {
                     reciveMonsters(10, start + 10, query, function (monsters) {
                         receiveMonstersResult(monsters);
                     })
                 }
-            })
-        }
+            }
+        })
     }, [currentMonsterList]);
 
 

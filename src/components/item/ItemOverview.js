@@ -59,25 +59,23 @@ export default function ItemOverview() {
 
     useEffect(() => {
         setIsFetching(false);
-        if (!currentItemList.items.length) {
-            reciveItems(10, start, query, function (result) {
-                receiveItemsResult(result);
-            })
-        }
-        if (items.current.scrollHeight == items.current.clientHeight
-            && currentItemList.items.length) {
 
-            reciveItemCount(query, function (result) {
-                console.log(result)
-                let itemCount = result.count;
-                console.log(itemCount +">" + currentItemList.items.length)
-                if (itemCount > currentItemList.items.length) {
+        reciveItemCount(query, function (result) {
+            let itemCount = result.count;
+            if (itemCount > currentItemList.items.length) {
+                if (!currentItemList.items.length) {
+                    reciveItems(10, start, query, function (result) {
+                        receiveItemsResult(result);
+                    })
+                }
+                if (items.current.scrollHeight == items.current.clientHeight
+                    && currentItemList.items.length) {
                     reciveItems(10, start + 10, query, function (items) {
                         receiveItemsResult(items);
                     })
                 }
-            })
-        }
+            }
+        })
     }, [currentItemList]);
 
 

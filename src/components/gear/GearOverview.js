@@ -58,23 +58,23 @@ export default function GearOverview() {
 
     useEffect(() => {
         setIsFetching(false);
-        if (!currentGearList.gears.length) {
-            reciveGears(10, start, query, function (result) {
-                receiveGearsResult(result);
-            })
-        }
-        if (gears.current.scrollHeight == gears.current.clientHeight
-            && currentGearList.gears.length) {
 
-            reciveGearCount(query, function (result) {
-                let gearCount = result.count;
-                if (gearCount > currentGearList.gears.length) {
+        reciveGearCount(query, function (result) {
+            let gearCount = result.count;
+            if (gearCount > currentGearList.gears.length) {
+                if (!currentGearList.gears.length) {
+                    reciveGears(10, start, query, function (result) {
+                        receiveGearsResult(result);
+                    })
+                }
+                if (gears.current.scrollHeight == gears.current.clientHeight
+                    && currentGearList.gears.length) {
                     reciveGears(10, start + 10, query, function (gears) {
                         receiveGearsResult(gears);
                     })
                 }
-            })
-        }
+            }
+        })
     }, [currentGearList]);
 
     const viewGear = (gear) => {

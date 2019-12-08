@@ -59,23 +59,23 @@ export default function SpellOverview() {
     useEffect(() => {
         setIsFetching(false);
 
-        if (!currentSpellList.spells.length) {
-            reciveSpells(10, start, query, function (result) {
-                receiveSpellsResult(result);
-            })
-        }
-        if (spells.current.scrollHeight == spells.current.clientHeight
-            && currentSpellList.spells.length) {
-
-            reciveSpellCount(query, function (result) {
-                let spellCount = result.count;
-                if (spellCount > currentSpellList.spells.length) {
+        reciveSpellCount(query, function (result) {
+            let spellCount = result.count;
+            console.log(result)
+            if (spellCount > currentSpellList.spells.length) {
+                if (!currentSpellList.spells.length) {
+                    reciveSpells(10, start, query, function (result) {
+                        receiveSpellsResult(result);
+                    })
+                }
+                if (spells.current.scrollHeight == spells.current.clientHeight
+                    && currentSpellList.spells.length) {
                     reciveSpells(10, start + 10, query, function (spells) {
                         receiveSpellsResult(spells);
                     })
                 }
-            })
-        }
+            }
+        })
     }, [currentSpellList]);
 
     const viewSpell = (spell) => {
