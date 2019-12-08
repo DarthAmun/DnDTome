@@ -211,7 +211,7 @@ module.exports.saveNewChars = (chars, mainWindow) => {
                     return console.error(err.message);
                 }
                 console.log(`====>Added ${char.char_name} successfull`);
-                mainWindow.webContents.send('displayMessage', { type: `Added character`, message: `Added ${char.char_name} successful` });
+                ipcRenderer.send('displayMessage', { type: `Added character`, message: `Added ${char.char_name} successful` });
             });
         });
     });

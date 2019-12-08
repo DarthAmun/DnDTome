@@ -6,6 +6,7 @@ import { reciveAllSpells, saveNewSpells } from '../database/SpellService';
 import { reciveAllItems, saveNewItems } from '../database/ItemService';
 import { reciveAllGears, saveNewGears } from '../database/GearService';
 import { reciveAllMonsters, saveNewMonsters } from '../database/MonsterService';
+import { reciveAllChars, saveNewChars } from '../database/CharacterService';
 import { Line } from 'rc-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
@@ -130,17 +131,19 @@ export default function Options() {
   }
 
   const exportChars = (e) => {
-    let content = JSON.stringify(chars);
+    reciveAllChars(function (result) {
+      let content = JSON.stringify(result);
 
-    options.defaultPath = options.defaultPath + '/chars_export.json';
-    dialog.showSaveDialog(null, options, (path) => {
+      options.defaultPath = options.defaultPath + '/chars_export.json';
+      dialog.showSaveDialog(null, options, (path) => {
 
-      // fileName is a string that contains the path and filename created in the save file dialog.  
-      fs.writeFile(path, content, (err) => {
-        if (err) {
-          ipcRenderer.send('displayMessage', { type: `Chars exported`, message: `Chars export failed` });
-        }
-        ipcRenderer.send('displayMessage', { type: `Chars exported`, message: `Chars export successful` });
+        // fileName is a string that contains the path and filename created in the save file dialog.  
+        fs.writeFile(path, content, (err) => {
+          if (err) {
+            ipcRenderer.send('displayMessage', { type: `Chars exported`, message: `Chars export failed` });
+          }
+          ipcRenderer.send('displayMessage', { type: `Chars exported`, message: `Chars export successful` });
+        });
       });
     });
   }
@@ -253,7 +256,7 @@ export default function Options() {
 
         // Change how to handle the file content
         let charsJson = JSON.parse(data);
-        ipcRenderer.send('saveNewChars', { chars: charsJson });
+        saveNewChars(charsJson, function (result) {});
       });
     });
   }
