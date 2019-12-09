@@ -14,8 +14,10 @@ import Home from './Home';
 import Options from './Options';
 
 import AddSpell from './add/AddSpell';
+import AddChar from './add/AddChar';
 import AddItem from './add/AddItem';
 import AddMonster from './add/AddMonster';
+import AddGear from './add/AddGear';
 
 import CharView from './char/CharView';
 
@@ -69,8 +71,10 @@ const App = () => {
         <LayoutRoute path="/monster-overview" layout={PageLayout} component={MonsterOverview} />
         <LayoutRoute path="/char-overview" layout={PageLayout} component={CharOverview} />
         <LayoutRoute path="/char/:id" layout={PageLayout} component={CharView} />
+        <LayoutRoute path="/add-char" layout={PageLayout} component={AddChar} />
         <LayoutRoute path="/add-spell" layout={PageLayout} component={AddSpell} />
         <LayoutRoute path="/add-item" layout={PageLayout} component={AddItem} />
+        <LayoutRoute path="/add-gear" layout={PageLayout} component={AddGear} />
         <LayoutRoute path="/add-monster" layout={PageLayout} component={AddMonster} />
         <LayoutRoute path="/options" layout={PageLayout} component={Options} />
         <LayoutRoute path="/" layout={HomeLayout} component={Home} />

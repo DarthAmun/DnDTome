@@ -1,88 +1,52 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { saveNewItem } from '../../database/ItemService';
 import '../../assets/css/add/AddItem.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
 
-class AddItem extends Component {
-    state = {
-        name: "",
-        id: "",
-        description: "",
-        pic: "",
-        rarity: "",
-        type: "",
-        source: ""
-    }
+export default function AddItem() {
+    const [name, setName] = useState("");
+    const [pic, setPic] = useState("");
+    const [description, setDescription] = useState("");
+    const [rarity, setRarity] = useState("");
+    const [type, setType] = useState("");
+    const [source, setSource] = useState("");
+    const [attunment, setAttunment] = useState("");
 
-    handleNameChange = (e) => {
-        this.setState({
-            ...this.state,
-            name: e.target.value
-        });
-    }
-    handleDescriptionChange = (e) => {
-        this.setState({
-            ...this.state,
-            description: e.target.value
-        });
-    }
-    handlePicChange = (e) => {
-        this.setState({
-            ...this.state,
-            pic: e.target.value
-        });
-    }
-    handleRarityChange = (e) => {
-        this.setState({
-            ...this.state,
-            rarity: e.target.value
-        });
-    }
-    handleTypeChange = (e) => {
-        this.setState({
-            ...this.state,
-            type: e.target.value
-        });
-    }
-    handleSourceChange = (e) => {
-        this.setState({
-            ...this.state,
-            source: e.target.value
-        });
+    const saveItemAction = (e) => {
+        saveNewItem({ name, pic, type, rarity, source, attunment, description });
     }
 
-    saveItem = (e) => {
-        saveNewItem(this.state);
-    }
+    const style = {
+        backgroundImage: `url(${pic})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat'
+    };
 
-    render() {
-        const style = {
-            backgroundImage: `url(${this.state.pic})`,
-            backgroundPosition: 'center',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat'
-        };
-
-        return (
-            <div id="overview">
-                <div id="newItem">
-                    <div className="image" style={style}></div>
-                    <textarea value={this.state.description} onChange={this.handleDescriptionChange}></textarea>
-                    <div className="top">
-                        <label>Pic:<input name="pic" type="text" value={this.state.pic} onChange={this.handlePicChange} /></label>
-                        <label>Name:<input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} /></label>
-                        <label>Sources:<input name="name" type="text" value={this.state.source} onChange={this.handleSourceChange} /></label>
-                    </div>
-                    <div className="top">
-                        <label>Rarity:<input name="rarity" type="text" value={this.state.rarity} onChange={this.handleRarityChange} /></label>
-                        <label>Type:<input name="type" type="text" value={this.state.type} onChange={this.handleTypeChange} /></label>
-                        <button onClick={this.saveItem}><FontAwesomeIcon icon={faSave} /> Save</button>
-                    </div>
-                </div>
+    return (
+        <div id="newItem">
+            <div className="top">
+                <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} /></label>
+                <label>Sources:<input name="source" type="text" value={source} onChange={e => setSource(e.target.value)} /></label>
+                <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label>
             </div>
-        )
-    }
-}
+            <div className="top">
+                <label>Rarity:<input name="rarity" type="text" value={rarity} onChange={e => setRarity(e.target.value)} /></label>
+                <label>Type:<input name="type" type="text" value={type} onChange={e => setType(e.target.value)} /></label>
+                <label className="checkbox-label">
+                    <div className="labelText">Attuned:</div>
+                    <input name="type" type="checkbox" checked={attunment} onChange={e => setAttunment(e.target.checked)} />
+                    <span className="checkbox-custom circular"></span>
+                </label>
+            </div>
+            <div className="top" style={{ width: "120px" }}>
+                <button onClick={saveItemAction}><FontAwesomeIcon icon={faSave} /> Save</button>
 
-export default AddItem;
+            </div>
+            <div className="image" style={style}></div>
+            <textarea value={description} onChange={e => setDescription(e.target.value)}></textarea>
+        </div>
+    )
+
+}
