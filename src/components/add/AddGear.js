@@ -4,11 +4,7 @@ import '../../assets/css/add/AddGear.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 
-const electron = window.require('electron');
-const ipcRenderer = electron.ipcRenderer;
-
 export default function GearView() {
-    const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [pic, setPic] = useState("");
     const [description, setDescription] = useState("");
@@ -19,7 +15,7 @@ export default function GearView() {
     const [type, setType] = useState("");
 
     const saveGear = (e) => {
-        saveNewGear({ id, name, pic, description, cost, weight, damage, properties, type });
+        saveNewGear({ name, pic, description, cost, weight, damage, properties, type });
     }
 
     const style = {
