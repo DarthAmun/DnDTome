@@ -1,10 +1,14 @@
 import '../assets/css/App.css';
-import React, { Component, useEffect } from 'react';
-import { MemoryRouter, Switch, Route, useLocation } from 'react-router';
+import React, { useEffect } from 'react';
+import { MemoryRouter, Switch, Route } from 'react-router';
+import ThemeService from '../services/ThemeService';
+import OptionService from '../database/OptionService';
 
 import SpellOverview from './spell/SpellOverview';
 import ItemOverview from './item/ItemOverview';
+import GearOverview from './gear/GearOverview';
 import MonsterOverview from './monster/MonsterOverview';
+import CharOverview from './char/CharOverview';
 
 import Home from './Home';
 import Options from './Options';
@@ -48,23 +52,30 @@ const LayoutRoute = ({ component: Component, layout: Layout, ...rest }) => (
 );
 
 const App = () => {
-  const theme = useContext(themeContext)
+
+  useEffect(() => {
+    OptionService.get('theme', function (result) {
+      ThemeService.setTheme(result);
+      ThemeService.applyTheme(result);
+    });
+  }, []);
+
   return (
-    <ThemeContext.Provider value={theme}>
-      <MemoryRouter>
-        <Switch>
-          <LayoutRoute path="/spell-overview" layout={PageLayout} component={SpellOverview} />
-          <LayoutRoute path="/item-overview" layout={PageLayout} component={ItemOverview} />
-          <LayoutRoute path="/monster-overview" layout={PageLayout} component={MonsterOverview} />
-          <LayoutRoute path="/char/:id" layout={PageLayout} component={CharView} />
-          <LayoutRoute path="/add-spell" layout={PageLayout} component={AddSpell} />
-          <LayoutRoute path="/add-item" layout={PageLayout} component={AddItem} />
-          <LayoutRoute path="/add-monster" layout={PageLayout} component={AddMonster} />
-          <LayoutRoute path="/options" layout={PageLayout} component={Options} />
-          <LayoutRoute path="/" layout={HomeLayout} component={Home} />
-        </Switch>
-      </MemoryRouter >
-    </ThemeContext.Provider>
+    <MemoryRouter>
+      <Switch>
+        <LayoutRoute path="/spell-overview" layout={PageLayout} component={SpellOverview} />
+        <LayoutRoute path="/item-overview" layout={PageLayout} component={ItemOverview} />
+        <LayoutRoute path="/gear-overview" layout={PageLayout} component={GearOverview} />
+        <LayoutRoute path="/monster-overview" layout={PageLayout} component={MonsterOverview} />
+        <LayoutRoute path="/char-overview" layout={PageLayout} component={CharOverview} />
+        <LayoutRoute path="/char/:id" layout={PageLayout} component={CharView} />
+        <LayoutRoute path="/add-spell" layout={PageLayout} component={AddSpell} />
+        <LayoutRoute path="/add-item" layout={PageLayout} component={AddItem} />
+        <LayoutRoute path="/add-monster" layout={PageLayout} component={AddMonster} />
+        <LayoutRoute path="/options" layout={PageLayout} component={Options} />
+        <LayoutRoute path="/" layout={HomeLayout} component={Home} />
+      </Switch>
+    </MemoryRouter >
   );
 };
 
