@@ -5,13 +5,6 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const url = require('url');
 
-//Database Services
-const SpellService = require('./src/database/SpellService');
-const ItemService = require('./src/database/ItemService');
-const GearService = require('./src/database/GearService');
-const MonsterService = require('./src/database/MonsterService');
-const CharacterService = require('./src/database/CharacterService');
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -271,250 +264,36 @@ const deleteAll = (tab) => {
   });
 }
 
-ipcMain.on('getAllSpells', (event) => {
-  SpellService.reciveAllSpells(mainWindow);
-});
-
-ipcMain.on('getAllItems', (event) => {
-  ItemService.reciveAllItems(mainWindow);
-});
-
-ipcMain.on('getAllGears', (event) => {
-  GearService.reciveAllGears(mainWindow);
-});
-
-ipcMain.on('getAllMonsters', (event) => {
-  MonsterService.reciveAllMonsters(mainWindow);
-});
-
-ipcMain.on('getAllChars', (event) => {
-  CharacterService.reciveAllChars(mainWindow);
-});
-
-ipcMain.on('getSearchSpells', (event, arg) => {
-  const { step, start } = arg;
-  this.searchSpellStep = step;
-  SpellService.reciveSpells(step, start, null, mainWindow);
-});
-
-ipcMain.on('getSearchItems', (event, arg) => {
-  const { step, start } = arg;
-  this.searchItemStep = step;
-  ItemService.reciveItems(step, start, null, mainWindow);
-});
-ipcMain.on('getSearchGears', (event, arg) => {
-  const { step, start } = arg;
-  this.searchGearStep = step;
-  GearService.reciveGears(step, start, null, mainWindow);
-});
-
-ipcMain.on('getSearchMonsters', (event, arg) => {
-  const { step, start } = arg;
-  this.searchMonsterStep = step;
-  MonsterService.reciveMonsters(step, start, null, mainWindow);
-});
-
-ipcMain.on('getSpellCount', (event, arg) => {
-  SpellService.reciveSpellCount(`SELECT count(*) AS count FROM 'main'.'tab_spells'`, mainWindow);
-});
-
-ipcMain.on('getItemCount', (event, arg) => {
-  ItemService.reciveItemCount(`SELECT count(*) AS count FROM 'main'.'tab_items'`, mainWindow);
-});
-
-ipcMain.on('getGearCount', (event, arg) => {
-  GearService.reciveGearCount(`SELECT count(*) AS count FROM 'main'.'tab_gears'`, mainWindow);
-});
-
-
-ipcMain.on('getMonsterCount', (event, arg) => {
-  MonsterService.reciveMonsterCount(`SELECT count(*) AS count FROM 'main'.'tab_monsters'`, mainWindow);
-});
-
 ipcMain.on('sendSpellSearchQuery', (event, arg) => {
   const { query } = arg;
-  const q = SpellService.reciveSpells(this.searchSpellStep, 0, query, mainWindow);
-  SpellService.reciveSpellCount(q.replace("SELECT * FROM 'main'.'tab_spells'", "SELECT count(*) AS count FROM 'main'.'tab_spells'"), mainWindow);
+  mainWindow.webContents.send('sendSpellSearchQuery', { query });
 });
-
 ipcMain.on('sendItemSearchQuery', (event, arg) => {
   const { query } = arg;
-  const q = ItemService.reciveItems(this.searchItemStep, 0, query, mainWindow);
-  ItemService.reciveItemCount(q.replace("SELECT * FROM 'main'.'tab_items'", "SELECT count(*) AS count FROM 'main'.'tab_items'"), mainWindow);
+  mainWindow.webContents.send('sendItemSearchQuery', { query });
 });
 
 ipcMain.on('sendGearSearchQuery', (event, arg) => {
   const { query } = arg;
-  const q = GearService.reciveGears(this.searchGearStep, 0, query, mainWindow);
-  GearService.reciveGearCount(q.replace("SELECT * FROM 'main'.'tab_gears'", "SELECT count(*) AS count FROM 'main'.'tab_gears'"), mainWindow);
+  mainWindow.webContents.send('sendGearSearchQuery', { query });
 });
 
 ipcMain.on('sendMonsterSearchQuery', (event, arg) => {
   const { query } = arg;
-  const q = MonsterService.reciveMonsters(this.searchMonsterStep, 0, query, mainWindow);
-  MonsterService.reciveMonsterCount(q.replace("SELECT * FROM 'main'.'tab_monsters'", "SELECT count(*) AS count FROM 'main'.'tab_monsters'"), mainWindow);
+  mainWindow.webContents.send('sendMonsterSearchQuery', { query });  
 });
-
-ipcMain.on('getSpell', (event, arg) => {
-  const { id } = arg;
-  SpellService.reciveSpell(id, mainWindow);
-});
-
-ipcMain.on('saveSpell', (event, arg) => {
-  const { spell } = arg;
-  SpellService.saveSpell(spell, mainWindow);
-});
-
-ipcMain.on('saveItem', (event, arg) => {
-  const { item } = arg;
-  ItemService.saveItem(item, mainWindow);
-});
-
-ipcMain.on('saveGear', (event, arg) => {
-  const { gear } = arg;
-  GearService.saveGear(gear, mainWindow);
-});
-
-ipcMain.on('saveMonster', (event, arg) => {
-  const { monster } = arg;
-  MonsterService.saveMonster(monster, mainWindow);
-});
-
-ipcMain.on('saveChar', (event, arg) => {
-  const { char } = arg;
-  CharacterService.saveChar(char, mainWindow);
-});
-ipcMain.on('saveNewChar', (event, arg) => {
-  const { char } = arg;
-  CharacterService.saveNewChar(char, mainWindow);
-});
-ipcMain.on('saveCharItems', (event, arg) => {
-  const { items } = arg;
-  CharacterService.saveCharItems(items);
-});
-ipcMain.on('saveCharSpells', (event, arg) => {
-  const { spells } = arg;
-  CharacterService.saveCharSpells(spells);
-});
-
-ipcMain.on('deleteSpell', (event, arg) => {
-  const { spell } = arg;
-  SpellService.deleteSpell(spell, mainWindow, spellWindow);
-});
-
-ipcMain.on('deleteItem', (event, arg) => {
-  const { item } = arg;
-  ItemService.deleteItem(item, mainWindow, itemWindow);
-});
-
-ipcMain.on('deleteGear', (event, arg) => {
-  const { gear } = arg;
-  GearService.deleteGear(gear, mainWindow, gearWindow);
-});
-
-ipcMain.on('deleteMonster', (event, arg) => {
-  const { monster } = arg;
-  MonsterService.deleteMonster(monster, mainWindow, monsterWindow);
-});
-
-ipcMain.on('saveNewSpell', (event, arg) => {
-  const { spell } = arg;
-  SpellService.saveNewSpell(spell, mainWindow);
-});
-ipcMain.on('saveNewSpells', (event, arg) => {
-  const { spells } = arg;
-  SpellService.saveNewSpells(spells, mainWindow);
-});
-
-ipcMain.on('saveNewItem', (event, arg) => {
-  const { item } = arg;
-  ItemService.saveNewItem(item, mainWindow);
-});
-ipcMain.on('saveNewItems', (event, arg) => {
-  const { items } = arg;
-  ItemService.saveNewItems(items, mainWindow);
-});
-
-ipcMain.on('saveNewGear', (event, arg) => {
-  const { gear } = arg;
-  GearService.saveNewGear(gear, mainWindow);
-});
-ipcMain.on('saveNewGears', (event, arg) => {
-  const { gears } = arg;
-  GearService.saveNewGears(gears, mainWindow);
-});
-
-ipcMain.on('saveNewMonster', (event, arg) => {
-  const { monster } = arg;
-  MonsterService.saveNewMonster(monster, mainWindow);
-});
-ipcMain.on('saveNewMonsters', (event, arg) => {
-  const { monsters } = arg;
-  MonsterService.saveNewMonsters(monsters, mainWindow);
-});
-
-
-ipcMain.on('saveNewChars', (event, arg) => {
-  const { chars } = arg;
-  CharacterService.saveNewChars(chars, mainWindow);
-});
-
-ipcMain.on('getChars', (event, arg) => {
-  CharacterService.reciveChars(mainWindow, itemWindow, gearWindow, spellWindow, monsterWindow);
-});
-
-ipcMain.on('getChar', (event, arg) => {
-  const { id } = arg;
-  CharacterService.reciveChar(id, mainWindow);
-});
-
-ipcMain.on('getCharSpells', (event, arg) => {
-  const { id } = arg;
-  CharacterService.reciveCharSpells(id, mainWindow);
-});
-ipcMain.on('getCharItems', (event, arg) => {
-  const { id } = arg;
-  CharacterService.reciveCharItems(id, mainWindow);
-});
-ipcMain.on('getCharMonsters', (event, arg) => {
-  const { id } = arg;
-  CharacterService.reciveCharMonsters(id, mainWindow);
-});
-
-
-ipcMain.on('addItemToChar', (event, arg) => {
-  const { char, item } = arg;
-  ItemService.addItemToChar(char, item, mainWindow);
-});
-ipcMain.on('addGearToChar', (event, arg) => {
-  const { char, gear } = arg;
-  GearService.addGearToChar(char, gear, mainWindow);
-});
-ipcMain.on('addSpellToChar', (event, arg) => {
-  const { char, spell } = arg;
-  SpellService.addSpellToChar(char, spell, mainWindow);
-});
-ipcMain.on('addMonsterToChar', (event, arg) => {
-  const { char, monster } = arg;
-  MonsterService.addMonsterToChar(char, monster, mainWindow);
-});
-
-ipcMain.on('deleteCharSpell', (event, arg) => {
-  const { spell } = arg;
-  CharacterService.deleteCharSpell(spell, mainWindow);
-});
-ipcMain.on('deleteCharItem', (event, arg) => {
-  const { item } = arg;
-  CharacterService.deleteCharItem(item, mainWindow);
-});
-ipcMain.on('deleteChar', (event, arg) => {
-  const { id } = arg;
-  CharacterService.deleteChar(id, mainWindow);
-});
-
 
 ipcMain.on('closeMainWindow', (event) => {
   mainWindow.close();
+});
+ipcMain.on('closeSpellWindow', (event) => {
+  spellWindow.hide();
+});
+ipcMain.on('closeItemWindow', (event) => {
+  itemWindow.hide();
+});
+ipcMain.on('closeMonsterWindow', (event) => {
+  monsterWindow.hide();
 });
 
 ipcMain.on('minimizeMainWindow', (event) => {
@@ -572,6 +351,24 @@ ipcMain.on('deleteAllMonsters', (event) => {
 ipcMain.on('deleteAllChars', (event) => {
   deleteAll("characters");
 });
+
+ipcMain.on('spellsUpdated', (event, arg) => {
+  const { spellStep, spellStart } = arg;
+  mainWindow.webContents.send('spellsUpdated', { spellStep, spellStart });
+});
+ipcMain.on('itemsUpdated', (event, arg) => {
+  const { itemStep, itemStart } = arg;
+  mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
+});
+ipcMain.on('gearsUpdated', (event, arg) => {
+  const { gearStep, gearStart } = arg;
+  mainWindow.webContents.send('gearsUpdated', { gearStep, gearStart });
+});
+ipcMain.on('monstersUpdated', (event, arg) => {
+  const { monsterStep, monsterStart } = arg;
+  mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
+});
+
 
 ipcMain.on('displayMessage', (event, m) => {
   mainWindow.webContents.send('displayMessage', { type: m.type, message: m.message });

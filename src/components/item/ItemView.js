@@ -3,6 +3,8 @@ import * as ReactDOM from "react-dom";
 import '../../assets/css/item/ItemView.css';
 import OptionService from '../../database/OptionService';
 import ThemeService from '../../services/ThemeService';
+import { saveItem, deleteItem, addItemToChar } from '../../database/ItemService';
+import { reciveAllChars } from '../../database/CharacterService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -26,7 +28,10 @@ export default function ItemView() {
     const receiveItem = (event, result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveItem")
-            const text = result.item_description.replace(/\\n/gm, "\r\n");
+            let text = "";
+            if (result.item_description !== null) {
+                text = result.item_description.replace(/\\n/gm, "\r\n");
+            }
             setName(result.item_name);
             setId(result.item_id);
             setDescription(text);
@@ -39,7 +44,7 @@ export default function ItemView() {
         })
     }
 
-    const receiveChars = (event, result) => {
+    const receiveChars = (result) => {
         setChars(result);
         setSelectedChar(result[0].char_id);
     }
@@ -53,26 +58,27 @@ export default function ItemView() {
             ThemeService.setTheme(result);
             ThemeService.applyTheme(result);
         });
+        reciveAllChars(function (result) {
+            receiveChars(result)
+        })
+
         ipcRenderer.on("onViewItem", receiveItem);
-        ipcRenderer.send('getChars');
-        ipcRenderer.on("getCharsResult", receiveChars);
         ipcRenderer.on("changeTheme", changeTheme);
         return () => {
             ipcRenderer.removeListener("onViewItem", receiveItem);
-            ipcRenderer.removeListener("getCharsResult", receiveChars);
             ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
 
-    const saveItem = (e) => {
-        ipcRenderer.send('saveItem', { item: { id, name, pic, type, rarity, source, attunment, description } });
+    const saveItemAction = (e) => {
+        saveItem({ id, name, pic, type, rarity, source, attunment, description });
     }
 
-    const addItemToChar = (e) => {
-        ipcRenderer.send('addItemToChar', { char: { selectedChar }, item: { id, name } });
+    const addItemToCharAction = (e) => {
+        addItemToChar({ selectedChar }, { id, name });
     }
 
-    const deleteItem = (e) => {
+    const deleteItemAction = (e) => {
         const options = {
             type: 'question',
             buttons: ['Cancel', 'Yes, please', 'No, thanks'],
@@ -83,7 +89,7 @@ export default function ItemView() {
 
         dialog.showMessageBox(null, options, (response) => {
             if (response == 1) {
-                ipcRenderer.send('deleteItem', { item: { id, name, pic, type, rarity, source, description } });
+                deleteItem({ id, name, pic, type, rarity, source, description });
             }
         });
     }
@@ -115,11 +121,11 @@ export default function ItemView() {
                     <input name="type" type="checkbox" checked={attunment} onChange={e => setAttunment(e.target.checked)} />
                     <span className="checkbox-custom circular"></span>
                 </label>
-                <button onClick={addItemToChar}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
+                <button onClick={addItemToCharAction}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
             </div>
             <div className="top" style={{ width: "120px" }}>
-                <button className="delete" onClick={deleteItem}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
-                <button onClick={saveItem}><FontAwesomeIcon icon={faSave} /> Save</button>
+                <button className="delete" onClick={deleteItemAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                <button onClick={saveItemAction}><FontAwesomeIcon icon={faSave} /> Save</button>
 
             </div>
             <div className="image" style={style}></div>

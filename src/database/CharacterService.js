@@ -1,64 +1,67 @@
-const path = require('path')
+const path = window.require('path')
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
+const { app } = electron.remote;
 
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database(path.join(__dirname, '../assets/db/tab.db'));
+let sqlite3 = window.require('sqlite3').verbose();
+let db = new sqlite3.Database(path.join(app.getAppPath(), './src/assets/db/tab.db'));
 
-module.exports.reciveAllChars = (mainWindow) => {
+module.exports.reciveAllChars = (callback) => {
     let q = "SELECT * FROM 'main'.'tab_characters'";
     db.serialize(function () {
         db.all(q, function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getAllCharsResult', rows);
+            callback(rows);
             console.log("====>" + `getAllCharsResult successfull`)
         });
     });
 }
 
-module.exports.reciveChar = (id, mainWindow) => {
+module.exports.reciveChar = (id, callback) => {
     db.serialize(function () {
         db.get("SELECT * FROM 'main'.'tab_characters' WHERE char_id=?", [id], function (err, row) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getCharResult', row);
+            callback(row);
             console.log("====>" + `getCharResult successfull`)
         });
     });
 }
 
-module.exports.reciveCharSpells = (id, mainWindow) => {
+module.exports.reciveCharSpells = (id, callback) => {
     db.serialize(function () {
         db.all("SELECT * FROM 'main'.'tab_characters_spells' AS a LEFT JOIN 'main'.'tab_spells' AS b ON a.spell_id = b.spell_id WHERE char_id=? ORDER BY b.spell_level, b.spell_name", [id], function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getCharSpellsResult', rows);
+            callback(rows);
             console.log("====>" + `getCharSpellsResult successfull`)
         });
     });
 }
 
-module.exports.reciveCharItems = (id, mainWindow) => {
+module.exports.reciveCharItems = (id, callback) => {
     db.serialize(function () {
         db.all("SELECT *, CASE WHEN b.item_name IS NOT NULL THEN b.item_name ELSE c.gear_name END as name FROM 'main'.'tab_characters_items' AS a LEFT JOIN 'main'.'tab_items' AS b ON a.item_id = b.item_id LEFT JOIN 'main'.'tab_gears' AS c ON a.gear_id = c.gear_id WHERE char_id=? ORDER BY name", [id], function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getCharItemsResult', rows);
+            callback(rows);
             console.log("====>" + `getCharItemsResult successfull`)
         });
     });
 }
 
-module.exports.reciveCharMonsters = (id, mainWindow) => {
+module.exports.reciveCharMonsters = (id, callback) => {
     db.serialize(function () {
         db.all("SELECT * FROM 'main'.'tab_characters_monsters' AS a LEFT JOIN 'main'.'tab_monsters' AS b ON a.monster_id = b.monster_id WHERE char_id=? ORDER BY b.monster_name", [id], function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getCharMonstersResult', rows);
+            callback(rows);
             console.log("====>" + `getCharMonstersResult successfull`)
         });
     });
@@ -97,7 +100,7 @@ module.exports.saveNewChar = (char, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====> ${char.name} updated successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Saved character`, message: `Saved ${char.name} successful` });
+            ipcRenderer.send('displayMessage', { type: `Saved character`, message: `Saved ${char.name} successful` });
         });
     });
 }
@@ -135,7 +138,7 @@ module.exports.saveChar = (char, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====> ${char.name} updated successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Saved character`, message: `Saved ${char.name} successful` });
+            ipcRenderer.send('displayMessage', { type: `Saved character`, message: `Saved ${char.name} successful` });
         });
     });
 }
@@ -208,29 +211,13 @@ module.exports.saveNewChars = (chars, mainWindow) => {
                     return console.error(err.message);
                 }
                 console.log(`====>Added ${char.char_name} successfull`);
-                mainWindow.webContents.send('displayMessage', { type: `Added character`, message: `Added ${char.char_name} successful` });
+                ipcRenderer.send('displayMessage', { type: `Added character`, message: `Added ${char.char_name} successful` });
             });
         });
     });
 }
 
-module.exports.reciveChars = (mainWindow, itemWindow, gearWindow, spellWindow, monsterWindow) => {
-    db.serialize(function () {
-        db.all("SELECT * FROM 'main'.'tab_characters' ORDER BY char_player ASC", function (err, rows) {
-            if (err != null) {
-                console.log("====>" + err);
-            }
-            mainWindow.webContents.send('getCharsResult', rows);
-            itemWindow.webContents.send('getCharsResult', rows);
-            gearWindow.webContents.send('getCharsResult', rows);
-            spellWindow.webContents.send('getCharsResult', rows);
-            monsterWindow.webContents.send('getCharsResult', rows);
-            console.log("====>" + `getCharsResult successfull`)
-        });
-    });
-}
-
-module.exports.deleteCharSpell = (spell, mainWindow) => {
+module.exports.deleteCharSpell = (spell) => {
     let data = [spell.id];
     let sql = `DELETE FROM 'main'.'tab_characters_spells' WHERE id = ?`;
     db.serialize(function () {
@@ -239,14 +226,13 @@ module.exports.deleteCharSpell = (spell, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Removed ${spell.spell_name} successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Removed spell`, message: `Removed ${spell.spell_name} successful` });
-            module.exports.reciveCharSpells(spell.char_id, mainWindow);
+            ipcRenderer.send('displayMessage', { type: `Removed spell`, message: `Removed ${spell.spell_name} successful` });
         });
     });
 }
 
 
-module.exports.deleteCharItem = (item, mainWindow) => {
+module.exports.deleteCharItem = (item) => {
     let data = [item.id];
     let sql = `DELETE FROM 'main'.'tab_characters_items' WHERE id = ?`;
     db.serialize(function () {
@@ -255,17 +241,31 @@ module.exports.deleteCharItem = (item, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Removed ${item.item_name} successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Removed item`, message: `Removed ${item.item_name} successful` });
-            module.exports.reciveCharItems(item.char_id, mainWindow);
+            ipcRenderer.send('displayMessage', { type: `Removed item`, message: `Removed ${item.item_name} successful` });
         });
     });
 }
 
-module.exports.deleteChar = (id, mainWindow) => {
+module.exports.deleteCharMonster = (monster) => {
+    let data = [monster.monster_id];
+    let sql = `DELETE FROM 'main'.'tab_characters_monsters' WHERE monster_id = ?`;
+    db.serialize(function () {
+        db.run(sql, data, function (err) {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log(`====>Removed ${monster.monster_name} successfull`);
+            ipcRenderer.send('displayMessage', { type: `Removed monster`, message: `Removed ${monster.monster_name} successful` });
+        });
+    });
+}
+
+module.exports.deleteChar = (id) => {
     let data = [id];
     let sql1 = `DELETE FROM 'main'.'tab_characters_items' WHERE char_id = ?`;
     let sql2 = `DELETE FROM 'main'.'tab_characters_spells' WHERE char_id = ?`;
-    let sql3 = `DELETE FROM 'main'.'tab_characters' WHERE char_id = ?`;
+    let sql3 = `DELETE FROM 'main'.'tab_characters_monsters' WHERE char_id = ?`;
+    let sql4 = `DELETE FROM 'main'.'tab_characters' WHERE char_id = ?`;
     db.serialize(function () {
         db.run(sql1, data, function (err) {
             if (err) {
@@ -283,8 +283,14 @@ module.exports.deleteChar = (id, mainWindow) => {
             if (err) {
                 return console.error(err.message);
             }
+            console.log(`====>Removed monsters from character successful`);
+        });
+        db.run(sql4, data, function (err) {
+            if (err) {
+                return console.error(err.message);
+            }
             console.log(`====>Removed character successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Deleted character`, message: `Deleted character successful` });
+            ipcRenderer.send('displayMessage', { type: `Deleted character`, message: `Deleted character successful` });
         });
     });
 }

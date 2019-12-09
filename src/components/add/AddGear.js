@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { saveNewGear } from '../../database/GearService';
 import '../../assets/css/add/AddGear.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -18,7 +19,7 @@ export default function GearView() {
     const [type, setType] = useState("");
 
     const saveGear = (e) => {
-        ipcRenderer.send('saveNewGear', { gear: { id, name, pic, description, cost, weight, damage, properties, type } });
+        saveNewGear({ id, name, pic, description, cost, weight, damage, properties, type });
     }
 
     const style = {

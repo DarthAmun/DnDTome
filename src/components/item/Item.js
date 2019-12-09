@@ -6,13 +6,16 @@ export default function Item(props) {
 
     const getRarityClass = () => {
         let rarityClass = props.item.item_rarity;
-        rarityClass = rarityClass.replace("A*", "").trim();
-        rarityClass = rarityClass.replace(/\s/g, "");
-        return rarityClass;
+        if(rarityClass !== null) {
+            rarityClass = rarityClass.replace("A*", "").trim();
+            rarityClass = rarityClass.replace(/\s/g, "");
+            return rarityClass;
+        }
+        return 'Common';
     }
 
     const getPicture = () => {
-        if (props.item.item_pic === "") {
+        if (props.item.item_pic === "" || props.item.item_pic === null) {
             return icon;
         }
         return props.item.item_pic;

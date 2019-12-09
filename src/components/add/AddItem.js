@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
+import { saveNewItem } from '../../database/ItemService';
 import '../../assets/css/add/AddItem.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-
-const electron = window.require('electron');
-const ipcRenderer = electron.ipcRenderer;
 
 class AddItem extends Component {
     state = {
@@ -55,7 +53,7 @@ class AddItem extends Component {
     }
 
     saveItem = (e) => {
-        ipcRenderer.send('saveNewItem', { item: this.state });
+        saveNewItem(this.state);
     }
 
     render() {

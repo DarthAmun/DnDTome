@@ -5,7 +5,7 @@ import icon from '../../assets/img/dice_icon_grey.png';
 export default function Gear(props) {
 
     const getPicture = () => {
-        if (props.gear.gear_pic === "") {
+        if (props.gear.gear_pic === "" || props.gear.gear_pic === null) {
             return icon;
         }
         return props.gear.gear_pic;

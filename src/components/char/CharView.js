@@ -5,6 +5,7 @@ import '../../assets/css/char/CharView.css';
 import OptionService from '../../database/OptionService';
 import ThemeService from '../../services/ThemeService';
 import PdfFillerService from '../../services/PdfFillerService';
+import { saveChar, saveCharItems, saveCharSpells, deleteChar, deleteCharItem, deleteCharMonster, reciveChar, reciveCharSpells, reciveCharMonsters, reciveCharItems, deleteCharSpell } from '../../database/CharacterService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes, faAngleUp, faAngleDoubleUp, faMinus, faHeartBroken, faHeartbeat, faTrashAlt, faFileExport, faPrint } from '@fortawesome/free-solid-svg-icons';
 import StatChart from './StatChart';
@@ -122,7 +123,7 @@ export default function CharView(props) {
     const [deathTwo, setDeathTwo] = useState(0);
     const [deathThree, setDeathThree] = useState(0);
 
-    const receiveChar = (event, result) => {
+    const receiveCharResult = (result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveChar")
             setName(result.char_name);
@@ -220,14 +221,13 @@ export default function CharView(props) {
         })
     }
 
-    const receiveSpells = (event, result) => {
+    const receiveSpellsResult = (result) => {
         setSpells(result);
     }
-    const receiveItems = (event, result) => {
+    const receiveItemsResult = (result) => {
         setItems(result);
     }
-    const reciveMonsters = (event, result) => {
-        console.log(result);
+    const reciveMonstersResult = (result) => {
         setMonsters(result);
     }
 
@@ -236,20 +236,19 @@ export default function CharView(props) {
             ThemeService.setTheme(result);
             ThemeService.applyTheme(result);
         });
-        ipcRenderer.send('getChar', { id: props.match.params.id });
-        ipcRenderer.on("getCharResult", receiveChar);
-        ipcRenderer.send('getCharSpells', { id: props.match.params.id });
-        ipcRenderer.on("getCharSpellsResult", receiveSpells);
-        ipcRenderer.send('getCharItems', { id: props.match.params.id });
-        ipcRenderer.on("getCharItemsResult", receiveItems);
-        ipcRenderer.send('getCharMonsters', { id: props.match.params.id });
-        ipcRenderer.on("getCharMonstersResult", reciveMonsters);
-        return () => {
-            ipcRenderer.removeListener("getCharResult", receiveChar)
-            ipcRenderer.removeListener("getCharSpellsResult", receiveSpells);
-            ipcRenderer.removeListener("getCharItemsResult", receiveItems);
-            ipcRenderer.removeListener("getCharMonstersResult", reciveMonsters);
-        }
+
+        reciveChar(props.match.params.id, function (result) {
+            receiveCharResult(result);
+        })
+        reciveCharSpells(props.match.params.id, function (result) {
+            receiveSpellsResult(result);
+        })
+        reciveCharMonsters(props.match.params.id, function (result) {
+            reciveMonstersResult(result);
+        })
+        reciveCharItems(props.match.params.id, function (result) {
+            receiveItemsResult(result);
+        })
     }, []);
 
     const options = {
@@ -349,7 +348,6 @@ export default function CharView(props) {
             "ST Wisdom": `${wisSave}`,
             "Check Box 22": `${chaSaveProf === 1 ? "Yes" : ""}`,
             "ST Charisma": `${chaSave}`,
-
             "Check Box 23": `${acrobaticsProf > 0 ? "Yes" : ""}`,
             "Acrobatics": `${acrobatics}`,
             "Check Box 24": `${animalHandlingProf > 0 ? "Yes" : ""}`,
@@ -394,6 +392,7 @@ export default function CharView(props) {
             "HPCurrent": `${currentHp}`,
             "HDTotal": `${hitDice}`,
             "Features and Traits": `${features + " " + racialFeatures + " " + classFeatures}`,
+            "AttacksSpellcasting": `${actions + " " + bonusActions + " " + reactions}`,
             "Speed": `${speed}`,
             "Equipment": `${items.map(item => {
                 if (item.item_id === null) {
@@ -411,6 +410,9 @@ export default function CharView(props) {
             "Wpn Name 3": `${weapons[2].wpn_Name}`,
             "Wpn3 AtkBonus": `${weapons[2].wpn_AtkBonus}`,
             "Wpn3 Damage": `${weapons[2].wpn_Damage}`,
+            "Backstory": `${notesOne}`,
+            "Feat+Traits": `${notesTwo}`,
+            "Treasure": `${notesThree}`,
         };
 
         console.log(data);
@@ -450,44 +452,50 @@ export default function CharView(props) {
     const viewGear = (gear) => {
         ipcRenderer.send('openGearView', gear);
     }
-
-    const deleteCharSpell = (spell) => {
-        ipcRenderer.send('deleteCharSpell', { spell: spell });
-    }
-    const deleteCharItem = (item) => {
-        ipcRenderer.send('deleteCharItem', { item: item });
-    }
-    const deleteCharMonster = (monster) => {
-        ipcRenderer.send('deleteCharMonster', { monster: monster });
+    const viewMonster = (monster) => {
+        ipcRenderer.send('openMonsterView', monster);
     }
 
+    const deleteCharSpellAction = (spell) => {
+        deleteCharSpell(spell);
+        reciveCharSpells(props.match.params.id, function (result) {
+            receiveSpellsResult(result);
+        })
+    }
+    const deleteCharItemAction = (item) => {
+        deleteCharItem(item);
+        reciveCharItems(props.match.params.id, function (result) {
+            receiveItemsResult(result);
+        })
+    }
+    const deleteCharMonsterAction = (monster) => {
+        deleteCharMonster(monster);
+        reciveCharMonsters(props.match.params.id, function (result) {
+            reciveMonstersResult(result);
+        })
+    }
 
-    const saveChar = () => {
-        ipcRenderer.send('saveChar', {
-            char: {
-                id, name, player, prof, exp, pic, classes, race, background, ac, hp, currentHp, hitDice,
-                init, speed, str, dex, con, int, wis, cha, strSave, dexSave, conSave, intSave, wisSave, chaSave,
-                strSaveProf, dexSaveProf, conSaveProf, intSaveProf, wisSaveProf, chaSaveProf,
-                actions, bonusActions, reactions, features, classFeatures, racialFeatures, profsLangs,
-                senses, passivPerception, passivInsight, passivInvestigation,
-                notesOne, notesTwo, notesThree, acrobatics, animalHandling, arcana,
-                athletics, deception, history, insight, intimidation, investigation, medicine, nature,
-                perception, performance, persuasion, religion, sleightOfHand, stealth, survival,
-                acrobaticsProf, animalHandlingProf, arcanaProf,
-                athleticsProf, deceptionProf, historyProf, insightProf, intimidationProf, investigationProf, medicineProf, natureProf,
-                perceptionProf, performanceProf, persuasionProf, religionProf, sleightOfHandProf, stealthProf, survivalProf, spellNotes
-            }
+
+    const saveCharAction = () => {
+        saveChar({
+            id, name, player, prof, exp, pic, classes, race, background, ac, hp, currentHp, hitDice,
+            init, speed, str, dex, con, int, wis, cha, strSave, dexSave, conSave, intSave, wisSave, chaSave,
+            strSaveProf, dexSaveProf, conSaveProf, intSaveProf, wisSaveProf, chaSaveProf,
+            actions, bonusActions, reactions, features, classFeatures, racialFeatures, profsLangs,
+            senses, passivPerception, passivInsight, passivInvestigation,
+            notesOne, notesTwo, notesThree, acrobatics, animalHandling, arcana,
+            athletics, deception, history, insight, intimidation, investigation, medicine, nature,
+            perception, performance, persuasion, religion, sleightOfHand, stealth, survival,
+            acrobaticsProf, animalHandlingProf, arcanaProf,
+            athleticsProf, deceptionProf, historyProf, insightProf, intimidationProf, investigationProf, medicineProf, natureProf,
+            perceptionProf, performanceProf, persuasionProf, religionProf, sleightOfHandProf, stealthProf, survivalProf, spellNotes
         });
-        ipcRenderer.send('saveCharItems', {
-            items: items
-        });
-        ipcRenderer.send('saveCharSpells', {
-            spells: spells
-        });
+        saveCharItems(items);
+        saveCharSpells(spells);
     }
 
-    const deleteChar = () => {
-        ipcRenderer.send('deleteChar', { id: id });
+    const deleteCharAction = () => {
+        deleteChar(id);
         historyRoute.push("/char-overview");
     }
 
@@ -612,8 +620,8 @@ export default function CharView(props) {
                     <StatChart data={data} />
                 </div>
                 <div className="smallLabelGroup">
-                    <button onClick={saveChar}><FontAwesomeIcon icon={faSave} /> Save</button><br />
-                    <button className="delete" onClick={deleteChar}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button><br />
+                    <button onClick={saveCharAction}><FontAwesomeIcon icon={faSave} /> Save</button><br />
+                    <button className="delete" onClick={deleteCharAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button><br />
                     <button onClick={printChar}><FontAwesomeIcon icon={faPrint} /> Print</button>
                 </div>
                 <div className="tabComponent">
@@ -830,7 +838,7 @@ export default function CharView(props) {
                                                         <span className="checkbox-custom circular"></span>
                                                     </label>
                                                 </td>
-                                                <td onClick={() => deleteCharSpell(spell)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
+                                                <td onClick={() => deleteCharSpellAction(spell)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
                                             </tr>;
                                         })}
                                     </tbody>
@@ -876,7 +884,7 @@ export default function CharView(props) {
                                                             </label> : ""}
 
                                                     </td>
-                                                    <td onClick={() => deleteCharItem(item)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
+                                                    <td onClick={() => deleteCharItemAction(item)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
                                                 </tr>;
                                             } else {
                                                 return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
@@ -901,7 +909,7 @@ export default function CharView(props) {
                                                             </label> : ""}
 
                                                     </td>
-                                                    <td onClick={() => deleteCharItem(item)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
+                                                    <td onClick={() => deleteCharItemAction(item)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
                                                 </tr>;
                                             }
                                         })}
@@ -928,7 +936,7 @@ export default function CharView(props) {
                                                 <td onClick={() => viewMonster(monster)}>{monster.monster_armorClass}</td>
                                                 <td onClick={() => viewMonster(monster)}>{monster.monster_hitPoints}</td>
                                                 <td onClick={() => viewMonster(monster)}>{monster.monster_speed}</td>
-                                                <td onClick={() => deleteCharMonster(monster)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
+                                                <td onClick={() => deleteCharMonsterAction(monster)} className="centered removeIcon"><FontAwesomeIcon icon={faTimes} /></td>
                                             </tr>;
                                         })}
                                     </tbody>

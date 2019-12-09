@@ -1,27 +1,32 @@
-const path = require('path')
+const path = window.require('path')
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
+const { app } = electron.remote;
 
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database(path.join(__dirname, '../assets/db/tab.db'));
+let sqlite3 = window.require('sqlite3').verbose();
+let db = new sqlite3.Database(path.join(app.getAppPath(), './src/assets/db/tab.db'));
+
 let monsterStep;
 let monsterStart;
 let searchMonsterQuery;
 
-module.exports.reciveAllMonsters = (mainWindow) => {
+module.exports.reciveAllMonsters = (callback) => {
     let q = "SELECT * FROM 'main'.'tab_monsters'";
     db.serialize(function () {
         db.all(q, function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getAllMonstersResult', rows);
+            callback(rows);
             console.log("====>" + `getAllMonstersResult successfull`)
         });
     });
 }
 
-module.exports.reciveMonsters = (step, start, query, mainWindow) => {
-    monsterStep = step;
-    monsterStart = start;
+module.exports.reciveMonsters = (step, start, query, callback) => {
+    localStorage.setItem('monsterStep', parseInt(step, 10));
+    localStorage.setItem('monsterStart', parseInt(start, 10));
+  
     if (query !== null) {
         searchMonsterQuery = query;
     }
@@ -35,6 +40,9 @@ module.exports.reciveMonsters = (step, start, query, mainWindow) => {
         }
         if (searchMonsterQuery.subtype != null && typeof searchMonsterQuery.subtype !== 'undefined' && searchMonsterQuery.subtype != "") {
             q += `monster_subtype like "%${searchMonsterQuery.subtype}%" AND `;
+        }
+        if (searchMonsterQuery.source != null && typeof searchMonsterQuery.source !== 'undefined' && searchMonsterQuery.source != "") {
+            q += `monster_source like "%${searchMonsterQuery.source}%" AND `;
         }
         if (searchMonsterQuery.cr != null && typeof searchMonsterQuery.cr !== 'undefined' && searchMonsterQuery.cr != "") {
             q += `monster_cr = "${searchMonsterQuery.cr}" AND `;
@@ -77,26 +85,28 @@ module.exports.reciveMonsters = (step, start, query, mainWindow) => {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getSearchMonstersResult', rows);
+            callback(rows);
             console.log("====>" + `getSearchMonstersResult from ${start} to ${(start + step)} successfull`)
         });
     });
     return q;
 }
 
-module.exports.reciveMonsterCount = (q, mainWindow) => {
+module.exports.reciveMonsterCount = (query, callback) => {
+    const q = this.reciveMonsters(10, 0, query, function (result) { });
+    const sql = q.replace("SELECT * FROM 'main'.'tab_monsters'", "SELECT count(*) AS count FROM 'main'.'tab_monsters'");
     db.serialize(function () {
-        db.all(q, function (err, rows) {
+        db.all(sql, function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getMonsterCountResult', rows);
+            callback(rows[0]);
             console.log("====>" + `getMonsterCount successfull`)
         });
     });
 }
 
-module.exports.saveMonster = (monster, mainWindow) => {
+module.exports.saveMonster = (monster) => {
     let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment, monster.ac, monster.hp, monster.speed, monster.str,
     monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.saveingThrows, monster.skills, monster.dmgVulnerabilitie,
     monster.dmgResistance, monster.dmgImmunities, monster.senses, monster.lang, monster.cr, monster.sAblt, monster.ablt, monster.lAblt,
@@ -114,13 +124,13 @@ module.exports.saveMonster = (monster, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====> ${monster.name} updated successfull`);
-            mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
-            mainWindow.webContents.send('displayMessage', { type: `Saved monster`, message: `Saved ${monster.name} successful` });
+            ipcRenderer.send('monstersUpdated', { monsterStep: parseInt(localStorage.getItem('monsterStep'), 10), monterStart: parseInt(localStorage.getItem('monterStart'), 10) });
+            ipcRenderer.send('displayMessage', { type: `Saved monster`, message: `Saved ${monster.name} successful` });
         });
     });
 }
 
-module.exports.saveNewMonster = (monster, mainWindow) => {
+module.exports.saveNewMonster = (monster) => {
     let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment, monster.ac, monster.hp, monster.speed, monster.str,
     monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.saveingThrows, monster.skills, monster.dmgVulnerabilitie,
     monster.dmgResistance, monster.dmgImmunities, monster.monster_conImmunities, monster.senses, monster.lang, monster.cr, monster.sAblt, monster.ablt, monster.lAblt,
@@ -138,12 +148,12 @@ module.exports.saveNewMonster = (monster, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Added ${monster.name} successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Added monster`, message: `Added ${monster.name} successful` });
+            ipcRenderer.send('displayMessage', { type: `Added monster`, message: `Added ${monster.name} successful` });
         });
     });
 }
 
-module.exports.saveNewMonsters = (monsters, mainWindow) => {
+module.exports.saveNewMonsters = (monsters, callback) => {
     let monsterImportLength = Object.keys(monsters).length;
     let monsterImported = 0;
     monsters.forEach(monster => {
@@ -167,13 +177,13 @@ module.exports.saveNewMonsters = (monsters, mainWindow) => {
                 }
                 console.log(`====>Added ${monster.monster_name} successfull`);
                 monsterImported++;
-                mainWindow.webContents.send('updateMonsterImport', { now: monsterImported, full: monsterImportLength, name: monster.monster_name });
+                callback({ now: monsterImported, full: monsterImportLength, name: monster.monster_name });
             });
         });
     });
 }
 
-module.exports.deleteMonster = (monster, mainWindow, monsterWindow) => {
+module.exports.deleteMonster = (monster) => {
     let data = [monster.id];
     let sql = `DELETE FROM 'main'.'tab_monsters' WHERE monster_id = ?`;
     db.serialize(function () {
@@ -182,14 +192,14 @@ module.exports.deleteMonster = (monster, mainWindow, monsterWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Deleted ${monster.name} successfull`);
-            monsterWindow.hide();
-            mainWindow.webContents.send('monstersUpdated', { monsterStep, monsterStart });
-            mainWindow.webContents.send('displayMessage', { type: `Deleted monster`, message: `Deleted ${monster.name} successful` });
+            ipcRenderer.send('closeMonsterWindow');
+            ipcRenderer.send('monstersUpdated', { monsterStep, monsterStart });
+            ipcRenderer.send('displayMessage', { type: `Deleted monster`, message: `Deleted ${monster.name} successful` });
         });
     });
 }
 
-module.exports.addMonsterToChar = (char, monster, mainWindow) => {
+module.exports.addMonsterToChar = (char, monster) => {
     let data = [char.selectedChar, monster.id];
     let sql = `INSERT INTO 'main'.'tab_characters_monsters' (char_id, monster_id)
                 VALUES  (?, ?)`;
@@ -199,7 +209,7 @@ module.exports.addMonsterToChar = (char, monster, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Added ${monster.name} to character successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Added monster to character`, message: `Added ${monster.name} to character successful` });
+            ipcRenderer.send('displayMessage', { type: `Added monster to character`, message: `Added ${monster.name} to character successful` });
         });
     });
 }

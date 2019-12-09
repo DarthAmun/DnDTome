@@ -1,27 +1,32 @@
-const path = require('path')
+const path = window.require('path')
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
+const { app } = electron.remote;
 
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database(path.join(__dirname, '../assets/db/tab.db'));
+let sqlite3 = window.require('sqlite3').verbose();
+let db = new sqlite3.Database(path.join(app.getAppPath(), './src/assets/db/tab.db'));
+
 let gearStep;
 let gearStart;
 let searchGearQuery;
 
-module.exports.reciveAllGears = (mainWindow) => {
+module.exports.reciveAllGears = (callback) => {
     let q = "SELECT * FROM 'main'.'tab_gears'";
     db.serialize(function () {
         db.all(q, function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getAllGearsResult', rows);
+            callback(rows);
             console.log("====>" + `getAllGearsResult successfull`)
         });
     });
 }
 
-module.exports.reciveGears = (step, start, query, mainWindow) => {
-    gearStep = step;
-    gearStart = start;
+module.exports.reciveGears = (step, start, query, callback) => {
+    localStorage.setItem('gearStep', parseInt(step, 10));
+    localStorage.setItem('gearStart', parseInt(start, 10));
+
     if (query !== null) {
         searchGearQuery = query;
     }
@@ -62,26 +67,28 @@ module.exports.reciveGears = (step, start, query, mainWindow) => {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getSearchGearsResult', rows);
+            callback(rows);
             console.log("====>" + `getSearchGearsResult from ${start} to ${(start + step)} successfull`);
         });
     });
     return q;
 }
 
-module.exports.reciveGearCount = (q, mainWindow) => {
+module.exports.reciveGearCount = (query, callback) => {
+    const q = this.reciveGears(10, 0, query, function (result) { });
+    const sql = q.replace("SELECT * FROM 'main'.'tab_gears'", "SELECT count(*) AS count FROM 'main'.'tab_gears'");
     db.serialize(function () {
-        db.all(q, function (err, rows) {
+        db.all(sql, function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getGearCountResult', rows);
+            callback(rows[0]);
             console.log("====>" + `getGearCount successfull`)
         });
     });
 }
 
-module.exports.deleteGear = (gear, mainWindow, gearWindow) => {
+module.exports.deleteGear = (gear) => {
     let data = [gear.id];
     let sql = `DELETE FROM 'main'.'tab_gears' WHERE gear_id = ?`;
     db.serialize(function () {
@@ -90,14 +97,14 @@ module.exports.deleteGear = (gear, mainWindow, gearWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Deleted ${gear.name} successfull`);
-            gearWindow.hide();
-            mainWindow.webContents.send('gearsUpdated', { gearStep, gearStart });
-            mainWindow.webContents.send('displayMessage', { type: `Deleted gear`, message: `Deleted ${gear.name} successful` });
+            ipcRenderer.send('closeSpellWindow');
+            ipcRenderer.send('gearsUpdated', { gearStep, gearStart });
+            ipcRenderer.send('displayMessage', { type: `Deleted gear`, message: `Deleted ${gear.name} successful` });
         });
     });
 }
 
-module.exports.saveGear = (gear, mainWindow) => {
+module.exports.saveGear = (gear) => {
     let data = [gear.name, gear.description, gear.pic, gear.cost, gear.weight, gear.damage, gear.properties, gear.type, gear.id];
     let sql = `UPDATE 'main'.'tab_gears'
                 SET gear_name = ?, gear_description = ?, gear_pic = ?, gear_cost= ?, gear_weight= ?, gear_damage= ?, gear_properties= ?, gear_type= ?
@@ -108,13 +115,13 @@ module.exports.saveGear = (gear, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====> ${gear.name} updated successfull`);
-            mainWindow.webContents.send('gearsUpdated', { gearStep, gearStart });
-            mainWindow.webContents.send('displayMessage', { type: `Saved gear`, message: `Saved ${gear.name} successful` });
+            ipcRenderer.send('gearsUpdated', { gearStep: parseInt(localStorage.getItem('gearStep'), 10), gearStart: parseInt(localStorage.getItem('gearStart'), 10) });
+            ipcRenderer.send('displayMessage', { type: `Saved gear`, message: `Saved ${gear.name} successful` });
         });
     });
 }
 
-module.exports.saveNewGear = (gear, mainWindow) => {
+module.exports.saveNewGear = (gear) => {
     let data = [gear.name, gear.description, gear.pic, gear.cost, gear.damage, gear.weight, gear.properties, gear.type];
     let sql = `INSERT INTO 'main'.'tab_gears' (gear_name, gear_description, gear_pic, gear_cost, gear_damage, gear_weight, gear_properties, gear_type)
                 VALUES  (?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -124,12 +131,12 @@ module.exports.saveNewGear = (gear, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Added ${gear.name} successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Added gear`, message: `Added ${gear.name} successful` });
+            ipcRenderer.send('displayMessage', { type: `Added gear`, message: `Added ${gear.name} successful` });
         });
     });
 }
 
-module.exports.saveNewGears = (gears, mainWindow) => {
+module.exports.saveNewGears = (gears, callback) => {
     let GearImportLength = Object.keys(gears).length;
     let GearImported = 0;
     gears.forEach(gear => {
@@ -143,13 +150,13 @@ module.exports.saveNewGears = (gears, mainWindow) => {
                 }
                 console.log(`====>Added ${gear.gear_name} successfull`);
                 GearImported++;
-                mainWindow.webContents.send('updateGearImport', { now: GearImported, full: GearImportLength, name: gear.gear_name });
+                callback({ now: GearImported, full: GearImportLength, name: gear.gear_name });
             });
         });
     });
 }
 
-module.exports.addGearToChar = (char, gear, mainWindow) => {
+module.exports.addGearToChar = (char, gear) => {
     let data = [char.selectedChar, gear.id, 1, false, false, gear.damage, gear.properties];
     let sql = `INSERT INTO 'main'.'tab_characters_items' (char_id, gear_id, item_amount, item_equiped, item_attuned, item_damage, item_properties)
                 VALUES  (?, ?, ?, ?, ?, ?, ?)`;
@@ -159,7 +166,7 @@ module.exports.addGearToChar = (char, gear, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Added ${gear.name} to character successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Added gear to character`, message: `Added ${gear.name} to character successful` });
+            ipcRenderer.send('displayMessage', { type: `Added gear to character`, message: `Added ${gear.name} to character successful` });
         });
     });
 }

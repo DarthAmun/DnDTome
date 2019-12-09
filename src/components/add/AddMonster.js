@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
+import { saveNewMonster } from '../../database/MonsterService';
 import '../../assets/css/add/AddMonster.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-
-const electron = window.require('electron');
-const ipcRenderer = electron.ipcRenderer;
-const { dialog } = electron.remote;
+import { faSave } from '@fortawesome/free-solid-svg-icons';
 
 class AddMonster extends Component {
     state = {
@@ -87,7 +84,7 @@ class AddMonster extends Component {
     }
 
     saveMonster = (e) => {
-        ipcRenderer.send('saveNewMonster', { monster: this.state });
+        saveNewMonster(this.state);
     }
 
     render() {

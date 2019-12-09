@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { saveNewChar } from '../../database/CharacterService';
 import '../../assets/css/char/CharView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faAngleUp, faAngleDoubleUp, faMinus, faHeartBroken, faHeartbeat } from '@fortawesome/free-solid-svg-icons';
@@ -113,20 +114,18 @@ export default function CharView() {
     }
 
     const saveChar = () => {
-        ipcRenderer.send('saveNewChar', {
-            char: {
-                name, player, prof, exp, pic, classes, race, background, ac, hp, currentHp, hitDice,
-                init, speed, str, dex, con, int, wis, cha, strSave, dexSave, conSave, intSave, wisSave, chaSave,
-                strSaveProf, dexSaveProf, conSaveProf, intSaveProf, wisSaveProf, chaSaveProf,
-                actions, bonusActions, reactions, features, classFeatures, racialFeatures, profsLangs,
-                senses, passivPerception, passivInsight, passivInvestigation,
-                notesOne, notesTwo, notesThree, acrobatics, animalHandling, arcana,
-                athletics, deception, history, insight, intimidation, investigation, medicine, nature,
-                perception, performance, persuasion, religion, sleightOfHand, stealth, survival,
-                acrobaticsProf, animalHandlingProf, arcanaProf,
-                athleticsProf, deceptionProf, historyProf, insightProf, intimidationProf, investigationProf, medicineProf, natureProf,
-                perceptionProf, performanceProf, persuasionProf, religionProf, sleightOfHandProf, stealthProf, survivalProf, spellNotes
-            }
+        saveNewChar({
+            name, player, prof, exp, pic, classes, race, background, ac, hp, currentHp, hitDice,
+            init, speed, str, dex, con, int, wis, cha, strSave, dexSave, conSave, intSave, wisSave, chaSave,
+            strSaveProf, dexSaveProf, conSaveProf, intSaveProf, wisSaveProf, chaSaveProf,
+            actions, bonusActions, reactions, features, classFeatures, racialFeatures, profsLangs,
+            senses, passivPerception, passivInsight, passivInvestigation,
+            notesOne, notesTwo, notesThree, acrobatics, animalHandling, arcana,
+            athletics, deception, history, insight, intimidation, investigation, medicine, nature,
+            perception, performance, persuasion, religion, sleightOfHand, stealth, survival,
+            acrobaticsProf, animalHandlingProf, arcanaProf,
+            athleticsProf, deceptionProf, historyProf, insightProf, intimidationProf, investigationProf, medicineProf, natureProf,
+            perceptionProf, performanceProf, persuasionProf, religionProf, sleightOfHandProf, stealthProf, survivalProf, spellNotes
         });
         historyRoute.push("/char-overview");
     }

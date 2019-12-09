@@ -1,27 +1,32 @@
-const path = require('path')
+const path = window.require('path')
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
+const { app } = electron.remote;
 
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database(path.join(__dirname, '../assets/db/tab.db'));
+let sqlite3 = window.require('sqlite3').verbose();
+let db = new sqlite3.Database(path.join(app.getAppPath(), './src/assets/db/tab.db'));
+
 let itemStep;
 let itemStart;
 let searchItemQuery;
 
-module.exports.reciveAllItems = (mainWindow) => {
+module.exports.reciveAllItems = (callback) => {
     let q = "SELECT * FROM 'main'.'tab_items'";
     db.serialize(function () {
         db.all(q, function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getAllItemsResult', rows);
+            callback(rows);
             console.log("====>" + `getAllItemsResult successfull`)
         });
     });
 }
 
-module.exports.reciveItems = (step, start, query, mainWindow) => {
-    itemStep = step;
-    itemStart = start;
+module.exports.reciveItems = (step, start, query, callback) => {
+    localStorage.setItem('itemStep', parseInt(step, 10));
+    localStorage.setItem('itemStart', parseInt(start, 10));
+  
     if (query !== null) {
         searchItemQuery = query;
     }
@@ -56,26 +61,28 @@ module.exports.reciveItems = (step, start, query, mainWindow) => {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getSearchItemsResult', rows);
+            callback(rows);
             console.log("====>" + `getSearchItemsResult from ${start} to ${(start + step)} successfull`);
         });
     });
     return q;
 }
 
-module.exports.reciveItemCount = (q, mainWindow) => {
+module.exports.reciveItemCount = (query, callback) => {
+    const q = this.reciveItems(10, 0, query, function (result) { });
+    const sql = q.replace("SELECT * FROM 'main'.'tab_items'", "SELECT count(*) AS count FROM 'main'.'tab_items'");
     db.serialize(function () {
-        db.all(q, function (err, rows) {
+        db.all(sql, function (err, rows) {
             if (err != null) {
                 console.log("====>" + err);
             }
-            mainWindow.webContents.send('getItemCountResult', rows);
+            callback(rows[0]);
             console.log("====>" + `getItemCount successfull`)
         });
     });
 }
 
-module.exports.deleteItem = (item, mainWindow, itemWindow) => {
+module.exports.deleteItem = (item) => {
     let data = [item.id];
     let sql = `DELETE FROM 'main'.'tab_items' WHERE item_id = ?`;
     db.serialize(function () {
@@ -84,14 +91,14 @@ module.exports.deleteItem = (item, mainWindow, itemWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Deleted ${item.name} successfull`);
-            itemWindow.hide();
-            mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
-            mainWindow.webContents.send('displayMessage', { type: `Deleted magic item`, message: `Deleted ${item.name} successful` });
+            ipcRenderer.send('closeItemWindow');
+            ipcRenderer.send('itemsUpdated', { itemStep, itemStart });
+            ipcRenderer.send('displayMessage', { type: `Deleted magic item`, message: `Deleted ${item.name} successful` });
         });
     });
 }
 
-module.exports.saveItem = (item, mainWindow) => {
+module.exports.saveItem = (item) => {
     let data = [item.name, item.type, item.rarity, item.description, item.pic, item.source, item.attunment, item.id];
     let sql = `UPDATE 'main'.'tab_items'
                 SET item_name = ?, item_type = ?, item_rarity = ?, item_description = ?, item_pic = ?, item_source = ?, item_attunment = ?
@@ -102,13 +109,13 @@ module.exports.saveItem = (item, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====> ${item.name} updated successfull`);
-            mainWindow.webContents.send('itemsUpdated', { itemStep, itemStart });
-            mainWindow.webContents.send('displayMessage', { type: `Saved magic item`, message: `Saved ${item.name} successful` });
+            ipcRenderer.send('itemsUpdated', { itemStep: parseInt(localStorage.getItem('itemStep'), 10), itemStart: parseInt(localStorage.getItem('itemStart'), 10) });
+            ipcRenderer.send('displayMessage', { type: `Saved magic item`, message: `Saved ${item.name} successful` });
         });
     });
 }
 
-module.exports.saveNewItem = (item, mainWindow) => {
+module.exports.saveNewItem = (item) => {
     let data = [item.name, item.description, item.pic, item.rarity, item.type, item.source];
     let sql = `INSERT INTO 'main'.'tab_items' (item_name, item_description, item_pic, item_rarity, item_type, item_source)
                 VALUES  (?, ?, ?, ?, ?, ?)`;
@@ -118,12 +125,12 @@ module.exports.saveNewItem = (item, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Added ${item.name} successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Added magic item`, message: `Added ${item.name} successful` });
+            ipcRenderer.send('displayMessage', { type: `Added magic item`, message: `Added ${item.name} successful` });
         });
     });
 }
 
-module.exports.saveNewItems = (items, mainWindow) => {
+module.exports.saveNewItems = (items, callback) => {
     let ItemImportLength = Object.keys(items).length;
     let ItemImported = 0;
     items.forEach(item => {
@@ -137,13 +144,13 @@ module.exports.saveNewItems = (items, mainWindow) => {
                 }
                 console.log(`====>Added ${item.item_name} successfull`);
                 ItemImported++;
-                mainWindow.webContents.send('updateItemImport', { now: ItemImported, full: ItemImportLength, name: item.item_name });
+                callback({ now: ItemImported, full: ItemImportLength, name: item.item_name });
             });
         });
     });
 }
 
-module.exports.addItemToChar = (char, item, mainWindow) => {
+module.exports.addItemToChar = (char, item) => {
     let data = [char.selectedChar, item.id, 1, false, false];
     let sql = `INSERT INTO 'main'.'tab_characters_items' (char_id, item_id, item_amount, item_equiped, item_attuned)
                 VALUES  (?, ?, ?, ?, ?)`;
@@ -153,7 +160,7 @@ module.exports.addItemToChar = (char, item, mainWindow) => {
                 return console.error(err.message);
             }
             console.log(`====>Added ${item.name} to character successfull`);
-            mainWindow.webContents.send('displayMessage', { type: `Added magic item to character`, message: `Added ${item.name} to character successful` });
+            ipcRenderer.send('displayMessage', { type: `Added magic item to character`, message: `Added ${item.name} to character successful` });
         });
     });
 }

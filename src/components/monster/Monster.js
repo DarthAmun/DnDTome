@@ -16,7 +16,7 @@ export default function Monster(props) {
     }
 
     const getPicture = () => {
-        if (props.monster.monster_pic === "") {
+        if (props.monster.monster_pic === "" || props.monster.monster_pic === null) {
             return icon;
         }
         return props.monster.monster_pic;
