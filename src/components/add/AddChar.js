@@ -5,9 +5,6 @@ import '../../assets/css/char/CharView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faAngleUp, faAngleDoubleUp, faMinus, faHeartBroken, faHeartbeat } from '@fortawesome/free-solid-svg-icons';
 
-const electron = window.require('electron');
-const ipcRenderer = electron.ipcRenderer;
-
 export default function CharView() {
     let historyRoute = useHistory();
 

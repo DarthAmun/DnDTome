@@ -29,7 +29,10 @@ export default function GearView() {
     const receiveGear = (event, result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveGear")
-            const text = result.gear_description.replace(/\\n/gm, "\r\n");
+            let text = "";
+            if(result.gear_description !== null && result.gear_description !== undefined){
+                text = result.gear_description.replace(/\\n/gm, "\r\n");
+            } 
             setName(result.gear_name);
             setId(result.gear_id);
             setDescription(text);
@@ -61,10 +64,7 @@ export default function GearView() {
             ThemeService.setTheme(result);
             ThemeService.applyTheme(result);
         });
-        reciveAllChars(function (result) {
-            receiveChars(result)
-        })
-
+        
         ipcRenderer.on("onViewGear", receiveGear);
         ipcRenderer.on("changeTheme", changeTheme);
         return () => {
@@ -72,6 +72,12 @@ export default function GearView() {
             ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
+
+    useEffect(() => {
+        reciveAllChars(function (result) {
+            receiveChars(result)
+        })
+    }, [id]);
 
     const saveGearAction = (e) => {
         saveGear({ id, name, pic, description, cost, weight, damage, properties, type });

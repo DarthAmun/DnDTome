@@ -24,7 +24,6 @@ export default function Gear(props) {
             <div className="gearIcon" style={style}></div>
             <div className="gearComp">{props.gear.gear_name}</div>
             <div className="gearComp smallGearAttr">{props.gear.gear_type}</div>
-            <div className="gearComp smallGearAttr">{props.gear.gear_cost}</div>
         </div>
     )
 }

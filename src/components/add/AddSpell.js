@@ -5,7 +5,6 @@ import { faSave } from '@fortawesome/free-solid-svg-icons';
 import '../../assets/css/add/AddSpell.css';
 
 export default function AddSpell() {
-    const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [school, setSchool] = useState("");
     const [level, setLevel] = useState(0);
@@ -19,7 +18,7 @@ export default function AddSpell() {
     const [sources, setSources] = useState("");
 
     const saveSpell = (e) => {
-        saveNewSpell({ id, name, school, level, ritual, time, range, duration, components, text, classes, sources });
+        saveNewSpell({ name, school, level, ritual, time, range, duration, components, text, classes, sources });
     }
 
     return (

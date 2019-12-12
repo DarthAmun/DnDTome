@@ -35,7 +35,7 @@ export default function MonsterOverview() {
     const searchMonster = (evt, rquery) => {
         setQuery(rquery.query);
         monsters.current.scrollTop = 0;
-        setStart(10);
+        setStart(0);
         reciveMonsters(10, 0, rquery.query, function (result) {
             receiveMonstersResult(result)
         })

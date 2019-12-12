@@ -49,9 +49,19 @@ export default function MonsterView() {
     const receiveMonster = (event, result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveMonster")
-            const text_sAblt = result.monster_sAblt.replace(/\\r\\n/gm, "\r\n");
-            const text_ablt = result.monster_ablt.replace(/\\r\\n/gm, "\r\n");
-            const text_lAbtl = result.monster_lAbtl.replace(/\\r\\n/gm, "\r\n");
+
+            let text_sAblt = "";
+            if (result.monster_sAblt !== null) {
+                text_sAblt = result.monster_sAblt.replace(/\\r\\n/gm, "\r\n");
+            }
+            let text_ablt = "";
+            if (result.monster_ablt !== null) {
+                text_ablt = result.monster_ablt.replace(/\\r\\n/gm, "\r\n");
+            }
+            let text_lAbtl = ""
+            if (result.monster_lAbtl !== null) {
+                text_lAbtl = result.monster_lAbtl.replace(/\\r\\n/gm, "\r\n");
+            }
 
             setId(result.monster_id);
             setName(result.monster_name);
@@ -102,9 +112,6 @@ export default function MonsterView() {
             ThemeService.setTheme(result);
             ThemeService.applyTheme(result);
         });
-        reciveAllChars(function (result) {
-            receiveChars(result)
-        })
 
         ipcRenderer.on("onViewMonster", receiveMonster);
         ipcRenderer.on("changeTheme", changeTheme);
@@ -113,6 +120,12 @@ export default function MonsterView() {
             ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
+
+    useEffect(() => {
+        reciveAllChars(function (result) {
+            receiveChars(result)
+        })
+    }, [id]);
 
     const formatScore = (score) => {
         let mod = Math.floor((score - 10) / 2);
