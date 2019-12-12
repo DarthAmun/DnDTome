@@ -112,9 +112,6 @@ export default function MonsterView() {
             ThemeService.setTheme(result);
             ThemeService.applyTheme(result);
         });
-        reciveAllChars(function (result) {
-            receiveChars(result)
-        })
 
         ipcRenderer.on("onViewMonster", receiveMonster);
         ipcRenderer.on("changeTheme", changeTheme);
@@ -123,6 +120,12 @@ export default function MonsterView() {
             ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
+
+    useEffect(() => {
+        reciveAllChars(function (result) {
+            receiveChars(result)
+        })
+    }, [id]);
 
     const formatScore = (score) => {
         let mod = Math.floor((score - 10) / 2);

@@ -58,9 +58,6 @@ export default function ItemView() {
             ThemeService.setTheme(result);
             ThemeService.applyTheme(result);
         });
-        reciveAllChars(function (result) {
-            receiveChars(result)
-        })
 
         ipcRenderer.on("onViewItem", receiveItem);
         ipcRenderer.on("changeTheme", changeTheme);
@@ -69,6 +66,12 @@ export default function ItemView() {
             ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
+
+    useEffect(() => {
+        reciveAllChars(function (result) {
+            receiveChars(result)
+        })
+    }, [id]);
 
     const saveItemAction = (e) => {
         saveItem({ id, name, pic, type, rarity, source, attunment, description });

@@ -64,10 +64,7 @@ export default function GearView() {
             ThemeService.setTheme(result);
             ThemeService.applyTheme(result);
         });
-        reciveAllChars(function (result) {
-            receiveChars(result)
-        })
-
+        
         ipcRenderer.on("onViewGear", receiveGear);
         ipcRenderer.on("changeTheme", changeTheme);
         return () => {
@@ -75,6 +72,12 @@ export default function GearView() {
             ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
+
+    useEffect(() => {
+        reciveAllChars(function (result) {
+            receiveChars(result)
+        })
+    }, [id]);
 
     const saveGearAction = (e) => {
         saveGear({ id, name, pic, description, cost, weight, damage, properties, type });

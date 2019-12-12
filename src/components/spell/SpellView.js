@@ -73,9 +73,6 @@ export default function SpellView() {
             ThemeService.setTheme(result);
             ThemeService.applyTheme(result);
         });
-        reciveAllChars(function (result) {
-            receiveChars(result)
-        })
 
         ipcRenderer.on("onViewSpell", receiveSpell);
         ipcRenderer.on("changeTheme", changeTheme);
@@ -84,6 +81,12 @@ export default function SpellView() {
             ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
+
+    useEffect(() => {
+        reciveAllChars(function (result) {
+            receiveChars(result)
+        })
+    }, [id]);
 
     const saveSpellAction = (e) => {
         saveSpell({ id, name, school, level, ritual, time, range, duration, components, text, classes, sources });
