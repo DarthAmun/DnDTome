@@ -35,7 +35,7 @@ export default function SpellOverview() {
     const searchSpell = (evt, rquery) => {
         setQuery(rquery.query);
         spells.current.scrollTop = 0;
-        setStart(10);
+        setStart(0);
         reciveSpells(10, 0, rquery.query, function (result) {
             receiveSpellsResult(result)
         })
@@ -61,7 +61,6 @@ export default function SpellOverview() {
 
         reciveSpellCount(query, function (result) {
             let spellCount = result.count;
-            console.log(result)
             if (spellCount > currentSpellList.spells.length) {
                 if (!currentSpellList.spells.length) {
                     reciveSpells(10, start, query, function (result) {

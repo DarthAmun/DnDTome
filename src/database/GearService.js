@@ -17,8 +17,8 @@ module.exports.reciveAllGears = (callback) => {
             if (err != null) {
                 console.log("====>" + err);
             }
-            callback(rows);
             console.log("====>" + `getAllGearsResult successfull`)
+            callback(rows);
         });
     });
 }
@@ -67,8 +67,8 @@ module.exports.reciveGears = (step, start, query, callback) => {
             if (err != null) {
                 console.log("====>" + err);
             }
-            callback(rows);
             console.log("====>" + `getSearchGearsResult from ${start} to ${(start + step)} successfull`);
+            callback(rows);
         });
     });
     return q;
@@ -82,8 +82,8 @@ module.exports.reciveGearCount = (query, callback) => {
             if (err != null) {
                 console.log("====>" + err);
             }
-            callback(rows[0]);
             console.log("====>" + `getGearCount successfull`)
+            callback(rows[0]);
         });
     });
 }

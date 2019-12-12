@@ -36,7 +36,7 @@ export default function ItemOverview() {
     const searchItem = (evt, rquery) => {
         setQuery(rquery.query);
         items.current.scrollTop = 0;
-        setStart(10);
+        setStart(0);
         reciveItems(10, 0, rquery.query, function (result) {
             receiveItemsResult(result)
         })

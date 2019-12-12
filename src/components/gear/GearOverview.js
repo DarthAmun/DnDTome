@@ -35,7 +35,7 @@ export default function GearOverview() {
     const searchGear = (evt, rquery) => {
         setQuery(rquery.query);
         gears.current.scrollTop = 0;
-        setStart(10);
+        setStart(0);
         reciveGears(10, 0, rquery.query, function (result) {
             receiveGearsResult(result)
         })
@@ -58,7 +58,6 @@ export default function GearOverview() {
 
     useEffect(() => {
         setIsFetching(false);
-
         reciveGearCount(query, function (result) {
             let gearCount = result.count;
             if (gearCount > currentGearList.gears.length) {
@@ -69,8 +68,8 @@ export default function GearOverview() {
                 }
                 if (gears.current.scrollHeight == gears.current.clientHeight
                     && currentGearList.gears.length) {
-                    reciveGears(10, start + 10, query, function (gears) {
-                        receiveGearsResult(gears);
+                    reciveGears(10, start+10, query, function (result) {
+                        receiveGearsResult(result);
                     })
                 }
             }
