@@ -32,8 +32,15 @@ export default function SpellView() {
     const receiveSpell = (event, result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveSpell")
-            const text = result.spell_text.replace(/\\n/gm, "\r\n");
-            const sources = result.spell_sources.replace(/\\n/gm, "\r\n");
+
+            let text = "";
+            if (result.spell_text !== null) {
+                text = result.spell_text.replace(/\\n/gm, "\r\n");
+            }
+            let sources = "";
+            if (result.spell_sources !== null) {
+                sources = result.spell_sources.replace(/\\n/gm, "\r\n");
+            }
 
             setName(result.spell_name);
             setSchool(result.spell_school);

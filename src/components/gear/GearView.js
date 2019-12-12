@@ -29,7 +29,10 @@ export default function GearView() {
     const receiveGear = (event, result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveGear")
-            const text = result.gear_description.replace(/\\n/gm, "\r\n");
+            let text = "";
+            if(result.gear_description !== null && result.gear_description !== undefined){
+                text = result.gear_description.replace(/\\n/gm, "\r\n");
+            } 
             setName(result.gear_name);
             setId(result.gear_id);
             setDescription(text);

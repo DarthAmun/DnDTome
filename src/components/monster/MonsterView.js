@@ -49,9 +49,19 @@ export default function MonsterView() {
     const receiveMonster = (event, result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveMonster")
-            const text_sAblt = result.monster_sAblt.replace(/\\r\\n/gm, "\r\n");
-            const text_ablt = result.monster_ablt.replace(/\\r\\n/gm, "\r\n");
-            const text_lAbtl = result.monster_lAbtl.replace(/\\r\\n/gm, "\r\n");
+
+            let text_sAblt = "";
+            if (result.monster_sAblt !== null) {
+                text_sAblt = result.monster_sAblt.replace(/\\r\\n/gm, "\r\n");
+            }
+            let text_ablt = "";
+            if (result.monster_ablt !== null) {
+                text_ablt = result.monster_ablt.replace(/\\r\\n/gm, "\r\n");
+            }
+            let text_lAbtl = ""
+            if (result.monster_lAbtl !== null) {
+                text_lAbtl = result.monster_lAbtl.replace(/\\r\\n/gm, "\r\n");
+            }
 
             setId(result.monster_id);
             setName(result.monster_name);
