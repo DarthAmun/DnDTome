@@ -4,6 +4,7 @@ import { MemoryRouter, Switch, Route } from 'react-router';
 import ThemeService from '../services/ThemeService';
 import OptionService from '../database/OptionService';
 import packageJson from '../../package.json';
+import Notification from './Notification';
 
 import SpellOverview from './spell/SpellOverview';
 import ItemOverview from './item/ItemOverview';
@@ -27,6 +28,7 @@ import TopNav from './TopNav';
 
 const PageLayout = ({ children }) => (
   <div className="App">
+    <Notification />
     <LeftNav />
     <div id="content">
       <TopNav />
