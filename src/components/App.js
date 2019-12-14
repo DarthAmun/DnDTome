@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { MemoryRouter, Switch, Route } from 'react-router';
 import ThemeService from '../services/ThemeService';
 import OptionService from '../database/OptionService';
+import packageJson from '../../package.json';
 
 import SpellOverview from './spell/SpellOverview';
 import ItemOverview from './item/ItemOverview';
@@ -31,14 +32,14 @@ const PageLayout = ({ children }) => (
       <TopNav />
       {children}
     </div>
-    <div id="credits">by DarthAmun</div>
+    <div id="credits">v{packageJson.version} by DarthAmun</div>
   </div>
 );
 
 const HomeLayout = ({ children }) => (
   <div className="App homeDrag">
     <div id="content">{children}</div>
-    <div id="credits">by DarthAmun</div>
+    <div id="credits">v{packageJson.version} by DarthAmun</div>
   </div>
 );
 
