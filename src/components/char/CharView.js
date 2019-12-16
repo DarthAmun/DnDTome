@@ -36,6 +36,8 @@ export default function CharView(props) {
     const [hitDice, setHitDice] = useState("");
     const [init, setInit] = useState(0);
     const [speed, setSpeed] = useState("");
+    const [inspiration, setInspiration] = useState(0);
+    const [alignment, setAlignment] = useState("");
 
     const [str, setStr] = useState(0);
     const [dex, setDex] = useState(0);
@@ -113,6 +115,9 @@ export default function CharView(props) {
 
     const [spellNotes, setSpellNotes] = useState("");
     const [spells, setSpells] = useState([]);
+    const [castingHit, setCastingHit] = useState(0);
+    const [castingDC, setCastingDC] = useState(0);
+
     const [items, setItems] = useState([]);
     const [monsters, setMonsters] = useState([]);
 
@@ -141,6 +146,8 @@ export default function CharView(props) {
             setHitDice(result.char_hitDice);
             setInit(result.char_init);
             setSpeed(result.char_speed);
+            setInspiration(result.char_inspiration);
+            setAlignment(result.char_alignment);
 
             setStr(result.char_str);
             setDex(result.char_dex);
@@ -216,6 +223,8 @@ export default function CharView(props) {
             setSurvival(result.char_survival);
             setSurvivalProf(result.char_survivalProf);
 
+            setCastingHit(result.char_castingHit);
+            setCastingDC(result.char_castingDC);
             setSpellNotes(result.char_spellNotes);
             console.timeEnd("receiveChar")
         })
@@ -488,7 +497,8 @@ export default function CharView(props) {
             perception, performance, persuasion, religion, sleightOfHand, stealth, survival,
             acrobaticsProf, animalHandlingProf, arcanaProf,
             athleticsProf, deceptionProf, historyProf, insightProf, intimidationProf, investigationProf, medicineProf, natureProf,
-            perceptionProf, performanceProf, persuasionProf, religionProf, sleightOfHandProf, stealthProf, survivalProf, spellNotes
+            perceptionProf, performanceProf, persuasionProf, religionProf, sleightOfHandProf, stealthProf, survivalProf, spellNotes,
+            alignment, inspiration, castingHit, castingDC
         });
         saveCharItems(items);
         saveCharSpells(spells);
@@ -608,13 +618,19 @@ export default function CharView(props) {
                     <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label><br />
                     <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} /></label><br />
                     <label>Player:<input name="player" type="text" value={player} onChange={e => setPlayer(e.target.value)} /></label><br />
-                    <label>Class:<input name="class" type="text" value={classes} onChange={e => setClasses(e.target.value)} /></label>
+                    <label>Class:<input name="class" type="text" value={classes} onChange={e => setClasses(e.target.value)} /></label><br />
+                    <label className="checkbox-label">
+                        <div className="labelText">Inspiration:</div>
+                        <input name="type" type="checkbox" checked={inspiration} onChange={e => setInspiration(e.target.checked)} />
+                        <span className="checkbox-custom circular"></span>
+                    </label>
                 </div>
                 <div className="smallLabelGroup">
                     <label>Exp:<input name="exp" type="number" value={exp} onChange={e => setExp(e.target.value)} /></label><br />
                     <label>Race:<input name="race" type="text" value={race} onChange={e => setRace(e.target.value)} /></label><br />
                     <label>Background:<input name="background" type="text" value={background} onChange={e => setBackground(e.target.value)} /></label><br />
-                    <label>Proficiency:<input name="level" type="number" value={prof} onChange={e => setProf(e.target.value)} /></label>
+                    <label>Proficiency:<input name="level" type="number" value={prof} onChange={e => setProf(e.target.value)} /></label><br />
+                    <label>Alignment:<input name="alignment" type="text" value={alignment} onChange={e => setAlignment(e.target.value)} /></label>
                 </div>
                 <div className="smallLabelGroup">
                     <StatChart data={data} />
@@ -814,6 +830,10 @@ export default function CharView(props) {
                         <div className="tabContent" style={{ display: tabs.spells ? "flex" : "none" }}>
                             <div className="charSpells">
                                 <div style={{ width: "clacl(100% - 10px)", height: "30px", padding: "5px" }}>
+                                    <div className="castingInfo">
+                                        <label>Hit: <input type="number" value={castingHit} onChange={e => setCastingHit(e.target.value)}></input></label>
+                                        <label>DC: <input type="number" value={castingDC} onChange={e => setCastingDC(e.target.value)}></input></label>
+                                    </div>
                                     <button onClick={exportSpells} style={{ width: "150px" }}><FontAwesomeIcon icon={faFileExport} /> Export as cards</button>
                                 </div>
                                 <table style={{ width: "100%" }}>
