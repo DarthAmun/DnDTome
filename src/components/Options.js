@@ -2,11 +2,11 @@ import '../assets/css/Options.css';
 import React, { useState } from 'react';
 import OptionService from '../database/OptionService';
 import ThemeService from '../services/ThemeService';
-import { reciveAllSpells, saveNewSpells } from '../database/SpellService';
+import { reciveSpells, saveNewSpells, addSpellToChar, saveNewSpellFromJson } from '../database/SpellService';
 import { reciveAllItems, saveNewItems } from '../database/ItemService';
 import { reciveAllGears, saveNewGears } from '../database/GearService';
 import { reciveAllMonsters, saveNewMonsters } from '../database/MonsterService';
-import { reciveAllChars, saveNewChars } from '../database/CharacterService';
+import { reciveAllChars, saveNewChar, reciveCharSpells, reciveCharItems, reciveCharMonsters } from '../database/CharacterService';
 import { Line } from 'rc-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
@@ -132,17 +132,26 @@ export default function Options() {
 
   const exportChars = (e) => {
     reciveAllChars(function (result) {
-      let content = JSON.stringify(result);
+      result.forEach(char => {
+        reciveCharSpells(char.char_id, function (spells) {
+          reciveCharItems(char.char_id, function (items) {
+            reciveCharMonsters(char.char_id, function (monsters) {
+              let completeChar = { char, monsters, spells, items };
+              let content = JSON.stringify(completeChar);
 
-      options.defaultPath = options.defaultPath + '/chars_export.json';
-      dialog.showSaveDialog(null, options, (path) => {
+              options.defaultPath = options.defaultPath + '/' + char.char_name + '_export.json';
+              dialog.showSaveDialog(null, options, (path) => {
 
-        // fileName is a string that contains the path and filename created in the save file dialog.  
-        fs.writeFile(path, content, (err) => {
-          if (err) {
-            ipcRenderer.send('displayMessage', { type: `Chars exported`, message: `Chars export failed` });
-          }
-          ipcRenderer.send('displayMessage', { type: `Chars exported`, message: `Chars export successful` });
+                // fileName is a string that contains the path and filename created in the save file dialog.  
+                fs.writeFile(path, content, (err) => {
+                  if (err) {
+                    ipcRenderer.send('displayMessage', { type: `Chars exported`, message: `Chars export failed` });
+                  }
+                  ipcRenderer.send('displayMessage', { type: `Chars exported`, message: `Chars export successful` });
+                });
+              });
+            });
+          });
         });
       });
     });
@@ -256,7 +265,21 @@ export default function Options() {
 
         // Change how to handle the file content
         let charsJson = JSON.parse(data);
-        saveNewChars(charsJson, function (result) {});
+        saveNewChar(charsJson.char, function (charId) {
+          charsJson.spells.forEach(spell => {
+            reciveSpells(10, 0, { name: spell.spell_name }, function (spells) {
+              if (spells.length === 0) {
+                saveNewSpellFromJson(spell, function(spellId) {
+                  spell = {...spell, id: spellId};
+                  charsJson.char = {...charsJson.char, selectedChar: charId};
+                  addSpellToChar(charsJson.char, spell,);
+                });
+              } else {
+                ipcRenderer.send('displayMessage', { type: `Spell not imported`, message: `Spell ${spell.spell_name} already in tome.` });
+              }
+            })
+          });
+        });
       });
     });
   }

@@ -96,7 +96,7 @@ module.exports.reciveSpells = (step, start, query, callback) => {
 }
 
 module.exports.reciveSpellCount = (query, callback) => {
-  const q = this.reciveSpells(10, 0, query, function (result) {});
+  const q = this.reciveSpells(10, 0, query, function (result) { });
   const sql = q.replace("SELECT * FROM 'main'.'tab_spells'", "SELECT count(*) AS count FROM 'main'.'tab_spells'");
   db.serialize(function () {
     db.all(sql, function (err, rows) {
@@ -159,6 +159,21 @@ module.exports.saveNewSpells = (spells, callback) => {
         spellImported++;
         callback({ now: spellImported, full: spellImportLength, name: spell.spell_name });
       });
+    });
+  });
+}
+
+module.exports.saveNewSpellFromJson = (spell, callback) => {
+  let data = [spell.spell_name, spell.spell_ritual, spell.spell_school, spell.spell_level, spell.spell_time, spell.spell_duration, spell.spell_range, spell.spell_components, spell.spell_text, spell.spell_classes, spell.spell_sources];
+  let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_ritual, spell_school, spell_level, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources)
+                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`====>Added ${spell.spell_name} successfull`);
+      callback(this.lastID);
     });
   });
 }
