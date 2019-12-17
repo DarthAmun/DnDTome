@@ -26,7 +26,7 @@ module.exports.reciveAllMonsters = (callback) => {
 module.exports.reciveMonsters = (step, start, query, callback) => {
     localStorage.setItem('monsterStep', parseInt(step, 10));
     localStorage.setItem('monsterStart', parseInt(start, 10));
-  
+
     if (query !== null) {
         searchMonsterQuery = query;
     }
@@ -179,6 +179,31 @@ module.exports.saveNewMonsters = (monsters, callback) => {
                 monsterImported++;
                 callback({ now: monsterImported, full: monsterImportLength, name: monster.monster_name });
             });
+        });
+    });
+}
+
+module.exports.saveNewMonsterFromJson = (monster, callback) => {
+    let data = [monster.monster_name, monster.monster_size, monster.monster_type, monster.monster_subtype, monster.monster_alignment,
+    monster.monster_armorClass, monster.monster_hitPoints, monster.monster_speed, monster.monster_strength, monster.monster_dexterity,
+    monster.monster_constitution, monster.monster_intelligence, monster.monster_wisdom, monster.monster_charisma, monster.monster_savingThrows,
+    monster.monster_skills, monster.monster_dmgVulnerabilities, monster.monster_dmgResistance, monster.monster_dmgImmunities, monster.monster_conImmunities,
+    monster.monster_senses, monster.monster_lang, monster.monster_cr, monster.monster_sAblt, monster.monster_ablt, monster.monster_lAbtl,
+    monster.monster_source, monster.monster_pic];
+    let sql = `INSERT INTO 'main'.'tab_monsters'
+                  (monster_name, monster_size, monster_type, monster_subtype, monster_alignment, monster_armorClass,
+                  monster_hitPoints, monster_speed, monster_strength, monster_dexterity, monster_constitution, 
+                  monster_intelligence, monster_wisdom, monster_charisma, monster_savingThrows, monster_skills, 
+                  monster_dmgVulnerabilities, monster_dmgResistance, monster_dmgImmunities, monster_conImmunities, monster_senses, monster_lang, 
+                  monster_cr, monster_sAblt, monster_ablt, monster_lAbtl, monster_source, monster_pic)
+                  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    db.serialize(function () {
+        db.run(sql, data, function (err) {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log(`====>Added ${monster.monster_name} successfull`);
+            callback(this.lastID);
         });
     });
 }

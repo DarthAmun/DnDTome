@@ -156,6 +156,21 @@ module.exports.saveNewGears = (gears, callback) => {
     });
 }
 
+module.exports.saveNewGearFromJson = (gear, callback) => {
+    let data = [gear.gear_name, gear.gear_description, gear.gear_pic, gear.gear_cost, gear.gear_damage, gear.gear_weight, gear.gear_properties, gear.gear_type];
+    let sql = `INSERT INTO 'main'.'tab_gears' (gear_name, gear_description, gear_pic, gear_cost, gear_damage, gear_weight, gear_properties, gear_type)
+                VALUES  (?, ?, ?, ?, ?, ?, ?, ?)`;
+    db.serialize(function () {
+        db.run(sql, data, function (err) {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log(`====>Added ${gear.gear_name} successfull`);
+            callback(this.lastID);
+        });
+    });
+}
+
 module.exports.addGearToChar = (char, gear) => {
     let data = [char.selectedChar, gear.id, 1, false, false, gear.damage, gear.properties];
     let sql = `INSERT INTO 'main'.'tab_characters_items' (char_id, gear_id, item_amount, item_equiped, item_attuned, item_damage, item_properties)

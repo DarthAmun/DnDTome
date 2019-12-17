@@ -26,7 +26,7 @@ module.exports.reciveAllItems = (callback) => {
 module.exports.reciveItems = (step, start, query, callback) => {
     localStorage.setItem('itemStep', parseInt(step, 10));
     localStorage.setItem('itemStart', parseInt(start, 10));
-  
+
     if (query !== null) {
         searchItemQuery = query;
     }
@@ -146,6 +146,21 @@ module.exports.saveNewItems = (items, callback) => {
                 ItemImported++;
                 callback({ now: ItemImported, full: ItemImportLength, name: item.item_name });
             });
+        });
+    });
+}
+
+module.exports.saveNewItemFromJson = (item, callback) => {
+    let data = [item.item_name, item.item_description, item.item_pic, item.item_rarity, item.item_type, item.item_source, item.item_attunment];
+    let sql = `INSERT INTO 'main'.'tab_items' (item_name, item_description, item_pic, item_rarity, item_type, item_source, item_attunment)
+                VALUES  (?, ?, ?, ?, ?, ?, ?)`;
+    db.serialize(function () {
+        db.run(sql, data, function (err) {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log(`====>Added ${item.item_name} successfull`);
+            callback(this.lastID);
         });
     });
 }

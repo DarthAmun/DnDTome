@@ -2,10 +2,10 @@ import '../assets/css/Options.css';
 import React, { useState } from 'react';
 import OptionService from '../database/OptionService';
 import ThemeService from '../services/ThemeService';
-import { reciveSpells, saveNewSpells, addSpellToChar, saveNewSpellFromJson } from '../database/SpellService';
-import { reciveAllItems, saveNewItems } from '../database/ItemService';
-import { reciveAllGears, saveNewGears } from '../database/GearService';
-import { reciveAllMonsters, saveNewMonsters } from '../database/MonsterService';
+import { reciveAllSpells, saveNewSpells, addSpellToChar, saveNewSpellFromJson, reciveSpells } from '../database/SpellService';
+import { reciveAllItems, saveNewItems, reciveItems, addItemToChar, saveNewItemFromJson } from '../database/ItemService';
+import { reciveAllGears, saveNewGears, addGearToChar, reciveGears, saveNewGearFromJson } from '../database/GearService';
+import { reciveAllMonsters, saveNewMonsters, reciveMonsters, addMonsterToChar, saveNewMonsterFromJson } from '../database/MonsterService';
 import { reciveAllChars, saveNewChar, reciveCharSpells, reciveCharItems, reciveCharMonsters } from '../database/CharacterService';
 import { Line } from 'rc-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -266,18 +266,56 @@ export default function Options() {
         // Change how to handle the file content
         let charsJson = JSON.parse(data);
         saveNewChar(charsJson.char, function (charId) {
+          charsJson.char = {...charsJson.char, selectedChar: charId};
+
           charsJson.spells.forEach(spell => {
             reciveSpells(10, 0, { name: spell.spell_name }, function (spells) {
               if (spells.length === 0) {
                 saveNewSpellFromJson(spell, function(spellId) {
                   spell = {...spell, id: spellId};
-                  charsJson.char = {...charsJson.char, selectedChar: charId};
-                  addSpellToChar(charsJson.char, spell,);
+                  addSpellToChar(charsJson.char, spell);
                 });
               } else {
                 ipcRenderer.send('displayMessage', { type: `Spell not imported`, message: `Spell ${spell.spell_name} already in tome.` });
               }
-            })
+            });
+          });
+          charsJson.monsters.forEach(monster => {
+            reciveMonsters(10, 0, { name: monster.monster_name }, function (monsters) {
+              if (monsters.length === 0) {
+                saveNewMonsterFromJson(monster, function(monsterId) {
+                  monster = {...monster, id: monsterId};
+                  addMonsterToChar(charsJson.char, monster);
+                });
+              } else {
+                ipcRenderer.send('displayMessage', { type: `Monster not imported`, message: `Monster ${monster.monster_name} already in tome.` });
+              }
+            });
+          });
+          charsJson.items.forEach(item => {
+            if(item.item_id !== null){
+              reciveItems(10, 0, { name: item.item_name }, function (items) {
+                if (items.length === 0) {
+                  saveNewItemFromJson(item, function(itemId) {
+                    item = {...item, id: itemId};
+                    addItemToChar(charsJson.char, item);
+                  });
+                } else {
+                  ipcRenderer.send('displayMessage', { type: `Item not imported`, message: `Item ${item.item_name} already in tome.` });
+                }
+              });
+            } else {
+              reciveGears(10, 0, { name: item.gear_name }, function (gears) {
+                if (gears.length === 0) {
+                  saveNewGearFromJson(item, function(gearId) {
+                    let gear = {...item, id: gearId};
+                    addGearToChar(charsJson.char, gear);
+                  });
+                } else {
+                  ipcRenderer.send('displayMessage', { type: `Gear not imported`, message: `Gear ${gear.gear_name} already in tome.` });
+                }
+              });
+            }
           });
         });
       });
