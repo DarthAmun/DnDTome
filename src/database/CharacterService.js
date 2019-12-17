@@ -78,7 +78,7 @@ module.exports.saveNewChar = (char, mainWindow) => {
     char.stealth, char.survival,
     char.acrobaticsProf, char.animalHandlingProf, char.arcanaProf, char.athleticsProf, char.deceptionProf, char.historyProf, char.insightProf, char.intimidationProf,
     char.investigationProf, char.medicineProf, char.natureProf, char.perceptionProf, char.performanceProf, char.persuasionProf, char.religionProf, char.sleightOfHandProf,
-    char.stealthProf, char.survivalProf, char.spellNotes];
+    char.stealthProf, char.survivalProf, char.spellNotes, char.alignment, char.inspiration, char.castingHit, char.castingDC];
     let sql = `INSERT INTO 'main'.'tab_characters'
                 (char_name, char_player, char_prof, char_exp, char_pic, char_classes, char_race, char_background, 
                 char_ac, char_hp, char_hp_current, char_hitDice, char_init, char_speed, 
@@ -92,8 +92,8 @@ module.exports.saveNewChar = (char, mainWindow) => {
                 char_sleightOfHand, char_stealth, char_survival, char_acrobaticsProf,   char_animalHandlingProf, 
                 char_arcanaProf, char_athleticsProf, char_deceptionProf, char_historyProf, char_insightProf, char_intimidationProf, char_investigationProf, 
                 char_medicineProf, char_natureProf, char_perceptionProf, char_performanceProf, char_persuasionProf, char_religionProf, 
-                char_sleightOfHandProf, char_stealthProf, char_survivalProf, char_spellNotes)
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+                char_sleightOfHandProf, char_stealthProf, char_survivalProf, char_spellNotes, char_alignment, char_inspiration, char_castingHit, char_castingDC)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
     db.serialize(function () {
         db.run(sql, data, function (err) {
             if (err) {
@@ -105,7 +105,7 @@ module.exports.saveNewChar = (char, mainWindow) => {
     });
 }
 
-module.exports.saveChar = (char, mainWindow) => {
+module.exports.saveChar = (char) => {
     let data = [char.name, char.player, char.prof, char.exp, char.pic, char.classes, char.race, char.background, char.ac, char.hp, char.currentHp, char.hitDice,
     char.init, char.speed, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.strSave, char.dexSave, char.conSave, char.intSave, char.wisSave, char.chaSave,
     char.strSaveProf, char.dexSaveProf, char.conSaveProf, char.intSaveProf, char.wisSaveProf, char.chaSaveProf,
@@ -116,7 +116,7 @@ module.exports.saveChar = (char, mainWindow) => {
     char.stealth, char.survival,
     char.acrobaticsProf, char.animalHandlingProf, char.arcanaProf, char.athleticsProf, char.deceptionProf, char.historyProf, char.insightProf, char.intimidationProf,
     char.investigationProf, char.medicineProf, char.natureProf, char.perceptionProf, char.performanceProf, char.persuasionProf, char.religionProf, char.sleightOfHandProf,
-    char.stealthProf, char.survivalProf, char.spellNotes, char.id];
+    char.stealthProf, char.survivalProf, char.spellNotes, char.alignment, char.inspiration, char.castingHit, char.castingDC, char.id];
     let sql = `UPDATE 'main'.'tab_characters'
                 SET char_name = ?, char_player = ?, char_prof = ?, char_exp = ?, char_pic = ?, char_classes = ?, char_race = ?, char_background = ?, 
                 char_ac = ?, char_hp = ?, char_hp_current = ?, char_hitDice = ?, char_init = ?, char_speed = ?, 
@@ -130,7 +130,7 @@ module.exports.saveChar = (char, mainWindow) => {
                 char_sleightOfHand = ?, char_stealth = ?, char_survival = ?, char_acrobaticsProf = ?,   char_animalHandlingProf = ?, 
                 char_arcanaProf = ?, char_athleticsProf = ?, char_deceptionProf = ?, char_historyProf = ?, char_insightProf = ?, char_intimidationProf = ?, char_investigationProf = ?, 
                 char_medicineProf = ?, char_natureProf = ?, char_perceptionProf = ?, char_performanceProf = ?, char_persuasionProf = ?, char_religionProf = ?, 
-                char_sleightOfHandProf = ?, char_stealthProf = ?, char_survivalProf = ?, char_spellNotes = ?
+                char_sleightOfHandProf = ?, char_stealthProf = ?, char_survivalProf = ?, char_spellNotes = ?, char_alignment = ?, char_inspiration = ?, char_castingHit = ?, char_castingDC = ?
                 WHERE char_id = ?`;
     db.serialize(function () {
         db.run(sql, data, function (err) {
