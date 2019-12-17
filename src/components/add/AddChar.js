@@ -24,6 +24,8 @@ export default function CharView() {
     const [hitDice, setHitDice] = useState("");
     const [init, setInit] = useState(0);
     const [speed, setSpeed] = useState("");
+    const [inspiration, setInspiration] = useState(0);
+    const [alignment, setAlignment] = useState("");
 
     const [str, setStr] = useState(0);
     const [dex, setDex] = useState(0);
@@ -100,6 +102,8 @@ export default function CharView() {
     const [survivalProf, setSurvivalProf] = useState(0);
 
     const [spellNotes, setSpellNotes] = useState("Spellslots for example?");
+    const [castingHit, setCastingHit] = useState(0);
+    const [castingDC, setCastingDC] = useState(0);
 
     const formatScore = (score) => {
         let mod = Math.floor((score - 10) / 2);
@@ -122,7 +126,8 @@ export default function CharView() {
             perception, performance, persuasion, religion, sleightOfHand, stealth, survival,
             acrobaticsProf, animalHandlingProf, arcanaProf,
             athleticsProf, deceptionProf, historyProf, insightProf, intimidationProf, investigationProf, medicineProf, natureProf,
-            perceptionProf, performanceProf, persuasionProf, religionProf, sleightOfHandProf, stealthProf, survivalProf, spellNotes
+            perceptionProf, performanceProf, persuasionProf, religionProf, sleightOfHandProf, stealthProf, survivalProf, spellNotes,
+            alignment, inspiration, castingHit, castingDC
         });
         historyRoute.push("/char-overview");
     }
@@ -205,13 +210,19 @@ export default function CharView() {
                     <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label><br />
                     <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} /></label><br />
                     <label>Player:<input name="player" type="text" value={player} onChange={e => setPlayer(e.target.value)} /></label><br />
-                    <label>Class:<input name="class" type="text" value={classes} onChange={e => setClasses(e.target.value)} /></label>
+                    <label>Class:<input name="class" type="text" value={classes} onChange={e => setClasses(e.target.value)} /></label><br />
+                    <label className="checkbox-label">
+                        <div className="labelText">Inspiration:</div>
+                        <input name="type" type="checkbox" checked={inspiration} onChange={e => setInspiration(e.target.checked)} />
+                        <span className="checkbox-custom circular"></span>
+                    </label>
                 </div>
                 <div className="smallLabelGroup">
                     <label>Exp:<input name="exp" type="number" value={exp} onChange={e => setExp(e.target.value)} /></label><br />
                     <label>Race:<input name="race" type="text" value={race} onChange={e => setRace(e.target.value)} /></label><br />
                     <label>Background:<input name="background" type="text" value={background} onChange={e => setBackground(e.target.value)} /></label><br />
-                    <label>Proficiency:<input name="level" type="number" value={prof} onChange={e => setProf(e.target.value)} /></label>
+                    <label>Proficiency:<input name="level" type="number" value={prof} onChange={e => setProf(e.target.value)} /></label><br />
+                    <label>Alignment:<input name="alignment" type="text" value={alignment} onChange={e => setAlignment(e.target.value)} /></label>
                 </div>
                 <button onClick={saveChar}><FontAwesomeIcon icon={faSave} /> Create</button>
                 <div className="tabComponent">
