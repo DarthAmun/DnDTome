@@ -84,7 +84,7 @@ export default function GearView() {
     }
 
     const addGearToCharAction = (e) => {
-        addGearToChar({ selectedChar }, { id, name, damage, properties });
+        addGearToChar({ selectedChar }, { id, name, damage, properties }, function () {});
     }
 
     const deleteGearAction = (e) => {

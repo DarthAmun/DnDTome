@@ -137,7 +137,7 @@ export default function MonsterView() {
     }
 
     const addMonsterToCharAction = (e) => {
-        addMonsterToChar({ selectedChar }, { id, name });
+        addMonsterToChar({ selectedChar }, { id, name }, function () {});
     }
 
     const saveMonsterAction = (e) => {

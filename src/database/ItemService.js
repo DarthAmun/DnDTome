@@ -165,7 +165,7 @@ module.exports.saveNewItemFromJson = (item, callback) => {
     });
 }
 
-module.exports.addItemToChar = (char, item) => {
+module.exports.addItemToChar = (char, item, callback) => {
     let data = [char.selectedChar, item.id, 1, false, false];
     let sql = `INSERT INTO 'main'.'tab_characters_items' (char_id, item_id, item_amount, item_equiped, item_attuned)
                 VALUES  (?, ?, ?, ?, ?)`;
@@ -176,6 +176,7 @@ module.exports.addItemToChar = (char, item) => {
             }
             console.log(`====>Added ${item.name} to character successfull`);
             ipcRenderer.send('displayMessage', { type: `Added magic item to character`, message: `Added ${item.name} to character successful` });
+            callback();
         });
     });
 }

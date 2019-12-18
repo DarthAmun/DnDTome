@@ -171,7 +171,7 @@ module.exports.saveNewGearFromJson = (gear, callback) => {
     });
 }
 
-module.exports.addGearToChar = (char, gear) => {
+module.exports.addGearToChar = (char, gear, callback) => {
     let data = [char.selectedChar, gear.id, 1, false, false, gear.damage, gear.properties];
     let sql = `INSERT INTO 'main'.'tab_characters_items' (char_id, gear_id, item_amount, item_equiped, item_attuned, item_damage, item_properties)
                 VALUES  (?, ?, ?, ?, ?, ?, ?)`;
@@ -182,6 +182,7 @@ module.exports.addGearToChar = (char, gear) => {
             }
             console.log(`====>Added ${gear.name} to character successfull`);
             ipcRenderer.send('displayMessage', { type: `Added gear to character`, message: `Added ${gear.name} to character successful` });
+            callback();
         });
     });
 }

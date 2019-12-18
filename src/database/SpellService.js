@@ -194,7 +194,7 @@ module.exports.deleteSpell = (spell) => {
   });
 }
 
-module.exports.addSpellToChar = (char, spell) => {
+module.exports.addSpellToChar = (char, spell, callback) => {
   let data = [char.selectedChar, spell.id, false];
   let sql = `INSERT INTO 'main'.'tab_characters_spells' (char_id, spell_id, spell_prepared)
               VALUES  (?, ?, ?)`;
@@ -205,6 +205,7 @@ module.exports.addSpellToChar = (char, spell) => {
       }
       console.log(`====>Added ${spell.name} to character successfull`);
       ipcRenderer.send('displayMessage', { type: `Added spell to character`, message: `Added ${spell.name} to character successful` });
+      callback();
     });
   });
 }

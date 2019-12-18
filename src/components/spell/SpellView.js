@@ -93,7 +93,7 @@ export default function SpellView() {
     }
 
     const addSpellToCharAction = (e) => {
-        addSpellToChar({ selectedChar }, { id, name });
+        addSpellToChar({ selectedChar }, { id, name }, function () {});
     }
 
     const deleteSpellAction = (e) => {

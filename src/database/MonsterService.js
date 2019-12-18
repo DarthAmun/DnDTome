@@ -224,7 +224,7 @@ module.exports.deleteMonster = (monster) => {
     });
 }
 
-module.exports.addMonsterToChar = (char, monster) => {
+module.exports.addMonsterToChar = (char, monster, callback) => {
     let data = [char.selectedChar, monster.id];
     let sql = `INSERT INTO 'main'.'tab_characters_monsters' (char_id, monster_id)
                 VALUES  (?, ?)`;
@@ -235,6 +235,7 @@ module.exports.addMonsterToChar = (char, monster) => {
             }
             console.log(`====>Added ${monster.name} to character successfull`);
             ipcRenderer.send('displayMessage', { type: `Added monster to character`, message: `Added ${monster.name} to character successful` });
+            callback();
         });
     });
 }

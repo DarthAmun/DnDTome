@@ -78,7 +78,7 @@ export default function ItemView() {
     }
 
     const addItemToCharAction = (e) => {
-        addItemToChar({ selectedChar }, { id, name });
+        addItemToChar({ selectedChar }, { id, name }, function () {});
     }
 
     const deleteItemAction = (e) => {

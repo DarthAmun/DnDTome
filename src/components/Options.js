@@ -266,60 +266,99 @@ export default function Options() {
         // Change how to handle the file content
         let charsJson = JSON.parse(data);
         saveNewChar(charsJson.char, function (charId) {
-          charsJson.char = {...charsJson.char, selectedChar: charId};
+          let char = { ...charsJson.char, selectedChar: charId };
 
-          charsJson.spells.forEach(spell => {
-            reciveSpells(10, 0, { name: spell.spell_name }, function (spells) {
-              if (spells.length === 0) {
-                saveNewSpellFromJson(spell, function(spellId) {
-                  spell = {...spell, id: spellId};
-                  addSpellToChar(charsJson.char, spell);
-                });
-              } else {
-                ipcRenderer.send('displayMessage', { type: `Spell not imported`, message: `Spell ${spell.spell_name} already in tome.` });
-              }
-            });
-          });
-          charsJson.monsters.forEach(monster => {
-            reciveMonsters(10, 0, { name: monster.monster_name }, function (monsters) {
-              if (monsters.length === 0) {
-                saveNewMonsterFromJson(monster, function(monsterId) {
-                  monster = {...monster, id: monsterId};
-                  addMonsterToChar(charsJson.char, monster);
-                });
-              } else {
-                ipcRenderer.send('displayMessage', { type: `Monster not imported`, message: `Monster ${monster.monster_name} already in tome.` });
-              }
-            });
-          });
-          charsJson.items.forEach(item => {
-            if(item.item_id !== null){
-              reciveItems(10, 0, { name: item.item_name }, function (items) {
-                if (items.length === 0) {
-                  saveNewItemFromJson(item, function(itemId) {
-                    item = {...item, id: itemId};
-                    addItemToChar(charsJson.char, item);
-                  });
-                } else {
-                  ipcRenderer.send('displayMessage', { type: `Item not imported`, message: `Item ${item.item_name} already in tome.` });
-                }
+          importCharSpells(charsJson.spells, char, 0, function () {
+            importCharMonsters(charsJson.monsters, char, 0, function () {
+              importCharItems(charsJson.items, char, 0, function () {
+                console.log("done");
               });
-            } else {
-              reciveGears(10, 0, { name: item.gear_name }, function (gears) {
-                if (gears.length === 0) {
-                  saveNewGearFromJson(item, function(gearId) {
-                    let gear = {...item, id: gearId};
-                    addGearToChar(charsJson.char, gear);
-                  });
-                } else {
-                  ipcRenderer.send('displayMessage', { type: `Gear not imported`, message: `Gear ${gear.gear_name} already in tome.` });
-                }
-              });
-            }
+            });
           });
         });
       });
     });
+  }
+
+  const importCharSpells = (charSpells, char, step, callback) => {
+    if (charSpells.length > step) {
+      let spell = charSpells[step];
+      reciveSpells(10, 0, { name: spell.spell_name }, function (spells) {
+        if (spells.length === 0) {
+          saveNewSpellFromJson(spell, function (spellId) {
+            spell = { ...spell, id: spellId };
+            addSpellToChar(char, spell, function () {
+              importCharSpells(charSpells, char, (step + 1), callback);
+            });
+          });
+        } else {
+          ipcRenderer.send('displayMessage', { type: `Spell not imported`, message: `Spell ${spell.spell_name} already in tome.` });
+          importCharSpells(charSpells, char, (step + 1), callback);
+        }
+      });
+    } else {
+      callback();
+    }
+  }
+
+  const importCharMonsters = (charMonsters, char, step, callback) => {
+    if (charMonsters.length > step) {
+      let monster = charMonsters[step];
+      reciveMonsters(10, 0, { name: monster.monster_name }, function (monsters) {
+        if (monsters.length === 0) {
+          saveNewMonsterFromJson(monster, function (monsterId) {
+            monster = { ...monster, id: monsterId };
+            addMonsterToChar(char, monster, function () {
+              importCharMonsters(charMonsters, char, (step + 1), callback);
+            });
+          });
+        } else {
+          ipcRenderer.send('displayMessage', { type: `Monster not imported`, message: `Monster ${monster.monster_name} already in tome.` });
+          importCharMonsters(charMonsters, char, (step + 1), callback);
+        }
+      });
+    } else {
+      console.log("Next...");
+      callback();
+    }
+  }
+
+  const importCharItems = (charItems, char, step, callback) => {
+    if (charItems.length > step) {
+      let item = charItems[step];
+      if (item.item_id !== null) {
+        reciveItems(10, 0, { name: item.item_name }, function (items) {
+          if (items.length === 0) {
+            saveNewItemFromJson(item, function (itemId) {
+              item = { ...item, id: itemId };
+              addItemToChar(char, item, function () {
+                importCharItems(charItems, char, (step + 1), callback);
+              });
+            });
+          } else {
+            ipcRenderer.send('displayMessage', { type: `Item not imported`, message: `Item ${item.item_name} already in tome.` });
+            importCharItems(charItems, char, (step + 1), callback);
+          }
+        });
+      } else {
+        reciveGears(10, 0, { name: item.gear_name }, function (gears) {
+          if (gears.length === 0) {
+            saveNewGearFromJson(item, function (gearId) {
+              let gear = { ...item, id: gearId };
+              addGearToChar(char, gear, function () {
+                importCharItems(charItems, char, (step + 1), callback);
+              });
+            });
+          } else {
+            ipcRenderer.send('displayMessage', { type: `Gear not imported`, message: `Gear ${item.gear_name} already in tome.` });
+            importCharItems(charItems, char, (step + 1), callback);
+          }
+        });
+      }
+    } else {
+      console.log("Next...");
+      callback();
+    }
   }
 
   const deleteAllItems = () => {
