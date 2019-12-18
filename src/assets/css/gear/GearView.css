@@ -147,6 +147,7 @@ body {
     position: absolute;
     opacity: 0;
     cursor: pointer;
+    display: none;
   }
   
   .checkbox-label .checkbox-custom {

@@ -147,6 +147,7 @@ body {
     position: absolute;
     opacity: 0;
     cursor: pointer;
+    display: none;
   }
   
   #gearView .checkbox-label .checkbox-custom {

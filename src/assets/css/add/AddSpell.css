@@ -145,6 +145,7 @@
     position: absolute;
     opacity: 0;
     cursor: pointer;
+    display: none;
   }
   
   #newSpell .checkbox-label .checkbox-custom {

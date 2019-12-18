@@ -415,6 +415,7 @@
     position: absolute;
     opacity: 0;
     cursor: pointer;
+    display: none;
   }
   
   .checkbox-label .checkbox-custom {
@@ -540,6 +541,7 @@
     position: absolute;
     opacity: 0;
     cursor: pointer;
+    display: none;
   }
   
   #char .smallLabelGroup .checkbox-label .checkbox-custom {

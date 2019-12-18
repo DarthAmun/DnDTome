@@ -150,6 +150,7 @@ body {
     position: absolute;
     opacity: 0;
     cursor: pointer;
+    display: none;
   }
   
   #newItem .checkbox-label .checkbox-custom {
