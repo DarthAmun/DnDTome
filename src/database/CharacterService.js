@@ -217,7 +217,7 @@ module.exports.saveNewChars = (chars) => {
     });
 }
 
-module.exports.saveNewChar = (char, callback) => {
+module.exports.saveNewCharFromJson = (char, callback) => {
     let data = [char.char_name, char.char_player, char.char_prof, char.char_exp, char.char_pic, char.char_classes, char.char_race, char.char_background, char.char_ac, char.char_hp, char.char_hp_current, char.char_hitDice,
     char.char_init, char.char_speed, char.char_str, char.char_dex, char.char_con, char.char_int, char.char_wis, char.char_cha, char.char_strSave, char.char_dexSave, char.char_conSave, char.char_intSave, char.char_wisSave, char.char_chaSave,
     char.char_strSaveProf, char.char_dexSaveProf, char.char_conSaveProf, char.char_intSaveProf, char.char_wisSaveProf, char.char_chaSaveProf,
@@ -228,7 +228,7 @@ module.exports.saveNewChar = (char, callback) => {
     char.char_stealth, char.char_survival,
     char.char_acrobaticsProf, char.char_animalHandlingProf, char.char_arcanaProf, char.char_athleticsProf, char.char_deceptionProf, char.char_historyProf, char.char_insightProf, char.char_intimidationProf,
     char.char_investigationProf, char.char_medicineProf, char.char_natureProf, char.char_perceptionProf, char.char_performanceProf, char.char_persuasionProf, char.char_religionProf, char.char_sleightOfHandProf,
-    char.char_stealthProf, char.char_survivalProf, char.char_spellNotes];
+    char.char_stealthProf, char.char_survivalProf, char.char_spellNotes, char.char_alignment, char.char_inspiration, char.char_castingHit, char.char_castingDC];
     let sql = `INSERT INTO 'main'.'tab_characters'
                     (char_name, char_player, char_prof, char_exp, char_pic, char_classes, char_race, char_background, 
                     char_ac, char_hp, char_hp_current, char_hitDice, char_init, char_speed, 
@@ -242,8 +242,8 @@ module.exports.saveNewChar = (char, callback) => {
                     char_sleightOfHand, char_stealth, char_survival, char_acrobaticsProf,   char_animalHandlingProf, 
                     char_arcanaProf, char_athleticsProf, char_deceptionProf, char_historyProf, char_insightProf, char_intimidationProf, char_investigationProf, 
                     char_medicineProf, char_natureProf, char_perceptionProf, char_performanceProf, char_persuasionProf, char_religionProf, 
-                    char_sleightOfHandProf, char_stealthProf, char_survivalProf, char_spellNotes)
-                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+                    char_sleightOfHandProf, char_stealthProf, char_survivalProf, char_spellNotes, char_alignment, char_inspiration, char_castingHit, char_castingDC)
+                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
     db.serialize(function () {
         db.run(sql, data, function (err) {
             if (err) {

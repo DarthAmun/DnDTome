@@ -689,7 +689,11 @@ export default function CharView(props) {
                                         {items.map((item, index) => {
                                             if (
                                                 (item.item_equiped
-                                                    || (item.item_amount && item.item_attunment)
+                                                    &&
+                                                    ((item.item_attuned && item.item_attunment)
+                                                        ||
+                                                        item.item_attunment === null
+                                                    )
                                                 )
                                                 && (
                                                     (item.item_type !== null && item.item_type.includes("Weapon"))

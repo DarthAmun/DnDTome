@@ -4,9 +4,9 @@ import OptionService from '../database/OptionService';
 import ThemeService from '../services/ThemeService';
 import { reciveAllSpells, saveNewSpells, addSpellToChar, saveNewSpellFromJson, reciveSpells } from '../database/SpellService';
 import { reciveAllItems, saveNewItems, reciveItems, addItemToChar, saveNewItemFromJson } from '../database/ItemService';
-import { reciveAllGears, saveNewGears, addGearToChar, reciveGears, saveNewGearFromJson } from '../database/GearService';
+import { reciveAllGears, saveNewGears, addGearToCharFromJson, reciveGears, saveNewGearFromJson } from '../database/GearService';
 import { reciveAllMonsters, saveNewMonsters, reciveMonsters, addMonsterToChar, saveNewMonsterFromJson } from '../database/MonsterService';
-import { reciveAllChars, saveNewChar, reciveCharSpells, reciveCharItems, reciveCharMonsters } from '../database/CharacterService';
+import { reciveAllChars, saveNewCharFromJson, reciveCharSpells, reciveCharItems, reciveCharMonsters } from '../database/CharacterService';
 import { Line } from 'rc-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
@@ -265,7 +265,7 @@ export default function Options() {
 
         // Change how to handle the file content
         let charsJson = JSON.parse(data);
-        saveNewChar(charsJson.char, function (charId) {
+        saveNewCharFromJson(charsJson.char, function (charId) {
           let char = { ...charsJson.char, selectedChar: charId };
 
           importCharSpells(charsJson.spells, char, 0, function () {
@@ -345,7 +345,7 @@ export default function Options() {
           if (gears.length === 0) {
             saveNewGearFromJson(item, function (gearId) {
               let gear = { ...item, id: gearId };
-              addGearToChar(char, gear, function () {
+              addGearToCharFromJson(char, gear, function () {
                 importCharItems(charItems, char, (step + 1), callback);
               });
             });
