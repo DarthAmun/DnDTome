@@ -13,7 +13,7 @@ export default function CharView() {
     const [name, setName] = useState("");
     const [player, setPlayer] = useState("");
     const [prof, setProf] = useState(0);
-    const [exp, setExp] = useState(0);
+    const [level, setLevel] = useState(0);
     const [pic, setPic] = useState("");
     const [classes, setClasses] = useState("");
     const [race, setRace] = useState("");
@@ -106,6 +106,19 @@ export default function CharView() {
     const [castingDC, setCastingDC] = useState(0);
 
     useEffect(() => {
+        if(level<5) {
+            setProf(2);
+        } else if(level<9) {
+            setProf(3);
+        }else if(level<13) {
+            setProf(4);
+        }else if(level<17) {
+            setProf(5);
+        }else if(level<21) {
+            setProf(6);
+        }
+    }, [level]);
+    useEffect(() => {
         setStrSave(parseInt(formatScore(str), 10) + (strSaveProf * prof));
         setAthletics(parseInt(formatScore(str), 10) + (athleticsProf * prof));
     }, [prof, str, strSaveProf, athleticsProf]);
@@ -160,7 +173,7 @@ export default function CharView() {
 
     const saveChar = () => {
         saveNewChar({
-            name, player, prof, exp, pic, classes, race, background, ac, hp, currentHp, hitDice,
+            name, player, prof, level, pic, classes, race, background, ac, hp, currentHp, hitDice,
             init, speed, str, dex, con, int, wis, cha, strSave, dexSave, conSave, intSave, wisSave, chaSave,
             strSaveProf, dexSaveProf, conSaveProf, intSaveProf, wisSaveProf, chaSaveProf,
             actions, bonusActions, reactions, features, classFeatures, racialFeatures, profsLangs,
@@ -226,7 +239,7 @@ export default function CharView() {
                     </label>
                 </div>
                 <div className="smallLabelGroup">
-                    <label>Exp:<input name="exp" type="number" value={exp} onChange={e => setExp(e.target.value)} /></label><br />
+                    <label>Level:<input name="level" type="number" value={level} onChange={e => setLevel(e.target.value)} /></label><br />
                     <label>Race:<input name="race" type="text" value={race} onChange={e => setRace(e.target.value)} /></label><br />
                     <label>Background:<input name="background" type="text" value={background} onChange={e => setBackground(e.target.value)} /></label><br />
                     <label>Proficiency:<input name="level" type="number" value={prof} onChange={e => setProf(e.target.value)} /></label><br />

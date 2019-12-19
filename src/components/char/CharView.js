@@ -25,7 +25,7 @@ export default function CharView(props) {
     const [name, setName] = useState("");
     const [player, setPlayer] = useState("");
     const [prof, setProf] = useState(0);
-    const [exp, setExp] = useState(0);
+    const [level, setLevel] = useState(0);
     const [pic, setPic] = useState("");
     const [classes, setClasses] = useState("");
     const [race, setRace] = useState("");
@@ -136,7 +136,7 @@ export default function CharView(props) {
             setPlayer(result.char_player);
             setPic(result.char_pic);
             setProf(result.char_prof);
-            setExp(result.char_exp);
+            setLevel(result.char_level);
             setClasses(result.char_classes);
             setRace(result.char_race);
             setBackground(result.char_background);
@@ -273,7 +273,7 @@ export default function CharView(props) {
         return cards;
     }
 
-    const exportSpells = () => {
+    const levelortSpells = () => {
         let content = makeCards();
         options.defaultPath = options.defaultPath + `/${name}_spellCards.html`;
         dialog.showSaveDialog(null, options, (path) => {
@@ -281,9 +281,9 @@ export default function CharView(props) {
             // fileName is a string that contains the path and filename created in the save file dialog.  
             fs.writeFile(path, content, (err) => {
                 if (err) {
-                    ipcRenderer.send('displayMessage', { type: `Spellcards exported`, message: `Spellcards failed` });
+                    ipcRenderer.send('displayMessage', { type: `Spellcards levelorted`, message: `Spellcards failed` });
                 }
-                ipcRenderer.send('displayMessage', { type: `Spellcards exported`, message: `Spellcards successful` });
+                ipcRenderer.send('displayMessage', { type: `Spellcards levelorted`, message: `Spellcards successful` });
             });
         });
     }
@@ -331,7 +331,7 @@ export default function CharView(props) {
             "Background": `${background}`,
             "PlayerName": `${player}`,
             "Race": `${race}`,
-            "XP": `${exp}`,
+            "XP": `${level}`,
             "STR": `${str}`,
             "STRmod": `${formatScore(str)}`,
             "DEX": `${dex}`,
@@ -487,7 +487,7 @@ export default function CharView(props) {
 
     const saveCharAction = () => {
         saveChar({
-            id, name, player, prof, exp, pic, classes, race, background, ac, hp, currentHp, hitDice,
+            id, name, player, prof, level, pic, classes, race, background, ac, hp, currentHp, hitDice,
             init, speed, str, dex, con, int, wis, cha, strSave, dexSave, conSave, intSave, wisSave, chaSave,
             strSaveProf, dexSaveProf, conSaveProf, intSaveProf, wisSaveProf, chaSaveProf,
             actions, bonusActions, reactions, features, classFeatures, racialFeatures, profsLangs,
@@ -626,7 +626,7 @@ export default function CharView(props) {
                     </label>
                 </div>
                 <div className="smallLabelGroup">
-                    <label>Exp:<input name="exp" type="number" value={exp} onChange={e => setExp(e.target.value)} /></label><br />
+                    <label>Level:<input name="level" type="number" value={level} onChange={e => setLevel(e.target.value)} /></label><br />
                     <label>Race:<input name="race" type="text" value={race} onChange={e => setRace(e.target.value)} /></label><br />
                     <label>Background:<input name="background" type="text" value={background} onChange={e => setBackground(e.target.value)} /></label><br />
                     <label>Proficiency:<input name="level" type="number" value={prof} onChange={e => setProf(e.target.value)} /></label><br />
@@ -838,7 +838,7 @@ export default function CharView(props) {
                                         <label>Hit: <input type="number" value={castingHit} onChange={e => setCastingHit(e.target.value)}></input></label>
                                         <label>DC: <input type="number" value={castingDC} onChange={e => setCastingDC(e.target.value)}></input></label>
                                     </div>
-                                    <button onClick={exportSpells} style={{ width: "150px" }}><FontAwesomeIcon icon={faFileExport} /> Export as cards</button>
+                                    <button onClick={levelortSpells} style={{ width: "150px" }}><FontAwesomeIcon icon={faFileLevelort} /> Levelort as cards</button>
                                 </div>
                                 <table style={{ width: "100%" }}>
                                     <tbody>

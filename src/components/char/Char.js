@@ -31,7 +31,7 @@ export default function Char(props) {
                     <div className="charComp">{props.char.char_classes}</div>
                     <div className="charComp">{props.char.char_race}</div>
                     <div className="charComp">{props.char.char_background}</div>
-                    <div className="charComp">Exp: {props.char.char_exp}</div>
+                    <div className="charComp">Level: {props.char.char_level}</div>
                 </div>
             </div>
         </Link>

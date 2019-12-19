@@ -68,7 +68,7 @@ module.exports.reciveCharMonsters = (id, callback) => {
 }
 
 module.exports.saveNewChar = (char, mainWindow) => {
-    let data = [char.name, char.player, char.prof, char.exp, char.pic, char.classes, char.race, char.background, char.ac, char.hp, char.currentHp, char.hitDice,
+    let data = [char.name, char.player, char.prof, char.level, char.pic, char.classes, char.race, char.background, char.ac, char.hp, char.currentHp, char.hitDice,
     char.init, char.speed, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.strSave, char.dexSave, char.conSave, char.intSave, char.wisSave, char.chaSave,
     char.strSaveProf, char.dexSaveProf, char.conSaveProf, char.intSaveProf, char.wisSaveProf, char.chaSaveProf,
     char.actions, char.bonusActions, char.reactions, char.features, char.classFeatures, char.racialFeatures,
@@ -80,7 +80,7 @@ module.exports.saveNewChar = (char, mainWindow) => {
     char.investigationProf, char.medicineProf, char.natureProf, char.perceptionProf, char.performanceProf, char.persuasionProf, char.religionProf, char.sleightOfHandProf,
     char.stealthProf, char.survivalProf, char.spellNotes, char.alignment, char.inspiration, char.castingHit, char.castingDC];
     let sql = `INSERT INTO 'main'.'tab_characters'
-                (char_name, char_player, char_prof, char_exp, char_pic, char_classes, char_race, char_background, 
+                (char_name, char_player, char_prof, char_level, char_pic, char_classes, char_race, char_background, 
                 char_ac, char_hp, char_hp_current, char_hitDice, char_init, char_speed, 
                 char_str, char_dex, char_con, char_int, char_wis, char_cha, char_strSave, char_dexSave, char_conSave, char_intSave, char_wisSave, char_chaSave, 
                 char_strSaveProf, char_dexSaveProf, char_conSaveProf, char_intSaveProf, char_wisSaveProf, char_chaSaveProf, 
@@ -106,7 +106,7 @@ module.exports.saveNewChar = (char, mainWindow) => {
 }
 
 module.exports.saveChar = (char) => {
-    let data = [char.name, char.player, char.prof, char.exp, char.pic, char.classes, char.race, char.background, char.ac, char.hp, char.currentHp, char.hitDice,
+    let data = [char.name, char.player, char.prof, char.level, char.pic, char.classes, char.race, char.background, char.ac, char.hp, char.currentHp, char.hitDice,
     char.init, char.speed, char.str, char.dex, char.con, char.int, char.wis, char.cha, char.strSave, char.dexSave, char.conSave, char.intSave, char.wisSave, char.chaSave,
     char.strSaveProf, char.dexSaveProf, char.conSaveProf, char.intSaveProf, char.wisSaveProf, char.chaSaveProf,
     char.actions, char.bonusActions, char.reactions, char.features, char.classFeatures, char.racialFeatures,
@@ -118,7 +118,7 @@ module.exports.saveChar = (char) => {
     char.investigationProf, char.medicineProf, char.natureProf, char.perceptionProf, char.performanceProf, char.persuasionProf, char.religionProf, char.sleightOfHandProf,
     char.stealthProf, char.survivalProf, char.spellNotes, char.alignment, char.inspiration, char.castingHit, char.castingDC, char.id];
     let sql = `UPDATE 'main'.'tab_characters'
-                SET char_name = ?, char_player = ?, char_prof = ?, char_exp = ?, char_pic = ?, char_classes = ?, char_race = ?, char_background = ?, 
+                SET char_name = ?, char_player = ?, char_prof = ?, char_level = ?, char_pic = ?, char_classes = ?, char_race = ?, char_background = ?, 
                 char_ac = ?, char_hp = ?, char_hp_current = ?, char_hitDice = ?, char_init = ?, char_speed = ?, 
                 char_str = ?, char_dex = ?, char_con = ?, char_int = ?, char_wis = ?, char_cha = ?, char_strSave = ?, char_dexSave = ?, char_conSave = ?, char_intSave = ?, char_wisSave = ?, char_chaSave = ?, 
                 char_strSaveProf = ?, char_dexSaveProf = ?, char_conSaveProf = ?, char_intSaveProf = ?, char_wisSaveProf = ?, char_chaSaveProf = ?, 
@@ -179,7 +179,7 @@ module.exports.saveCharSpells = (spells) => {
 
 module.exports.saveNewChars = (chars) => {
     chars.forEach(char => {
-        let data = [char.char_name, char.char_player, char.char_prof, char.char_exp, char.char_pic, char.char_classes, char.char_race, char.char_background, char.char_ac, char.char_hp, char.char_hp_current, char.char_hitDice,
+        let data = [char.char_name, char.char_player, char.char_prof, char.char_level, char.char_pic, char.char_classes, char.char_race, char.char_background, char.char_ac, char.char_hp, char.char_hp_current, char.char_hitDice,
         char.char_init, char.char_speed, char.char_str, char.char_dex, char.char_con, char.char_int, char.char_wis, char.char_cha, char.char_strSave, char.char_dexSave, char.char_conSave, char.char_intSave, char.char_wisSave, char.char_chaSave,
         char.char_strSaveProf, char.char_dexSaveProf, char.char_conSaveProf, char.char_intSaveProf, char.char_wisSaveProf, char.char_chaSaveProf,
         char.char_actions, char.char_bonusActions, char.char_reactions, char.char_features, char.char_classFeatures, char.char_racialFeatures,
@@ -191,7 +191,7 @@ module.exports.saveNewChars = (chars) => {
         char.char_investigationProf, char.char_medicineProf, char.char_natureProf, char.char_perceptionProf, char.char_performanceProf, char.char_persuasionProf, char.char_religionProf, char.char_sleightOfHandProf,
         char.char_stealthProf, char.char_survivalProf, char.char_spellNotes];
         let sql = `INSERT INTO 'main'.'tab_characters'
-                    (char_name, char_player, char_prof, char_exp, char_pic, char_classes, char_race, char_background, 
+                    (char_name, char_player, char_prof, char_level, char_pic, char_classes, char_race, char_background, 
                     char_ac, char_hp, char_hp_current, char_hitDice, char_init, char_speed, 
                     char_str, char_dex, char_con, char_int, char_wis, char_cha, char_strSave, char_dexSave, char_conSave, char_intSave, char_wisSave, char_chaSave, 
                     char_strSaveProf, char_dexSaveProf, char_conSaveProf, char_intSaveProf, char_wisSaveProf, char_chaSaveProf, 
@@ -218,7 +218,7 @@ module.exports.saveNewChars = (chars) => {
 }
 
 module.exports.saveNewCharFromJson = (char, callback) => {
-    let data = [char.char_name, char.char_player, char.char_prof, char.char_exp, char.char_pic, char.char_classes, char.char_race, char.char_background, char.char_ac, char.char_hp, char.char_hp_current, char.char_hitDice,
+    let data = [char.char_name, char.char_player, char.char_prof, char.char_level, char.char_pic, char.char_classes, char.char_race, char.char_background, char.char_ac, char.char_hp, char.char_hp_current, char.char_hitDice,
     char.char_init, char.char_speed, char.char_str, char.char_dex, char.char_con, char.char_int, char.char_wis, char.char_cha, char.char_strSave, char.char_dexSave, char.char_conSave, char.char_intSave, char.char_wisSave, char.char_chaSave,
     char.char_strSaveProf, char.char_dexSaveProf, char.char_conSaveProf, char.char_intSaveProf, char.char_wisSaveProf, char.char_chaSaveProf,
     char.char_actions, char.char_bonusActions, char.char_reactions, char.char_features, char.char_classFeatures, char.char_racialFeatures,
@@ -230,7 +230,7 @@ module.exports.saveNewCharFromJson = (char, callback) => {
     char.char_investigationProf, char.char_medicineProf, char.char_natureProf, char.char_perceptionProf, char.char_performanceProf, char.char_persuasionProf, char.char_religionProf, char.char_sleightOfHandProf,
     char.char_stealthProf, char.char_survivalProf, char.char_spellNotes, char.char_alignment, char.char_inspiration, char.char_castingHit, char.char_castingDC];
     let sql = `INSERT INTO 'main'.'tab_characters'
-                    (char_name, char_player, char_prof, char_exp, char_pic, char_classes, char_race, char_background, 
+                    (char_name, char_player, char_prof, char_level, char_pic, char_classes, char_race, char_background, 
                     char_ac, char_hp, char_hp_current, char_hitDice, char_init, char_speed, 
                     char_str, char_dex, char_con, char_int, char_wis, char_cha, char_strSave, char_dexSave, char_conSave, char_intSave, char_wisSave, char_chaSave, 
                     char_strSaveProf, char_dexSaveProf, char_conSaveProf, char_intSaveProf, char_wisSaveProf, char_chaSaveProf, 
