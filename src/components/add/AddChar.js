@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { saveNewChar } from '../../database/CharacterService';
 import '../../assets/css/char/CharView.css';
@@ -105,6 +105,50 @@ export default function CharView() {
     const [castingHit, setCastingHit] = useState(0);
     const [castingDC, setCastingDC] = useState(0);
 
+    useEffect(() => {
+        setStrSave(parseInt(formatScore(str), 10) + (strSaveProf * prof));
+        setAthletics(parseInt(formatScore(str), 10) + (athleticsProf * prof));
+    }, [prof, str, strSaveProf, athleticsProf]);
+    useEffect(() => {
+        setDexSave(parseInt(formatScore(dex), 10) + (dexSaveProf * prof));
+        setAcrobatics(parseInt(formatScore(dex), 10) + (acrobaticsProf * prof));
+        setSleightOfHand(parseInt(formatScore(dex), 10) + (sleightOfHandProf * prof));
+        setStealth(parseInt(formatScore(dex), 10) + (stealthProf * prof));
+
+        setInit(parseInt(formatScore(dex), 10));
+    }, [prof, dex, dexSaveProf, acrobaticsProf, sleightOfHandProf, stealthProf]);
+    useEffect(() => {
+        setConSave(parseInt(formatScore(con), 10) + (conSaveProf * prof));
+    }, [prof, con, conSaveProf]);
+    useEffect(() => {
+        setIntSave(parseInt(formatScore(int), 10) + (intSaveProf * prof));
+        setArcana(parseInt(formatScore(int), 10) + (arcanaProf * prof));
+        setHistory(parseInt(formatScore(int), 10) + (historyProf * prof));
+        setInvestigation(parseInt(formatScore(int), 10) + (investigationProf * prof));
+        setNature(parseInt(formatScore(int), 10) + (natureProf * prof));
+        setReligion(parseInt(formatScore(int), 10) + (religionProf * prof));
+
+        setPassivInvestigation(parseInt(formatScore(int), 10) + (investigationProf * prof) + 10);
+    }, [prof, int, intSaveProf, arcanaProf, historyProf, investigationProf, natureProf, religionProf]);
+    useEffect(() => {
+        setWisSave(parseInt(formatScore(wis), 10) + (wisSaveProf * prof));
+        setAnimalHandling(parseInt(formatScore(wis), 10) + (animalHandlingProf * prof));
+        setInsight(parseInt(formatScore(wis), 10) + (insightProf * prof));
+        setMedicine(parseInt(formatScore(wis), 10) + (medicineProf * prof));
+        setPerception(parseInt(formatScore(wis), 10) + (perceptionProf * prof));
+        setSurvival(parseInt(formatScore(wis), 10) + (survivalProf * prof));
+
+        setPassivPerception(parseInt(formatScore(wis), 10) + (perceptionProf * prof) + 10);
+        setPassivInsight(parseInt(formatScore(wis), 10) + (insightProf * prof) + 10);
+    }, [prof, wis, wisSaveProf, animalHandlingProf, insightProf, medicineProf, perceptionProf, survivalProf]);
+    useEffect(() => {
+        setChaSave(parseInt(formatScore(cha), 10) + (chaSaveProf * prof));
+        setDeception(parseInt(formatScore(cha), 10) + (deceptionProf * prof));
+        setIntimidation(parseInt(formatScore(cha), 10) + (intimidationProf * prof));
+        setPerformance(parseInt(formatScore(cha), 10) + (performanceProf * prof));
+        setPersuasion(parseInt(formatScore(cha), 10) + (persuasionProf * prof));
+    }, [prof, cha, chaSaveProf, deceptionProf, intimidationProf, performanceProf, persuasionProf]);
+
     const formatScore = (score) => {
         let mod = Math.floor((score - 10) / 2);
         if (mod >= 0) {
@@ -158,20 +202,6 @@ export default function CharView() {
             return faAngleDoubleUp;
         }
     }
-    const changeDeathIcon = (value) => {
-        if (value === undefined || value === 0) {
-            return faMinus;
-        } else {
-            return faHeartBroken;
-        }
-    }
-    const changeLifeIcon = (value) => {
-        if (value === undefined || value === 0) {
-            return faMinus;
-        } else {
-            return faHeartbeat;
-        }
-    }
 
     const style = {
         backgroundImage: `url(${pic})`,
@@ -179,28 +209,6 @@ export default function CharView() {
         backgroundSize: 'contain',
         backgroundRepeat: 'no-repeat'
     };
-
-    const data = [
-        {
-            subject: 'Str', A: str, fullMark: 40,
-        },
-        {
-            subject: 'Dex', A: dex, fullMark: 40,
-        },
-        {
-            subject: 'Con', A: con, fullMark: 40,
-        },
-        {
-            subject: 'Int', A: int, fullMark: 40,
-        },
-        {
-            subject: 'Wis', A: wis, fullMark: 40,
-        },
-        {
-            subject: 'Cha', A: cha, fullMark: 40,
-        },
-    ];
-
 
     return (
         <div id="overview">
