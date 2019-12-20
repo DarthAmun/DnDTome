@@ -129,8 +129,8 @@ export default function CharView(props) {
     const [deathThree, setDeathThree] = useState(0);
 
     const receiveCharResult = (result) => {
+        console.time("receiveChar")
         ReactDOM.unstable_batchedUpdates(() => {
-            console.time("receiveChar")
             setName(result.char_name);
             setId(result.char_id);
             setPlayer(result.char_player);
@@ -186,48 +186,50 @@ export default function CharView(props) {
             setNotesTwo(result.char_notesTwo);
             setNotesThree(result.char_notesThree);
 
-            setAcrobatics(result.char_acrobatics);
             setAcrobaticsProf(result.char_acrobaticsProf);
-            setAnimalHandling(result.char_animalHandling);
             setAnimalHandlingProf(result.char_animalHandlingProf);
-            setArcana(result.char_arcana);
             setArcanaProf(result.char_arcanaProf);
-            setAthletics(result.char_athletics);
             setAthleticsProf(result.char_athleticsProf);
-            setDeception(result.char_deception);
             setDeceptionProf(result.char_deceptionProf);
-            setHistory(result.char_history);
             setHistoryProf(result.char_historyProf);
-            setInsight(result.char_insight);
             setInsightProf(result.char_insightProf);
-            setIntimidation(result.char_intimidation);
             setIntimidationProf(result.char_intimidationProf);
-            setInvestigation(result.char_investigation);
             setInvestigationProf(result.char_investigationProf);
-            setMedicine(result.char_medicine);
             setMedicineProf(result.char_medicineProf);
-            setNature(result.char_nature);
             setNatureProf(result.char_natureProf);
-            setPerception(result.char_perception);
             setPerceptionProf(result.char_perceptionProf);
-            setPerformance(result.char_performance);
             setPerformanceProf(result.char_performanceProf);
-            setPersuasion(result.char_persuasion);
             setPersuasionProf(result.char_persuasionProf);
-            setReligion(result.char_religion);
             setReligionProf(result.char_religionProf);
-            setSleightOfHand(result.char_sleightOfHand);
             setSleightOfHandProf(result.char_sleightOfHandProf);
-            setStealth(result.char_stealth);
             setStealthProf(result.char_stealthProf);
-            setSurvival(result.char_survival);
             setSurvivalProf(result.char_survivalProf);
-
+            
             setCastingHit(result.char_castingHit);
             setCastingDC(result.char_castingDC);
             setSpellNotes(result.char_spellNotes);
-            console.timeEnd("receiveChar")
-        })
+        });
+        ReactDOM.unstable_batchedUpdates(() => {
+            setAcrobatics(result.char_acrobatics);
+            setAnimalHandling(result.char_animalHandling);
+            setArcana(result.char_arcana);
+            setAthletics(result.char_athletics);
+            setDeception(result.char_deception);
+            setHistory(result.char_history);
+            setInsight(result.char_insight);
+            setIntimidation(result.char_intimidation);
+            setInvestigation(result.char_investigation);
+            setMedicine(result.char_medicine);
+            setNature(result.char_nature);
+            setPerception(result.char_perception);
+            setPerformance(result.char_performance);
+            setPersuasion(result.char_persuasion);
+            setReligion(result.char_religion);
+            setSleightOfHand(result.char_sleightOfHand);
+            setStealth(result.char_stealth);
+            setSurvival(result.char_survival);
+        });
+        console.timeEnd("receiveChar")
     }
 
     const receiveSpellsResult = (result) => {
@@ -259,6 +261,61 @@ export default function CharView(props) {
             receiveItemsResult(result);
         })
     }, []);
+
+    useEffect(() => {
+        if(level<5) {
+            setProf(2);
+        } else if(level<9) {
+            setProf(3);
+        }else if(level<13) {
+            setProf(4);
+        }else if(level<17) {
+            setProf(5);
+        }else if(level<21) {
+            setProf(6);
+        }
+    }, [level]);
+    useEffect(() => {
+        setStrSave(parseInt(formatScore(str), 10) + (strSaveProf * prof));
+        setAthletics(parseInt(formatScore(str), 10) + (athleticsProf * prof));
+    }, [prof, str, strSaveProf, athleticsProf]);
+    useEffect(() => {
+        setDexSave(parseInt(formatScore(dex), 10) + (dexSaveProf * prof));
+        setAcrobatics(parseInt(formatScore(dex), 10) + (acrobaticsProf * prof));
+        setSleightOfHand(parseInt(formatScore(dex), 10) + (sleightOfHandProf * prof));
+        setStealth(parseInt(formatScore(dex), 10) + (stealthProf * prof));
+    }, [prof, dex, dexSaveProf, acrobaticsProf, sleightOfHandProf, stealthProf]);
+    useEffect(() => {
+        setConSave(parseInt(formatScore(con), 10) + (conSaveProf * prof));
+    }, [prof, con, conSaveProf]);
+    useEffect(() => {
+        setIntSave(parseInt(formatScore(int), 10) + (intSaveProf * prof));
+        setArcana(parseInt(formatScore(int), 10) + (arcanaProf * prof));
+        setHistory(parseInt(formatScore(int), 10) + (historyProf * prof));
+        setInvestigation(parseInt(formatScore(int), 10) + (investigationProf * prof));
+        setNature(parseInt(formatScore(int), 10) + (natureProf * prof));
+        setReligion(parseInt(formatScore(int), 10) + (religionProf * prof));
+
+        setPassivInvestigation(parseInt(formatScore(int), 10) + (investigationProf * prof) + 10);
+    }, [prof, int, intSaveProf, arcanaProf, historyProf, investigationProf, natureProf, religionProf]);
+    useEffect(() => {
+        setWisSave(parseInt(formatScore(wis), 10) + (wisSaveProf * prof));
+        setAnimalHandling(parseInt(formatScore(wis), 10) + (animalHandlingProf * prof));
+        setInsight(parseInt(formatScore(wis), 10) + (insightProf * prof));
+        setMedicine(parseInt(formatScore(wis), 10) + (medicineProf * prof));
+        setPerception(parseInt(formatScore(wis), 10) + (perceptionProf * prof));
+        setSurvival(parseInt(formatScore(wis), 10) + (survivalProf * prof));
+
+        setPassivPerception(parseInt(formatScore(wis), 10) + (perceptionProf * prof) + 10);
+        setPassivInsight(parseInt(formatScore(wis), 10) + (insightProf * prof) + 10);
+    }, [prof, wis, wisSaveProf, animalHandlingProf, insightProf, medicineProf, perceptionProf, survivalProf]);
+    useEffect(() => {
+        setChaSave(parseInt(formatScore(cha), 10) + (chaSaveProf * prof));
+        setDeception(parseInt(formatScore(cha), 10) + (deceptionProf * prof));
+        setIntimidation(parseInt(formatScore(cha), 10) + (intimidationProf * prof));
+        setPerformance(parseInt(formatScore(cha), 10) + (performanceProf * prof));
+        setPersuasion(parseInt(formatScore(cha), 10) + (persuasionProf * prof));
+    }, [prof, cha, chaSaveProf, deceptionProf, intimidationProf, performanceProf, persuasionProf]);
 
     const options = {
         defaultPath: app.getPath('documents')
@@ -838,7 +895,7 @@ export default function CharView(props) {
                                         <label>Hit: <input type="number" value={castingHit} onChange={e => setCastingHit(e.target.value)}></input></label>
                                         <label>DC: <input type="number" value={castingDC} onChange={e => setCastingDC(e.target.value)}></input></label>
                                     </div>
-                                    <button onClick={levelortSpells} style={{ width: "150px" }}><FontAwesomeIcon icon={faFileLevelort} /> Levelort as cards</button>
+                                    <button onClick={levelortSpells} style={{ width: "150px" }}><FontAwesomeIcon icon={faFileExport} /> Levelort as cards</button>
                                 </div>
                                 <table style={{ width: "100%" }}>
                                     <tbody>
