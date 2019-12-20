@@ -9,9 +9,9 @@ export default function Item(props) {
         if(rarityClass !== null) {
             rarityClass = rarityClass.replace("A*", "").trim();
             rarityClass = rarityClass.replace(/\s/g, "");
-            return rarityClass;
+            return rarityClass.toLowerCase();
         }
-        return 'Common';
+        return 'common';
     }
 
     const getPicture = () => {

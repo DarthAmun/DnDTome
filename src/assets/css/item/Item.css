@@ -59,22 +59,22 @@
     font-size: 12px;
 }
 
-.Common {
+.common {
     border: 3px solid rgba(92, 102, 130, 1);
 }
-.Uncommon {
+.uncommon {
     border: 3px solid rgb(77, 189, 86);
 }
-.Rare {
+.rare {
     border: 3px solid rgb(70, 117, 247);
 }
-.VeryRare {
+.veryRare {
     border: 3px solid rgb(161, 70, 247);
 }
-.Legendary {
+.legendary {
     border: 3px solid rgb(247, 206, 70);
 }
-.Artifact {
+.artifact {
     border: 3px solid rgb(247, 70, 70);
 }
 
