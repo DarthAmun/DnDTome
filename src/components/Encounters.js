@@ -76,7 +76,9 @@ export default function Encounters() {
                 <div className="encouterParticipantHeader">Initiative Name Hp AC</div>
                 {
                     participantList.map((participant, index) => {
-                        return <div className="encouterParticipant" key={index}>{participant.init} {participant.name} {participant.hp} {participant.ac}</div>;
+                        return <div className="encouterParticipant" key={index}>{participant.init} {participant.name} {participant.hp} {participant.ac}
+                            <div className="">Tag</div><div className="">Delete</div>
+                        </div>;
                     })
                 }
             </div>

@@ -25,6 +25,7 @@ export default function SpellView() {
     const [text, setText] = useState("");
     const [classes, setClasses] = useState("");
     const [sources, setSources] = useState("");
+    const [pic, setPic] = useState("");
 
     const [chars, setChars] = useState([]);
     const [selectedChar, setSelectedChar] = useState(0);
@@ -54,6 +55,7 @@ export default function SpellView() {
             setClasses(result.spell_classes);
             setSources(sources);
             setId(result.spell_id);
+            setPic(result.spell_pic);
             console.timeEnd("receiveSpell")
         })
     }
@@ -89,11 +91,11 @@ export default function SpellView() {
     }, [id]);
 
     const saveSpellAction = (e) => {
-        saveSpell({ id, name, school, level, ritual, time, range, duration, components, text, classes, sources });
+        saveSpell({ id, name, school, level, ritual, time, range, duration, components, text, classes, sources, pic });
     }
 
     const addSpellToCharAction = (e) => {
-        addSpellToChar({ selectedChar }, { id, name }, function () {});
+        addSpellToChar({ selectedChar }, { id, name }, function () { });
     }
 
     const deleteSpellAction = (e) => {
@@ -112,17 +114,28 @@ export default function SpellView() {
         });
     }
 
+    const style = {
+        backgroundImage: `url(${pic})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat'
+    };
+
     return (
         <div id="spellView">
             <div className="top">
                 <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Name..." /></label>
                 <label>School:<input name="school" type="text" value={school} onChange={e => setSchool(e.target.value)} placeholder="School..." /></label>
-                <label className="small">Level:<input name="level" type="number" value={level} onChange={e => setLevel(e.target.value)} /></label>
-                <label className="small left checkbox-label">
-                    <div className="labelText">Ritual:</div>
-                    <input name="ritual" type="checkbox" checked={ritual} onChange={e => setRitual(e.target.checked)} />
-                    <span className="checkbox-custom circular"></span>
-                </label>
+                <div className="spellImgBlock">
+                    <label className="small">Level:<input name="level" type="number" value={level} onChange={e => setLevel(e.target.value)} /></label>
+                    <label className="smaller left checkbox-label">
+                        <div className="labelText">Ritual:</div>
+                        <input name="ritual" type="checkbox" checked={ritual} onChange={e => setRitual(e.target.checked)} />
+                        <span className="checkbox-custom circular"></span>
+                    </label>
+                    <div className="image" style={style}></div>
+                    <label className="smallPic">Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label>
+                </div>
                 <label>Casting Time:<input name="time" type="text" value={time} onChange={e => setTime(e.target.value)} placeholder="Casting Time..." /></label>
                 <label>Range:<input name="range" type="text" value={range} onChange={e => setRange(e.target.value)} placeholder="Range..." /></label>
                 <label>Duration:<input name="duration" type="text" value={duration} onChange={e => setDuration(e.target.value)} placeholder="Duration..." /></label>

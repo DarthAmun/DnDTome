@@ -131,7 +131,7 @@ function createWindow() {
   spellWindow = new BrowserWindow({
     parent: mainWindow,
     width: 950,
-    height: 410,
+    height: 450,
     show: false,
     resizable: false,
     frame: true,
