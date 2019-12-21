@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from "react-router"
 import '../assets/css/LeftNav.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMeteor, faIdCard, faShieldAlt, faDiceD20, faCog, faDragon } from '@fortawesome/free-solid-svg-icons';
+import { faMeteor, faIdCard, faShieldAlt, faDiceD20, faCog, faDragon, faFistRaised } from '@fortawesome/free-solid-svg-icons';
 import { faSketch } from '@fortawesome/free-brands-svg-icons';
 import Particles from 'react-particles-js';
 
@@ -148,6 +148,11 @@ class LeftNav extends Component {
         <Link to="/monster-overview" style={{ top: "270px" }} className={this.props.location.pathname == "/monster-overview" ? "menuItemActiv" : ""}>
           <div className="menuItem">
             <FontAwesomeIcon icon={faDragon} /> Monsters
+          </div>
+        </Link>
+        <Link to="/encounters" style={{ top: "320px" }} className={this.props.location.pathname == "/encounters" ? "menuItemActiv" : ""}>
+          <div className="menuItem">
+            <FontAwesomeIcon icon={faFistRaised} /> Encounters
           </div>
         </Link>
         <Link to="/options" style={{ bottom: "10px" }} className={this.props.location.pathname == "/options" ? "menuItemActiv" : ""}>

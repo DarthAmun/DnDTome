@@ -23,6 +23,19 @@ module.exports.reciveAllMonsters = (callback) => {
     });
 }
 
+module.exports.reciveMonstersByName = (name, callback) => {
+    let q = `SELECT * FROM 'main'.'tab_monsters' WHERE monster_name like "%${name}%"`;
+    db.serialize(function () {
+        db.all(q, function (err, rows) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            callback(rows);
+            console.log("====>" + `getAllMonstersResult successfull`)
+        });
+    });
+}
+
 module.exports.reciveMonsters = (step, start, query, callback) => {
     localStorage.setItem('monsterStep', parseInt(step, 10));
     localStorage.setItem('monsterStart', parseInt(start, 10));
