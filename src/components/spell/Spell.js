@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../../assets/css/spell/Spell.css';
+import icon from '../../assets/img/dice_icon_grey.png';
 
 export default function Spell(props) {
 
@@ -52,6 +53,20 @@ export default function Spell(props) {
         return value;
     }
 
+    const getPicture = () => {
+        if (props.spell.spell_pic === "" || props.spell.spell_pic === null) {
+            return icon;
+        }
+        return props.spell.spell_pic;
+    }
+
+    const style = {
+        backgroundImage: `url(${getPicture()})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat'
+    };
+
     return (
         <div className="spell" style={{ animationDelay: `${props.delay * 50}ms` }} onClick={props.onClick}>
             <div className={`spellSchool spellAttr ${props.spell.spell_school}`}>{props.spell.spell_school}</div>
@@ -59,7 +74,10 @@ export default function Spell(props) {
             {hasRitual(props.spell.spell_ritual)}
             {hasConcentration(props.spell.spell_duration)}
 
-            <div className="spellName spellAttr"><b>{props.spell.spell_name}</b></div>
+            <div className="spellName spellAttr">
+                <div className="image" style={style}></div>
+                <b>{props.spell.spell_name}</b>
+            </div>
 
             <div className="spellTime smallSpellAttr"><b>Time: </b>{formatTime(props.spell.spell_time)}</div>
             <div className="spellDuration smallSpellAttr"><b>Duration: </b>{formatDuration(props.spell.spell_duration)}</div>

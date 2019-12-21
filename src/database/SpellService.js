@@ -111,9 +111,9 @@ module.exports.reciveSpellCount = (query, callback) => {
 
 
 module.exports.saveSpell = (spell) => {
-  let data = [spell.name, spell.school, spell.level, spell.ritual, spell.time, spell.duration, spell.range, spell.components, spell.text, spell.classes, spell.sources, spell.id];
+  let data = [spell.name, spell.school, spell.level, spell.ritual, spell.time, spell.duration, spell.range, spell.components, spell.text, spell.classes, spell.sources, spell.pic, spell.id];
   let sql = `UPDATE 'main'.'tab_spells'
-              SET spell_name = ?, spell_school = ?, spell_level = ?, spell_ritual = ?, spell_time = ?, spell_duration = ?, spell_range = ?, spell_components = ?, spell_text = ?, spell_classes = ?, spell_sources = ?
+              SET spell_name = ?, spell_school = ?, spell_level = ?, spell_ritual = ?, spell_time = ?, spell_duration = ?, spell_range = ?, spell_components = ?, spell_text = ?, spell_classes = ?, spell_sources = ?, spell_pic = ?
               WHERE spell_id = ?`;
   db.serialize(function () {
     db.run(sql, data, function (err) {
@@ -129,9 +129,9 @@ module.exports.saveSpell = (spell) => {
 
 module.exports.saveNewSpell = (spell) => {
   console.log(spell);
-  let data = [spell.name, spell.school, spell.level, spell.ritual, spell.time, spell.duration, spell.range, spell.components, spell.text, spell.classes, spell.sources];
-  let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_school, spell_level, spell_ritual, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources)
-              VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  let data = [spell.name, spell.school, spell.level, spell.ritual, spell.time, spell.duration, spell.range, spell.components, spell.text, spell.classes, spell.sources, spell.pic];
+  let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_school, spell_level, spell_ritual, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources, spell_pic)
+              VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   db.serialize(function () {
     db.run(sql, data, function (err) {
       if (err) {
@@ -147,9 +147,9 @@ module.exports.saveNewSpells = (spells, callback) => {
   let spellImportLength = Object.keys(spells).length;
   let spellImported = 0;
   spells.forEach(spell => {
-    let data = [spell.spell_name, spell.spell_ritual, spell.spell_school, spell.spell_level, spell.spell_time, spell.spell_duration, spell.spell_range, spell.spell_components, spell.spell_text, spell.spell_classes, spell.spell_sources];
-    let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_ritual, spell_school, spell_level, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources)
-                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    let data = [spell.spell_name, spell.spell_ritual, spell.spell_school, spell.spell_level, spell.spell_time, spell.spell_duration, spell.spell_range, spell.spell_components, spell.spell_text, spell.spell_classes, spell.spell_sources, spell.spell_pic];
+    let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_ritual, spell_school, spell_level, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources, spell_pic)
+                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     db.serialize(function () {
       db.run(sql, data, function (err) {
         if (err) {
@@ -164,9 +164,9 @@ module.exports.saveNewSpells = (spells, callback) => {
 }
 
 module.exports.saveNewSpellFromJson = (spell, callback) => {
-  let data = [spell.spell_name, spell.spell_ritual, spell.spell_school, spell.spell_level, spell.spell_time, spell.spell_duration, spell.spell_range, spell.spell_components, spell.spell_text, spell.spell_classes, spell.spell_sources];
-  let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_ritual, spell_school, spell_level, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources)
-                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  let data = [spell.spell_name, spell.spell_ritual, spell.spell_school, spell.spell_level, spell.spell_time, spell.spell_duration, spell.spell_range, spell.spell_components, spell.spell_text, spell.spell_classes, spell.spell_sources, spell.spell_pic];
+  let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_ritual, spell_school, spell_level, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources, spell_pic)
+                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   db.serialize(function () {
     db.run(sql, data, function (err) {
       if (err) {

@@ -9,6 +9,7 @@ import { saveChar, saveCharItems, saveCharSpells, deleteChar, deleteCharItem, de
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes, faAngleUp, faAngleDoubleUp, faMinus, faHeartBroken, faHeartbeat, faTrashAlt, faFileExport, faPrint } from '@fortawesome/free-solid-svg-icons';
 import StatChart from './StatChart';
+import icon from '../../assets/img/dice_icon_grey.png';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -330,7 +331,7 @@ export default function CharView(props) {
         return cards;
     }
 
-    const levelortSpells = () => {
+    const exportSpells = () => {
         let content = makeCards();
         options.defaultPath = options.defaultPath + `/${name}_spellCards.html`;
         dialog.showSaveDialog(null, options, (path) => {
@@ -338,9 +339,9 @@ export default function CharView(props) {
             // fileName is a string that contains the path and filename created in the save file dialog.  
             fs.writeFile(path, content, (err) => {
                 if (err) {
-                    ipcRenderer.send('displayMessage', { type: `Spellcards levelorted`, message: `Spellcards failed` });
+                    ipcRenderer.send('displayMessage', { type: `Spellcards exported`, message: `Spellcards failed` });
                 }
-                ipcRenderer.send('displayMessage', { type: `Spellcards levelorted`, message: `Spellcards successful` });
+                ipcRenderer.send('displayMessage', { type: `Spellcards exported`, message: `Spellcards successful` });
             });
         });
     }
@@ -638,6 +639,13 @@ export default function CharView(props) {
         }
     }
 
+    const getSpellPicture = (spell) => {
+        if (spell.spell_pic === "" || spell.spell_pic === null) {
+            return icon;
+        }
+        return spell.spell_pic;
+    };
+
     const style = {
         backgroundImage: `url(${pic})`,
         backgroundPosition: 'center',
@@ -895,11 +903,12 @@ export default function CharView(props) {
                                         <label>Hit: <input type="number" value={castingHit} onChange={e => setCastingHit(e.target.value)}></input></label>
                                         <label>DC: <input type="number" value={castingDC} onChange={e => setCastingDC(e.target.value)}></input></label>
                                     </div>
-                                    <button onClick={levelortSpells} style={{ width: "150px" }}><FontAwesomeIcon icon={faFileExport} /> Levelort as cards</button>
+                                    <button onClick={exportSpells} style={{ width: "150px" }}><FontAwesomeIcon icon={faFileExport} /> Export as cards</button>
                                 </div>
                                 <table style={{ width: "100%" }}>
                                     <tbody>
                                         <tr>
+                                            <th>Icon</th>
                                             <th>Lvl</th>
                                             <th>Name</th>
                                             <th>Casting Time</th>
@@ -909,6 +918,7 @@ export default function CharView(props) {
                                         </tr>
                                         {spells.map((spell, index) => {
                                             return <tr className="charSpell" key={spell.id} style={{ cursor: 'pointer' }}>
+                                                <td onClick={() => viewSpell(spell)}><div className="image" style={{backgroundImage: `url(${getSpellPicture(spell)})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div></td>
                                                 <td onClick={() => viewSpell(spell)}>{formatLevel(spell.spell_level)}</td>
                                                 <td onClick={() => viewSpell(spell)}>{spell.spell_name}</td>
                                                 <td onClick={() => viewSpell(spell)}>{formatCastingTime(spell.spell_time)}</td>
