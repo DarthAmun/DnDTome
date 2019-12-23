@@ -83,7 +83,7 @@ export default function MonsterOverview() {
     }
 
     const fetchMoreListItems = () => {
-        reciveMonsters(10, start + 10, query, function (result) {
+        reciveMonsters(10, start, query, function (result) {
             receiveMonstersResult(result);
         })
     }

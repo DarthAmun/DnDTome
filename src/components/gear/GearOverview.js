@@ -81,7 +81,7 @@ export default function GearOverview() {
     }
 
     const fetchMoreListItems = () => {
-        reciveGears(10, start + 10, query, function (result) {
+        reciveGears(10, start, query, function (result) {
             receiveGearsResult(result);
         })
     }

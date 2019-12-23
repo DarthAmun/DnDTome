@@ -84,7 +84,7 @@ export default function ItemOverview() {
     }
 
     const fetchMoreListItems = () => {
-        reciveItems(10, start + 10, query, function (result) {
+        reciveItems(10, start, query, function (result) {
             receiveItemsResult(result);
         })
     }
