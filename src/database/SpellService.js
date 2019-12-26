@@ -50,11 +50,19 @@ module.exports.reciveSpells = (step, start, query, callback) => {
     if (searchSpellQuery.time != null && typeof searchSpellQuery.time !== 'undefined' && searchSpellQuery.time != "") {
       q += `spell_time like "%${searchSpellQuery.time}%" AND `;
     }
-    if (searchSpellQuery.level != null && typeof searchSpellQuery.level !== 'undefined' && searchSpellQuery.level != "") {
-      q += `spell_level = "${searchSpellQuery.level}" AND `;
+    if (searchSpellQuery.level != null && typeof searchSpellQuery.level !== 'undefined' && searchSpellQuery.level != "" && searchSpellQuery.level.length !== 0) {
+      searchSpellQuery.level.map(level => {
+        q += `spell_level = "${level.value}" OR `;
+      });
+      q = q.slice(0, -3);
+      q += "AND ";
     }
-    if (searchSpellQuery.school != null && typeof searchSpellQuery.school !== 'undefined' && searchSpellQuery.school != "") {
-      q += `spell_school like "%${searchSpellQuery.school}%" AND `;
+    if (searchSpellQuery.school != null && typeof searchSpellQuery.school !== 'undefined' && searchSpellQuery.school != "" && searchSpellQuery.school.length !== 0) {
+      searchSpellQuery.school.map(school => {
+        q += `spell_school like "%${school.value}%" OR `;
+      });
+      q = q.slice(0, -3);
+      q += "AND ";
     }
     if (searchSpellQuery.range != null && typeof searchSpellQuery.range !== 'undefined' && searchSpellQuery.range != "") {
       q += `spell_range like "%${searchSpellQuery.range}%" AND `;

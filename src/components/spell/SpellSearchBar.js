@@ -42,7 +42,7 @@ export default function SpellSearchBar({ callback }) {
     }, []);
 
     useEffect(() => {
-        callback({ name, school, level, time, range, duration, components, text, classes, sources });
+        ipcRenderer.send("sendSpellSearchQuery", {query: { name, school, level, time, range, duration, components, text, classes, sources }});
     }, [name, school, level, time, range, duration, components, text, classes, sources]);
 
     const resetSearch = () => {
