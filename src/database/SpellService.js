@@ -39,6 +39,8 @@ module.exports.reciveSpells = (step, start, query, callback) => {
   localStorage.setItem('spellStep', parseInt(step, 10));
   localStorage.setItem('spellStart', parseInt(start, 10));
 
+console.log(query)
+
   if (query !== null) {
     searchSpellQuery = query;
   }
@@ -81,6 +83,9 @@ module.exports.reciveSpells = (step, start, query, callback) => {
     }
     if (searchSpellQuery.duration != null && typeof searchSpellQuery.duration !== 'undefined' && searchSpellQuery.duration != "") {
       q += `spell_duration like "%${searchSpellQuery.duration}%" AND `;
+    }
+    if (searchSpellQuery.ritual != null && typeof searchSpellQuery.ritual !== 'undefined' && searchSpellQuery.ritual != "") {
+      q += `spell_ritual = ${searchSpellQuery.ritual} AND `;
     }
     if (q.includes(" AND ")) {
       q = q.slice(0, -4);

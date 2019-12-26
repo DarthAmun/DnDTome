@@ -15,7 +15,7 @@ export default function SpellSearchBar() {
     const [schoolList, setSchoolList] = useState([]);
     const [level, setLevel] = useState("");
     const [levelList, setLevelList] = useState([]);
-    // const [ritual, setRitual] = useState(0);
+    const [ritual, setRitual] = useState(0);
     const [time, setTime] = useState("");
     const [range, setRange] = useState("");
     const [duration, setDuration] = useState("");
@@ -33,15 +33,15 @@ export default function SpellSearchBar() {
         })
         reciveAttributeSelection("level", function (result) {
             let levels = result.map(level => {
-                return { value: level.spell_level, label: level.spell_level};
+                return { value: level.spell_level, label: level.spell_level };
             })
             setLevelList(levels);
         })
     }, []);
 
     useEffect(() => {
-        ipcRenderer.send("sendSpellSearchQuery", {query: { name, school, level, time, range, duration, components, text, classes, sources }});
-    }, [name, school, level, time, range, duration, components, text, classes, sources]);
+        ipcRenderer.send("sendSpellSearchQuery", { query: { name, school, level, time, range, duration, components, text, classes, sources, ritual } });
+    }, [name, school, level, time, range, duration, components, text, classes, sources, ritual]);
 
     const resetSearch = () => {
 
@@ -75,8 +75,12 @@ export default function SpellSearchBar() {
 
     return (
         <div id="searchBar">
+            <label className="smaller left checkbox-label">
+                <div className="labelText">Ritual:</div>
+                <input name="ritual" type="checkbox" checked={ritual} onChange={e => setRitual(e.target.checked)} />
+                <span className="checkbox-custom circular"></span>
+            </label>
             <input type="text" name={name} placeholder="Name..." value={name} onChange={e => setName(e.target.value)} />
-
             <Select
                 value={school}
                 onChange={school => setSchool(school)}
@@ -93,6 +97,13 @@ export default function SpellSearchBar() {
                 styles={customStyles}
                 placeholder="Level..."
             />
+            <input type="text" name={time} placeholder="Casting time..." value={time} onChange={e => setTime(e.target.value)} />
+            <input type="text" name={range} placeholder="Range..." value={range} onChange={e => setRange(e.target.value)} />
+            <input type="text" name={duration} placeholder="Duration..." value={duration} onChange={e => setDuration(e.target.value)} />
+            <input type="text" name={components} placeholder="Components..." value={components} onChange={e => setComponents(e.target.value)} />
+            <input type="text" name={text} placeholder="Text..." value={text} onChange={e => setText(e.target.value)} />
+            <input type="text" name={classes} placeholder="Classes..." value={classes} onChange={e => setClasses(e.target.value)} />
+            <input type="text" name={sources} placeholder="Sources..." value={sources} onChange={e => setSources(e.target.value)} />
             <button onClick={resetSearch}>
                 <FontAwesomeIcon icon={faUndo} /> Reset
             </button>

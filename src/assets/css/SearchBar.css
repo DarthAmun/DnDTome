@@ -2,8 +2,8 @@
     width: 100%;
     float: left;
     z-index: 100;
-    max-height: 50px;
-    transition: max-height 0.5s ease-out;
+    /* max-height: 50px;
+    transition: max-height 0.5s ease-out; */
 }
 
 #searchBar:hover {
@@ -57,3 +57,36 @@
     box-shadow: var(--boxshadow-hover);
 }
   
+#searchBar label {
+    display: inline-block;
+    width: 80px;
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    text-align: right;
+    color: var(--card-title-color);
+    font-size: 16px;
+    margin: 5px;
+}
+
+#searchBar label.small {
+    width: 225px;
+}
+
+#searchBar label.left {
+    float:left;
+    text-align: left;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#searchBar label.small input{
+    width: 75px;
+}
+#searchBar label.left input{
+    float: left;
+}
+
+#searchBar .checkbox-label .checkbox-custom {
+    left: 60px;
+    top: 7px;
+}
