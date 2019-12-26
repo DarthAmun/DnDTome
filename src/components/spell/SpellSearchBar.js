@@ -9,7 +9,7 @@ import Select from 'react-select';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
-export default function SpellSearchBar({ callback }) {
+export default function SpellSearchBar() {
     const [name, setName] = useState("");
     const [school, setSchool] = useState([]);
     const [schoolList, setSchoolList] = useState([]);
@@ -23,8 +23,6 @@ export default function SpellSearchBar({ callback }) {
     const [text, setText] = useState("");
     const [classes, setClasses] = useState("");
     const [sources, setSources] = useState("");
-
-    // queryName="sendSpellSearchQuery"
 
     useEffect(() => {
         reciveAttributeSelection("school", function (result) {
@@ -95,19 +93,6 @@ export default function SpellSearchBar({ callback }) {
                 styles={customStyles}
                 placeholder="Level..."
             />
-
-            {/* <select value={school} onChange={e => setSchool(e.target.value)}>
-                <option value="">All Schools</option>
-                {schoolList.map((school, index) => {
-                    return <option key={index} value={school.spell_school}>{school.spell_school}</option>;
-                })}
-            </select>
-            <select value={level} onChange={e => setLevel(e.target.value)}>
-                <option value="">All Levels</option>
-                {levelList.map((level, index) => {
-                    return <option key={index} value={level.spell_level}>{level.spell_level}</option>;
-                })}
-            </select> */}
             <button onClick={resetSearch}>
                 <FontAwesomeIcon icon={faUndo} /> Reset
             </button>
