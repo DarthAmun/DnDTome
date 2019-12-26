@@ -23,7 +23,7 @@ module.exports.reciveSpell = (id, callback) => {
 }
 
 module.exports.reciveAllSpells = (callback) => {
-  let q = "SELECT * FROM 'main'.'tab_spells'";
+  let q = "SELECT * FROM 'main'.'tab_spells' ORDER BY spell_name";
   db.serialize(function () {
     db.all(q, function (err, rows) {
       if (err != null) {
@@ -105,6 +105,19 @@ module.exports.reciveSpellCount = (query, callback) => {
       }
       callback(rows[0]);
       console.log("====>" + `getSpellCount successfull`)
+    });
+  });
+}
+
+module.exports.reciveAttributeSelection = (attribute, callback) => {
+  let q = `SELECT spell_${attribute} FROM 'main'.'tab_spells' GROUP BY spell_${attribute}`;
+  db.serialize(function () {
+    db.all(q, function (err, rows) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      callback(rows);
+      console.log("====>" + `get all ${attribute} successfull`)
     });
   });
 }
