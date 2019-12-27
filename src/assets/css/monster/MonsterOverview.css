@@ -1,10 +1,5 @@
-#overview {
-    height: 100%;
-    width: 100%;
-}
-
 #monsterOverview {
-    height: calc(100% - 20px);
+    height: calc(100% - 40px);
     float: left;
     overflow-y: hidden;
     overflow-x: hidden;

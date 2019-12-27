@@ -1,10 +1,5 @@
-#overview {
-    height: 100%;
-    width: 100%;
-}
-
 #char {
-    height: calc(100% - 20px);
+    height: calc(100% - 40px);
     width: calc(100% - 20px);
     overflow: hidden;
     color: var(--card-title-color);
