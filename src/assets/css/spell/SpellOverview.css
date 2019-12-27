@@ -12,11 +12,11 @@
 
 #spells {
     float: left;
-    height: calc(100% - 60px);
+    height: calc(100% - 50px);
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    margin-bottom: 10px;
+    background: var(--app-background-color);
 }
 
 #spells::-webkit-scrollbar {
@@ -43,6 +43,7 @@
     background-color: var(--button-background-color);
     color: var(--button-color);
     margin-left: 5px;
+    margin-top: 5px;
 }
 
 #overview .button:hover {

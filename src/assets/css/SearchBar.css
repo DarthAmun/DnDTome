@@ -2,8 +2,8 @@
     width: 100%;
     float: left;
     z-index: 100;
-    /* max-height: 50px;
-    transition: max-height 0.5s ease-out; */
+    max-height: 50px;
+    transition: max-height 0.5s ease-out;
 }
 
 #searchBar:hover {
@@ -89,4 +89,15 @@
 #searchBar .checkbox-label .checkbox-custom {
     left: 60px;
     top: 7px;
+}
+
+#searchBar *::-webkit-scrollbar {
+    width: 6px;
+    background-color: var(--scrollbar);
+    border-radius: 5px;
+}
+
+#searchBar *::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 5px;
 }

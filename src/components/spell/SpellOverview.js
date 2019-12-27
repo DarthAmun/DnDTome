@@ -82,7 +82,6 @@ export default function SpellOverview() {
     }
 
     const fetchMoreListItems = () => {
-        console.log(start);
         reciveSpells(10, start, query, function (result) {
             receiveSpellsResult(result);
         })

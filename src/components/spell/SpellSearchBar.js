@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as ReactDOM from "react-dom";
 import '../../assets/css/SearchBar.css';
 import { reciveAttributeSelection } from '../../database/SpellService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -44,7 +45,19 @@ export default function SpellSearchBar() {
     }, [name, school, level, time, range, duration, components, text, classes, sources, ritual]);
 
     const resetSearch = () => {
-
+        ReactDOM.unstable_batchedUpdates(() => {
+            setName("");
+            setSchool("");
+            setLevel("");
+            setRitual("");
+            setTime("");
+            setRange("");
+            setDuration("");
+            setComponents("");
+            setText("");
+            setClasses("");
+            setSources("");
+        });
     };
 
     const customStyles = {
