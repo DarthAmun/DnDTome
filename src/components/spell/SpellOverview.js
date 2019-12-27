@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import '../../assets/css/spell/SpellOverview.css';
 import Spell from './Spell';
 import { reciveSpells, reciveSpellCount } from '../../database/SpellService';
-import SearchBar from '../SearchBar';
+import SpellSearchBar from './SpellSearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -82,7 +82,6 @@ export default function SpellOverview() {
     }
 
     const fetchMoreListItems = () => {
-        console.log(start);
         reciveSpells(10, start, query, function (result) {
             receiveSpellsResult(result);
         })
@@ -96,7 +95,7 @@ export default function SpellOverview() {
     return (
         <div id="overview">
             <div id="spellOverview">
-                <SearchBar inputs={["name", "school", "level", "duration", "time", "range", "components", "text", "classes", "sources"]} queryName="sendSpellSearchQuery" />
+                <SpellSearchBar />
                 <div id="spells" onScroll={handleScroll} ref={spells}>
                     {currentSpellList.spells.map((spell, index) => {
                         return <Spell delay={0} spell={spell} key={spell.spell_id} onClick={() => viewSpell(spell)} />;

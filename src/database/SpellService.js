@@ -23,7 +23,7 @@ module.exports.reciveSpell = (id, callback) => {
 }
 
 module.exports.reciveAllSpells = (callback) => {
-  let q = "SELECT * FROM 'main'.'tab_spells'";
+  let q = "SELECT * FROM 'main'.'tab_spells' ORDER BY spell_name";
   db.serialize(function () {
     db.all(q, function (err, rows) {
       if (err != null) {
@@ -39,6 +39,8 @@ module.exports.reciveSpells = (step, start, query, callback) => {
   localStorage.setItem('spellStep', parseInt(step, 10));
   localStorage.setItem('spellStart', parseInt(start, 10));
 
+console.log(query)
+
   if (query !== null) {
     searchSpellQuery = query;
   }
@@ -50,11 +52,19 @@ module.exports.reciveSpells = (step, start, query, callback) => {
     if (searchSpellQuery.time != null && typeof searchSpellQuery.time !== 'undefined' && searchSpellQuery.time != "") {
       q += `spell_time like "%${searchSpellQuery.time}%" AND `;
     }
-    if (searchSpellQuery.level != null && typeof searchSpellQuery.level !== 'undefined' && searchSpellQuery.level != "") {
-      q += `spell_level = "${searchSpellQuery.level}" AND `;
+    if (searchSpellQuery.level != null && typeof searchSpellQuery.level !== 'undefined' && searchSpellQuery.level != "" && searchSpellQuery.level.length !== 0) {
+      searchSpellQuery.level.map(level => {
+        q += `spell_level = "${level.value}" OR `;
+      });
+      q = q.slice(0, -3);
+      q += "AND ";
     }
-    if (searchSpellQuery.school != null && typeof searchSpellQuery.school !== 'undefined' && searchSpellQuery.school != "") {
-      q += `spell_school like "%${searchSpellQuery.school}%" AND `;
+    if (searchSpellQuery.school != null && typeof searchSpellQuery.school !== 'undefined' && searchSpellQuery.school != "" && searchSpellQuery.school.length !== 0) {
+      searchSpellQuery.school.map(school => {
+        q += `spell_school like "%${school.value}%" OR `;
+      });
+      q = q.slice(0, -3);
+      q += "AND ";
     }
     if (searchSpellQuery.range != null && typeof searchSpellQuery.range !== 'undefined' && searchSpellQuery.range != "") {
       q += `spell_range like "%${searchSpellQuery.range}%" AND `;
@@ -73,6 +83,9 @@ module.exports.reciveSpells = (step, start, query, callback) => {
     }
     if (searchSpellQuery.duration != null && typeof searchSpellQuery.duration !== 'undefined' && searchSpellQuery.duration != "") {
       q += `spell_duration like "%${searchSpellQuery.duration}%" AND `;
+    }
+    if (searchSpellQuery.ritual != null && typeof searchSpellQuery.ritual !== 'undefined' && searchSpellQuery.ritual != "") {
+      q += `spell_ritual = ${searchSpellQuery.ritual} AND `;
     }
     if (q.includes(" AND ")) {
       q = q.slice(0, -4);
@@ -105,6 +118,19 @@ module.exports.reciveSpellCount = (query, callback) => {
       }
       callback(rows[0]);
       console.log("====>" + `getSpellCount successfull`)
+    });
+  });
+}
+
+module.exports.reciveAttributeSelection = (attribute, callback) => {
+  let q = `SELECT spell_${attribute} FROM 'main'.'tab_spells' GROUP BY spell_${attribute}`;
+  db.serialize(function () {
+    db.all(q, function (err, rows) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      callback(rows);
+      console.log("====>" + `get all ${attribute} successfull`)
     });
   });
 }

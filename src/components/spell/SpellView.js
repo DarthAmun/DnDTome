@@ -61,7 +61,6 @@ export default function SpellView() {
     }
 
     const receiveChars = (result) => {
-        console.log(result)
         setChars(result);
         setSelectedChar(result[0].char_id);
     }

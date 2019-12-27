@@ -53,6 +53,7 @@
     "node-gyp": "^6.0.0",
     "rc-progress": "^2.5.2",
     "react-particles-js": "^2.7.0",
+    "react-select": "^3.0.8",
     "recharts": "^1.8.5",
     "sqlite3": "^4.1.0"
   }

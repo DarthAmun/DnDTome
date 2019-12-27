@@ -37,14 +37,14 @@ html, body, #root {
   width: 150px;
   height: 30px;
   position: absolute;
-  bottom: 10px;
+  bottom: 5px;
   right: 10px;
   font-size: 12px;
   color: #8000ff;
   font-family: 'Quicksand', sans-serif;
   -webkit-font-smoothing: antialiased;
   text-shadow: none;
-  line-height: 48px;
+  line-height: 30px;
   text-align: right;
 }
 
