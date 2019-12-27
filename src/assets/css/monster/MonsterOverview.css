@@ -12,11 +12,11 @@
 
 #monsters {
     float: left;
-    height: calc(100% - 60px);
+    height: calc(100% - 50px);
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    margin-bottom: 10px;
+    background: var(--app-background-color);
 }
 
 #monsters::-webkit-scrollbar {
