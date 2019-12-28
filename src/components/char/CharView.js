@@ -506,8 +506,11 @@ export default function CharView(props) {
     }
 
     const formatCastingTime = (value) => {
-        let words = value.split(',');
-        return words[0];
+        if(value !== null) {
+            let words = value.split(',');
+            return words[0];
+        }
+        return "";
     }
 
     const viewSpell = (spell) => {

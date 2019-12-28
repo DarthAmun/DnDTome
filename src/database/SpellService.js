@@ -22,6 +22,18 @@ module.exports.reciveSpell = (id, callback) => {
   });
 }
 
+module.exports.reciveSpellByName = (name, callback) => {
+  db.serialize(function () {
+    db.get("SELECT * FROM 'main'.'tab_spells' WHERE spell_name=?", [name], function (err, row) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      callback(row);
+      console.log("====>" + `getSpell successfull`)
+    });
+  });
+}
+
 module.exports.reciveAllSpells = (callback) => {
   let q = "SELECT * FROM 'main'.'tab_spells' ORDER BY spell_name";
   db.serialize(function () {
@@ -221,7 +233,13 @@ module.exports.deleteSpell = (spell) => {
 }
 
 module.exports.addSpellToChar = (char, spell, callback) => {
-  let data = [char.selectedChar, spell.id, false];
+  let data = [];
+  if(spell.id === undefined){
+    data = [char.selectedChar, spell.spell_id, false];
+  } else {
+    data = [char.selectedChar, spell.id, false];
+  }
+  
   let sql = `INSERT INTO 'main'.'tab_characters_spells' (char_id, spell_id, spell_prepared)
               VALUES  (?, ?, ?)`;
   db.serialize(function () {

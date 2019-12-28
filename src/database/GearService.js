@@ -23,6 +23,18 @@ module.exports.reciveAllGears = (callback) => {
     });
 }
 
+module.exports.reciveGearByName = (name, callback) => {
+    db.serialize(function () {
+      db.get("SELECT * FROM 'main'.'tab_gears' WHERE gear_name=?", [name], function (err, row) {
+        if (err != null) {
+          console.log("====>" + err);
+        }
+        callback(row);
+        console.log("====>" + `getSpell successfull`)
+      });
+    });
+  }
+
 module.exports.reciveGears = (step, start, query, callback) => {
     localStorage.setItem('gearStep', parseInt(step, 10));
     localStorage.setItem('gearStart', parseInt(start, 10));
@@ -188,7 +200,12 @@ module.exports.addGearToChar = (char, gear, callback) => {
 }
 
 module.exports.addGearToCharFromJson = (char, gear, callback) => {
-    let data = [char.selectedChar, gear.id, 1, false, false, gear.gear_damage, gear.gear_properties];
+    let data = [];
+    if(gear.id === undefined) {
+        data = [char.selectedChar, gear.gear_id, 1, false, false, gear.gear_damage, gear.gear_properties];
+    } else {
+        data = [char.selectedChar, gear.id, 1, false, false, gear.gear_damage, gear.gear_properties];
+    }
     let sql = `INSERT INTO 'main'.'tab_characters_items' (char_id, gear_id, item_amount, item_equiped, item_attuned, item_damage, item_properties)
                 VALUES  (?, ?, ?, ?, ?, ?, ?)`;
     db.serialize(function () {

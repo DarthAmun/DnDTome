@@ -2,10 +2,10 @@ import '../assets/css/Options.css';
 import React, { useState } from 'react';
 import OptionService from '../database/OptionService';
 import ThemeService from '../services/ThemeService';
-import { reciveAllSpells, saveNewSpells, addSpellToChar, saveNewSpellFromJson, reciveSpells } from '../database/SpellService';
-import { reciveAllItems, saveNewItems, reciveItems, addItemToChar, saveNewItemFromJson } from '../database/ItemService';
-import { reciveAllGears, saveNewGears, addGearToCharFromJson, reciveGears, saveNewGearFromJson } from '../database/GearService';
-import { reciveAllMonsters, saveNewMonsters, reciveMonsters, addMonsterToChar, saveNewMonsterFromJson } from '../database/MonsterService';
+import { reciveAllSpells, saveNewSpells, addSpellToChar, saveNewSpellFromJson, reciveSpellByName } from '../database/SpellService';
+import { reciveAllItems, saveNewItems, reciveItemByName, addItemToChar, saveNewItemFromJson } from '../database/ItemService';
+import { reciveAllGears, saveNewGears, addGearToCharFromJson, reciveGearByName, saveNewGearFromJson } from '../database/GearService';
+import { reciveAllMonsters, saveNewMonsters, reciveMonstersByCertainName, addMonsterToChar, saveNewMonsterFromJson } from '../database/MonsterService';
 import { reciveAllChars, saveNewCharFromJson, reciveCharSpells, reciveCharItems, reciveCharMonsters } from '../database/CharacterService';
 import { Line } from 'rc-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -281,10 +281,11 @@ export default function Options() {
   }
 
   const importCharSpells = (charSpells, char, step, callback) => {
-    if (charSpells.length > step) {
+    if (charSpells.length !== undefined && charSpells.length > step) {
       let spell = charSpells[step];
-      reciveSpells(10, 0, { name: spell.spell_name }, function (spells) {
-        if (spells.length === 0) {
+      reciveSpellByName(spell.spell_name, function (spells) {
+        console.log(spells);
+        if (spells === undefined) {
           saveNewSpellFromJson(spell, function (spellId) {
             spell = { ...spell, id: spellId };
             addSpellToChar(char, spell, function () {
@@ -293,7 +294,9 @@ export default function Options() {
           });
         } else {
           ipcRenderer.send('displayMessage', { type: `Spell not imported`, message: `Spell ${spell.spell_name} already in tome.` });
-          importCharSpells(charSpells, char, (step + 1), callback);
+          addSpellToChar(char, spells, function () {
+            importCharSpells(charSpells, char, (step + 1), callback);
+          });
         }
       });
     } else {
@@ -302,10 +305,10 @@ export default function Options() {
   }
 
   const importCharMonsters = (charMonsters, char, step, callback) => {
-    if (charMonsters.length > step) {
+    if (charMonsters.length !== undefined && charMonsters.length > step) {
       let monster = charMonsters[step];
-      reciveMonsters(10, 0, { name: monster.monster_name }, function (monsters) {
-        if (monsters.length === 0) {
+      reciveMonstersByCertainName(monster.monster_name, function (monsters) {
+        if (monsters === undefined) {
           saveNewMonsterFromJson(monster, function (monsterId) {
             monster = { ...monster, id: monsterId };
             addMonsterToChar(char, monster, function () {
@@ -314,7 +317,9 @@ export default function Options() {
           });
         } else {
           ipcRenderer.send('displayMessage', { type: `Monster not imported`, message: `Monster ${monster.monster_name} already in tome.` });
-          importCharMonsters(charMonsters, char, (step + 1), callback);
+          addMonsterToChar(char, monsters, function () {
+            importCharMonsters(charMonsters, char, (step + 1), callback);
+          });
         }
       });
     } else {
@@ -324,11 +329,11 @@ export default function Options() {
   }
 
   const importCharItems = (charItems, char, step, callback) => {
-    if (charItems.length > step) {
+    if (charItems.length !== undefined && charItems.length > step) {
       let item = charItems[step];
       if (item.item_id !== null) {
-        reciveItems(10, 0, { name: item.item_name }, function (items) {
-          if (items.length === 0) {
+        reciveItemByName(item.item_name, function (items) {
+          if (items === undefined) {
             saveNewItemFromJson(item, function (itemId) {
               item = { ...item, id: itemId };
               addItemToChar(char, item, function () {
@@ -337,12 +342,14 @@ export default function Options() {
             });
           } else {
             ipcRenderer.send('displayMessage', { type: `Item not imported`, message: `Item ${item.item_name} already in tome.` });
-            importCharItems(charItems, char, (step + 1), callback);
+            addItemToChar(char, items, function () {
+              importCharItems(charItems, char, (step + 1), callback);
+            });
           }
         });
       } else {
-        reciveGears(10, 0, { name: item.gear_name }, function (gears) {
-          if (gears.length === 0) {
+        reciveGearByName(item.gear_name, function (gears) {
+          if (gears === undefined) {
             saveNewGearFromJson(item, function (gearId) {
               let gear = { ...item, id: gearId };
               addGearToCharFromJson(char, gear, function () {
@@ -351,7 +358,9 @@ export default function Options() {
             });
           } else {
             ipcRenderer.send('displayMessage', { type: `Gear not imported`, message: `Gear ${item.gear_name} already in tome.` });
-            importCharItems(charItems, char, (step + 1), callback);
+            addGearToCharFromJson(char, gears, function () {
+              importCharItems(charItems, char, (step + 1), callback);
+            });
           }
         });
       }

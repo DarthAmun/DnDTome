@@ -36,6 +36,18 @@ module.exports.reciveMonstersByName = (name, callback) => {
     });
 }
 
+module.exports.reciveMonstersByCertainName = (name, callback) => {
+    db.serialize(function () {
+        db.get(`SELECT * FROM 'main'.'tab_monsters' WHERE monster_name=?`, [name], function (err, rows) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            callback(rows);
+            console.log("====>" + `getAllMonstersResult successfull`)
+        });
+    });
+}
+
 module.exports.reciveMonsters = (step, start, query, callback) => {
     localStorage.setItem('monsterStep', parseInt(step, 10));
     localStorage.setItem('monsterStart', parseInt(start, 10));
@@ -238,7 +250,12 @@ module.exports.deleteMonster = (monster) => {
 }
 
 module.exports.addMonsterToChar = (char, monster, callback) => {
-    let data = [char.selectedChar, monster.id];
+    let data = [];
+    if(monster.id === undefined) {
+        data = [char.selectedChar, monster.monster_id];
+    } else {
+        data = [char.selectedChar, monster.id];
+    }
     let sql = `INSERT INTO 'main'.'tab_characters_monsters' (char_id, monster_id)
                 VALUES  (?, ?)`;
     db.serialize(function () {

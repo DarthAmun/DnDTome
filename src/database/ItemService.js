@@ -22,6 +22,17 @@ module.exports.reciveAllItems = (callback) => {
         });
     });
 }
+module.exports.reciveItemByName = (name, callback) => {
+    db.serialize(function () {
+      db.get("SELECT * FROM 'main'.'tab_items' WHERE item_name=?", [name], function (err, row) {
+        if (err != null) {
+          console.log("====>" + err);
+        }
+        callback(row);
+        console.log("====>" + `getSpell successfull`)
+      });
+    });
+  }
 
 module.exports.reciveItems = (step, start, query, callback) => {
     localStorage.setItem('itemStep', parseInt(step, 10));
@@ -166,7 +177,12 @@ module.exports.saveNewItemFromJson = (item, callback) => {
 }
 
 module.exports.addItemToChar = (char, item, callback) => {
-    let data = [char.selectedChar, item.id, 1, false, false];
+    let data = [];
+    if(item.id === undefined) {
+        data = [char.selectedChar, item.item_id, 1, false, false];
+    } else {
+        data = [char.selectedChar, item.id, 1, false, false];
+    }
     let sql = `INSERT INTO 'main'.'tab_characters_items' (char_id, item_id, item_amount, item_equiped, item_attuned)
                 VALUES  (?, ?, ?, ?, ?)`;
     db.serialize(function () {
