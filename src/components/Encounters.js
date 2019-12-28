@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../assets/css/Encounters.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faDice, faLevelDownAlt } from '@fortawesome/free-solid-svg-icons';
+import icon from '../assets/img/dice_icon_grey.png';
 
 import { reciveAllMonsters, reciveMonstersByName } from '../database/MonsterService';
 import { reciveAllChars } from '../database/CharacterService';
@@ -35,7 +36,7 @@ export default function Encounters() {
     };
 
     const addChar = char => {
-        let participant = { id: char.char_id, subid: subIdCount, name: char.char_name, hp: char.char_hp, currentHp: char.char_hp, ac: char.char_ac, initBonus: char.char_init, init: 0, tag: "", current: "" };
+        let participant = { id: char.char_id, subid: subIdCount, name: char.char_name, hp: char.char_hp, currentHp: char.char_hp, ac: char.char_ac, initBonus: char.char_init, init: 0, tag: "", char: char, current: "" };
         setSubIdCount(subIdCount + 1);
         let list = participantList.concat(participant);
         setParticipantList(list);
@@ -101,6 +102,21 @@ export default function Encounters() {
         }
     }
 
+    const getPicture = (participant) => {
+        if (participant.monster !== undefined) {
+            if (participant.monster.monster_pic === "" || participant.monster.monster_pic === null) {
+                return icon;
+            }
+            return participant.monster.monster_pic;
+        } else if(participant.char !== undefined) {
+            if (participant.char.char_pic === "") {
+                return icon;
+            }
+            return participant.char.char_pic;
+        }
+        return icon;
+    };
+
     return (
         <div id="overview">
             <div id="encounterOverview">
@@ -144,7 +160,10 @@ export default function Encounters() {
                                 <div className="encounterParticipantInit">
                                     <input type="text" name={participant.init} placeholder="0" value={participant.init} onChange={e => setParticipantInit(e, participant.subid)} />
                                 </div>
-                                <div className="encounterParticipantName" onClick={() => viewMonster(participant)}>{participant.name}</div>
+                                <div className="encounterParticipantName" onClick={() => viewMonster(participant)}>
+                                <div className="image" style={{backgroundImage: `url(${getPicture(participant)})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                                    {participant.name}
+                                </div>
                                 <div className="encounterParticipantCurrentHp">
                                     <input type="text" name={participant.currentHp} placeholder="0" value={participant.currentHp} onChange={e => setParticipantHp(e, participant.subid)} />
                                 </div>

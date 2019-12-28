@@ -109,7 +109,8 @@
     color: var(--card-color);
     box-shadow: var(--boxshadow);
     margin-bottom: 5px;
-    height: 20px;
+    height: 30px;
+    line-height: 30px;
 }
 
 #encounterContent .encouterParticipant.current {
@@ -125,49 +126,60 @@
 #encounterContent .encounterParticipantInit{
     width: 70px;
     float: left;
-    height: 20px;
+    height: 30px;
 }
 
 #encounterContent .encounterParticipantName{
     width: calc(100% - 450px);
     float: left;
     overflow: hidden;
-    height: 20px;
+    height: 30px;
     cursor: pointer;
+}
+
+#encounterContent .encounterParticipantName .image {
+    float: left;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    overflow: hidden;
+    margin-right: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    background-color: white;
 }
 
 #encounterContent .encounterParticipantCurrentHp{
     width: 60px;
     float: left;
-    height: 20px;
+    height: 30px;
 }
 
 #encounterContent .encounterParticipantHp{
     width: 60px;
     float: left;
-    height: 20px;
+    height: 30px;
 }
 
 #encounterContent .encounterParticipantAc{
     width: 50px;
     float: left;
-    height: 20px;
+    height: 30px;
 }
 
 #encounterContent .encounterParticipantActions{
     width: 200px;
     float: left;
-    height: 20px;
+    height: 30px;
 }
 
 #encounterContent .encounterParticipantActionsTag {
     width: 169px;
     float: left;
-    height: 20px;
+    height: 30px;
 }
 
 #encounterContent .encouterParticipant input{
-    height: 20px;
+    height: 30px;
     width: calc(100% - 30px);
     border-radius: 3px;
     border: none;
@@ -180,7 +192,7 @@
 }
 
 .encounterParticipantActions button, .button {
-    height: 20px;
+    height: 30px;
     width: auto;
     border: none;
     border-radius: 5px;
