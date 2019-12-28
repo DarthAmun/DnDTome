@@ -105,6 +105,7 @@ export default function Encounters() {
         <div id="overview">
             <div id="encounterOverview">
                 <div id="encounterAddMenu">
+                    <div className="triangle"></div>
                     <div id="encounterAddChar">
                         <div className="encounterAddTitle"><b>Characters</b></div>
                         <div className="encounterAddCharList">

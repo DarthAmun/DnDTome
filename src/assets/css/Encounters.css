@@ -5,12 +5,33 @@
     float: left;
     overflow-y: hidden;
     overflow-x: hidden;
+    position: relative;
 }
 
 #encounterAddMenu {
-    width: 200px;
+    width: 220px;
     height: 100%;
     float: left;
+    left: -200px;
+    position: absolute;
+    transition: left 0.5s ease-out;
+    overflow: hidden;
+}
+
+#encounterAddMenu:hover {
+    left: 0px;
+    transition: left 0.5s ease-in;
+}
+
+#encounterAddMenu .triangle{
+    height: 0px;
+    width: 0px;
+    position: absolute;
+    top: calc(50% - 25px);
+    right: 0px;
+    border-style: solid;
+    border-width: 25px 0 25px 20px;
+    border-color: transparent transparent transparent #8000ff;
 }
 
 #encounterAddMenu #encounterAddChar {
@@ -76,7 +97,7 @@
 }
 
 #encounterContent {
-    width: calc(100% - 210px);
+    width: calc(100% - 30px);
     min-width: 460px;
     height: calc(100% - 20px);
     float: right;
