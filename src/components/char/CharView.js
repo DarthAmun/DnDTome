@@ -205,7 +205,7 @@ export default function CharView(props) {
             setSleightOfHandProf(result.char_sleightOfHandProf);
             setStealthProf(result.char_stealthProf);
             setSurvivalProf(result.char_survivalProf);
-            
+
             setCastingHit(result.char_castingHit);
             setCastingDC(result.char_castingDC);
             setSpellNotes(result.char_spellNotes);
@@ -264,15 +264,15 @@ export default function CharView(props) {
     }, []);
 
     useEffect(() => {
-        if(level<5) {
+        if (level < 5) {
             setProf(2);
-        } else if(level<9) {
+        } else if (level < 9) {
             setProf(3);
-        }else if(level<13) {
+        } else if (level < 13) {
             setProf(4);
-        }else if(level<17) {
+        } else if (level < 17) {
             setProf(5);
-        }else if(level<21) {
+        } else if (level < 21) {
             setProf(6);
         }
     }, [level]);
@@ -506,7 +506,7 @@ export default function CharView(props) {
     }
 
     const formatCastingTime = (value) => {
-        if(value !== null) {
+        if (value !== null) {
             let words = value.split(',');
             return words[0];
         }
@@ -647,6 +647,25 @@ export default function CharView(props) {
             return icon;
         }
         return spell.spell_pic;
+    };
+    const getMonsterPicture = (monster) => {
+        if (monster.monster_pic === "" || monster.monster_pic === null) {
+            return icon;
+        }
+        return monster.monster_pic;
+    };
+    const getItemPicture = (item) => {
+        if (item.item_id === null) {
+            if (item.gear_pic === "" || item.gear_pic === null) {
+                return icon;
+            }
+            return item.gear_pic;
+        } else {
+            if (item.item_pic === "" || item.item_pic === null) {
+                return icon;
+            }
+            return item.item_pic;
+        }
     };
 
     const style = {
@@ -921,7 +940,7 @@ export default function CharView(props) {
                                         </tr>
                                         {spells.map((spell, index) => {
                                             return <tr className="charSpell" key={spell.id} style={{ cursor: 'pointer' }}>
-                                                <td onClick={() => viewSpell(spell)}><div className="image" style={{backgroundImage: `url(${getSpellPicture(spell)})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div></td>
+                                                <td onClick={() => viewSpell(spell)}><div className="image" style={{ backgroundImage: `url(${getSpellPicture(spell)})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}></div></td>
                                                 <td onClick={() => viewSpell(spell)}>{formatLevel(spell.spell_level)}</td>
                                                 <td onClick={() => viewSpell(spell)}>{spell.spell_name}</td>
                                                 <td onClick={() => viewSpell(spell)}>{formatCastingTime(spell.spell_time)}</td>
@@ -957,6 +976,7 @@ export default function CharView(props) {
                                         {items.map((item, index) => {
                                             if (item.item_id === null) {
                                                 return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
+                                                    <td onClick={() => viewGear(item)}><div className="image" style={{ backgroundImage: `url(${getItemPicture(item)})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}></div></td>
                                                     <td onClick={() => viewGear(item)}>{item.gear_name}</td>
                                                     <td onClick={() => viewGear(item)}>{item.gear_type}</td>
                                                     <td className="centered" onClick={() => viewItem(item)}>{item.gear_cost}</td>
@@ -982,6 +1002,7 @@ export default function CharView(props) {
                                                 </tr>;
                                             } else {
                                                 return <tr className="charItem" key={item.id} style={{ cursor: 'pointer' }}>
+                                                    <td onClick={() => viewItem(item)}><div className="image" style={{ backgroundImage: `url(${getItemPicture(item)})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}></div></td>
                                                     <td onClick={() => viewItem(item)}>{item.item_name}</td>
                                                     <td onClick={() => viewItem(item)}>{item.item_type}</td>
                                                     <td className="centered" onClick={() => viewItem(item)}></td>
@@ -1016,6 +1037,7 @@ export default function CharView(props) {
                                 <table style={{ width: "100%" }}>
                                     <tbody>
                                         <tr>
+                                            <th>Icon</th>
                                             <th>CR</th>
                                             <th>Name</th>
                                             <th>AC</th>
@@ -1025,6 +1047,7 @@ export default function CharView(props) {
                                         </tr>
                                         {monsters.map((monster, index) => {
                                             return <tr className="charMonster" key={index} style={{ cursor: 'pointer' }}>
+                                                <td onClick={() => viewMonster(monster)}><div className="image" style={{ backgroundImage: `url(${getMonsterPicture(monster)})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}></div></td>
                                                 <td onClick={() => viewMonster(monster)}>{monster.monster_cr}</td>
                                                 <td onClick={() => viewMonster(monster)}>{monster.monster_name}</td>
                                                 <td onClick={() => viewMonster(monster)}>{monster.monster_armorClass}</td>

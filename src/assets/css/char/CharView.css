@@ -112,7 +112,7 @@
     margin: 5px;
 }
 
-#char .charSpell .image {
+#char .charSpell .image, #char .charMonsters .image, #char .charItems .image {
     float: left;
     width: 27px;
     height: 27px;
@@ -123,6 +123,10 @@
     box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
     background-color: white;
     margin: 5px;
+}
+#char .charMonsters .image {
+    width: 57px;
+    height: 57px;
 }
 
 #char .smallLabelGroup label, #char .abilityScores label, 
