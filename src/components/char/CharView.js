@@ -775,13 +775,7 @@ export default function CharView(props) {
                                         </tr>
                                         {items.map((item, index) => {
                                             if (
-                                                (item.item_equiped
-                                                    &&
-                                                    ((item.item_attuned && item.item_attunment)
-                                                        ||
-                                                        item.item_attunment === null
-                                                    )
-                                                )
+                                                item.item_equiped
                                                 && (
                                                     (item.item_type !== null && item.item_type.includes("Weapon"))
                                                     ||
@@ -964,6 +958,7 @@ export default function CharView(props) {
                                 <table className="itemTable">
                                     <tbody>
                                         <tr>
+                                            <th>Icon</th>
                                             <th>Name</th>
                                             <th>Type</th>
                                             <th>Cost</th>
