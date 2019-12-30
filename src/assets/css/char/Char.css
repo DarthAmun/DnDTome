@@ -55,6 +55,7 @@
     height: 20px;
     width: 100%;
     line-height: 20px;
+    overflow: hidden;
 }
 
 .char .rightChar .charComp {
