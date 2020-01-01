@@ -56,6 +56,11 @@ export default function SpellView() {
             setSources(sources);
             setId(result.spell_id);
             setPic(result.spell_pic);
+            
+            if (result.spell_pic === null) {
+                setPic("");
+            }
+
             console.timeEnd("receiveSpell")
         })
     }
@@ -88,6 +93,10 @@ export default function SpellView() {
             receiveChars(result)
         })
     }, [id]);
+
+    useEffect(() => {
+        console.log(pic)
+    }, [pic]);
 
     const saveSpellAction = (e) => {
         saveSpell({ id, name, school, level, ritual, time, range, duration, components, text, classes, sources, pic });
