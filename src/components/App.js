@@ -74,7 +74,6 @@ const App = () => {
         <LayoutRoute path="/gear-overview" layout={PageLayout} component={GearOverview} />
         <LayoutRoute path="/monster-overview" layout={PageLayout} component={MonsterOverview} />
         <LayoutRoute path="/char-overview" layout={PageLayout} component={CharOverview} />
-        <LayoutRoute path="/char/:id" layout={PageLayout} component={CharView} />
         <LayoutRoute path="/add-char" layout={PageLayout} component={AddChar} />
         <LayoutRoute path="/add-spell" layout={PageLayout} component={AddSpell} />
         <LayoutRoute path="/add-item" layout={PageLayout} component={AddItem} />

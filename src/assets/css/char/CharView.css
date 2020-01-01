@@ -1,5 +1,17 @@
+body {
+    height: 100%;
+    margin: 0px;
+    background-color: var(--app-background-color);
+    overflow: hidden;
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    src: url('../../font/Quicksand-Medium.ttf') format('truetype');
+}
+
 #char {
-    height: calc(100% - 40px);
+    height: calc(100% - 20px);
     width: calc(100% - 20px);
     overflow: hidden;
     color: var(--card-title-color);
@@ -12,6 +24,7 @@
     justify-content: flex-start;
     align-items: center;
     align-content: flex-start;
+    font-family: 'Quicksand', sans-serif;
 }
 
 #char input {
@@ -176,14 +189,12 @@
 }
 
 #char .abilityScores, #char .savingThrows, #char .skills {
-    height: 205px;
     width: 210px;
     margin: 5px;
 }
 #char .abilityScores .score {
     width: 210px;
     float: left;
-    height: 35px;
     line-height: 30px;
 }
 #char .abilityScores .score input, #char .savingThrows input, #char .skills input {

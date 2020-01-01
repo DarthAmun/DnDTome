@@ -16,6 +16,8 @@ let gearWindow;
 let gearPath;
 let monsterWindow;
 let monsterPath;
+let charWindow;
+let charPath;
 // Keep a reference for dev mode
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
@@ -27,20 +29,6 @@ let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database(path.join(__dirname, './src/assets/db/tab.db'));
 
 function createWindow() {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 1180,
-    height: 680,
-    minHeight: 400,
-    minWidth: 660,
-    show: false,
-    frame: false,
-    icon: __dirname + './src/assets/img/dice_icon.ico',
-    //The lines below solved the issue
-    webPreferences: {
-      nodeIntegration: true
-    }
-  });
 
   // and load the index.html of the app.
   let indexPath;
@@ -75,6 +63,12 @@ function createWindow() {
       pathname: 'monster.html',
       slashes: true
     });
+    charPath = url.format({
+      protocol: 'http:',
+      host: 'localhost:8080',
+      pathname: 'char.html',
+      slashes: true
+    });
   } else {
     indexPath = url.format({
       protocol: 'file:',
@@ -101,30 +95,37 @@ function createWindow() {
       pathname: path.join(__dirname, 'dist', 'monster.html'),
       slashes: true
     });
+    charPath = url.format({
+      protocol: 'file:',
+      pathname: path.join(__dirname, 'dist', 'char.html'),
+      slashes: true
+    });
   }
-  mainWindow.loadURL(indexPath);
 
-  // Don't show until we are ready and loaded
+  // Create the browser window.
+  mainWindow = new BrowserWindow({
+    width: 1180,
+    height: 680,
+    minHeight: 400,
+    minWidth: 660,
+    show: false,
+    frame: false,
+    icon: __dirname + './src/assets/img/dice_icon.ico',
+    webPreferences: {
+      nodeIntegration: true
+    }
+  });
+  mainWindow.loadURL(indexPath);
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
     mainWindow.setTitle("DnD Tome");
-    // Open the DevTools automatically if developing
     if (dev) {
       mainWindow.webContents.openDevTools();
     }
   });
-
-  // Emitted when the window is closed.
   mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
     db.close();
     mainWindow = null;
-    spellWindow = null;
-    itemWindow = null;
-    gearWindow = null;
-    monsterWindow = null;
   });
 
   //Spell window
@@ -208,6 +209,26 @@ function createWindow() {
   monsterWindow.on('close', (e) => {
     e.preventDefault();
     monsterWindow.hide();
+  });
+
+  //Char window
+   charWindow = new BrowserWindow({
+    parent: mainWindow,
+    width: 1000,
+    height: 750,
+    show: false,
+    resizable: true,
+    frame: true,
+    icon: __dirname + './src/assets/img/dice_icon.ico',
+    webPreferences: {
+      nodeIntegration: true
+    }
+  });
+  charWindow.setMenu(null);
+  charWindow.loadURL(charPath);
+  charWindow.on('close', (e) => {
+    e.preventDefault();
+    charWindow.hide();
   });
 }
 
@@ -340,20 +361,11 @@ ipcMain.on('sendGearSearchQuery', (event, arg) => {
 
 ipcMain.on('sendMonsterSearchQuery', (event, arg) => {
   const { query } = arg;
-  mainWindow.webContents.send('sendMonsterSearchQuery', { query });  
+  mainWindow.webContents.send('sendMonsterSearchQuery', { query });
 });
 
 ipcMain.on('closeMainWindow', (event) => {
   mainWindow.close();
-});
-ipcMain.on('closeSpellWindow', (event) => {
-  spellWindow.hide();
-});
-ipcMain.on('closeItemWindow', (event) => {
-  itemWindow.hide();
-});
-ipcMain.on('closeMonsterWindow', (event) => {
-  monsterWindow.hide();
 });
 
 ipcMain.on('minimizeMainWindow', (event) => {
@@ -361,39 +373,48 @@ ipcMain.on('minimizeMainWindow', (event) => {
 });
 
 ipcMain.on('openSpellView', (event, spell) => {
-  spellWindow.show();
   if (dev) {
     spellWindow.webContents.openDevTools();
   }
   spellWindow.setTitle("DnD Tome - " + spell.spell_name);
   spellWindow.webContents.send('onViewSpell', spell);
+  spellWindow.show();
 });
 
 ipcMain.on('openItemView', (event, item) => {
-  itemWindow.show();
   if (dev) {
     itemWindow.webContents.openDevTools();
   }
   itemWindow.setTitle("DnD Tome - " + item.item_name);
   itemWindow.webContents.send('onViewItem', item);
+  itemWindow.show();
 });
 
 ipcMain.on('openGearView', (event, gear) => {
-  gearWindow.show();
   if (dev) {
     gearWindow.webContents.openDevTools();
   }
   gearWindow.setTitle("DnD Tome - " + gear.gear_name);
   gearWindow.webContents.send('onViewGear', gear);
+  gearWindow.show();
 });
 
 ipcMain.on('openMonsterView', (event, monster) => {
-  monsterWindow.show();
   if (dev) {
     monsterWindow.webContents.openDevTools();
   }
   monsterWindow.setTitle("DnD Tome - " + monster.monster_name);
   monsterWindow.webContents.send('onViewMonster', monster);
+  monsterWindow.show();
+});
+
+ipcMain.on('openCharView', (event, char) => {
+  if (dev) {
+    charWindow.webContents.openDevTools();
+  }
+  charWindow.setTitle("DnD Tome - " + char.char_name);
+  charWindow.webContents.send('onViewChar', char);
+  charWindow.show();
 });
 
 ipcMain.on('deleteAllSpells', (event) => {
@@ -434,17 +455,10 @@ ipcMain.on('displayMessage', (event, m) => {
   mainWindow.webContents.send('displayMessage', { type: m.type, message: m.message });
 });
 
-ipcMain.on('reloadWindows', (event) => {
-  itemWindow.reload();
-  gearWindow.reload();
-  spellWindow.reload();
-  monsterWindow.reload();
-  mainWindow.reload();
-});
-
 ipcMain.on('changeTheme', (event, theme) => {
   itemWindow.webContents.send('changeTheme', { theme: theme });
-  gearWindow.webContents.send('changeTheme',  { theme: theme });
-  spellWindow.webContents.send('changeTheme',  { theme: theme });
-  monsterWindow.webContents.send('changeTheme',  { theme: theme });
+  gearWindow.webContents.send('changeTheme', { theme: theme });
+  spellWindow.webContents.send('changeTheme', { theme: theme });
+  monsterWindow.webContents.send('changeTheme', { theme: theme });
+  charWindow.webContents.send('changeTheme', { theme: theme });
 });

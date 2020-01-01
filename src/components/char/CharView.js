@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import * as ReactDOM from "react-dom";
-import { useHistory } from 'react-router-dom';
 import '../../assets/css/char/CharView.css';
 import OptionService from '../../database/OptionService';
 import ThemeService from '../../services/ThemeService';
@@ -16,10 +15,7 @@ const ipcRenderer = electron.ipcRenderer;
 const { dialog, app } = electron.remote;
 const fs = require('fs');
 
-
-export default function CharView(props) {
-    let historyRoute = useHistory();
-
+export default function CharView() {
     const [tabs, setTabs] = useState({ skills: true, combat: false, actions: false, features: false, spells: false, equipment: false, monsters: false, notes: false });
 
     const [id, setId] = useState(0);
@@ -129,7 +125,8 @@ export default function CharView(props) {
     const [deathTwo, setDeathTwo] = useState(0);
     const [deathThree, setDeathThree] = useState(0);
 
-    const receiveCharResult = (result) => {
+    const receiveCharResult = (event, result) => {
+        console.log(result)
         console.time("receiveChar")
         ReactDOM.unstable_batchedUpdates(() => {
             setName(result.char_name);
@@ -243,25 +240,36 @@ export default function CharView(props) {
         setMonsters(result);
     }
 
+    const changeTheme = (event, result) => {
+        ThemeService.applyTheme(result.theme);
+    }
+
     useEffect(() => {
         OptionService.get('theme', function (result) {
             ThemeService.setTheme(result);
             ThemeService.applyTheme(result);
         });
 
-        reciveChar(props.match.params.id, function (result) {
-            receiveCharResult(result);
-        })
-        reciveCharSpells(props.match.params.id, function (result) {
+        ipcRenderer.on("onViewChar", receiveCharResult);
+        ipcRenderer.on("changeTheme", changeTheme);
+        return () => {
+            ipcRenderer.removeListener("onViewChar", receiveCharResult);
+            ipcRenderer.removeListener("changeTheme", changeTheme);
+        }
+
+    }, []);
+
+    useEffect(() => {
+        reciveCharSpells(id, function (result) {
             receiveSpellsResult(result);
         })
-        reciveCharMonsters(props.match.params.id, function (result) {
+        reciveCharMonsters(id, function (result) {
             reciveMonstersResult(result);
         })
-        reciveCharItems(props.match.params.id, function (result) {
+        reciveCharItems(id, function (result) {
             receiveItemsResult(result);
         })
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         if (level < 5) {

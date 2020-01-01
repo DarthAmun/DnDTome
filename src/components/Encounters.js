@@ -96,9 +96,12 @@ export default function Encounters() {
         setParticipantList(part);
     }
 
-    const viewMonster = (participant) => {
+    const viewParticipant = (participant) => {
         if (participant.monster !== undefined) {
             ipcRenderer.send('openMonsterView', participant.monster);
+        }
+        if (participant.char !== undefined) {
+            ipcRenderer.send('openCharView', participant.char);
         }
     }
 
@@ -160,7 +163,7 @@ export default function Encounters() {
                                 <div className="encounterParticipantInit">
                                     <input type="text" name={participant.init} placeholder="0" value={participant.init} onChange={e => setParticipantInit(e, participant.subid)} />
                                 </div>
-                                <div className="encounterParticipantName" onClick={() => viewMonster(participant)}>
+                                <div className="encounterParticipantName" onClick={() => viewParticipant(participant)}>
                                 <div className="image" style={{backgroundImage: `url(${getPicture(participant)})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                                     {participant.name}
                                 </div>

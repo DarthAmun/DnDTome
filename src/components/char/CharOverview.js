@@ -6,11 +6,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import Char from './Char';
 
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
+
 export default function SpellOverview() {
     const [currentCharList, setCurrentCharList] = useState([]);
 
     const receiveChars = (result) => {
         setCurrentCharList(result);
+    }
+
+    const viewChar = (char) => {
+        console.log("char send")
+        ipcRenderer.send('openCharView', char);
     }
 
     useEffect(() => {
@@ -23,7 +31,7 @@ export default function SpellOverview() {
         <div id="overview">
             <div id="chars">
                 {currentCharList.map((char, index) => {
-                    return <Char delay={index} char={char} key={char.char_id} />;
+                    return <Char delay={index} char={char} key={char.char_id} onClick={() => viewChar(char)} />;
                 })}
                 <Link to="/add-char">
                     <div className="add">
