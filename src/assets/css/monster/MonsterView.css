@@ -88,6 +88,23 @@ body {
     color: var(--pagination-input-color);
 }
 
+#monsterView textarea:hover + .textareaTip{
+    opacity: 1;
+    display: block;
+    transition: opacity 0.3s ease-out;
+}
+#monsterView .textareaTip {
+    position: relative;
+    height: 20px;
+    width: auto;
+    top: -52px;
+    left: 2px;
+    font-size: 8px;
+    opacity: 0;
+    display: none;
+    transition: opacity 0.3s ease-in;
+}
+
 #monsterView textarea.small {
     height: 28px;
     width: 300px; 

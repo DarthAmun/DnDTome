@@ -137,7 +137,7 @@ export default function MonsterView() {
     }
 
     const addMonsterToCharAction = (e) => {
-        addMonsterToChar({ selectedChar }, { id, name }, function () {});
+        addMonsterToChar({ selectedChar }, { id, name }, function () { });
     }
 
     const saveMonsterAction = (e) => {
@@ -230,15 +230,23 @@ export default function MonsterView() {
             </div>
             <div className="top">
                 <textarea className="small" value={savingThrows} onChange={e => setSavingThrows(e.target.value)} placeholder="Saving Throws..."></textarea>
+                <div className="textareaTip">Saving Throws</div>
                 <textarea className="small" value={skills} onChange={e => setSkills(e.target.value)} placeholder="Skills..."></textarea>
+                <div className="textareaTip">Skills</div>
                 <textarea className="small" value={senses} onChange={e => setSenses(e.target.value)} placeholder="Senses..."></textarea>
+                <div className="textareaTip">Senses</div>
                 <textarea className="small" value={lang} onChange={e => setLang(e.target.value)} placeholder="Languages..."></textarea>
+                <div className="textareaTip">Languages</div>
             </div>
             <div className="top">
                 <textarea className="small" value={dmgVulnerabilitie} onChange={e => setDmgVulnerabilitie(e.target.value)} placeholder="Vulnerabilities..."></textarea>
+                <div className="textareaTip">Vulnerabilities</div>
                 <textarea className="small" value={dmgResistance} onChange={e => setDmgResistance(e.target.value)} placeholder="Resistances..."></textarea>
+                <div className="textareaTip">Resistances</div>
                 <textarea className="small" value={dmgImmunities} onChange={e => setDmgImmunities(e.target.value)} placeholder="Damage immunities..."></textarea>
+                <div className="textareaTip">Damage immunities</div>
                 <textarea className="small" value={conImmunities} onChange={e => setConImmunities(e.target.value)} placeholder="Condition immunities..."></textarea>
+                <div className="textareaTip">Condition immunities</div>
             </div>
             <textarea value={sAblt} onChange={e => setSAblt(e.target.value)} placeholder="Special abilities..."></textarea>
             <textarea value={ablt} onChange={e => setAblt(e.target.value)} placeholder="Actions..."></textarea>
