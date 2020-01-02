@@ -73,7 +73,7 @@ console.log(query)
     }
     if (searchSpellQuery.school != null && typeof searchSpellQuery.school !== 'undefined' && searchSpellQuery.school != "" && searchSpellQuery.school.length !== 0) {
       searchSpellQuery.school.map(school => {
-        q += `spell_school like "%${school.value}%" OR `;
+        q += `spell_school = "${school.value}" OR `;
       });
       q = q.slice(0, -3);
       q += "AND ";

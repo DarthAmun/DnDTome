@@ -23,12 +23,18 @@ export default function ItemSearchBar() {
     useEffect(() => {
         reciveAttributeSelection("rarity", function (result) {
             let rarities = result.map(rarity => {
+                if(rarity.item_rarity === "") {
+                    return { value: rarity.item_rarity, label: "Empty" };
+                }
                 return { value: rarity.item_rarity, label: rarity.item_rarity };
             })
             setRarityList(rarities);
         })
         reciveAttributeSelection("type", function (result) {
             let types = result.map(type => {
+                if(type.item_type === "") {
+                    return { value: type.item_type, label: "Empty" };
+                }
                 return { value: type.item_type, label: type.item_type };
             })
             setTypeList(types);

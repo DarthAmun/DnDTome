@@ -28,12 +28,18 @@ export default function SpellSearchBar() {
     useEffect(() => {
         reciveAttributeSelection("school", function (result) {
             let schools = result.map(school => {
+                if (school.spell_school === "") {
+                    return { value: school.spell_school, label: "Empty" };
+                }
                 return { value: school.spell_school, label: school.spell_school };
             })
             setSchoolList(schools);
         })
         reciveAttributeSelection("level", function (result) {
             let levels = result.map(level => {
+                if (level.spell_level === "") {
+                    return { value: level.spell_level, label: "Empty" };
+                }
                 return { value: level.spell_level, label: level.spell_level };
             })
             setLevelList(levels);
