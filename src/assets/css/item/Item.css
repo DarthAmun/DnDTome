@@ -1,6 +1,6 @@
 .item {
     width: 200px;
-    height: 260px;
+    height: 230px;
     float: left;
     color: var(--card-color);
     text-align: center;
@@ -29,10 +29,10 @@
 
 .itemIcon {
     margin: 15px;
-    margin-left: 36px;
-    margin-right: 36px;
-    width: 120px;
-    height: 120px;
+    margin-left: 55px;
+    margin-right: 55px;
+    width: 84px;
+    height: 84px;
     border-radius: 200px;
     border: 2px solid #8000ff;
     overflow: hidden;

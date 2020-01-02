@@ -1,6 +1,6 @@
 .spell {
     width: 200px;
-    height: 240px;
+    height: 250px;
     float: left;
     color: var(--card-color);
     text-align: center;
@@ -111,8 +111,8 @@
 
 .spell .spellName .image{ 
     margin-right: 10px;
-    height: 27px;
-    width: 27px;
+    height: 37px;
+    width: 37px;
     float: left;
     border-radius: 100px;
     border: 3px solid #8000ff;

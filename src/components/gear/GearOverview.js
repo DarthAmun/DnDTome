@@ -80,10 +80,6 @@ export default function GearOverview() {
         })
     }, [currentGearList]);
 
-    useEffect(() => {
-        console.log(start);
-    }, [start]);
-
     const viewGear = (gear) => {
         ipcRenderer.send('openGearView', gear);
     }
