@@ -24,15 +24,15 @@ module.exports.reciveAllItems = (callback) => {
 }
 module.exports.reciveItemByName = (name, callback) => {
     db.serialize(function () {
-      db.get("SELECT * FROM 'main'.'tab_items' WHERE item_name=?", [name], function (err, row) {
-        if (err != null) {
-          console.log("====>" + err);
-        }
-        callback(row);
-        console.log("====>" + `getSpell successfull`)
-      });
+        db.get("SELECT * FROM 'main'.'tab_items' WHERE item_name=?", [name], function (err, row) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            callback(row);
+            console.log("====>" + `getSpell successfull`)
+        });
     });
-  }
+}
 
 module.exports.reciveItems = (step, start, query, callback) => {
     localStorage.setItem('itemStep', parseInt(step, 10));
@@ -49,15 +49,26 @@ module.exports.reciveItems = (step, start, query, callback) => {
         if (searchItemQuery.description != null && typeof searchItemQuery.description !== 'undefined' && searchItemQuery.description != "") {
             q += `item_description like "%${searchItemQuery.description}%" AND `;
         }
-        if (searchItemQuery.rarity != null && typeof searchItemQuery.rarity !== 'undefined' && searchItemQuery.rarity != "") {
-            q += `item_rarity like "%${searchItemQuery.rarity}%" AND `;
+        if (searchItemQuery.rarity != null && typeof searchItemQuery.rarity !== 'undefined' && searchItemQuery.rarity != "" && searchItemQuery.rarity.length !== 0) {
+            searchItemQuery.rarity.map(rarity => {
+                q += `item_rarity = "${rarity.value}" OR `;
+            });
+            q = q.slice(0, -3);
+            q += "AND ";
         }
-        if (searchItemQuery.type != null && typeof searchItemQuery.type !== 'undefined' && searchItemQuery.type != "") {
-            q += `item_type like "%${searchItemQuery.type}%" AND `;
+        if (searchItemQuery.type != null && typeof searchItemQuery.type !== 'undefined' && searchItemQuery.type != "" && searchItemQuery.type.length !== 0) {
+            searchItemQuery.type.map(type => {
+                q += `item_type = "${type.value}" OR `;
+            });
+            q = q.slice(0, -3);
+            q += "AND ";
         }
         if (searchItemQuery.source != null && typeof searchItemQuery.source !== 'undefined' && searchItemQuery.source != "") {
             q += `item_source like "%${searchItemQuery.source}%" AND `;
         }
+        if (searchItemQuery.attunment != null && typeof searchItemQuery.attunment !== 'undefined' && searchItemQuery.attunment != "") {
+            q += `item_attunment = ${searchItemQuery.attunment} AND `;
+          }
         if (q.includes(" AND ")) {
             q = q.slice(0, -4);
         } else {
@@ -89,6 +100,19 @@ module.exports.reciveItemCount = (query, callback) => {
             }
             callback(rows[0]);
             console.log("====>" + `getItemCount successfull`)
+        });
+    });
+}
+
+module.exports.reciveAttributeSelection = (attribute, callback) => {
+    let q = `SELECT item_${attribute} FROM 'main'.'tab_items' GROUP BY item_${attribute}`;
+    db.serialize(function () {
+        db.all(q, function (err, rows) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            callback(rows);
+            console.log("====>" + `get all ${attribute} successfull`)
         });
     });
 }
@@ -178,7 +202,7 @@ module.exports.saveNewItemFromJson = (item, callback) => {
 
 module.exports.addItemToChar = (char, item, callback) => {
     let data = [];
-    if(item.id === undefined) {
+    if (item.id === undefined) {
         data = [char.selectedChar, item.item_id, 1, false, false];
     } else {
         data = [char.selectedChar, item.id, 1, false, false];

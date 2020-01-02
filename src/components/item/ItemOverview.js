@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import '../../assets/css/item/ItemOverview.css';
 import Item from './Item';
 import { reciveItems, reciveItemCount } from '../../database/ItemService';
-import SearchBar from '../SearchBar';
+import ItemSearchBar from './ItemSearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -97,7 +97,7 @@ export default function ItemOverview() {
     return (
         <div id="overview">
             <div id="itemsOverview">
-                <SearchBar inputs={["name", "description", "rarity", "type", "source"]} queryName="sendItemSearchQuery" />
+                <ItemSearchBar />
                 <div id="items" onScroll={handleScroll} ref={items}>
                     {currentItemList.items.map((item, index) => {
                         return <Item delay={0} item={item} key={item.item_id} onClick={() => viewItem(item)} />;
