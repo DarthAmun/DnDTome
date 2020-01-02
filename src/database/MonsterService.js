@@ -131,6 +131,19 @@ module.exports.reciveMonsterCount = (query, callback) => {
     });
 }
 
+module.exports.reciveAttributeSelection = (attribute, callback) => {
+    let q = `SELECT monster_${attribute} FROM 'main'.'tab_monsters' GROUP BY monster_${attribute}`;
+    db.serialize(function () {
+        db.all(q, function (err, rows) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            callback(rows);
+            console.log("====>" + `get all ${attribute} successfull`)
+        });
+    });
+}
+
 module.exports.saveMonster = (monster) => {
     let data = [monster.name, monster.size, monster.type, monster.subtype, monster.alignment, monster.ac, monster.hp, monster.speed, monster.str,
     monster.dex, monster.con, monster.int, monster.wis, monster.cha, monster.saveingThrows, monster.skills, monster.dmgVulnerabilitie,

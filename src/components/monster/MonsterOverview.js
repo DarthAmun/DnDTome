@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import * as ReactDOM from "react-dom";
 import '../../assets/css/monster/MonsterOverview.css';
 import Monster from './Monster';
-import SearchBar from '../SearchBar';
+import MonsterSearchBar from './MonsterSearchBar';
 import { reciveMonsters, reciveMonsterCount } from '../../database/MonsterService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -100,7 +100,7 @@ export default function MonsterOverview() {
     return (
         <div id="overview">
             <div id="monsterOverview">
-                <SearchBar inputs={["name", "type", "subtype", "cr", "alignment", "speed", "source", "damage", "senses", "ability", "action"]} queryName="sendMonsterSearchQuery" />
+                <MonsterSearchBar />
                 <div id="monsters" onScroll={handleScroll} ref={monsters}>
                     {currentMonsterList.monsters.map((monster, index) => {
                         return <Monster delay={0} monster={monster} key={monster.monster_id} onClick={() => viewMonster(monster)} />;

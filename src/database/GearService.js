@@ -117,7 +117,6 @@ module.exports.reciveAttributeSelection = (attribute, callback) => {
     });
 }
 
-
 module.exports.deleteGear = (gear) => {
     let data = [gear.id];
     let sql = `DELETE FROM 'main'.'tab_gears' WHERE gear_id = ?`;
