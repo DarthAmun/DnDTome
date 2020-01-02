@@ -25,15 +25,15 @@ module.exports.reciveAllGears = (callback) => {
 
 module.exports.reciveGearByName = (name, callback) => {
     db.serialize(function () {
-      db.get("SELECT * FROM 'main'.'tab_gears' WHERE gear_name=?", [name], function (err, row) {
-        if (err != null) {
-          console.log("====>" + err);
-        }
-        callback(row);
-        console.log("====>" + `getSpell successfull`)
-      });
+        db.get("SELECT * FROM 'main'.'tab_gears' WHERE gear_name=?", [name], function (err, row) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            callback(row);
+            console.log("====>" + `getSpell successfull`)
+        });
     });
-  }
+}
 
 module.exports.reciveGears = (step, start, query, callback) => {
     localStorage.setItem('gearStep', parseInt(step, 10));
@@ -47,8 +47,12 @@ module.exports.reciveGears = (step, start, query, callback) => {
         if (searchGearQuery.name != null && typeof searchGearQuery.name !== 'undefined' && searchGearQuery.name != "") {
             q += `gear_name like "%${searchGearQuery.name}%" AND `;
         }
-        if (searchGearQuery.type != null && typeof searchGearQuery.type !== 'undefined' && searchGearQuery.type != "") {
-            q += `gear_type like "%${searchGearQuery.type}%" AND `;
+        if (searchGearQuery.type != null && typeof searchGearQuery.type !== 'undefined' && searchGearQuery.type != "" && searchGearQuery.type.length !== 0) {
+            searchGearQuery.type.map(type => {
+                q += `gear_type = "${type.value}" OR `;
+            });
+            q = q.slice(0, -3);
+            q += "AND ";
         }
         if (searchGearQuery.description != null && typeof searchGearQuery.description !== 'undefined' && searchGearQuery.description != "") {
             q += `gear_description like "%${searchGearQuery.description}%" AND `;
@@ -99,6 +103,20 @@ module.exports.reciveGearCount = (query, callback) => {
         });
     });
 }
+
+module.exports.reciveAttributeSelection = (attribute, callback) => {
+    let q = `SELECT gear_${attribute} FROM 'main'.'tab_gears' GROUP BY gear_${attribute}`;
+    db.serialize(function () {
+        db.all(q, function (err, rows) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            callback(rows);
+            console.log("====>" + `get all ${attribute} successfull`)
+        });
+    });
+}
+
 
 module.exports.deleteGear = (gear) => {
     let data = [gear.id];
@@ -201,7 +219,7 @@ module.exports.addGearToChar = (char, gear, callback) => {
 
 module.exports.addGearToCharFromJson = (char, gear, callback) => {
     let data = [];
-    if(gear.id === undefined) {
+    if (gear.id === undefined) {
         data = [char.selectedChar, gear.gear_id, 1, false, false, gear.gear_damage, gear.gear_properties];
     } else {
         data = [char.selectedChar, gear.id, 1, false, false, gear.gear_damage, gear.gear_properties];

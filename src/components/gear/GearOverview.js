@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import * as ReactDOM from "react-dom";
 import '../../assets/css/gear/GearOverview.css';
 import Gear from './Gear';
+import GearSearchBar from './GearSearchBar';
 import { reciveGears, reciveGearCount } from '../../database/GearService';
-import SearchBar from '../SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,17 +12,20 @@ const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
 export default function GearOverview() {
-    const [start, setStart] = useState(0);
     const [currentGearList, setCurrentGearList] = useState({ gears: [] });
     const gears = useRef(null);
     const [isFetching, setIsFetching] = useState(false);
+    const [start, setStart] = useState(0);
     const [query, setQuery] = useState({});
 
     const receiveGearsResult = (result) => {
         let newList = currentGearList.gears
         newList = newList.concat(result);
-        setCurrentGearList({ gears: newList });
-        setStart(start + 10);
+
+        ReactDOM.unstable_batchedUpdates(() => {
+            setCurrentGearList({ gears: newList });
+            setStart(start + 10);
+        });
     }
 
     const updateGear = () => {
@@ -68,13 +72,17 @@ export default function GearOverview() {
                 }
                 if (gears.current.scrollHeight == gears.current.clientHeight
                     && currentGearList.gears.length) {
-                    reciveGears(10, start+10, query, function (result) {
+                    reciveGears(10, start, query, function (result) {
                         receiveGearsResult(result);
                     })
                 }
             }
         })
     }, [currentGearList]);
+
+    useEffect(() => {
+        console.log(start);
+    }, [start]);
 
     const viewGear = (gear) => {
         ipcRenderer.send('openGearView', gear);
@@ -94,7 +102,7 @@ export default function GearOverview() {
     return (
         <div id="overview">
             <div id="itemsOverview">
-                <SearchBar inputs={["name", "type", "description", "cost", "damage", "properties", "weight"]} queryName="sendGearSearchQuery" />
+                <GearSearchBar />
                 <div id="items" onScroll={handleScroll} ref={gears}>
                     {currentGearList.gears.map((gear, index) => {
                         return <Gear delay={0} gear={gear} key={gear.gear_id} onClick={() => viewGear(gear)} />;
