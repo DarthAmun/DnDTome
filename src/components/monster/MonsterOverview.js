@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import * as ReactDOM from "react-dom";
 import '../../assets/css/monster/MonsterOverview.css';
 import Monster from './Monster';
-import { reciveMonsters, reciveMonsterCount } from '../../database/MonsterService';
 import SearchBar from '../SearchBar';
+import { reciveMonsters, reciveMonsterCount } from '../../database/MonsterService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -20,8 +21,11 @@ export default function MonsterOverview() {
     const receiveMonstersResult = (result) => {
         let newList = currentMonsterList.monsters
         newList = newList.concat(result);
-        setCurrentMonsterList({ monsters: newList });
-        setStart(start + 10);
+
+        ReactDOM.unstable_batchedUpdates(() => {
+            setCurrentMonsterList({ monsters: newList });
+            setStart(start + 10);
+        });
     }
 
     const updateMonster = () => {
@@ -69,7 +73,7 @@ export default function MonsterOverview() {
                 }
                 if (monsters.current.scrollHeight == monsters.current.clientHeight
                     && currentMonsterList.monsters.length) {
-                    reciveMonsters(10, start + 10, query, function (monsters) {
+                    reciveMonsters(10, start, query, function (monsters) {
                         receiveMonstersResult(monsters);
                     })
                 }

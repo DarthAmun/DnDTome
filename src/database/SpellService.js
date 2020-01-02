@@ -51,8 +51,6 @@ module.exports.reciveSpells = (step, start, query, callback) => {
   localStorage.setItem('spellStep', parseInt(step, 10));
   localStorage.setItem('spellStart', parseInt(start, 10));
 
-console.log(query)
-
   if (query !== null) {
     searchSpellQuery = query;
   }
@@ -166,7 +164,6 @@ module.exports.saveSpell = (spell) => {
 }
 
 module.exports.saveNewSpell = (spell) => {
-  console.log(spell);
   let data = [spell.name, spell.school, spell.level, spell.ritual, spell.time, spell.duration, spell.range, spell.components, spell.text, spell.classes, spell.sources, spell.pic];
   let sql = `INSERT INTO 'main'.'tab_spells' (spell_name, spell_school, spell_level, spell_ritual, spell_time, spell_duration, spell_range, spell_components, spell_text, spell_classes, spell_sources, spell_pic)
               VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;

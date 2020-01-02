@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import * as ReactDOM from "react-dom";
 import '../../assets/css/item/ItemOverview.css';
 import Item from './Item';
 import { reciveItems, reciveItemCount } from '../../database/ItemService';
@@ -21,8 +22,11 @@ export default function ItemOverview() {
     const receiveItemsResult = (result) => {
         let newList = currentItemList.items
         newList = newList.concat(result);
-        setCurrentItemList({ items: newList });
-        setStart(start + 10);
+
+        ReactDOM.unstable_batchedUpdates(() => {
+            setCurrentItemList({ items: newList });
+            setStart(start + 10);
+        });
     }
 
     const updateItem = () => {
@@ -59,7 +63,6 @@ export default function ItemOverview() {
 
     useEffect(() => {
         setIsFetching(false);
-
         reciveItemCount(query, function (result) {
             let itemCount = result.count;
             if (itemCount > currentItemList.items.length) {
@@ -70,7 +73,7 @@ export default function ItemOverview() {
                 }
                 if (items.current.scrollHeight == items.current.clientHeight
                     && currentItemList.items.length) {
-                    reciveItems(10, start + 10, query, function (items) {
+                    reciveItems(10, start, query, function (items) {
                         receiveItemsResult(items);
                     })
                 }

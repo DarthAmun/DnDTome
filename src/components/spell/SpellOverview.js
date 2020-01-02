@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import * as ReactDOM from "react-dom";
 import '../../assets/css/spell/SpellOverview.css';
 import Spell from './Spell';
 import { reciveSpells, reciveSpellCount } from '../../database/SpellService';
@@ -20,8 +21,11 @@ export default function SpellOverview() {
     const receiveSpellsResult = (result) => {
         let newList = currentSpellList.spells
         newList = newList.concat(result);
-        setCurrentSpellList({ spells: newList });
-        setStart(start + 10);
+
+        ReactDOM.unstable_batchedUpdates(() => {
+            setCurrentSpellList({ spells: newList });
+            setStart(start + 10);
+        });
     }
 
     const updateSpell = () => {
@@ -69,7 +73,7 @@ export default function SpellOverview() {
                 }
                 if (spells.current.scrollHeight == spells.current.clientHeight
                     && currentSpellList.spells.length) {
-                    reciveSpells(10, start + 10, query, function (spells) {
+                    reciveSpells(10, start, query, function (spells) {
                         receiveSpellsResult(spells);
                     })
                 }
