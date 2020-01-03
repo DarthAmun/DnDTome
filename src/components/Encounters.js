@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../assets/css/Encounters.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faDice, faLevelDownAlt } from '@fortawesome/free-solid-svg-icons';
+import { faDice, faLevelDownAlt, faSkullCrossbones } from '@fortawesome/free-solid-svg-icons';
 import icon from '../assets/img/dice_icon_grey.png';
 
 import { reciveAllMonsters, reciveMonstersByName } from '../database/MonsterService';
@@ -180,7 +180,7 @@ export default function Encounters() {
                                     <div className="encounterParticipantActionsTag">
                                         <input type="text" name={participant} placeholder="Tag..." value={participant.tag} onChange={e => setParticipantTag(e, participant.subid)} />
                                     </div>
-                                    <button onClick={e => deleteAction(index, participant.subid)} className="delete"><FontAwesomeIcon icon={faTrashAlt} /></button>
+                                    <button onClick={e => deleteAction(index, participant.subid)} className="delete"><FontAwesomeIcon icon={faSkullCrossbones} /></button>
                                 </div>
                             </div>;
                         })

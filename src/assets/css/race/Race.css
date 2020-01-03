@@ -1,0 +1,81 @@
+.race {
+    width: 180px;
+    height: 250px;
+    float: left;
+    color: var(--card-color);
+    text-align: center;
+    margin: 5px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: var(--card-background-color);
+    opacity: 0;
+    animation-name: zoomIn;
+    animation-duration: 300ms;
+    transition-duration: 300ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    box-shadow: var(--boxshadow);
+}
+
+.race:hover {
+    box-shadow: var(--boxshadow-hover);
+    cursor: pointer;
+}
+
+.race .icon {
+    width: 18px;
+    height: 50px;
+    line-height: 50px;
+    float: right;
+}
+
+.race .small {
+    font-size: 6px;
+    margin-left: 5px;
+    margin-right: 5px;
+    line-height: 6px;
+}
+
+.race .raceAttr {
+    height: auto;
+    float: left;
+    padding: 10px;
+}
+
+.race .smallSpellAttr {
+    height: auto;
+    width: calc(100% - 20px);
+    float: left;
+    line-height: 10px;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.race .raceName {
+    font-size: 14px;
+    border-top: var(--card-seperator-line);
+    border-bottom: var(--card-seperator-line);
+    width: calc(100% - 20px);
+    color: var(--card-title-color);
+}
+
+.race .image{ 
+    height: 180px;
+    width: 100%;
+    float: left;
+    overflow: hidden;
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(0.3, 0.3, 0.3);
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+    }
+}

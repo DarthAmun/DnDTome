@@ -11,6 +11,7 @@ import ItemOverview from './item/ItemOverview';
 import GearOverview from './gear/GearOverview';
 import MonsterOverview from './monster/MonsterOverview';
 import CharOverview from './char/CharOverview';
+import RaceOverview from './race/RaceOverview';
 
 import Home from './Home';
 import Options from './Options';
@@ -21,8 +22,6 @@ import AddChar from './add/AddChar';
 import AddItem from './add/AddItem';
 import AddMonster from './add/AddMonster';
 import AddGear from './add/AddGear';
-
-import CharView from './char/CharView';
 
 import LeftNav from './LeftNav';
 import TopNav from './TopNav';
@@ -74,6 +73,7 @@ const App = () => {
         <LayoutRoute path="/gear-overview" layout={PageLayout} component={GearOverview} />
         <LayoutRoute path="/monster-overview" layout={PageLayout} component={MonsterOverview} />
         <LayoutRoute path="/char-overview" layout={PageLayout} component={CharOverview} />
+        <LayoutRoute path="/race-overview" layout={PageLayout} component={RaceOverview} />
         <LayoutRoute path="/add-char" layout={PageLayout} component={AddChar} />
         <LayoutRoute path="/add-spell" layout={PageLayout} component={AddSpell} />
         <LayoutRoute path="/add-item" layout={PageLayout} component={AddItem} />

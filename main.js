@@ -353,15 +353,17 @@ ipcMain.on('sendItemSearchQuery', (event, arg) => {
   const { query } = arg;
   mainWindow.webContents.send('sendItemSearchQuery', { query });
 });
-
 ipcMain.on('sendGearSearchQuery', (event, arg) => {
   const { query } = arg;
   mainWindow.webContents.send('sendGearSearchQuery', { query });
 });
-
 ipcMain.on('sendMonsterSearchQuery', (event, arg) => {
   const { query } = arg;
   mainWindow.webContents.send('sendMonsterSearchQuery', { query });
+});
+ipcMain.on('sendRaceSearchQuery', (event, arg) => {
+  const { query } = arg;
+  mainWindow.webContents.send('sendRaceSearchQuery', { query });
 });
 
 ipcMain.on('closeMainWindow', (event) => {
