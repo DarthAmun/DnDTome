@@ -113,6 +113,25 @@ export default function RaceView() {
         });
     }
 
+    const setPerkTitle = (e, id) => {
+        let part = perks.map(perk => {
+            if (perk.perk_id === id) { return { ...perk, perk_title: e.target.value }; } else { return perk; }
+        });
+        setPerks(part);
+    }
+    const setPerkLevel = (e, id) => {
+        let part = perks.map(perk => {
+            if (perk.perk_id === id) { return { ...perk, perk_level: e.target.value }; } else { return perk; }
+        });
+        setPerks(part);
+    }
+    const setPerkText = (e, id) => {
+        let part = perks.map(perk => {
+            if (perk.perk_id === id) { return { ...perk, perk_text: e.target.value }; } else { return perk; }
+        });
+        setPerks(part);
+    }
+
     const style = {
         backgroundImage: `url(${pic})`,
         backgroundPosition: 'center',
@@ -149,10 +168,10 @@ export default function RaceView() {
             </div>
             <div className="right">
                 {perks.map((perk, index) => {
-                    return <div className="perk" index={perk.perk_id}>
-                        <input className="perkTitle" type="text" value={perk.perk_title} onChange={e => setPerkTitle(e.target.value)} placeholder="Perk title..."></input>
-                        <input className="perkLevel" type="number" value={perk.perk_level} onChange={e => setPerkLevel(e.target.value)} placeholder="Perk level..."></input>
-                        <textarea className="perkText" value={perk.perk_text} onChange={e => setPerkText(e.target.value)} placeholder="Perk text..."></textarea>
+                    return <div className="perk" key={perk.perk_id}>
+                        <input className="perkTitle" type="text" value={perk.perk_title} onChange={e => setPerkTitle(e, perk.perk_id)} placeholder="Perk title..."></input>
+                        <input className="perkLevel" type="number" value={perk.perk_level} onChange={e => setPerkLevel(e, perk.perk_id)} placeholder="Perk level..."></input>
+                        <textarea className="perkText" value={perk.perk_text} onChange={e => setPerkText(e, perk.perk_id)} placeholder="Perk text..."></textarea>
                     </div>;
                 })}
             </div>
