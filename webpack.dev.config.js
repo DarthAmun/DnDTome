@@ -12,6 +12,9 @@ const defaultInclude = [SRC_DIR];
 
 module.exports = {
   entry: {
+    race: [
+      SRC_DIR + '/race.js',
+    ],
     char: [
       SRC_DIR + '/char.js',
     ],
@@ -91,6 +94,11 @@ module.exports = {
       filename: 'char.html',
       template: 'src/index.html',
       chunks: ['char']
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'race.html',
+      template: 'src/index.html',
+      chunks: ['race']
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')

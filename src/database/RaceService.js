@@ -47,6 +47,20 @@ module.exports.reciveAllRaces = (callback) => {
   });
 }
 
+module.exports.reciveRacePerks = (id, callback) => {
+  let q = `SELECT * FROM 'main'.'tab_races_perks' WHERE race_id=${id} ORDER BY perk_title`;
+  db.serialize(function () {
+    db.all(q, function (err, rows) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log("====>" + `getAllRacesPerksResult successfull`)
+      callback(rows);
+    });
+  });
+}
+
+
 module.exports.reciveRaces = (step, start, query, callback) => {
   localStorage.setItem('raceStep', parseInt(step, 10));
   localStorage.setItem('raceStart', parseInt(start, 10));

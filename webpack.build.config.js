@@ -13,6 +13,9 @@ const defaultInclude = [SRC_DIR];
 
 module.exports = {
     entry: {
+        race: [
+            SRC_DIR + '/race.js',
+        ],
         char: [
             SRC_DIR + '/char.js',
         ],
@@ -94,6 +97,11 @@ module.exports = {
             filename: 'char.html',
             template: 'src/index.html',
             chunks: ['char']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'race.html',
+            template: 'src/index.html',
+            chunks: ['race']
         }),
         new ExtractTextPlugin({ filename: '[name].css' }),
         new webpack.DefinePlugin({

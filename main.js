@@ -18,6 +18,8 @@ let monsterWindow;
 let monsterPath;
 let charWindow;
 let charPath;
+let raceWindow;
+let racePath;
 // Keep a reference for dev mode
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
@@ -69,6 +71,12 @@ function createWindow() {
       pathname: 'char.html',
       slashes: true
     });
+    racePath = url.format({
+      protocol: 'http:',
+      host: 'localhost:8080',
+      pathname: 'race.html',
+      slashes: true
+    });
   } else {
     indexPath = url.format({
       protocol: 'file:',
@@ -98,6 +106,11 @@ function createWindow() {
     charPath = url.format({
       protocol: 'file:',
       pathname: path.join(__dirname, 'dist', 'char.html'),
+      slashes: true
+    });
+    racePath = url.format({
+      protocol: 'file:',
+      pathname: path.join(__dirname, 'dist', 'race.html'),
       slashes: true
     });
   }
@@ -209,6 +222,26 @@ function createWindow() {
   monsterWindow.on('close', (e) => {
     e.preventDefault();
     monsterWindow.hide();
+  });
+
+  //Race window
+  raceWindow = new BrowserWindow({
+    parent: mainWindow,
+    width: 1000,
+    height: 630,
+    show: false,
+    resizable: true,
+    frame: true,
+    icon: __dirname + './src/assets/img/dice_icon.ico',
+    webPreferences: {
+      nodeIntegration: true
+    }
+  });
+  raceWindow.setMenu(null);
+  raceWindow.loadURL(racePath);
+  raceWindow.on('close', (e) => {
+    e.preventDefault();
+    raceWindow.hide();
   });
 
   //Char window
@@ -383,6 +416,15 @@ ipcMain.on('openSpellView', (event, spell) => {
   spellWindow.show();
 });
 
+ipcMain.on('openRaceView', (event, race) => {
+  if (dev) {
+    raceWindow.webContents.openDevTools();
+  }
+  raceWindow.setTitle("DnD Tome - " + race.race_name);
+  raceWindow.webContents.send('onViewRace', race);
+  raceWindow.show();
+});
+
 ipcMain.on('openItemView', (event, item) => {
   if (dev) {
     itemWindow.webContents.openDevTools();
@@ -463,4 +505,5 @@ ipcMain.on('changeTheme', (event, theme) => {
   spellWindow.webContents.send('changeTheme', { theme: theme });
   monsterWindow.webContents.send('changeTheme', { theme: theme });
   charWindow.webContents.send('changeTheme', { theme: theme });
+  raceWindow.webContents.send('changeTheme', { theme: theme });
 });
