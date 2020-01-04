@@ -12,7 +12,7 @@ const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const { dialog } = electron.remote;
 
-export default function SpellView() {
+export default function SpellView({spell}) {
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [school, setSchool] = useState("");
@@ -30,7 +30,7 @@ export default function SpellView() {
     const [chars, setChars] = useState([]);
     const [selectedChar, setSelectedChar] = useState(0);
 
-    const receiveSpell = (event, result) => {
+    const receiveSpell = (result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveSpell")
 
@@ -56,7 +56,7 @@ export default function SpellView() {
             setSources(sources);
             setId(result.spell_id);
             setPic(result.spell_pic);
-            
+
             if (result.spell_pic === null) {
                 setPic("");
             }
@@ -80,10 +80,8 @@ export default function SpellView() {
             ThemeService.applyTheme(result);
         });
 
-        ipcRenderer.on("onViewSpell", receiveSpell);
         ipcRenderer.on("changeTheme", changeTheme);
         return () => {
-            ipcRenderer.removeListener("onViewSpell", receiveSpell);
             ipcRenderer.removeListener("changeTheme", changeTheme);
         }
     }, []);
@@ -95,8 +93,8 @@ export default function SpellView() {
     }, [id]);
 
     useEffect(() => {
-        console.log(pic)
-    }, [pic]);
+        receiveSpell(spell);
+    }, [spell]);
 
     const saveSpellAction = (e) => {
         saveSpell({ id, name, school, level, ritual, time, range, duration, components, text, classes, sources, pic });
@@ -135,8 +133,8 @@ export default function SpellView() {
                 <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Name..." /></label>
                 <label>School:<input name="school" type="text" value={school} onChange={e => setSchool(e.target.value)} placeholder="School..." /></label>
                 <div className="spellImgBlock">
-                    <label className="small">Level:<input name="level" type="number" value={level} onChange={e => setLevel(e.target.value)} /></label>
-                    <label className="smaller left checkbox-label">
+                    <label className="smallSpellLabel">Level:<input name="level" type="number" value={level} onChange={e => setLevel(e.target.value)} /></label>
+                    <label className="smallerSpellLabel left checkbox-label">
                         <div className="labelText">Ritual:</div>
                         <input name="ritual" type="checkbox" checked={ritual} onChange={e => setRitual(e.target.checked)} />
                         <span className="checkbox-custom circular"></span>

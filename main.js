@@ -408,57 +408,63 @@ ipcMain.on('minimizeMainWindow', (event) => {
 });
 
 ipcMain.on('openSpellView', (event, spell) => {
-  if (dev) {
-    spellWindow.webContents.openDevTools();
-  }
-  spellWindow.setTitle("DnD Tome - " + spell.spell_name);
-  spellWindow.webContents.send('onViewSpell', spell);
-  spellWindow.show();
+  // if (dev) {
+  //   spellWindow.webContents.openDevTools();
+  // }
+  // spellWindow.setTitle("DnD Tome - " + spell.spell_name);
+  // spellWindow.webContents.send('onViewSpell', spell);
+  // spellWindow.show();
+  mainWindow.webContents.send('onViewSpell', spell);
 });
 
 ipcMain.on('openRaceView', (event, race) => {
-  if (dev) {
-    raceWindow.webContents.openDevTools();
-  }
-  raceWindow.setTitle("DnD Tome - " + race.race_name);
-  raceWindow.webContents.send('onViewRace', race);
-  raceWindow.show();
+  // if (dev) {
+  //   raceWindow.webContents.openDevTools();
+  // }
+  // raceWindow.setTitle("DnD Tome - " + race.race_name);
+  // raceWindow.webContents.send('onViewRace', race);
+  // raceWindow.show();
+  mainWindow.webContents.send('onViewRace', race);
 });
 
 ipcMain.on('openItemView', (event, item) => {
-  if (dev) {
-    itemWindow.webContents.openDevTools();
-  }
-  itemWindow.setTitle("DnD Tome - " + item.item_name);
-  itemWindow.webContents.send('onViewItem', item);
-  itemWindow.show();
+  // if (dev) {
+  //   itemWindow.webContents.openDevTools();
+  // }
+  // itemWindow.setTitle("DnD Tome - " + item.item_name);
+  // itemWindow.webContents.send('onViewItem', item);
+  // itemWindow.show();
+  mainWindow.webContents.send('onViewItem', item);
 });
 
 ipcMain.on('openGearView', (event, gear) => {
-  if (dev) {
-    gearWindow.webContents.openDevTools();
-  }
-  gearWindow.setTitle("DnD Tome - " + gear.gear_name);
-  gearWindow.webContents.send('onViewGear', gear);
-  gearWindow.show();
+  // if (dev) {
+  //   gearWindow.webContents.openDevTools();
+  // }
+  // gearWindow.setTitle("DnD Tome - " + gear.gear_name);
+  // gearWindow.webContents.send('onViewGear', gear);
+  // gearWindow.show();
+  mainWindow.webContents.send('onViewGear', gear);
 });
 
 ipcMain.on('openMonsterView', (event, monster) => {
-  if (dev) {
-    monsterWindow.webContents.openDevTools();
-  }
-  monsterWindow.setTitle("DnD Tome - " + monster.monster_name);
-  monsterWindow.webContents.send('onViewMonster', monster);
-  monsterWindow.show();
+  // if (dev) {
+  //   monsterWindow.webContents.openDevTools();
+  // }
+  // monsterWindow.setTitle("DnD Tome - " + monster.monster_name);
+  // monsterWindow.webContents.send('onViewMonster', monster);
+  // monsterWindow.show();
+  mainWindow.webContents.send('onViewMonster', monster);
 });
 
 ipcMain.on('openCharView', (event, char) => {
-  if (dev) {
-    charWindow.webContents.openDevTools();
-  }
-  charWindow.setTitle("DnD Tome - " + char.char_name);
-  charWindow.webContents.send('onViewChar', char);
-  charWindow.show();
+  // if (dev) {
+  //   charWindow.webContents.openDevTools();
+  // }
+  // charWindow.setTitle("DnD Tome - " + char.char_name);
+  // charWindow.webContents.send('onViewChar', char);
+  // charWindow.show();
+  mainWindow.webContents.send('onViewChar', char);
 });
 
 ipcMain.on('deleteAllSpells', (event) => {

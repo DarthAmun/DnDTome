@@ -1,22 +1,9 @@
-body {
-    height: 100%;
-    margin: 0px;
-    background-color: var(--app-background-color);
-    overflow: hidden;
-}
-
-@font-face {
-    font-family: 'Quicksand';
-    src: url('../../font/Quicksand-Medium.ttf') format('truetype');
-}
-
 #spellView {
     height: calc(100% - 20px);
     width: calc(100% - 20px);
     overflow: hidden;
     color: var(--card-title-color);
     padding: 10px;
-    font-family: 'Quicksand', sans-serif;
 }
 
 #spellView input, #spellView select {
@@ -91,17 +78,19 @@ body {
     text-align: right;
     line-height: 30px;
     float: left;
+    height: 37px
 }
 #spellView label .labelText{
     float: left;
     height: 37px;
     line-height: 33px;
     text-align: right;
+    font-size: 16px;
 }
-#spellView label.small {
+#spellView label.smallSpellLabel {
     width: 225px;
 }
-#spellView label.smaller {
+#spellView label.smallerSpellLabel {
   width: 150px;
 }
 #spellView label.smallPic {
@@ -113,7 +102,7 @@ body {
     padding-left: 5px;
     padding-right: 5px;
 }
-#spellView label.small input{
+#spellView label.smallSpellLabel input{
     width: 75px;
 }
 #spellView label.smallPic input {
@@ -122,7 +111,7 @@ body {
 #spellView label.left input{
     float: left;
 }
-#spellView label.small input[type=checkbox]{
+#spellView label.smallSpellLabel input[type=checkbox]{
     width: 15px;
     background: none;
     box-shadow: none;
@@ -163,20 +152,21 @@ body {
     border-radius: 5px;
 }
 
-.checkbox-label {
+#spellView .checkbox-label {
     display: block;
     position: relative;
     cursor: pointer;
+    clear: none;
   }
   
-  .checkbox-label input {
+  #spellView .checkbox-label input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
     display: none;
   }
   
-  .checkbox-label .checkbox-custom {
+  #spellView .checkbox-label .checkbox-custom {
     position: absolute;
     top: 2px;
     left: 60px;
@@ -194,7 +184,7 @@ body {
   }
   
   
-  .checkbox-label input:checked ~ .checkbox-custom {
+  #spellView .checkbox-label input:checked ~ #spellView .checkbox-custom {
     border-radius: 5px;
     -webkit-transform: rotate(0deg) scale(1);
     -ms-transform: rotate(0deg) scale(1);
@@ -205,7 +195,7 @@ body {
   }
   
   
-  .checkbox-label .checkbox-custom::after {
+  #spellView .checkbox-label .checkbox-custom::after {
     position: absolute;
     content: "";
     left: 12px;
@@ -227,7 +217,7 @@ body {
   }
   
   
-  .checkbox-label input:checked ~ .checkbox-custom::after {
+  #spellView .checkbox-label input:checked ~ #spellView .checkbox-custom::after {
   -webkit-transform: rotate(45deg) scale(1);
   -ms-transform: rotate(45deg) scale(1);
   transform: rotate(45deg) scale(1);
@@ -242,7 +232,7 @@ body {
   border-radius: 0;
   }
   
-  .checkbox-label input:checked ~ .checkbox-custom::before {
+  #spellView .checkbox-label input:checked ~ #spellView .checkbox-custom::before {
     transition: all 0.3s ease-out;
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
@@ -252,29 +242,29 @@ body {
   
   
   /* Style for Circular Checkbox */
-  .checkbox-label .checkbox-custom.circular {
+  #spellView .checkbox-label .checkbox-custom.circular {
     border-radius: 50%;
     border: 2px solid #8000ff;
   }
   
-  .checkbox-label input:checked ~ .checkbox-custom.circular {
+  #spellView .checkbox-label input:checked ~ #spellView .checkbox-custom.circular {
     background-color: var(--pagination-input-background-color);
     border-radius: 50%;
     border: 2px solid var(--pagination-input-background-color);
   }
-  .checkbox-label input:checked ~ .checkbox-custom.circular::after {
+  #spellView .checkbox-label input:checked ~ #spellView .checkbox-custom.circular::after {
     border: solid #8000ff;
     border-width: 0 2px 2px 0;
   }
-  .checkbox-label .checkbox-custom.circular::after {
+  #spellView .checkbox-label .checkbox-custom.circular::after {
     border-radius: 50%;
   }
   
-  .checkbox-label .checkbox-custom.circular::before {
+  #spellView .checkbox-label .checkbox-custom.circular::before {
     border-radius: 50%;
     border: 2px solid #FFFFFF;
   }
   
-  .checkbox-label input:checked ~ .checkbox-custom.circular::before {
+  #spellView .checkbox-label input:checked ~ #spellView .checkbox-custom.circular::before {
     border-radius: 50%;
   }
