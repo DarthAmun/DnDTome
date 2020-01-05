@@ -69,6 +69,9 @@ module.exports.reciveGears = (step, start, query, callback) => {
         if (searchGearQuery.properties != null && typeof searchGearQuery.properties !== 'undefined' && searchGearQuery.properties != "") {
             q += `gear_properties like "%${searchGearQuery.properties}%" AND `;
         }
+        if (searchGearQuery.sources != null && typeof searchGearQuery.sources !== 'undefined' && searchGearQuery.sources != "") {
+            q += `gear_sources like "%${searchGearQuery.sources}%" AND `;
+        }
         if (q.includes(" AND ")) {
             q = q.slice(0, -4);
         } else {
@@ -134,9 +137,9 @@ module.exports.deleteGear = (gear) => {
 }
 
 module.exports.saveGear = (gear) => {
-    let data = [gear.name, gear.description, gear.pic, gear.cost, gear.weight, gear.damage, gear.properties, gear.type, gear.id];
+    let data = [gear.name, gear.description, gear.pic, gear.cost, gear.weight, gear.damage, gear.properties, gear.type, gear.sources, gear.id];
     let sql = `UPDATE 'main'.'tab_gears'
-                SET gear_name = ?, gear_description = ?, gear_pic = ?, gear_cost= ?, gear_weight= ?, gear_damage= ?, gear_properties= ?, gear_type= ?
+                SET gear_name = ?, gear_description = ?, gear_pic = ?, gear_cost= ?, gear_weight= ?, gear_damage= ?, gear_properties= ?, gear_type= ?, gear_sources= ?
                 WHERE gear_id = ?`;
     db.serialize(function () {
         db.run(sql, data, function (err) {
@@ -151,9 +154,9 @@ module.exports.saveGear = (gear) => {
 }
 
 module.exports.saveNewGear = (gear) => {
-    let data = [gear.name, gear.description, gear.pic, gear.cost, gear.damage, gear.weight, gear.properties, gear.type];
-    let sql = `INSERT INTO 'main'.'tab_gears' (gear_name, gear_description, gear_pic, gear_cost, gear_damage, gear_weight, gear_properties, gear_type)
-                VALUES  (?, ?, ?, ?, ?, ?, ?, ?)`;
+    let data = [gear.name, gear.description, gear.pic, gear.cost, gear.damage, gear.weight, gear.properties, gear.type, gear.sources];
+    let sql = `INSERT INTO 'main'.'tab_gears' (gear_name, gear_description, gear_pic, gear_cost, gear_damage, gear_weight, gear_properties, gear_type, gear_sources)
+                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     db.serialize(function () {
         db.run(sql, data, function (err) {
             if (err) {
@@ -169,9 +172,9 @@ module.exports.saveNewGears = (gears, callback) => {
     let GearImportLength = Object.keys(gears).length;
     let GearImported = 0;
     gears.forEach(gear => {
-        let data = [gear.gear_name, gear.gear_description, gear.gear_pic, gear.gear_cost, gear.gear_damage, gear.gear_weight, gear.gear_properties, gear.gear_type];
-        let sql = `INSERT INTO 'main'.'tab_gears' (gear_name, gear_description, gear_pic, gear_cost, gear_damage, gear_weight, gear_properties, gear_type)
-                VALUES  (?, ?, ?, ?, ?, ?, ?, ?)`;
+        let data = [gear.gear_name, gear.gear_description, gear.gear_pic, gear.gear_cost, gear.gear_damage, gear.gear_weight, gear.gear_properties, gear.gear_type, gear.gear_sources];
+        let sql = `INSERT INTO 'main'.'tab_gears' (gear_name, gear_description, gear_pic, gear_cost, gear_damage, gear_weight, gear_properties, gear_type, gear_sources)
+                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         db.serialize(function () {
             db.run(sql, data, function (err) {
                 if (err) {
@@ -186,8 +189,8 @@ module.exports.saveNewGears = (gears, callback) => {
 }
 
 module.exports.saveNewGearFromJson = (gear, callback) => {
-    let data = [gear.gear_name, gear.gear_description, gear.gear_pic, gear.gear_cost, gear.gear_damage, gear.gear_weight, gear.gear_properties, gear.gear_type];
-    let sql = `INSERT INTO 'main'.'tab_gears' (gear_name, gear_description, gear_pic, gear_cost, gear_damage, gear_weight, gear_properties, gear_type)
+    let data = [gear.gear_name, gear.gear_description, gear.gear_pic, gear.gear_cost, gear.gear_damage, gear.gear_weight, gear.gear_properties, gear.gear_type, gear.gear_sources];
+    let sql = `INSERT INTO 'main'.'tab_gears' (gear_name, gear_description, gear_pic, gear_cost, gear_damage, gear_weight, gear_properties, gear_type, gear_sources)
                 VALUES  (?, ?, ?, ?, ?, ?, ?, ?)`;
     db.serialize(function () {
         db.run(sql, data, function (err) {
