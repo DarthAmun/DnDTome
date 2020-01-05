@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as ReactDOM from "react-dom";
 import '../../assets/css/gear/GearView.css';
-import OptionService from '../../database/OptionService';
-import ThemeService from '../../services/ThemeService';
 import { saveGear, deleteGear, addGearToChar } from '../../database/GearService';
 import { reciveAllChars } from '../../database/CharacterService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,7 +10,7 @@ const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const { dialog } = electron.remote;
 
-export default function GearView() {
+export default function GearView({gear}) {
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [pic, setPic] = useState("");
@@ -26,7 +24,7 @@ export default function GearView() {
     const [chars, setChars] = useState([]);
     const [selectedChar, setSelectedChar] = useState(0);
 
-    const receiveGear = (event, result) => {
+    const receiveGear = (result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveGear")
             let text = "";
@@ -55,29 +53,15 @@ export default function GearView() {
         })
     }
 
-    const changeTheme = (event, result) => {
-        ThemeService.applyTheme(result.theme);
-    }
-
-    useEffect(() => {
-        OptionService.get('theme', function (result) {
-            ThemeService.setTheme(result);
-            ThemeService.applyTheme(result);
-        });
-        
-        ipcRenderer.on("onViewGear", receiveGear);
-        ipcRenderer.on("changeTheme", changeTheme);
-        return () => {
-            ipcRenderer.removeListener("onViewGear", receiveGear);
-            ipcRenderer.removeListener("changeTheme", changeTheme);
-        }
-    }, []);
-
     useEffect(() => {
         reciveAllChars(function (result) {
             receiveChars(result)
         })
     }, [id]);
+
+    useEffect(() => {
+        receiveGear(gear);
+    }, [gear]);
 
     const saveGearAction = (e) => {
         saveGear({ id, name, pic, description, cost, weight, damage, properties, type });

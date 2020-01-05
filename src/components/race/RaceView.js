@@ -12,7 +12,7 @@ const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const { dialog } = electron.remote;
 
-export default function RaceView() {
+export default function RaceView({race}) {
     const [id, setId] = useState(0);
     const [name, setName] = useState("");
     const [sources, setSources] = useState("");
@@ -28,7 +28,7 @@ export default function RaceView() {
     const [chars, setChars] = useState([]);
     const [selectedChar, setSelectedChar] = useState(0);
 
-    const receiveRace = (event, result) => {
+    const receiveRace = (result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveRace")
             setName(result.race_name);
@@ -44,7 +44,6 @@ export default function RaceView() {
             if (result.race_pic === null) {
                 setPic("");
             }
-
             console.timeEnd("receiveRace")
         })
     }
@@ -58,24 +57,6 @@ export default function RaceView() {
         setSelectedChar(result[0].char_id);
     }
 
-    const changeTheme = (event, result) => {
-        ThemeService.applyTheme(result.theme);
-    }
-
-    useEffect(() => {
-        OptionService.get('theme', function (result) {
-            ThemeService.setTheme(result);
-            ThemeService.applyTheme(result);
-        });
-
-        ipcRenderer.on("onViewRace", receiveRace);
-        ipcRenderer.on("changeTheme", changeTheme);
-        return () => {
-            ipcRenderer.removeListener("onViewRace", receiveRace);
-            ipcRenderer.removeListener("changeTheme", changeTheme);
-        }
-    }, []);
-
     useEffect(() => {
         reciveAllChars(function (result) {
             receiveChars(result)
@@ -84,6 +65,10 @@ export default function RaceView() {
             receivePerksResult(result);
         })
     }, [id]);
+
+    useEffect(() => {
+        receiveRace(race);
+    }, [race]);
 
     useEffect(() => {
         console.log(perks)

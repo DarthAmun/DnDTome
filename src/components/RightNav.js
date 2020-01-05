@@ -7,6 +7,10 @@ import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 
 import SpellView from "./spell/SpellView";
 import ItemView from "./item/ItemView";
+import GearView from "./gear/GearView";
+import MonsterView from "./monster/MonsterView";
+import CharView from "./char/CharView";
+import RaceView from "./race/RaceView";
 
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
@@ -88,22 +92,38 @@ export default function RightNav() {
   const getView = () => {
     if (activeView.windowType === "spell") {
       return (
-        <div
-          className="activeView"
-          style={{
-            display: `${showView ? "block" : "none"}`,
-          }}>
+        <div className="activeView" style={{ display: `${showView ? "block" : "none"}` }}>
           <SpellView spell={activeView} />
         </div>
       );
     } else if (activeView.windowType === "item") {
       return (
-        <div
-          className="activeView"
-          style={{
-            display: `${showView ? "block" : "none"}`,
-          }}>
+        <div className="activeView" style={{ display: `${showView ? "block" : "none"}` }}>
           <ItemView item={activeView} />
+        </div>
+      );
+    } else if (activeView.windowType === "gear") {
+      return (
+        <div className="activeView" style={{ display: `${showView ? "block" : "none"}` }}>
+          <GearView gear={activeView} />
+        </div>
+      );
+    } else if (activeView.windowType === "monster") {
+      return (
+        <div className="activeView" style={{ display: `${showView ? "block" : "none"}` }}>
+          <MonsterView monster={activeView} />
+        </div>
+      );
+    } else if (activeView.windowType === "char") {
+      return (
+        <div className="activeView" style={{ display: `${showView ? "block" : "none"}` }}>
+          <CharView char={activeView} />
+        </div>
+      );
+    } else if (activeView.windowType === "race") {
+      return (
+        <div className="activeView" style={{ display: `${showView ? "block" : "none"}` }}>
+          <RaceView race={activeView} />
         </div>
       );
     }
@@ -123,8 +143,10 @@ export default function RightNav() {
 
   const removeView = (windows) => {
     let wins = shortWindows.filter(window => window !== windows);
-    console.log(wins)
-    setShortWindows(wins);
+    ReactDOM.unstable_batchedUpdates(() => {
+      setShortWindows(wins);
+      setShowView(false);
+    });
   }
 
   return (

@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import * as ReactDOM from "react-dom";
 import '../../assets/css/char/CharView.css';
-import OptionService from '../../database/OptionService';
-import ThemeService from '../../services/ThemeService';
 import PdfFillerService from '../../services/PdfFillerService';
 import { saveChar, saveCharItems, saveCharSpells, deleteChar, deleteCharItem, deleteCharMonster, reciveChar, reciveCharSpells, reciveCharMonsters, reciveCharItems, deleteCharSpell } from '../../database/CharacterService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +13,7 @@ const ipcRenderer = electron.ipcRenderer;
 const { dialog, app } = electron.remote;
 const fs = require('fs');
 
-export default function CharView() {
+export default function CharView({char}) {
     const [tabs, setTabs] = useState({ skills: true, combat: false, actions: false, features: false, spells: false, equipment: false, monsters: false, notes: false });
 
     const [id, setId] = useState(0);
@@ -125,7 +123,7 @@ export default function CharView() {
     const [deathTwo, setDeathTwo] = useState(0);
     const [deathThree, setDeathThree] = useState(0);
 
-    const receiveCharResult = (event, result) => {
+    const receiveCharResult = (result) => {
         console.log(result)
         console.time("receiveChar")
         ReactDOM.unstable_batchedUpdates(() => {
@@ -240,25 +238,6 @@ export default function CharView() {
         setMonsters(result);
     }
 
-    const changeTheme = (event, result) => {
-        ThemeService.applyTheme(result.theme);
-    }
-
-    useEffect(() => {
-        OptionService.get('theme', function (result) {
-            ThemeService.setTheme(result);
-            ThemeService.applyTheme(result);
-        });
-
-        ipcRenderer.on("onViewChar", receiveCharResult);
-        ipcRenderer.on("changeTheme", changeTheme);
-        return () => {
-            ipcRenderer.removeListener("onViewChar", receiveCharResult);
-            ipcRenderer.removeListener("changeTheme", changeTheme);
-        }
-
-    }, []);
-
     useEffect(() => {
         reciveCharSpells(id, function (result) {
             receiveSpellsResult(result);
@@ -270,6 +249,10 @@ export default function CharView() {
             receiveItemsResult(result);
         })
     }, [id]);
+
+    useEffect(() => {
+        receiveCharResult(char);
+    }, [char]);
 
     useEffect(() => {
         if (level < 5) {
