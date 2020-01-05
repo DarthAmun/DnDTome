@@ -1,0 +1,79 @@
+#rightNav {
+  width: 60px;
+  height: 100%;
+  float: right;
+  box-shadow: inset 10px 0px 10px -5px rgba(0, 0, 0, 0.25);
+  background: var(--app-background-color);
+}
+
+#rightNav::-webkit-scrollbar {
+  width: 6px;
+  background-color: var(--scrollbar);
+  border-radius: 5px;
+}
+
+#rightNav::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 5px;
+}
+
+#rightNav .activeView {
+  z-index: 10000;
+  position: absolute;
+  top: 40px;
+  right: 60px;
+  left: 120px;
+  height: calc(100% - 40px);
+  box-sizing: border-box;
+  background: var(--app-background-color);
+}
+
+#rightNav > .windowContainer .image {
+  float: left;
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+  border: 3px solid #8000ff;
+  box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+  background-color: white;
+  cursor: pointer;
+}
+
+#rightNav .windowContainer {
+  width: 36px;
+  margin-left: 10px;
+  margin-top: 10px;
+  float: left;
+}
+
+#rightNav .windowContainer .removeWindow {
+  height: 20px;
+  width: 20px;
+  color: #8000ff;
+  font-size: 14px;
+  position: relative;
+  top: 7px;
+  right: -28px;
+  cursor: pointer;
+  float: left;
+}
+
+#rightNav a:hover,
+#rightNav a.menuItemActiv {
+  border-right: 3px solid #8000ff;
+  cursor: pointer;
+}
+
+.gradIcon {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 70px;
+  background-color: white;
+  border-radius: 60px;
+  position: absolute;
+  right: 30px;
+  top: 10px;
+  border: none;
+  padding: 0px;
+}

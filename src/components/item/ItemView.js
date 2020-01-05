@@ -12,7 +12,7 @@ const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const { dialog } = electron.remote;
 
-export default function ItemView() {
+export default function ItemView({ item }) {
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [pic, setPic] = useState("");
@@ -25,7 +25,7 @@ export default function ItemView() {
     const [chars, setChars] = useState([]);
     const [selectedChar, setSelectedChar] = useState(0);
 
-    const receiveItem = (event, result) => {
+    const receiveItem = (result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveItem")
             let text = "";
@@ -49,36 +49,22 @@ export default function ItemView() {
         setSelectedChar(result[0].char_id);
     }
 
-    const changeTheme = (event, result) => {
-        ThemeService.applyTheme(result.theme);
-    }
-
-    useEffect(() => {
-        OptionService.get('theme', function (result) {
-            ThemeService.setTheme(result);
-            ThemeService.applyTheme(result);
-        });
-
-        ipcRenderer.on("onViewItem", receiveItem);
-        ipcRenderer.on("changeTheme", changeTheme);
-        return () => {
-            ipcRenderer.removeListener("onViewItem", receiveItem);
-            ipcRenderer.removeListener("changeTheme", changeTheme);
-        }
-    }, []);
-
     useEffect(() => {
         reciveAllChars(function (result) {
             receiveChars(result)
         })
     }, [id]);
 
+    useEffect(() => {
+        receiveItem(item);
+    }, [item]);
+
     const saveItemAction = (e) => {
         saveItem({ id, name, pic, type, rarity, source, attunment, description });
     }
 
     const addItemToCharAction = (e) => {
-        addItemToChar({ selectedChar }, { id, name }, function () {});
+        addItemToChar({ selectedChar }, { id, name }, function () { });
     }
 
     const deleteItemAction = (e) => {
@@ -129,10 +115,12 @@ export default function ItemView() {
             <div className="top" style={{ width: "120px" }}>
                 <button className="delete" onClick={deleteItemAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                 <button onClick={saveItemAction}><FontAwesomeIcon icon={faSave} /> Save</button>
-
             </div>
-            <div className="image" style={style}></div>
-            <textarea value={description} onChange={e => setDescription(e.target.value)}></textarea>
+
+            <div className="top" style={{ width: "100%" }}>
+                <div className="image" style={style}></div>
+                <textarea value={description} onChange={e => setDescription(e.target.value)}></textarea>
+            </div>
         </div>
     )
 

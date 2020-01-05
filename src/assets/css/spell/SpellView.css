@@ -1,131 +1,122 @@
-body {
-    height: 100%;
-    margin: 0px;
-    background-color: var(--app-background-color);
-    overflow: hidden;
-}
-
-@font-face {
-    font-family: 'Quicksand';
-    src: url('../../font/Quicksand-Medium.ttf') format('truetype');
-}
-
 #spellView {
-    height: calc(100% - 20px);
-    width: calc(100% - 20px);
-    overflow: hidden;
-    color: var(--card-title-color);
-    padding: 10px;
-    font-family: 'Quicksand', sans-serif;
+  height: calc(100% - 20px);
+  width: calc(100% - 20px);
+  overflow: hidden;
+  color: var(--card-title-color);
+  padding: 10px;
 }
 
-#spellView input, #spellView select {
-    height: 30px;
-    width: 300px;
-    border: none;
-    border-radius: 3px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-left: 5px;
-    margin-bottom: 5px;
-    float: right;
-    font-family: inherit;
-    font-size: 14px;
-    box-shadow: var(--boxshadow);
-    background-color: var(--pagination-input-background-color);
-    color: var(--pagination-input-color);
+#spellView input,
+#spellView select {
+  height: 30px;
+  width: 300px;
+  border: none;
+  border-radius: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  float: right;
+  font-family: inherit;
+  font-size: 14px;
+  box-shadow: var(--boxshadow);
+  background-color: var(--pagination-input-background-color);
+  color: var(--pagination-input-color);
 }
 
 #spellView select {
-    width: 320px;
+  width: 320px;
 }
 
 #spellView button {
-    height: 28px;
-    width: auto;
-    border: none;
-    border-radius: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-left: 10px;
-    margin-bottom: 5px;
-    text-align: center;
-    float: left;
-    font-family: inherit;
-    font-size: 14px;
-    background-color: var(--button-background-color);
-    color: var(--button-color);
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
+  height: 28px;
+  width: auto;
+  border: none;
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  text-align: center;
+  float: left;
+  font-family: inherit;
+  font-size: 14px;
+  background-color: var(--button-background-color);
+  color: var(--button-color);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
 }
 
 #spellView button:hover {
-    box-shadow: var(--boxshadow-hover);
-    cursor: pointer;
+  box-shadow: var(--boxshadow-hover);
+  cursor: pointer;
 }
 
 #spellView button.delete {
-    background-color: darkred;
+  background-color: darkred;
+  margin-right: 0px;
 }
 
 #spellView textarea {
-    height: 345px;
-    width: 444px;
-    float: left;
-    resize: none;
-    border-radius: 3px;
-    border-bottom-right-radius: 0px;
-    border: none;
-    padding: 10px;
-    font-family: inherit;
-    font-size: 14px;
-    margin-bottom: 5px;
-    box-shadow: var(--boxshadow);
-    background-color: var(--pagination-input-background-color);
-    color: var(--pagination-input-color);
+  height: 345px;
+  width: 444px;
+  float: left;
+  resize: none;
+  border-radius: 3px;
+  border-bottom-right-radius: 0px;
+  border: none;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  margin-bottom: 5px;
+  box-shadow: var(--boxshadow);
+  background-color: var(--pagination-input-background-color);
+  color: var(--pagination-input-color);
 }
 
 #spellView label {
-    display: inline-block;
-    width: 450px;
-    text-align: right;
-    line-height: 30px;
-    float: left;
+  display: inline-block;
+  width: 450px;
+  text-align: right;
+  line-height: 30px;
+  float: left;
+  height: 37px;
 }
-#spellView label .labelText{
-    float: left;
-    height: 37px;
-    line-height: 33px;
-    text-align: right;
+#spellView label .labelText {
+  float: left;
+  height: 37px;
+  line-height: 33px;
+  text-align: right;
+  font-size: 16px;
 }
-#spellView label.small {
-    width: 225px;
+#spellView label.smallSpellLabel {
+  width: 225px;
 }
-#spellView label.smaller {
+#spellView label.smallerSpellLabel {
   width: 150px;
 }
 #spellView label.smallPic {
   width: 315px;
 }
 #spellView label.left {
-    float:left;
-    text-align: left;
-    padding-left: 5px;
-    padding-right: 5px;
+  float: left;
+  text-align: left;
+  padding-left: 5px;
+  padding-right: 5px;
 }
-#spellView label.small input{
-    width: 75px;
+#spellView label.smallSpellLabel input {
+  width: 75px;
 }
 #spellView label.smallPic input {
   width: 165px;
 }
-#spellView label.left input{
-    float: left;
+#spellView label.left input {
+  float: left;
 }
-#spellView label.small input[type=checkbox]{
-    width: 15px;
-    background: none;
-    box-shadow: none;
+#spellView label.smallSpellLabel input[type="checkbox"] {
+  width: 15px;
+  background: none;
+  box-shadow: none;
 }
 
 #spellView .spellImgBlock {
@@ -145,93 +136,92 @@ body {
 }
 
 #spellView .top {
-    float: left;
-    width: 450px;
-    margin-right: 10px;
+  float: left;
+  width: 465px;
+  margin-right: 10px;
 }
 
 #spellView::-webkit-scrollbar,
 #spellView textarea::-webkit-scrollbar {
-    width: 6px;
-    background-color: var(--scrollbar);
-    border-radius: 5px;
+  width: 6px;
+  background-color: var(--scrollbar);
+  border-radius: 5px;
 }
 
 #spellView::-webkit-scrollbar-thumb,
 #spellView textarea::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-thumb);
-    border-radius: 5px;
+  background-color: var(--scrollbar-thumb);
+  border-radius: 5px;
 }
 
-.checkbox-label {
-    display: block;
-    position: relative;
-    cursor: pointer;
-  }
-  
-  .checkbox-label input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    display: none;
-  }
-  
-  .checkbox-label .checkbox-custom {
-    position: absolute;
-    top: 2px;
-    left: 60px;
-    height: 24px;
-    width: 24px;
-    background-color: transparent;
-    border-radius: 5px;
-    transition: all 0.3s ease-out;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    border: 2px solid #FFFFFF;
-    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
-  }
-  
-  
-  .checkbox-label input:checked ~ .checkbox-custom {
-    border-radius: 5px;
-    -webkit-transform: rotate(0deg) scale(1);
-    -ms-transform: rotate(0deg) scale(1);
-    transform: rotate(0deg) scale(1);
-    opacity:1;
-    border: 2px solid #FFFFFF;
-    background-color: var(--pagination-input-background-color);
-  }
-  
-  
-  .checkbox-label .checkbox-custom::after {
-    position: absolute;
-    content: "";
-    left: 12px;
-    top: 12px;
-    height: 0px;
-    width: 0px;
-    border-radius: 5px;
-    border: solid #8000ff;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(0deg) scale(0);
-    -ms-transform: rotate(0deg) scale(0);
-    transform: rotate(0deg) scale(0);
-    opacity:1;
-    transition: all 0.3s ease-out;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-  }
-  
-  
-  .checkbox-label input:checked ~ .checkbox-custom::after {
+#spellView .checkbox-label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  clear: none;
+  height: 35px;
+}
+
+#spellView .checkbox-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  display: none;
+}
+
+#spellView .checkbox-label .checkbox-custom {
+  position: absolute;
+  top: 2px;
+  left: 60px;
+  height: 24px;
+  width: 24px;
+  background-color: transparent;
+  border-radius: 5px;
+  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  border: 2px solid #ffffff;
+  box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+}
+
+#spellView .checkbox-label input:checked ~ .checkbox-custom {
+  border-radius: 5px;
+  -webkit-transform: rotate(0deg) scale(1);
+  -ms-transform: rotate(0deg) scale(1);
+  transform: rotate(0deg) scale(1);
+  opacity: 1;
+  border: 2px solid #ffffff;
+  background-color: var(--pagination-input-background-color);
+}
+
+#spellView .checkbox-label .checkbox-custom::after {
+  position: absolute;
+  content: "";
+  left: 12px;
+  top: 12px;
+  height: 0px;
+  width: 0px;
+  border-radius: 5px;
+  border: solid #8000ff;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(0deg) scale(0);
+  -ms-transform: rotate(0deg) scale(0);
+  transform: rotate(0deg) scale(0);
+  opacity: 1;
+  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+}
+
+#spellView .checkbox-label input:checked ~ .checkbox-custom::after {
   -webkit-transform: rotate(45deg) scale(1);
   -ms-transform: rotate(45deg) scale(1);
   transform: rotate(45deg) scale(1);
-  opacity:1;
+  opacity: 1;
   left: 8px;
   top: 3px;
   width: 6px;
@@ -240,41 +230,40 @@ body {
   border-width: 0 2px 2px 0;
   background-color: transparent;
   border-radius: 0;
-  }
-  
-  .checkbox-label input:checked ~ .checkbox-custom::before {
-    transition: all 0.3s ease-out;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-  }
-  
-  
-  /* Style for Circular Checkbox */
-  .checkbox-label .checkbox-custom.circular {
-    border-radius: 50%;
-    border: 2px solid #8000ff;
-  }
-  
-  .checkbox-label input:checked ~ .checkbox-custom.circular {
-    background-color: var(--pagination-input-background-color);
-    border-radius: 50%;
-    border: 2px solid var(--pagination-input-background-color);
-  }
-  .checkbox-label input:checked ~ .checkbox-custom.circular::after {
-    border: solid #8000ff;
-    border-width: 0 2px 2px 0;
-  }
-  .checkbox-label .checkbox-custom.circular::after {
-    border-radius: 50%;
-  }
-  
-  .checkbox-label .checkbox-custom.circular::before {
-    border-radius: 50%;
-    border: 2px solid #FFFFFF;
-  }
-  
-  .checkbox-label input:checked ~ .checkbox-custom.circular::before {
-    border-radius: 50%;
-  }
+}
+
+#spellView .checkbox-label input:checked ~ .checkbox-custom::before {
+  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+}
+
+/* Style for Circular Checkbox */
+#spellView .checkbox-label .checkbox-custom.circular {
+  border-radius: 50%;
+  border: 2px solid #8000ff;
+}
+
+#spellView .checkbox-label input:checked ~ .checkbox-custom.circular {
+  background-color: var(--pagination-input-background-color);
+  border-radius: 50%;
+  border: 2px solid var(--pagination-input-background-color);
+}
+#spellView .checkbox-label input:checked ~ .checkbox-custom.circular::after {
+  border: solid #8000ff;
+  border-width: 0 2px 2px 0;
+}
+#spellView .checkbox-label .checkbox-custom.circular::after {
+  border-radius: 50%;
+}
+
+#spellView .checkbox-label .checkbox-custom.circular::before {
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+}
+
+#spellView .checkbox-label input:checked ~ .checkbox-custom.circular::before {
+  border-radius: 50%;
+}

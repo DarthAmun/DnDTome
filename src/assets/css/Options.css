@@ -1,6 +1,6 @@
 #optionContent {
     float: left;
-    height: 100%;
+    height: calc(100% - 30px);
     width: 100%;
     overflow-y: hidden;
     overflow-x: hidden;

@@ -24,6 +24,7 @@ import AddMonster from './add/AddMonster';
 import AddGear from './add/AddGear';
 
 import LeftNav from './LeftNav';
+import RightNav from './RightNav';
 import TopNav from './TopNav';
 
 const PageLayout = ({ children }) => (
@@ -34,6 +35,7 @@ const PageLayout = ({ children }) => (
       <TopNav />
       {children}
     </div>
+    <RightNav />
     <div id="credits">v{packageJson.version} by DarthAmun</div>
   </div>
 );

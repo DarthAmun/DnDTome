@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as ReactDOM from "react-dom";
 import '../../assets/css/monster/MonsterView.css';
-import OptionService from '../../database/OptionService';
-import ThemeService from '../../services/ThemeService';
 import { saveMonster, deleteMonster, addMonsterToChar } from '../../database/MonsterService';
 import { reciveAllChars } from '../../database/CharacterService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,7 +10,7 @@ const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const { dialog } = electron.remote;
 
-export default function MonsterView() {
+export default function MonsterView({monster}) {
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [pic, setPic] = useState("");
@@ -46,7 +44,7 @@ export default function MonsterView() {
     const [chars, setChars] = useState([]);
     const [selectedChar, setSelectedChar] = useState(0);
 
-    const receiveMonster = (event, result) => {
+    const receiveMonster = (result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveMonster")
 
@@ -103,29 +101,15 @@ export default function MonsterView() {
         setSelectedChar(result[0].char_id);
     }
 
-    const changeTheme = (event, result) => {
-        ThemeService.applyTheme(result.theme);
-    }
-
-    useEffect(() => {
-        OptionService.get('theme', function (result) {
-            ThemeService.setTheme(result);
-            ThemeService.applyTheme(result);
-        });
-
-        ipcRenderer.on("onViewMonster", receiveMonster);
-        ipcRenderer.on("changeTheme", changeTheme);
-        return () => {
-            ipcRenderer.removeListener("onViewMonster", receiveMonster);
-            ipcRenderer.removeListener("changeTheme", changeTheme);
-        }
-    }, []);
-
     useEffect(() => {
         reciveAllChars(function (result) {
             receiveChars(result)
         })
     }, [id]);
+
+    useEffect(() => {
+        receiveMonster(monster);
+    }, [monster]);
 
     const formatScore = (score) => {
         let mod = Math.floor((score - 10) / 2);

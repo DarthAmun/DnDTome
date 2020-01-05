@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as ReactDOM from "react-dom";
 import '../../assets/css/spell/SpellView.css';
-import OptionService from '../../database/OptionService';
-import ThemeService from '../../services/ThemeService';
 import { saveSpell, deleteSpell, addSpellToChar } from '../../database/SpellService';
 import { reciveAllChars } from '../../database/CharacterService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,7 +10,7 @@ const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const { dialog } = electron.remote;
 
-export default function SpellView() {
+export default function SpellView({ spell }) {
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [school, setSchool] = useState("");
@@ -30,7 +28,7 @@ export default function SpellView() {
     const [chars, setChars] = useState([]);
     const [selectedChar, setSelectedChar] = useState(0);
 
-    const receiveSpell = (event, result) => {
+    const receiveSpell = (result) => {
         ReactDOM.unstable_batchedUpdates(() => {
             console.time("receiveSpell")
 
@@ -56,7 +54,7 @@ export default function SpellView() {
             setSources(sources);
             setId(result.spell_id);
             setPic(result.spell_pic);
-            
+
             if (result.spell_pic === null) {
                 setPic("");
             }
@@ -70,24 +68,6 @@ export default function SpellView() {
         setSelectedChar(result[0].char_id);
     }
 
-    const changeTheme = (event, result) => {
-        ThemeService.applyTheme(result.theme);
-    }
-
-    useEffect(() => {
-        OptionService.get('theme', function (result) {
-            ThemeService.setTheme(result);
-            ThemeService.applyTheme(result);
-        });
-
-        ipcRenderer.on("onViewSpell", receiveSpell);
-        ipcRenderer.on("changeTheme", changeTheme);
-        return () => {
-            ipcRenderer.removeListener("onViewSpell", receiveSpell);
-            ipcRenderer.removeListener("changeTheme", changeTheme);
-        }
-    }, []);
-
     useEffect(() => {
         reciveAllChars(function (result) {
             receiveChars(result)
@@ -95,8 +75,8 @@ export default function SpellView() {
     }, [id]);
 
     useEffect(() => {
-        console.log(pic)
-    }, [pic]);
+        receiveSpell(spell);
+    }, [spell]);
 
     const saveSpellAction = (e) => {
         saveSpell({ id, name, school, level, ritual, time, range, duration, components, text, classes, sources, pic });
@@ -135,8 +115,8 @@ export default function SpellView() {
                 <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Name..." /></label>
                 <label>School:<input name="school" type="text" value={school} onChange={e => setSchool(e.target.value)} placeholder="School..." /></label>
                 <div className="spellImgBlock">
-                    <label className="small">Level:<input name="level" type="number" value={level} onChange={e => setLevel(e.target.value)} /></label>
-                    <label className="smaller left checkbox-label">
+                    <label className="smallSpellLabel">Level:<input name="level" type="number" value={level} onChange={e => setLevel(e.target.value)} /></label>
+                    <label className="smallerSpellLabel left checkbox-label">
                         <div className="labelText">Ritual:</div>
                         <input name="ritual" type="checkbox" checked={ritual} onChange={e => setRitual(e.target.checked)} />
                         <span className="checkbox-custom circular"></span>
@@ -150,18 +130,20 @@ export default function SpellView() {
                 <label>Components:<input name="components" type="text" value={components} onChange={e => setComponents(e.target.value)} placeholder="Components..." /></label>
                 <label>Classes:<input name="classes" type="text" value={classes} onChange={e => setClasses(e.target.value)} placeholder="Classes..." /></label>
                 <label>Sources:<input name="sources" type="text" value={sources} onChange={e => setSources(e.target.value)} placeholder="Sources..." /></label>
-            </div>
-            <textarea value={text} onChange={e => setText(e.target.value)} placeholder="Describtion..."></textarea>
-            <label>Char:
+                <label>Char:
                 <select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
-                    {chars.map((char, index) => {
-                        return <option key={index} value={char.char_id}>{char.char_name}</option>;
-                    })}
-                </select>
-            </label>
-            <button onClick={addSpellToCharAction}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
-            <button onClick={saveSpellAction}><FontAwesomeIcon icon={faSave} /> Save</button>
-            <button onClick={deleteSpellAction} className="delete" style={{ float: "right" }}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                        {chars.map((char, index) => {
+                            return <option key={index} value={char.char_id}>{char.char_name}</option>;
+                        })}
+                    </select>
+                </label>
+            </div>
+            <div className="top">
+                <textarea value={text} onChange={e => setText(e.target.value)} placeholder="Describtion..."></textarea>
+                <button onClick={addSpellToCharAction}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
+                <button onClick={saveSpellAction}><FontAwesomeIcon icon={faSave} /> Save</button>
+                <button onClick={deleteSpellAction} className="delete" style={{ float: "right" }}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+            </div>
         </div>
     )
 }
