@@ -35,7 +35,7 @@
   border-radius: 5px;
   padding-left: 10px;
   padding-right: 10px;
-  margin-left: 10px;
+  margin-right: 10px;
   margin-bottom: 5px;
   text-align: center;
   float: left;
@@ -54,6 +54,7 @@
 
 #spellView button.delete {
   background-color: darkred;
+  margin-right: 0px;
 }
 
 #spellView textarea {
@@ -136,7 +137,7 @@
 
 #spellView .top {
   float: left;
-  width: 450px;
+  width: 465px;
   margin-right: 10px;
 }
 

@@ -39,12 +39,12 @@
     float: left;
 }
 
-.icon {
+.monster .icon {
     width: 18px;
     height: 18px;
 }
 
-.small {
+.monster .small {
     font-size: 6px;
     margin-left: 5px;
     margin-right: 5px;

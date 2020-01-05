@@ -10,7 +10,7 @@ const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const { dialog } = electron.remote;
 
-export default function SpellView({spell}) {
+export default function SpellView({ spell }) {
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [school, setSchool] = useState("");
@@ -130,18 +130,20 @@ export default function SpellView({spell}) {
                 <label>Components:<input name="components" type="text" value={components} onChange={e => setComponents(e.target.value)} placeholder="Components..." /></label>
                 <label>Classes:<input name="classes" type="text" value={classes} onChange={e => setClasses(e.target.value)} placeholder="Classes..." /></label>
                 <label>Sources:<input name="sources" type="text" value={sources} onChange={e => setSources(e.target.value)} placeholder="Sources..." /></label>
-            </div>
-            <textarea value={text} onChange={e => setText(e.target.value)} placeholder="Describtion..."></textarea>
-            <label>Char:
+                <label>Char:
                 <select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
-                    {chars.map((char, index) => {
-                        return <option key={index} value={char.char_id}>{char.char_name}</option>;
-                    })}
-                </select>
-            </label>
-            <button onClick={addSpellToCharAction}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
-            <button onClick={saveSpellAction}><FontAwesomeIcon icon={faSave} /> Save</button>
-            <button onClick={deleteSpellAction} className="delete" style={{ float: "right" }}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                        {chars.map((char, index) => {
+                            return <option key={index} value={char.char_id}>{char.char_name}</option>;
+                        })}
+                    </select>
+                </label>
+            </div>
+            <div className="top">
+                <textarea value={text} onChange={e => setText(e.target.value)} placeholder="Describtion..."></textarea>
+                <button onClick={addSpellToCharAction}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
+                <button onClick={saveSpellAction}><FontAwesomeIcon icon={faSave} /> Save</button>
+                <button onClick={deleteSpellAction} className="delete" style={{ float: "right" }}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+            </div>
         </div>
     )
 }

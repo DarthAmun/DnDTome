@@ -9,7 +9,7 @@
 #gearView input,
 #gearView select {
   height: 30px;
-  width: 200px;
+  width: 300px;
   border: none;
   border-radius: 3px;
   padding-left: 10px;
@@ -25,7 +25,7 @@
 }
 
 #gearView select {
-  width: 220px;
+  width: 320px;
 }
 
 #gearView button {
@@ -84,7 +84,7 @@
 
 #gearView label {
   display: inline-block;
-  width: 300px;
+  width: 400px;
   text-align: right;
   line-height: 30px;
 }
@@ -103,8 +103,8 @@
 
 #gearView .top {
   float: left;
-  width: 300px;
-  height: 145px;
+  width: 400px;
+  height: 175px;
   margin-right: 10px;
 }
 

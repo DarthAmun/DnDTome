@@ -9,7 +9,7 @@
 #itemView input,
 #itemView select {
   height: 30px;
-  width: 200px;
+  width: 300px;
   border: none;
   border-radius: 3px;
   padding-left: 10px;
@@ -25,7 +25,7 @@
 }
 
 #itemView select {
-  width: 220px;
+  width: 320px;
 }
 
 #itemView button {
@@ -85,7 +85,7 @@
 
 #itemView label {
   display: inline-block;
-  width: 290px;
+  width: 390px;
   text-align: right;
   line-height: 30px;
 }
@@ -105,7 +105,7 @@
 
 #itemView .top {
   float: left;
-  width: 290px;
+  width: 390px;
   height: 150px;
   margin-right: 10px;
 }

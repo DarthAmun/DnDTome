@@ -12,7 +12,7 @@ const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const { dialog } = electron.remote;
 
-export default function ItemView({item}) {
+export default function ItemView({ item }) {
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [pic, setPic] = useState("");
@@ -64,7 +64,7 @@ export default function ItemView({item}) {
     }
 
     const addItemToCharAction = (e) => {
-        addItemToChar({ selectedChar }, { id, name }, function () {});
+        addItemToChar({ selectedChar }, { id, name }, function () { });
     }
 
     const deleteItemAction = (e) => {
@@ -115,10 +115,12 @@ export default function ItemView({item}) {
             <div className="top" style={{ width: "120px" }}>
                 <button className="delete" onClick={deleteItemAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                 <button onClick={saveItemAction}><FontAwesomeIcon icon={faSave} /> Save</button>
-
             </div>
-            <div className="image" style={style}></div>
-            <textarea value={description} onChange={e => setDescription(e.target.value)}></textarea>
+
+            <div className="top" style={{ width: "100%" }}>
+                <div className="image" style={style}></div>
+                <textarea value={description} onChange={e => setDescription(e.target.value)}></textarea>
+            </div>
         </div>
     )
 
