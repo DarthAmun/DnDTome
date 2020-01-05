@@ -121,11 +121,61 @@ module.exports.reciveAttributeSelection = (attribute, callback) => {
   });
 }
 
+module.exports.deletePerk = (id, callback) => {
+  let data = [id];
+  let sql = `DELETE FROM 'main'.'tab_races_perks' WHERE perk_id = ?`;
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      callback();
+      console.log(`====>Deleted ${race.name} successfull`);
+      ipcRenderer.send('displayMessage', { type: `Deleted perk`, message: `Deleted perk successful` });
+    });
+  });
+}
+
+module.exports.insertNewPerk = (id, callback) => {
+  let data = ["", "", 1, id];
+  let sql = `INSERT INTO 'main'.'tab_races_perks'
+               (perk_title, perk_text, perk_level, race_id)
+              VALUES (?, ?, ?, ?)`;
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      callback(this.lastID);
+      console.log(`====> add new perk successfull`);
+      ipcRenderer.send('displayMessage', { type: `Added new race perk`, message: `Added perk successful` });
+    });
+  });
+}
+
+module.exports.savePerks = (perks) => {
+  perks.forEach(perk => {
+    let data = [perk.perk_title, perk.perk_text, perk.perk_level, perk.perk_id];
+    let sql = `UPDATE 'main'.'tab_races_perks'
+              SET perk_title = ?, perk_text = ?, perk_level = ?
+              WHERE perk_id = ?`;
+    db.serialize(function () {
+      db.run(sql, data, function (err) {
+        if (err) {
+          return console.error(err.message);
+        }
+        console.log(`====> perks updated successfull`);
+        ipcRenderer.send('racesUpdated', { raceStep: parseInt(localStorage.getItem('raceStep'), 10), raceStart: parseInt(localStorage.getItem('raceStart'), 10) });
+        ipcRenderer.send('displayMessage', { type: `Saved race perks`, message: `Saved perks successful` });
+      });
+    });
+  });
+}
 
 module.exports.saveRace = (race) => {
-  let data = [race.name, race.school, race.level, race.ritual, race.time, race.duration, race.range, race.components, race.text, race.classes, race.sources, race.pic, race.id];
+  let data = [race.name, race.surces, race.pic, race.age, race.abilityScoreImprov, race.alignment, race.size, race.speed, race.lang, race.id];
   let sql = `UPDATE 'main'.'tab_races'
-              SET race_name = ?, race_school = ?, race_level = ?, race_ritual = ?, race_time = ?, race_duration = ?, race_range = ?, race_components = ?, race_text = ?, race_classes = ?, race_sources = ?, race_pic = ?
+              SET race_name = ?, race_sources = ?, race_pic = ?, race_age = ?, race_abilityScoreImprov = ?, race_alignment = ?, race_size = ?, race_speed = ?, race_lang = ?
               WHERE race_id = ?`;
   db.serialize(function () {
     db.run(sql, data, function (err) {
@@ -207,12 +257,12 @@ module.exports.deleteRace = (race) => {
 
 module.exports.addRaceToChar = (char, race, callback) => {
   let data = [];
-  if(race.id === undefined){
+  if (race.id === undefined) {
     data = [char.selectedChar, race.race_id, false];
   } else {
     data = [char.selectedChar, race.id, false];
   }
-  
+
   let sql = `INSERT INTO 'main'.'tab_characters_races' (char_id, race_id, race_prepared)
               VALUES  (?, ?, ?)`;
   db.serialize(function () {
