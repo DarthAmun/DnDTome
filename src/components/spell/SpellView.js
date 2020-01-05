@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as ReactDOM from "react-dom";
 import '../../assets/css/spell/SpellView.css';
-import OptionService from '../../database/OptionService';
-import ThemeService from '../../services/ThemeService';
 import { saveSpell, deleteSpell, addSpellToChar } from '../../database/SpellService';
 import { reciveAllChars } from '../../database/CharacterService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -69,22 +67,6 @@ export default function SpellView({spell}) {
         setChars(result);
         setSelectedChar(result[0].char_id);
     }
-
-    const changeTheme = (event, result) => {
-        ThemeService.applyTheme(result.theme);
-    }
-
-    useEffect(() => {
-        OptionService.get('theme', function (result) {
-            ThemeService.setTheme(result);
-            ThemeService.applyTheme(result);
-        });
-
-        ipcRenderer.on("changeTheme", changeTheme);
-        return () => {
-            ipcRenderer.removeListener("changeTheme", changeTheme);
-        }
-    }, []);
 
     useEffect(() => {
         reciveAllChars(function (result) {
