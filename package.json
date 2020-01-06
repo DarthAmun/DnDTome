@@ -17,9 +17,13 @@
     "postpackage": "npm run package-win && npm run package-linux",
     "package-win": "electron-packager ./ --out=./builds --icon=./src/assets/img/dice_icon.ico --overwrite --platform=win32 --arch=x64 --executableName=DnDTome",
     "package-linux": "electron-packager ./ --out=./builds --icon=./src/assets/img/dice_icon.png --overwrite --platform=linux --arch=x64 --executableName=DnDTome",
-    "postinstall": "npm run appDeps-win && npm run appDeps-linux ",
+    "package-mac": "electron-packager ./ --out=./builds --icon=./src/assets/img/dice_icon.icns  --overwrite  --platform=darwin --arch=x64 --target=dmg --darwinDarkModeSupport=true --executableName=DnDTome",
+    "create-mac-installer": "electron-installer-dmg ./builds/dndtome-0.1.9-SNAPSHOT-darwin-x64/dndtome-0.1.9-SNAPSHOT.app DnDTome --icon=./src/assets/img/dice_icon.icns",
+    "create-mac-zip": "electron-installer-zip ./builds/dndtome-0.1.9-SNAPSHOT-darwin-x64/dndtome-0.1.9-SNAPSHOT.app dndtome-0.1.9.zip",
+    "postinstall": "npm run appDeps-win && npm run appDeps-linux && npm run appDeps-mac",
     "appDeps-win": "electron-builder install-app-deps --platform=win32 --arch=x64 ",
-    "appDeps-linux": "electron-builder install-app-deps --platform=linux --arch=x64"
+    "appDeps-linux": "electron-builder install-app-deps --platform=linux --arch=x64",
+    "appDeps-mac": "electron-builder install-app-deps --platform=darwin --arch=x64"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -31,6 +35,8 @@
     "css-loader": "^3.2.0",
     "electron": "^6.0.12",
     "electron-builder": "^21.2.0",
+    "electron-installer-dmg": "^3.0.0",
+    "electron-installer-zip": "^0.1.2",
     "electron-packager": "^14.0.6",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.11",
