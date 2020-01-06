@@ -23,7 +23,8 @@
     "postinstall": "npm run appDeps-win && npm run appDeps-linux && npm run appDeps-mac",
     "appDeps-win": "electron-builder install-app-deps --platform=win32 --arch=x64 ",
     "appDeps-linux": "electron-builder install-app-deps --platform=linux --arch=x64",
-    "appDeps-mac": "electron-builder install-app-deps --platform=darwin --arch=x64"
+    "appDeps-mac": "electron-builder install-app-deps --platform=darwin --arch=x64",
+    "pack": "electron-builder --dir"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -36,6 +37,8 @@
     "electron": "^6.0.12",
     "electron-builder": "^21.2.0",
     "electron-installer-dmg": "^3.0.0",
+    "electron-installer-snap": "^4.1.0",
+    "electron-installer-windows": "^2.0.0",
     "electron-installer-zip": "^0.1.2",
     "electron-packager": "^14.0.6",
     "extract-text-webpack-plugin": "^3.0.2",
@@ -55,12 +58,15 @@
     "@fortawesome/free-regular-svg-icons": "^5.11.1",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.7",
+    "db-migrate": "^0.11.6",
+    "db-migrate-sqlite3": "^0.4.0",
     "hummus": "^1.0.107",
     "node-gyp": "^6.0.0",
     "rc-progress": "^2.5.2",
     "react-particles-js": "^2.7.0",
     "react-select": "^3.0.8",
     "recharts": "^1.8.5",
-    "sqlite3": "^4.1.0"
+    "sqlite3": "^4.1.0",
+    "update-electron-app": "^1.5.0"
   }
 }
