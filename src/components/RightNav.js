@@ -47,9 +47,11 @@ export default function RightNav() {
 
   useEffect(() => {
     ipcRenderer.on("onView", receiveResult);
+    ipcRenderer.on("closeActiveView", closeActiveView);
 
     return () => {
       ipcRenderer.removeListener("onView", receiveResult);
+      ipcRenderer.removeListener("closeActiveView", closeActiveView);
     };
   }, []);
 
@@ -93,37 +95,37 @@ export default function RightNav() {
   const getView = () => {
     if (activeView.windowType === "spell") {
       return (
-        <div className="activeView" style={{ display: `${showView ? "block" : "none"}` }}>
+        <div className={`activeView ${showView ? 'show' : 'hide'}`}>
           <SpellView spell={activeView} />
         </div>
       );
     } else if (activeView.windowType === "item") {
       return (
-        <div className="activeView" style={{ display: `${showView ? "block" : "none"}` }}>
+        <div className={`activeView ${showView ? 'show' : 'hide'}`}>
           <ItemView item={activeView} />
         </div>
       );
     } else if (activeView.windowType === "gear") {
       return (
-        <div className="activeView" style={{ display: `${showView ? "block" : "none"}` }}>
+        <div className={`activeView ${showView ? 'show' : 'hide'}`}>
           <GearView gear={activeView} />
         </div>
       );
     } else if (activeView.windowType === "monster") {
       return (
-        <div className="activeView" style={{ display: `${showView ? "block" : "none"}` }}>
+        <div className={`activeView ${showView ? 'show' : 'hide'}`}>
           <MonsterView monster={activeView} />
         </div>
       );
     } else if (activeView.windowType === "char") {
       return (
-        <div className="activeView" style={{ display: `${showView ? "block" : "none"}` }}>
+        <div className={`activeView ${showView ? 'show' : 'hide'}`}>
           <CharView char={activeView} />
         </div>
       );
     } else if (activeView.windowType === "race") {
       return (
-        <div className="activeView" style={{ display: `${showView ? "block" : "none"}` }}>
+        <div className={`activeView ${showView ? 'show' : 'hide'}`}>
           <RaceView race={activeView} />
         </div>
       );
@@ -141,6 +143,11 @@ export default function RightNav() {
       });
     }
   };
+
+  const closeActiveView = () => {
+    console.log("close");
+    setShowView(false);
+  }
 
   const removeView = (windows) => {
     let wins = shortWindows.filter(window => window !== windows);
