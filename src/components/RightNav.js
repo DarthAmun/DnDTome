@@ -21,11 +21,10 @@ export default function RightNav() {
   const [showView, setShowView] = useState(false);
 
   const receiveResult = (event, result) => {
+    console.log(result);
     let type = "";
     if (result.spell_id !== undefined) {
       type = "spell";
-    } else if (result.char_id !== undefined) {
-      type = "char";
     } else if (result.item_id !== undefined) {
       type = "item";
     } else if (result.gear_id !== undefined) {
@@ -34,6 +33,8 @@ export default function RightNav() {
       type = "race";
     } else if (result.monster_id !== undefined) {
       type = "monster";
+    } else if (result.char_id !== undefined) {
+      type = "char";
     }
 
     let newWindow = { ...result, windowType: type };

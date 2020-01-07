@@ -11,7 +11,7 @@ let monsterStart;
 let searchMonsterQuery;
 
 module.exports.reciveAllMonsters = (callback) => {
-    let q = "SELECT * FROM 'main'.'tab_monsters'";
+    let q = "SELECT * FROM 'main'.'tab_monsters' ORDER BY monster_name";
     db.serialize(function () {
         db.all(q, function (err, rows) {
             if (err != null) {
