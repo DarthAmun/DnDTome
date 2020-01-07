@@ -6,3 +6,4 @@ builds/
 export/
 src/assets/db/tab.db
 *.db-journal
+.idea/
