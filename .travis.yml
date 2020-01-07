@@ -72,4 +72,4 @@ before_cache:
 branches:
   only:
   - master
-  - staging
+  - prod
