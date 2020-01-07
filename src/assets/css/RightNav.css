@@ -26,12 +26,53 @@
   height: calc(100% - 40px);
   box-sizing: border-box;
   background: var(--app-background-color);
+}
+
+#rightNav .activeView.show {
   opacity: 0;
   animation-name: zoomIn;
   animation-duration: 300ms;
   transition-duration: 300ms;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
+}
+
+#rightNav .activeView.hide {
+  opacity: 1;
+  animation-name: zoomOut;
+  animation-duration: 300ms;
+  transition-duration: 300ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+@keyframes zoomIn {
+  from {
+    display: block;
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    
+    opacity: 1;
+  }
+}
+@keyframes zoomOut {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+    display: none;
+    opacity: 0;
+  }
 }
 
 #rightNav > .windowContainer .image {
@@ -51,19 +92,6 @@
   animation-fill-mode: forwards;
 }
 
-@keyframes zoomIn {
-  from {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-  }
-}
 
 #rightNav .windowContainer {
   width: 36px;

@@ -224,6 +224,9 @@ ipcMain.on("minimizeMainWindow", event => {
 ipcMain.on("openView", (event, viewItem) => {
   mainWindow.webContents.send("onView", viewItem);
 });
+ipcMain.on("closeActiveView", (event) => {
+  mainWindow.webContents.send("closeActiveView");
+});
 
 ipcMain.on("deleteAllSpells", event => {
   deleteAll("spells");
