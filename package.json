@@ -20,7 +20,8 @@
     "postinstall": "npm run appDeps-win && npm run appDeps-linux ",
     "appDeps-win": "electron-builder install-app-deps --platform=win32 --arch=x64 ",
     "appDeps-linux": "electron-builder install-app-deps --platform=linux --arch=x64",
-    "release": "electron-builder"
+    "release": "electron-builder",
+    "test": "echo success"
   },
   "build": {
     "appId": "moc.emotdnd",
