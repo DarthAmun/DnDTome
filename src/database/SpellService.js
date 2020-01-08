@@ -133,7 +133,7 @@ module.exports.reciveSpellCount = (query, callback) => {
 }
 
 module.exports.reciveAttributeSelection = (attribute, callback) => {
-  let q = `SELECT spell_${attribute} FROM 'main'.'tab_spells' GROUP BY spell_${attribute}`;
+  let q = `SELECT spell_${attribute} FROM 'main'.'tab_spells' GROUP BY spell_${attribute} ORDER BY spell_${attribute}`;
   db.serialize(function () {
     db.all(q, function (err, rows) {
       if (err != null) {

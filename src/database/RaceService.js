@@ -72,6 +72,21 @@ module.exports.reciveRaces = (step, start, query, callback) => {
     if (searchRaceQuery.name != null && typeof searchRaceQuery.name !== 'undefined' && searchRaceQuery.name != "") {
       q += `race_name like "%${searchRaceQuery.name}%" AND `;
     }
+    if (searchRaceQuery.sources != null && typeof searchRaceQuery.sources !== 'undefined' && searchRaceQuery.sources != "") {
+      q += `race_sources like "%${searchRaceQuery.sources}%" AND `;
+    }
+    if (searchRaceQuery.abilityScoreImprov != null && typeof searchRaceQuery.abilityScoreImprov !== 'undefined' && searchRaceQuery.abilityScoreImprov != "") {
+      q += `race_abilityScoreImprov like "%${searchRaceQuery.abilityScoreImprov}%" AND `;
+    }
+    if (searchRaceQuery.size != null && typeof searchRaceQuery.size !== 'undefined' && searchRaceQuery.size != "") {
+      q += `race_size like "%${searchRaceQuery.size}%" AND `;
+    }
+    if (searchRaceQuery.speed != null && typeof searchRaceQuery.speed !== 'undefined' && searchRaceQuery.speed != "") {
+      q += `race_speed like "%${searchRaceQuery.speed}%" AND `;
+    }
+    if (searchRaceQuery.lang != null && typeof searchRaceQuery.lang !== 'undefined' && searchRaceQuery.lang != "") {
+      q += `race_lang like "%${searchRaceQuery.lang}%" AND `;
+    }
     if (q.includes(" AND ")) {
       q = q.slice(0, -4);
     } else {
@@ -108,7 +123,7 @@ module.exports.reciveRaceCount = (query, callback) => {
 }
 
 module.exports.reciveAttributeSelection = (attribute, callback) => {
-  let q = `SELECT race_${attribute} FROM 'main'.'tab_races' GROUP BY race_${attribute}`;
+  let q = `SELECT race_${attribute} FROM 'main'.'tab_races' GROUP BY race_${attribute} ORDER BY race_${attribute}`;
   db.serialize(function () {
     db.all(q, function (err, rows) {
       if (err != null) {

@@ -105,7 +105,7 @@ module.exports.reciveItemCount = (query, callback) => {
 }
 
 module.exports.reciveAttributeSelection = (attribute, callback) => {
-    let q = `SELECT item_${attribute} FROM 'main'.'tab_items' GROUP BY item_${attribute}`;
+    let q = `SELECT item_${attribute} FROM 'main'.'tab_items' GROUP BY item_${attribute} ORDER BY item_${attribute}`;
     db.serialize(function () {
         db.all(q, function (err, rows) {
             if (err != null) {

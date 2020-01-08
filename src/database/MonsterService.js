@@ -60,17 +60,43 @@ module.exports.reciveMonsters = (step, start, query, callback) => {
         if (searchMonsterQuery.name != null && typeof searchMonsterQuery.name !== 'undefined' && searchMonsterQuery.name != "") {
             q += `monster_name like "%${searchMonsterQuery.name}%" AND `;
         }
-        if (searchMonsterQuery.type != null && typeof searchMonsterQuery.type !== 'undefined' && searchMonsterQuery.type != "") {
-            q += `monster_type like "%${searchMonsterQuery.type}%" AND `;
+        if (searchMonsterQuery.type != null && typeof searchMonsterQuery.type !== 'undefined' && searchMonsterQuery.type != "" && searchMonsterQuery.type.length !== 0) {
+            searchMonsterQuery.type.map(type => {
+                q += `monster_type = "${type.value}" OR `;
+            });
+            q = q.slice(0, -3);
+            q += "AND ";
         }
-        if (searchMonsterQuery.subtype != null && typeof searchMonsterQuery.subtype !== 'undefined' && searchMonsterQuery.subtype != "") {
-            q += `monster_subtype like "%${searchMonsterQuery.subtype}%" AND `;
+        if (searchMonsterQuery.subtype != null && typeof searchMonsterQuery.subtype !== 'undefined' && searchMonsterQuery.subtype != "" && searchMonsterQuery.subtype.length !== 0) {
+            searchMonsterQuery.subtype.map(subtype => {
+                q += `monster_subtype = "${subtype.value}" OR `;
+            });
+            q = q.slice(0, -3);
+            q += "AND ";
+        }
+        if (searchMonsterQuery.size != null && typeof searchMonsterQuery.size !== 'undefined' && searchMonsterQuery.size != "" && searchMonsterQuery.size.length !== 0) {
+            searchMonsterQuery.size.map(size => {
+                q += `monster_size = "${size.value}" OR `;
+            });
+            q = q.slice(0, -3);
+            q += "AND ";
         }
         if (searchMonsterQuery.source != null && typeof searchMonsterQuery.source !== 'undefined' && searchMonsterQuery.source != "") {
             q += `monster_source like "%${searchMonsterQuery.source}%" AND `;
         }
-        if (searchMonsterQuery.cr != null && typeof searchMonsterQuery.cr !== 'undefined' && searchMonsterQuery.cr != "") {
-            q += `monster_cr = "${searchMonsterQuery.cr}" AND `;
+        if (searchMonsterQuery.cr != null && typeof searchMonsterQuery.cr !== 'undefined' && searchMonsterQuery.cr != "" && searchMonsterQuery.cr.length !== 0) {
+            searchMonsterQuery.cr.map(cr => {
+                q += `monster_cr = "${cr.value}" OR `;
+            });
+            q = q.slice(0, -3);
+            q += "AND ";
+        }
+        if (searchMonsterQuery.armorClass != null && typeof searchMonsterQuery.armorClass !== 'undefined' && searchMonsterQuery.armorClass != "" && searchMonsterQuery.armorClass.length !== 0) {
+            searchMonsterQuery.armorClass.map(armorClass => {
+                q += `monster_armorClass = "${armorClass.value}" OR `;
+            });
+            q = q.slice(0, -3);
+            q += "AND ";
         }
         if (searchMonsterQuery.alignment != null && typeof searchMonsterQuery.alignment !== 'undefined' && searchMonsterQuery.alignment != "") {
             q += `monster_alignment like "%${searchMonsterQuery.alignment}%" AND `;
@@ -81,8 +107,8 @@ module.exports.reciveMonsters = (step, start, query, callback) => {
         if (searchMonsterQuery.senses != null && typeof searchMonsterQuery.senses !== 'undefined' && searchMonsterQuery.senses != "") {
             q += `monster_senses like "%${searchMonsterQuery.senses}%" AND `;
         }
-        if (searchMonsterQuery.senses != null && typeof searchMonsterQuery.senses !== 'undefined' && searchMonsterQuery.senses != "") {
-            q += `monster_senses like "%${searchMonsterQuery.senses}%" AND `;
+        if (searchMonsterQuery.savingThrows != null && typeof searchMonsterQuery.savingThrows !== 'undefined' && searchMonsterQuery.savingThrows != "") {
+            q += `monster_savingThrows like "%${searchMonsterQuery.savingThrows}%" AND `;
         }
         if (searchMonsterQuery.ability != null && typeof searchMonsterQuery.ability !== 'undefined' && searchMonsterQuery.ability != "") {
             q += `monster_sAblt like "%${searchMonsterQuery.ability}%" AND `;
@@ -132,7 +158,7 @@ module.exports.reciveMonsterCount = (query, callback) => {
 }
 
 module.exports.reciveAttributeSelection = (attribute, callback) => {
-    let q = `SELECT monster_${attribute} FROM 'main'.'tab_monsters' GROUP BY monster_${attribute}`;
+    let q = `SELECT monster_${attribute} FROM 'main'.'tab_monsters' GROUP BY monster_${attribute} ORDER BY ABS(monster_${attribute})`;
     db.serialize(function () {
         db.all(q, function (err, rows) {
             if (err != null) {
@@ -264,7 +290,7 @@ module.exports.deleteMonster = (monster) => {
 
 module.exports.addMonsterToChar = (char, monster, callback) => {
     let data = [];
-    if(monster.id === undefined) {
+    if (monster.id === undefined) {
         data = [char.selectedChar, monster.monster_id];
     } else {
         data = [char.selectedChar, monster.id];

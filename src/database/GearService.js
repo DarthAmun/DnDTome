@@ -108,7 +108,7 @@ module.exports.reciveGearCount = (query, callback) => {
 }
 
 module.exports.reciveAttributeSelection = (attribute, callback) => {
-    let q = `SELECT gear_${attribute} FROM 'main'.'tab_gears' GROUP BY gear_${attribute}`;
+    let q = `SELECT gear_${attribute} FROM 'main'.'tab_gears' GROUP BY gear_${attribute} ORDER BY gear_${attribute}`;
     db.serialize(function () {
         db.all(q, function (err, rows) {
             if (err != null) {
