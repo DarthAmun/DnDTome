@@ -21,7 +21,6 @@ export default function RightNav() {
   const [showView, setShowView] = useState(false);
 
   const receiveResult = (event, result) => {
-    console.log(result);
     let type = "";
     if (result.spell_id !== undefined) {
       type = "spell";
@@ -145,7 +144,6 @@ export default function RightNav() {
   };
 
   const closeActiveView = () => {
-    console.log("close");
     setShowView(false);
   }
 

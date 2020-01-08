@@ -96,7 +96,6 @@ export default function MonsterView({monster}) {
     }
 
     const receiveChars = (result) => {
-        console.log(result)
         setChars(result);
         setSelectedChar(result[0].char_id);
     }

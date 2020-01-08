@@ -319,7 +319,7 @@ export default function Options() {
           importCharSpells(charsJson.spells, char, 0, function () {
             importCharMonsters(charsJson.monsters, char, 0, function () {
               importCharItems(charsJson.items, char, 0, function () {
-                console.log("done");
+                console.log("====> Char import done");
               });
             });
           });
@@ -332,7 +332,6 @@ export default function Options() {
     if (charSpells.length !== undefined && charSpells.length > step) {
       let spell = charSpells[step];
       reciveSpellByName(spell.spell_name, function (spells) {
-        console.log(spells);
         if (spells === undefined) {
           saveNewSpellFromJson(spell, function (spellId) {
             spell = { ...spell, id: spellId };

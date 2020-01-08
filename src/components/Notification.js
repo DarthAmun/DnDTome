@@ -13,7 +13,6 @@ export default function Notification() {
 
     useEffect(() => {
         ipcRenderer.on("displayMessage", displayMessage);
-        console.log("Recived Message");
         return () => {
             ipcRenderer.removeListener("displayMessage", display);
         }

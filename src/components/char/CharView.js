@@ -124,7 +124,6 @@ export default function CharView({char}) {
     const [deathThree, setDeathThree] = useState(0);
 
     const receiveCharResult = (result) => {
-        console.log(result)
         console.time("receiveChar")
         ReactDOM.unstable_batchedUpdates(() => {
             setName(result.char_name);
@@ -473,8 +472,6 @@ export default function CharView({char}) {
             "Treasure": `${notesThree}`,
         };
 
-        console.log(data);
-
         dialog.showSaveDialog(null, options, (path) => {
             PdfFillerService.fillPdf(sourcePDF, path, data, log);
         });
@@ -514,7 +511,6 @@ export default function CharView({char}) {
         ipcRenderer.send('openView', gear);
     }
     const viewMonster = (monster) => {
-        console.log(monster)
         ipcRenderer.send('openView', monster);
     }
 
