@@ -1,5 +1,5 @@
 {
-  "name": "dndtome-0.1.9-SNAPSHOT",
+  "name": "DnDTome",
   "version": "0.1.9-SNAPSHOT",
   "description": "Program to learn react and electron on the subject of pen and paper",
   "author": "DarthAmun",
@@ -19,7 +19,33 @@
     "package-linux": "electron-packager ./ --out=./builds --icon=./src/assets/img/dice_icon.png --overwrite --platform=linux --arch=x64 --executableName=DnDTome",
     "postinstall": "npm run appDeps-win && npm run appDeps-linux ",
     "appDeps-win": "electron-builder install-app-deps --platform=win32 --arch=x64 ",
-    "appDeps-linux": "electron-builder install-app-deps --platform=linux --arch=x64"
+    "appDeps-linux": "electron-builder install-app-deps --platform=linux --arch=x64",
+    "release": "electron-builder"
+  },
+  "build": {
+    "appId": "moc.emotdnd",
+    "publish": "github",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "appImage": {
+      "license": "LICENSE"
+    },
+    "nsis": {
+      "createDesktopShortcut": "always",
+      "license": "LICENSE"
+    }
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
