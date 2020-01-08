@@ -11,7 +11,7 @@ let gearStart;
 let searchGearQuery;
 
 module.exports.reciveAllGears = (callback) => {
-    let q = "SELECT * FROM 'main'.'tab_gears'";
+    let q = "SELECT * FROM 'main'.'tab_gears' ORDER BY gear_name";
     db.serialize(function () {
         db.all(q, function (err, rows) {
             if (err != null) {

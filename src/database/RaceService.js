@@ -60,7 +60,6 @@ module.exports.reciveRacePerks = (id, callback) => {
   });
 }
 
-
 module.exports.reciveRaces = (step, start, query, callback) => {
   localStorage.setItem('raceStep', parseInt(step, 10));
   localStorage.setItem('raceStart', parseInt(start, 10));
@@ -190,7 +189,7 @@ module.exports.saveRace = (race) => {
 }
 
 module.exports.saveNewRace = (race) => {
-  let data = [race.name, race.school, race.level, race.ritual, race.time, race.duration, race.range, race.components, race.text, race.classes, race.sources, race.pic];
+  let data = [race.name, race.surces, race.pic, race.age, race.abilityScoreImprov, race.alignment, race.size, race.speed, race.lang];
   let sql = `INSERT INTO 'main'.'tab_races' (race_name, race_school, race_level, race_ritual, race_time, race_duration, race_range, race_components, race_text, race_classes, race_sources, race_pic)
               VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   db.serialize(function () {
@@ -208,9 +207,9 @@ module.exports.saveNewRaces = (races, callback) => {
   let raceImportLength = Object.keys(races).length;
   let raceImported = 0;
   races.forEach(race => {
-    let data = [race.race_name, race.race_ritual, race.race_school, race.race_level, race.race_time, race.race_duration, race.race_range, race.race_components, race.race_text, race.race_classes, race.race_sources, race.race_pic];
-    let sql = `INSERT INTO 'main'.'tab_races' (race_name, race_ritual, race_school, race_level, race_time, race_duration, race_range, race_components, race_text, race_classes, race_sources, race_pic)
-                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    let data = [race.name, race.surces, race.pic, race.age, race.abilityScoreImprov, race.alignment, race.size, race.speed, race.lang];
+    let sql = `INSERT INTO 'main'.'tab_races' (race_name, race_sources, race_pic, race_age, race_abilityScoreImprov, race_alignment, race_size, race_speed, race_lang)
+                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     db.serialize(function () {
       db.run(sql, data, function (err) {
         if (err) {
@@ -224,17 +223,35 @@ module.exports.saveNewRaces = (races, callback) => {
   });
 }
 
-module.exports.saveNewRaceFromJson = (race, callback) => {
-  let data = [race.race_name, race.race_ritual, race.race_school, race.race_level, race.race_time, race.race_duration, race.race_range, race.race_components, race.race_text, race.race_classes, race.race_sources, race.race_pic];
-  let sql = `INSERT INTO 'main'.'tab_races' (race_name, race_ritual, race_school, race_level, race_time, race_duration, race_range, race_components, race_text, race_classes, race_sources, race_pic)
-                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+module.exports.saveNewRaceFromJson = (raceJson, callback) => {
+  let race = raceJson.race;
+  let data = [race.race_name, race.race_surces, race.race_pic, race.race_age, race.race_abilityScoreImprov, race.race_alignment, race.race_size, race.race_speed, race.race_lang];
+  let sql = `INSERT INTO 'main'.'tab_races' (race_name, race_sources, race_pic, race_age, race_abilityScoreImprov, race_alignment, race_size, race_speed, race_lang)
+                VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   db.serialize(function () {
     db.run(sql, data, function (err) {
       if (err) {
         return console.error(err.message);
       }
       console.log(`====>Added ${race.race_name} successfull`);
-      callback(this.lastID);
+      callback({ id: this.lastID, perks: raceJson.perks });
+    });
+  });
+}
+
+module.exports.importRacePerks = (perks, id) => {
+  perks.forEach(perk => {
+    let data = [perk.perk_title, perk.perk_text, perk.perk_level, id];
+    let sql = `INSERT INTO 'main'.'tab_races_perks'
+      (perk_title, perk_text, perk_level, race_id)
+      VALUES (?, ?, ?, ?)`;
+    db.serialize(function () {
+      db.run(sql, data, function (err) {
+        if (err) {
+          return console.error(err.message);
+        }
+        console.log(`====>Added ${perk.perk_name} successfull`);
+      });
     });
   });
 }

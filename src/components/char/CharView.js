@@ -505,16 +505,17 @@ export default function CharView({char}) {
     }
 
     const viewSpell = (spell) => {
-        ipcRenderer.send('openSpellView', spell);
+        ipcRenderer.send('openView', spell);
     }
     const viewItem = (item) => {
-        ipcRenderer.send('openItemView', item);
+        ipcRenderer.send('openView', item);
     }
     const viewGear = (gear) => {
-        ipcRenderer.send('openGearView', gear);
+        ipcRenderer.send('openView', gear);
     }
     const viewMonster = (monster) => {
-        ipcRenderer.send('openMonsterView', monster);
+        console.log(monster)
+        ipcRenderer.send('openView', monster);
     }
 
     const deleteCharSpellAction = (spell) => {
