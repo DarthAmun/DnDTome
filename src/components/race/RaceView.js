@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as ReactDOM from "react-dom";
 import '../../assets/css/race/RaceView.css';
-import { saveRace, savePerks, deleteRace, deletePerk, addRaceToChar, reciveRacePerks, insertNewPerk } from '../../database/RaceService';
-import { reciveAllChars } from '../../database/CharacterService';
+import { saveRace, savePerks, deleteRace, deletePerk, reciveRacePerks, insertNewPerk } from '../../database/RaceService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -22,9 +21,6 @@ export default function RaceView({ race }) {
     const [speed, setSpeed] = useState("");
     const [lang, setLang] = useState("");
     const [perks, setPerks] = useState([]);
-
-    const [chars, setChars] = useState([]);
-    const [selectedChar, setSelectedChar] = useState(0);
 
     const receiveRace = (result) => {
         ReactDOM.unstable_batchedUpdates(() => {
@@ -50,15 +46,7 @@ export default function RaceView({ race }) {
         setPerks(result);
     }
 
-    const receiveChars = (result) => {
-        setChars(result);
-        setSelectedChar(result[0].char_id);
-    }
-
     useEffect(() => {
-        reciveAllChars(function (result) {
-            receiveChars(result)
-        })
         reciveRacePerks(id, function (result) {
             receivePerksResult(result);
         })
@@ -68,16 +56,9 @@ export default function RaceView({ race }) {
         receiveRace(race);
     }, [race]);
 
-    useEffect(() => {
-    }, [perks]);
-
     const saveRaceAction = (e) => {
         saveRace({ id, name, sources, pic, age, abilityScoreImprov, alignment, size, speed, lang });
         savePerks(perks);
-    }
-
-    const addRaceToCharAction = (e) => {
-        addRaceToChar({ selectedChar }, { id, name }, function () { });
     }
 
     const deleteRaceAction = (e) => {
@@ -142,16 +123,9 @@ export default function RaceView({ race }) {
                         <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Name..." /></label>
                         <label className="smallPic">Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label>
                         <label>Sources:<input name="sources" type="text" value={sources} onChange={e => setSources(e.target.value)} placeholder="Sources..." /></label>
-                        <label>Char: <select value={selectedChar} onChange={e => setSelectedChar(e.target.value)}>
-                            {chars.map((char, index) => {
-                                return <option key={index} value={char.char_id}>{char.char_name}</option>;
-                            })}
-                        </select>
-                        </label>
                         <label>Ability Score:<input name="abilityScoreImprov" type="text" value={abilityScoreImprov} onChange={e => setAbilityScoreImprov(e.target.value)} placeholder="Ability score improvement..." /></label>
                     </div>
                     <div className="image" style={style}></div>
-                    <button onClick={addRaceToCharAction}><FontAwesomeIcon icon={faPlus} /> Add to char</button>
                     <button onClick={saveRaceAction}><FontAwesomeIcon icon={faSave} /> Save</button>
                 </div>
                 <label>Age:<textarea className="small" name="age" value={age} onChange={e => setAge(e.target.value)} placeholder="Age..."></textarea></label>
