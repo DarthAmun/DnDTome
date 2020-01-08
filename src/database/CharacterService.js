@@ -7,7 +7,7 @@ let sqlite3 = window.require('sqlite3').verbose();
 let db = new sqlite3.Database(path.join(app.getAppPath(), './src/assets/db/tab.db'));
 
 module.exports.reciveAllChars = (callback) => {
-    let q = "SELECT * FROM 'main'.'tab_characters'";
+    let q = "SELECT * FROM 'main'.'tab_characters' ORDER BY char_name";
     db.serialize(function () {
         db.all(q, function (err, rows) {
             if (err != null) {

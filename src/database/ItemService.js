@@ -11,7 +11,7 @@ let itemStart;
 let searchItemQuery;
 
 module.exports.reciveAllItems = (callback) => {
-    let q = "SELECT * FROM 'main'.'tab_items'";
+    let q = "SELECT * FROM 'main'.'tab_items' ORDER BY item_name";
     db.serialize(function () {
         db.all(q, function (err, rows) {
             if (err != null) {

@@ -98,10 +98,10 @@ export default function Encounters() {
 
     const viewParticipant = (participant) => {
         if (participant.monster !== undefined) {
-            ipcRenderer.send('openMonsterView', participant.monster);
+            ipcRenderer.send('openView', participant.monster);
         }
         if (participant.char !== undefined) {
-            ipcRenderer.send('openCharView', participant.char);
+            ipcRenderer.send('openView', participant.char);
         }
     }
 

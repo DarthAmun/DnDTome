@@ -1,5 +1,5 @@
 import '../assets/css/Options.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import OptionService from '../database/OptionService';
 import ThemeService from '../services/ThemeService';
 import { reciveAllSpells, saveNewSpells, addSpellToChar, saveNewSpellFromJson, reciveSpellByName } from '../database/SpellService';
@@ -7,6 +7,7 @@ import { reciveAllItems, saveNewItems, reciveItemByName, addItemToChar, saveNewI
 import { reciveAllGears, saveNewGears, addGearToCharFromJson, reciveGearByName, saveNewGearFromJson } from '../database/GearService';
 import { reciveAllMonsters, saveNewMonsters, reciveMonstersByCertainName, addMonsterToChar, saveNewMonsterFromJson } from '../database/MonsterService';
 import { reciveAllChars, saveNewCharFromJson, reciveCharSpells, reciveCharItems, reciveCharMonsters } from '../database/CharacterService';
+import { reciveAllRaces, importRacePerks, reciveRacePerks, saveNewRaceFromJson } from '../database/RaceService';
 import { Line } from 'rc-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
@@ -23,8 +24,11 @@ export default function Options() {
   const [itemsImported, setItemsImported] = useState({ percent: 0, now: 0, full: 0, name: "" });
   const [gearsImported, setGearsImported] = useState({ percent: 0, now: 0, full: 0, name: "" });
   const [monstersImported, setMonstersImported] = useState({ percent: 0, now: 0, full: 0, name: "" });
+  const [racesImported, setRacesImported] = useState({ percent: 0, now: 0, full: 0, name: "" });
 
   const [importing, setImporting] = useState("none");
+
+  const [races, setRaces] = useState([]);
 
   const updateSpellImport = (result) => {
     let percent = Math.round((result.now / result.full) * 100);
@@ -46,6 +50,11 @@ export default function Options() {
     percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
     setMonstersImported({ percent: percent, now: result.now, full: result.full, name: result.name });
   }
+  const updateRaceImport = (result) => {
+    let percent = Math.round((result.now / result.full) * 100);
+    percent !== 0 && percent !== 100 ? setImporting("block") : setImporting("none");
+    setRacesImported({ percent: percent, now: result.now, full: result.full, name: result.name });
+  }
 
   const toPatreon = () => {
     shell.openExternal("https://www.patreon.com/bePatron?u=25310394");
@@ -57,6 +66,10 @@ export default function Options() {
   const options = {
     defaultPath: app.getPath('documents')
   }
+
+  useEffect(() => {
+    exportRaces();
+  }, []);
 
   const exportSpells = (e) => {
     reciveAllSpells(function (result) {
@@ -125,6 +138,16 @@ export default function Options() {
             ipcRenderer.send('displayMessage', { type: `Monsters exported`, message: `Monster export failed` });
           }
           ipcRenderer.send('displayMessage', { type: `Monsters exported`, message: `Monster export successful` });
+        });
+      });
+    });
+  }
+
+  const exportRaces = (e) => {
+    reciveAllRaces(function (result) {
+      result.forEach(race => {
+        reciveRacePerks(race.race_id, function (perks) {
+          setRaces(races => [...races, { race, perks }]);
         });
       });
     });
@@ -245,6 +268,31 @@ export default function Options() {
         saveNewMonsters(monstersJson, function (result) {
           updateMonsterImport(result);
         });
+      });
+    });
+  }
+
+  const importRaces = (e) => {
+    dialog.showOpenDialog((fileNames) => {
+      // fileNames is an array that contains all the selected
+      if (fileNames === undefined) {
+        console.log("No file selected");
+        return;
+      }
+
+      fs.readFile(fileNames[0], 'utf-8', (err, data) => {
+        if (err) {
+          alert("An error ocurred reading the file :" + err.message);
+          return;
+        }
+
+        // Change how to handle the file content
+        let racesJson = JSON.parse(data);
+        racesJson.forEach(raceJson => {
+          saveNewRaceFromJson(raceJson, function (result) {
+            importRacePerks(result.perks, result.id);
+          });
+        })
       });
     });
   }
@@ -430,6 +478,21 @@ export default function Options() {
       }
     });
   }
+  const deleteAllRaces = () => {
+    const options = {
+      type: 'question',
+      buttons: ['Cancel', 'Yes, please', 'No, thanks'],
+      defaultId: 2,
+      title: `Delete all races?`,
+      message: 'All races will be deleted!'
+    };
+
+    dialog.showMessageBox(null, options, (response) => {
+      if (response == 1) {
+        ipcRenderer.send('deleteAllRaces');
+      }
+    });
+  }
   const deleteAllChars = () => {
     const options = {
       type: 'question',
@@ -459,6 +522,22 @@ export default function Options() {
     ipcRenderer.send('changeTheme', ThemeService.getTheme());
   }
 
+  const exportRacesAction = () => {
+    let content = JSON.stringify(races);
+
+    options.defaultPath = options.defaultPath + '/races_export.json';
+    dialog.showSaveDialog(null, options, (path) => {
+
+      // fileName is a string that contains the path and filename created in the save file dialog.  
+      fs.writeFile(path, content, (err) => {
+        if (err) {
+          ipcRenderer.send('displayMessage', { type: `Races exported`, message: `Race export failed` });
+        }
+        ipcRenderer.send('displayMessage', { type: `Races exported`, message: `Race export successful` });
+      });
+    });
+  }
+
   return (
     <div id="overview">
       <div id="optionContent">
@@ -482,7 +561,8 @@ export default function Options() {
             <button onClick={exportItems}><FontAwesomeIcon icon={faFileExport} /> Export all Magic Items </button><br />
             <button onClick={exportGears}><FontAwesomeIcon icon={faFileExport} /> Export all Gear </button><br />
             <button onClick={exportMonsters}><FontAwesomeIcon icon={faFileExport} /> Export all Monsters </button><br />
-            <button onClick={exportChars}><FontAwesomeIcon icon={faFileExport} /> Export all Characters </button>
+            <button onClick={exportChars}><FontAwesomeIcon icon={faFileExport} /> Export all Characters </button><br />
+            <button onClick={exportRacesAction}><FontAwesomeIcon icon={faFileExport} /> Export all Races </button>
           </div>
           <div className="optionSection">
             <h3>Data Import</h3>
@@ -490,7 +570,8 @@ export default function Options() {
             <button onClick={importItems}><FontAwesomeIcon icon={faFileImport} /> Import Magic Items </button><br />
             <button onClick={importGears}><FontAwesomeIcon icon={faFileImport} /> Import Gear </button><br />
             <button onClick={importMonsters}><FontAwesomeIcon icon={faFileImport} /> Import Monsters </button><br />
-            <button onClick={importChars}><FontAwesomeIcon icon={faFileImport} /> Import Characters </button>
+            <button onClick={importChars}><FontAwesomeIcon icon={faFileImport} /> Import Characters </button><br />
+            <button onClick={importRaces}><FontAwesomeIcon icon={faFileImport} /> Import Races </button>
           </div>
           <div className="optionSection">
             <h3>Delete Data</h3>
@@ -498,7 +579,8 @@ export default function Options() {
             <button onClick={deleteAllItems}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Magic Items </button><br />
             <button onClick={deleteAllGears}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Gear </button><br />
             <button onClick={deleteAllMonsters}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Monsters </button><br />
-            <button onClick={deleteAllChars}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Characters </button>
+            <button onClick={deleteAllChars}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Characters </button><br />
+            <button onClick={deleteAllRaces}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Races </button>
           </div>
         </div>
       </div>
@@ -526,6 +608,12 @@ export default function Options() {
             (<div>Imported {monstersImported.percent}% ({monstersImported.now}/{monstersImported.full}) of monsters.
               <Line percent={monstersImported.percent} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
               Importing {monstersImported.name} ...
+              </div>) : (<div></div>)
+          }
+          {racesImported.percent !== 0 && racesImported.percent !== 100 ?
+            (<div>Imported {racesImported.percent}% ({racesImported.now}/{racesImported.full}) of races.
+              <Line percent={racesImported.percent} strokeWidth="1" trailWidth="1" strokeColor="#8000ff" />
+              Importing {racesImported.name} ...
               </div>) : (<div></div>)
           }
         </div>
