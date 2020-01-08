@@ -117,6 +117,19 @@ const deleteAll = tab => {
       }
       console.log(`====> ${tab} autoincreasement reseted successful`);
     });
+    db.run(`DELETE FROM tab_${tab}_perks`, function(err) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log(`====> All from ${tab} successful deleted`);
+      mainWindow.webContents.send("displayMessage", { type: `Delete All ${tab}_perks`, message: "delete all successful" });
+    });
+    db.run(`DELETE FROM sqlite_sequence WHERE name='tab_${tab}_perks'`, function(err) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log(`====> ${tab}_perks autoincreasement reseted successful`);
+    });
   });
 };
 
@@ -239,6 +252,9 @@ ipcMain.on("deleteAllGears", event => {
 });
 ipcMain.on("deleteAllMonsters", event => {
   deleteAll("monsters");
+});
+ipcMain.on("deleteAllRaces", event => {
+  deleteAll("races");
 });
 ipcMain.on("deleteAllChars", event => {
   deleteAllCharacters();
