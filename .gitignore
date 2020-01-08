@@ -4,5 +4,5 @@ node_modules/
 dist/
 builds/
 export/
-src/assets/db/tab.db
+src/assets/db/*
 *.db-journal
