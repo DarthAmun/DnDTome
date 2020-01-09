@@ -121,20 +121,20 @@ export default function RaceView({ race }) {
                 <div className="topPart">
                     <div className="top">
                         <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Name..." /></label>
-                        <label className="smallPic">Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label>
-                        <label>Sources:<input name="sources" type="text" value={sources} onChange={e => setSources(e.target.value)} placeholder="Sources..." /></label>
+                        <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label>
                         <label>Ability Score:<input name="abilityScoreImprov" type="text" value={abilityScoreImprov} onChange={e => setAbilityScoreImprov(e.target.value)} placeholder="Ability score improvement..." /></label>
+                        <label className="small">Sources:<input name="sources" type="text" value={sources} onChange={e => setSources(e.target.value)} placeholder="Sources..." /></label>
+                        <button onClick={deleteRaceAction} className="delete" style={{marginRight: "5px", marginLeft: "5px"}}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                        <button onClick={saveRaceAction}><FontAwesomeIcon icon={faSave} /> Save</button>
                     </div>
                     <div className="image" style={style}></div>
-                    <button onClick={saveRaceAction}><FontAwesomeIcon icon={faSave} /> Save</button>
+                    <button onClick={addNewPerkAction}><FontAwesomeIcon icon={faPlus} /> Add perk</button>
                 </div>
                 <label>Age:<textarea className="small" name="age" value={age} onChange={e => setAge(e.target.value)} placeholder="Age..."></textarea></label>
                 <label>Alignment:<textarea className="small" name="alignment" value={alignment} onChange={e => setAlignment(e.target.value)} placeholder="Alignment..."></textarea></label>
                 <label>Size:<textarea className="small" name="size" value={size} onChange={e => setSize(e.target.value)} placeholder="Size..."></textarea></label>
                 <label>Speed:<textarea className="small" name="speed" value={speed} onChange={e => setSpeed(e.target.value)} placeholder="Speed..."></textarea></label>
                 <label>Language:<textarea className="small" name="language" value={lang} onChange={e => setLang(e.target.value)} placeholder="Language..."></textarea></label>
-                <button onClick={deleteRaceAction} className="delete" style={{ float: "left" }}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
-                <button onClick={addNewPerkAction} style={{ float: "right" }}><FontAwesomeIcon icon={faPlus} /> Add perk</button>
             </div>
             <div className="right">
                 {perks.map((perk, index) => {

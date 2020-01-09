@@ -205,8 +205,8 @@ module.exports.saveRace = (race) => {
 
 module.exports.saveNewRace = (race) => {
   let data = [race.name, race.surces, race.pic, race.age, race.abilityScoreImprov, race.alignment, race.size, race.speed, race.lang];
-  let sql = `INSERT INTO 'main'.'tab_races' (race_name, race_school, race_level, race_ritual, race_time, race_duration, race_range, race_components, race_text, race_classes, race_sources, race_pic)
-              VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  let sql = `INSERT INTO 'main'.'tab_races' (race_name, race_sources, race_pic, race_age, race_abilityScoreImprov, race_alignment, race_size, race_speed, race_lang)
+              VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   db.serialize(function () {
     db.run(sql, data, function (err) {
       if (err) {
@@ -282,7 +282,7 @@ module.exports.deleteRace = (race) => {
       console.log(`====>Deleted ${race.name} successfull`);
       ipcRenderer.send('closeRaceWindow');
       ipcRenderer.send('racesUpdated', { raceStep, raceStart });
-      ipcRenderer.send('displayMessage', { type: `Deleted monster`, message: `Deleted ${race.name} successful` });
+      ipcRenderer.send('displayMessage', { type: `Deleted race`, message: `Deleted ${race.name} successful` });
     });
   });
 }
