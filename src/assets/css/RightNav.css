@@ -56,7 +56,6 @@
     opacity: 1;
   }
   100% {
-    
     opacity: 1;
   }
 }
@@ -90,14 +89,46 @@
   transition-duration: 300ms;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
+  position: relative;
+  z-index: 100001;
 }
-
 
 #rightNav .windowContainer {
   width: 36px;
+  height: 40px;
   margin-left: 10px;
   margin-top: 10px;
   float: left;
+}
+#rightNav .windowContainer:hover .windowToolTip {
+  display: inline-flex;
+  opacity: 0;
+  animation-name: zoomIn;
+  animation-duration: 300ms;
+  transition-duration: 300ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+#rightNav .windowContainer .windowToolTip {
+  float: right;
+    background-color: #8000ff;
+    color: var(--button-color);
+    width: auto;
+    padding-left: 5px;
+    padding-right: 15px;
+    border-radius: 5px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+    position: relative;
+    z-index: 100000;
+    top: -33px;
+    right: 25px;
+    text-align: right;
+    white-space: nowrap;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    display: none;
 }
 
 #rightNav .windowContainer .removeWindow {

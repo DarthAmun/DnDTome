@@ -166,6 +166,7 @@ export default function RightNav() {
                 <FontAwesomeIcon icon={faTimesCircle} />
               </div>
               <div className="image" onClick={e => showActiveView(window)} style={{ backgroundImage: `url(${getSpellPicture(window)})`, backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
+              <div className="windowToolTip">{window.spell_name}</div>
             </div>
           );
         } else if (window.windowType === "item") {
@@ -175,6 +176,7 @@ export default function RightNav() {
                 <FontAwesomeIcon icon={faTimesCircle} />
               </div>
               <div className="image" onClick={e => showActiveView(window)} style={{ backgroundImage: `url(${getItemPicture(window)})`, backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
+              <div className="windowToolTip">{window.item_name}</div>
             </div>
           );
         } else if (window.windowType === "gear") {
@@ -184,6 +186,7 @@ export default function RightNav() {
                 <FontAwesomeIcon icon={faTimesCircle} />
               </div>
               <div className="image" onClick={e => showActiveView(window)} style={{ backgroundImage: `url(${getGearPicture(window)})`, backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat", }}></div>
+              <div className="windowToolTip">{window.gear_name}</div>
             </div>
           );
         } else if (window.windowType === "monster") {
@@ -193,6 +196,7 @@ export default function RightNav() {
                 <FontAwesomeIcon icon={faTimesCircle} />
               </div>
               <div className="image" onClick={e => showActiveView(window)} style={{ backgroundImage: `url(${getMonsterPicture(window)})`, backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat", }}></div>
+              <div className="windowToolTip">{window.monster_name}</div>
             </div>
           );
         } else if (window.windowType === "race") {
@@ -202,6 +206,7 @@ export default function RightNav() {
                 <FontAwesomeIcon icon={faTimesCircle} />
               </div>
               <div className="image" onClick={e => showActiveView(window)} style={{ backgroundImage: `url(${getRacePicture(window)})`, backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat", }}></div>
+              <div className="windowToolTip">{window.race_name}</div>
             </div>
           );
         } else if (window.windowType === "char") {
@@ -211,6 +216,7 @@ export default function RightNav() {
                 <FontAwesomeIcon icon={faTimesCircle} />
               </div>
               <div className="image" onClick={e => showActiveView(window)} style={{ backgroundImage: `url(${getCharPicture(window)})`, backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat", }}></div>
+              <div className="windowToolTip">{window.char_name}</div>
             </div>
           );
         }
