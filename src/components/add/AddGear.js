@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { saveNewGear } from '../../database/GearService';
-import '../../assets/css/add/AddGear.css';
+import '../../assets/css/gear/GearView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 

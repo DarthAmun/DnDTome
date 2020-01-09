@@ -1,28 +1,10 @@
-html, body {
-    height: 100%;
-    margin: 0px;
-    background-color: var(--app-background-color);
-    overflow: hidden;
-}
-
-#root {
-  margin: 0;
-  height: 100%;
-  overflow-y: hidden;
-}
-
-@font-face {
-    font-family: 'Quicksand';
-    src: url('../../font/Quicksand-Medium.ttf') format('truetype');
-}
-
 #raceView {
-    height: calc(100% - 20px);
-    width: calc(100% - 20px);
-    overflow: hidden;
-    color: var(--card-title-color);
-    padding: 10px;
-    font-family: 'Quicksand', sans-serif;
+  height: calc(100% - 20px);
+  width: calc(100% - 20px);
+  color: var(--card-title-color);
+  padding: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #raceView .left {
@@ -35,7 +17,7 @@ html, body {
   height: 100%;
   padding-left: 10px;
   float: left;
-  
+
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -45,123 +27,119 @@ html, body {
   height: 135px;
 }
 
-#raceView input, #raceView select {
-    height: 30px;
-    width: 300px;
-    border: none;
-    border-radius: 3px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-left: 5px;
-    margin-bottom: 5px;
-    float: right;
-    font-family: inherit;
-    font-size: 14px;
-    box-shadow: var(--boxshadow);
-    background-color: var(--pagination-input-background-color);
-    color: var(--pagination-input-color);
+#raceView input,
+#raceView select {
+  height: 30px;
+  width: 300px;
+  border: none;
+  border-radius: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  float: right;
+  font-family: inherit;
+  font-size: 14px;
+  box-shadow: var(--boxshadow);
+  background-color: var(--pagination-input-background-color);
+  color: var(--pagination-input-color);
 }
 
 #raceView select {
-    width: 320px;
+  width: 320px;
 }
 
 #raceView button {
-    height: 30px;
-    width: auto;
-    border: none;
-    border-radius: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-bottom: 5px;
-    text-align: center;
-    float: left;
-    font-family: inherit;
-    font-size: 14px;
-    background-color: var(--button-background-color);
-    color: var(--button-color);
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
+  height: 30px;
+  width: auto;
+  border: none;
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 5px;
+  text-align: center;
+  float: left;
+  font-family: inherit;
+  font-size: 14px;
+  background-color: var(--button-background-color);
+  color: var(--button-color);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
 }
 
 #raceView button:hover {
-    box-shadow: var(--boxshadow-hover);
-    cursor: pointer;
+  box-shadow: var(--boxshadow-hover);
+  cursor: pointer;
 }
 
 #raceView button.delete {
-    background-color: darkred;
+  background-color: darkred;
 }
 
 #raceView textarea {
-    height: auto;
-    width: calc(100% - 20px);
-    float: left;
-    border-radius: 3px;
-    border-bottom-right-radius: 0px;
-    resize: none;
-    border: none;
-    padding: 10px;
-    font-family: inherit;
-    font-size: 14px;
-    box-shadow: var(--boxshadow);
-    background-color: var(--pagination-input-background-color);
-    color: var(--pagination-input-color);
+  height: auto;
+  width: calc(100% - 20px);
+  float: left;
+  border-radius: 3px;
+  border-bottom-right-radius: 0px;
+  resize: none;
+  border: none;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  box-shadow: var(--boxshadow);
+  background-color: var(--pagination-input-background-color);
+  color: var(--pagination-input-color);
+  margin-right: 5px;
 }
 
 #raceView textarea.small {
   height: 48px;
-  width: calc(100% - 150px); 
+  width: calc(100% - 150px);
   line-height: 15px;
-  float:right;
+  float: right;
   margin-left: 5px;
   margin-bottom: 5px;
 }
 
 #raceView label {
-    display: inline-block;
-    width: 100%;
-    text-align: right;
-    line-height: 30px;
-    float: left;
+  display: inline-block;
+  width: 100%;
+  text-align: right;
+  line-height: 30px;
+  float: left;
 }
 #raceView .top label {
   width: 450px;
 }
-#raceView label .labelText{
-    float: left;
-    height: 37px;
-    line-height: 33px;
-    text-align: right;
+#raceView label .labelText {
+  float: left;
+  height: 37px;
+  line-height: 33px;
+  text-align: right;
 }
 #raceView label.small {
-    width: 225px;
+  width: 290px;
 }
 #raceView label.smaller {
   width: 150px;
 }
-#raceView label.smallPic {
-  width: 315px;
-}
 #raceView label.left {
-    float:left;
-    text-align: left;
-    padding-left: 5px;
-    padding-right: 5px;
+  float: left;
+  text-align: left;
+  padding-left: 5px;
+  padding-right: 5px;
 }
-#raceView label.small input{
-    width: 75px;
+#raceView label.small input {
+  width: 140px;
 }
-#raceView label.smallPic input {
-  width: 165px;
+#raceView label.left input {
+  float: left;
 }
-#raceView label.left input{
-    float: left;
-}
-#raceView label.small input[type=checkbox]{
-    width: 15px;
-    background: none;
-    box-shadow: none;
+#raceView label.small input[type="checkbox"] {
+  width: 15px;
+  background: none;
+  box-shadow: none;
 }
 
 #raceView .image {
@@ -175,24 +153,24 @@ html, body {
 }
 
 #raceView .top {
-    float: left;
-    width: 450px;
-    margin-right: 10px;
+  float: left;
+  width: 450px;
+  margin-right: 10px;
 }
 
 #raceView::-webkit-scrollbar,
-#raceView textarea::-webkit-scrollbar, 
+#raceView textarea::-webkit-scrollbar,
 #raceView .right::-webkit-scrollbar {
-    width: 6px;
-    background-color: var(--scrollbar);
-    border-radius: 5px;
+  width: 6px;
+  background-color: var(--scrollbar);
+  border-radius: 5px;
 }
 
 #raceView::-webkit-scrollbar-thumb,
-#raceView textarea::-webkit-scrollbar-thumb, 
+#raceView textarea::-webkit-scrollbar-thumb,
 #raceView .right::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-thumb);
-    border-radius: 5px;
+  background-color: var(--scrollbar-thumb);
+  border-radius: 5px;
 }
 
 #raceView .perk {
@@ -208,15 +186,15 @@ html, body {
   box-shadow: var(--boxshadow);
   margin-bottom: 10px;
 }
-#raceView .perk .perkTitle{
+#raceView .perk .perkTitle {
   width: calc(100% - 123px);
   margin: 0px;
   float: left;
 }
-#raceView .perk .perkLevel{
+#raceView .perk .perkLevel {
   width: 40px;
   float: left;
 }
-#raceView .perk .perkText{
+#raceView .perk .perkText {
   height: 90px;
 }

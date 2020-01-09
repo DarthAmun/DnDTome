@@ -1,9 +1,10 @@
 #gearView {
   height: calc(100% - 20px);
   width: calc(100% - 20px);
-  overflow: hidden;
   color: var(--card-title-color);
   padding: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #gearView input,

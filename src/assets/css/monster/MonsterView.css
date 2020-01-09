@@ -1,22 +1,10 @@
-body {
-    height: 100%;
-    margin: 0px;
-    background-color: var(--app-background-color);
-    overflow: hidden;
-}
-
-@font-face {
-    font-family: 'Quicksand';
-    src: url('../../font/Quicksand-Medium.ttf') format('truetype');
-}
-
 #monsterView {
     height: calc(100% - 20px);
     width: calc(100% - 20px);
-    overflow: hidden;
     color: var(--card-title-color);
     padding: 10px;
-    font-family: 'Quicksand', sans-serif;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #monsterView input, #monsterView select {
@@ -41,7 +29,6 @@ body {
 #monsterView select {
     width: 220px;
 }
-
 
 #monsterView button {
     height: 32px;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { saveNewItem } from '../../database/ItemService';
-import '../../assets/css/add/AddItem.css';
+import '../../assets/css/item/ItemView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 

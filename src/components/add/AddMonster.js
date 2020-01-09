@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { saveNewMonster } from '../../database/MonsterService';
-import '../../assets/css/add/AddMonster.css';
+import '../../assets/css/monster/MonsterView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 
