@@ -22,6 +22,7 @@ import AddChar from './add/AddChar';
 import AddItem from './add/AddItem';
 import AddMonster from './add/AddMonster';
 import AddGear from './add/AddGear';
+import AddRace from './add/AddRace';
 
 import LeftNav from './LeftNav';
 import RightNav from './RightNav';
@@ -81,6 +82,7 @@ const App = () => {
         <LayoutRoute path="/add-item" layout={PageLayout} component={AddItem} />
         <LayoutRoute path="/add-gear" layout={PageLayout} component={AddGear} />
         <LayoutRoute path="/add-monster" layout={PageLayout} component={AddMonster} />
+        <LayoutRoute path="/add-race" layout={PageLayout} component={AddRace} />
         <LayoutRoute path="/options" layout={PageLayout} component={Options} />
         <LayoutRoute path="/encounters" layout={PageLayout} component={Encounters} />
         <LayoutRoute path="/" layout={HomeLayout} component={Home} />
