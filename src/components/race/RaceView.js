@@ -58,6 +58,10 @@ export default function RaceView({ race }) {
 
     const saveRaceAction = (e) => {
         saveRace({ id, name, sources, pic, age, abilityScoreImprov, alignment, size, speed, lang });
+        ipcRenderer.send('updateWindow', {
+            race_id: id, race_name: name, race_sources: sources, race_pic: pic, race_age: age, race_speed: speed,
+            race_abilityScoreImprov: abilityScoreImprov, race_alignment: alignment, race_size: size, race_lang: lang
+        });
         savePerks(perks);
     }
 
@@ -124,7 +128,7 @@ export default function RaceView({ race }) {
                         <label>Pic:<input name="pic" type="text" value={pic} onChange={e => setPic(e.target.value)} /></label>
                         <label>Ability Score:<input name="abilityScoreImprov" type="text" value={abilityScoreImprov} onChange={e => setAbilityScoreImprov(e.target.value)} placeholder="Ability score improvement..." /></label>
                         <label className="small">Sources:<input name="sources" type="text" value={sources} onChange={e => setSources(e.target.value)} placeholder="Sources..." /></label>
-                        <button onClick={deleteRaceAction} className="delete" style={{marginRight: "5px", marginLeft: "5px"}}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
+                        <button onClick={deleteRaceAction} className="delete" style={{ marginRight: "5px", marginLeft: "5px" }}><FontAwesomeIcon icon={faTrashAlt} /> Delete</button>
                         <button onClick={saveRaceAction}><FontAwesomeIcon icon={faSave} /> Save</button>
                     </div>
                     <div className="image" style={style}></div>

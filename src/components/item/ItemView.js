@@ -61,6 +61,10 @@ export default function ItemView({ item }) {
 
     const saveItemAction = (e) => {
         saveItem({ id, name, pic, type, rarity, source, attunment, description });
+        ipcRenderer.send('updateWindow', {
+            item_id: id, item_name: name, item_pic: pic, item_type: type, item_rarity: rarity,
+            item_source: source, item_attunment: attunment, item_description: description
+        });
     }
 
     const addItemToCharAction = (e) => {

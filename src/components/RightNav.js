@@ -44,6 +44,27 @@ export default function RightNav() {
     });
   };
 
+  const updateWindow = (e, result) => {
+    let windows = shortWindows.map(shortWindow => {
+      if (shortWindow.windowType === "spell" && result.spell_id !== undefined && shortWindow.spell_id === result.spell_id) {
+        return { ...result, windowType: "spell" };
+      } else if (shortWindow.windowType === "item" && result.item_id !== undefined && shortWindow.item_id === result.item_id) {
+        return { ...result, windowType: "item" };
+      } else if (shortWindow.windowType === "gear" && result.gear_id !== undefined && shortWindow.gear_id === result.gear_id) {
+        return { ...result, windowType: "gear" };
+      } else if (shortWindow.windowType === "race" && result.race_id !== undefined && shortWindow.race_id === result.race_id) {
+        return { ...result, windowType: "race" };
+      } else if (shortWindow.windowType === "monster" && result.monster_id !== undefined && shortWindow.monster_id === result.monster_id) {
+        return { ...result, windowType: "monster" };
+      } else if (shortWindow.windowType === "char" && result.char_id !== undefined && shortWindow.char_id === result.char_id) {
+        return { ...result, windowType: "char" };
+      }
+      return shortWindows;
+    });
+    console.log(windows);
+    setShortWindows(windows);
+  }
+
   useEffect(() => {
     ipcRenderer.on("onView", receiveResult);
     ipcRenderer.on("closeActiveView", closeActiveView);
@@ -53,6 +74,15 @@ export default function RightNav() {
       ipcRenderer.removeListener("closeActiveView", closeActiveView);
     };
   }, []);
+
+  useEffect(() => {
+    ipcRenderer.on("updateWindow", updateWindow);
+    return () => {
+      ipcRenderer.removeListener("updateWindow", updateWindow);
+    };
+  }, [updateWindow]);
+
+
 
   const getSpellPicture = spell => {
     if (spell.spell_pic === "" || spell.spell_pic === null) {

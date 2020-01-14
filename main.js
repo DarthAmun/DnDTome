@@ -280,3 +280,7 @@ ipcMain.on("monstersUpdated", (event, arg) => {
 ipcMain.on("displayMessage", (event, m) => {
   mainWindow.webContents.send("displayMessage", { type: m.type, message: m.message });
 });
+
+ipcMain.on("updateWindow", (event, window) => {
+  mainWindow.webContents.send("updateWindow", window);
+});

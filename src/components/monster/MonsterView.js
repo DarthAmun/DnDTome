@@ -10,7 +10,7 @@ const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const { dialog } = electron.remote;
 
-export default function MonsterView({monster}) {
+export default function MonsterView({ monster }) {
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [pic, setPic] = useState("");
@@ -128,6 +128,14 @@ export default function MonsterView({monster}) {
             id, name, type, subtype, cr, ac, hp, str, dex, con,
             int, wis, cha, senses, lang, speed, source, skills, savingThrows, dmgImmunities, dmgResistance,
             dmgVulnerabilitie, conImmunities, sAblt, ablt, lAblt, pic, size, alignment
+        });
+        ipcRenderer.send('updateWindow', {
+            monster_id: id, monster_name: name, monster_size: size, monster_type: type, monster_subtype: subtype, monster_alignment: alignment,
+            monster_hitPoints: hp, monster_speed: speed, monster_strength: str, monster_dexterity: dex, monster_constitution: con,
+            monster_intelligence: int, monster_wisdom: wis, monster_charisma: cha, monster_savingThrows: savingThrows, monster_skills: skills,
+            monster_dmgVulnerabilities: dmgVulnerabilitie, monster_dmgResistance: setDmgResistance, monster_dmgImmunities: setDmgImmunities,
+            monster_conImmunities: conImmunities, monster_senses: senses, monster_lang: lang, monster_armorClass: ac,
+            monster_cr: cr, monster_sAblt: sAblt, monster_ablt: ablt, monster_lAbtl: lAblt, monster_source: source, monster_pic: pic
         });
     }
 

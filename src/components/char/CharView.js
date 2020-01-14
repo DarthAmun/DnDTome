@@ -13,7 +13,7 @@ const ipcRenderer = electron.ipcRenderer;
 const { dialog, app } = electron.remote;
 const fs = require('fs');
 
-export default function CharView({char}) {
+export default function CharView({ char }) {
     const [tabs, setTabs] = useState({ skills: true, combat: false, actions: false, features: false, spells: false, equipment: false, monsters: false, notes: false });
 
     const [id, setId] = useState(0);
@@ -548,6 +548,26 @@ export default function CharView({char}) {
             athleticsProf, deceptionProf, historyProf, insightProf, intimidationProf, investigationProf, medicineProf, natureProf,
             perceptionProf, performanceProf, persuasionProf, religionProf, sleightOfHandProf, stealthProf, survivalProf, spellNotes,
             alignment, inspiration, castingHit, castingDC
+        });
+        ipcRenderer.send('updateWindow', {
+            char_id: id, char_name: name, char_player: player, char_prof: prof, char_level: level, char_pic: pic, char_classes: classes, char_race: race,
+            char_background: background, char_ac: ac, char_hp: hp, char_hp_current: currentHp, char_hitDice: hitDice, char_init: init, char_speed: speed,
+            char_str: str, char_dex: dex, char_con: con, char_int: int, char_wis: wis, char_cha: cha, char_strSave: strSave, char_dexSave: dexSave,
+            char_conSave: conSave, char_intSave: intSave, char_wisSave: wisSave, char_chaSave: chaSave, char_strSaveProf: strSaveProf, char_dexSaveProf: dexSaveProf,
+            char_conSaveProf: conSaveProf, char_intSaveProf: intSaveProf, char_wisSaveProf: wisSaveProf, char_chaSaveProf: chaSaveProf, char_actions: actions,
+            char_bonusActions: bonusActions, char_reactions: reactions, char_features: features, char_classFeatures: classFeatures, char_racialFeatures: racialFeatures,
+            char_profs_langs: profsLangs, char_senses: senses, char_passivPerception: passivPerception, char_passivInsight: passivInsight,
+            char_passivInvestigation: passivInvestigation, char_notesOne: notesOne, char_notesTwo: notesTwo, char_notesThree: notesThree,
+            char_acrobatics: acrobatics, char_animalHandling: animalHandling, char_arcana: arcana, char_athletics: athletics, char_deception: deception,
+            char_history: history, char_insight: insight, char_intimidation: intimidation, char_investigation: investigation, char_medicine: medicine,
+            char_nature: nature, char_perception: perception, char_performance: performance, char_persuasion: persuasion, char_religion: religion,
+            char_sleightOfHand: sleightOfHand, char_stealth: stealth, char_survival: survival, char_acrobaticsProf: acrobaticsProf,
+            char_animalHandlingProf: animalHandlingProf, char_arcanaProf: arcanaProf, char_athleticsProf: athleticsProf, char_deceptionProf: deceptionProf,
+            char_historyProf: historyProf, char_insightProf: insightProf, char_intimidationProf: intimidationProf, char_investigationProf: investigationProf,
+            char_medicineProf: medicineProf, char_natureProf: natureProf, char_perceptionProf: perceptionProf, char_performanceProf: performanceProf,
+            char_persuasionProf: persuasionProf, char_religionProf: religionProf, char_sleightOfHandProf: sleightOfHandProf, char_stealthProf: stealthProf,
+            char_survivalProf: survivalProf, char_spellNotes: spellNotes, char_alignment: alignment, char_inspiration: inspiration, char_castingHit: castingHit,
+            char_castingDC: castingDC
         });
         saveCharItems(items);
         saveCharSpells(spells);

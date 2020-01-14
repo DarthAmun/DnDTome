@@ -67,6 +67,11 @@ export default function GearView({ gear }) {
 
     const saveGearAction = (e) => {
         saveGear({ id, name, pic, description, cost, weight, damage, properties, type, sources });
+        ipcRenderer.send('updateWindow', {
+            gear_id: id, gear_name: name, gear_pic: pic, gear_description: description,
+            gear_cost: cost, gear_weight: weight, gear_damage: damage, gear_properties: properties, 
+            gear_type: type, gear_sources: sources
+        });
     }
 
     const addGearToCharAction = (e) => {

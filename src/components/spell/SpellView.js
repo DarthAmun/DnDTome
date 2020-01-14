@@ -80,6 +80,10 @@ export default function SpellView({ spell }) {
 
     const saveSpellAction = (e) => {
         saveSpell({ id, name, school, level, ritual, time, range, duration, components, text, classes, sources, pic });
+        ipcRenderer.send('updateWindow', {
+            spell_id: id, spell_name: name, spell_school: school, spell_level: level, spell_ritual: ritual, spell_time: time, spell_range: range, spell_duration: duration,
+            spell_components: components, spell_text: text, spell_classes: classes, spell_sources: sources, spell_pic: pic
+        });
     }
 
     const addSpellToCharAction = (e) => {
