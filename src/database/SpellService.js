@@ -157,7 +157,6 @@ module.exports.saveSpell = (spell) => {
         return console.error(err.message);
       }
       console.log(`====> ${spell.name} updated successfull`);
-      ipcRenderer.send('spellsUpdated', { spellStep: parseInt(localStorage.getItem('spellStep'), 10), spellStart: parseInt(localStorage.getItem('spellStart'), 10) });
       ipcRenderer.send('displayMessage', { type: `Saved spell`, message: `Saved ${spell.name} successful` });
     });
   });

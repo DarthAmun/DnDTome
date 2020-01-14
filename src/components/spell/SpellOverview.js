@@ -28,12 +28,15 @@ export default function SpellOverview() {
     });
   };
 
-  const updateSpell = () => {
-    spells.current.scrollTop = 0;
-    setStart(10);
-    reciveSpells(10, 0, query, function(result) {
-      receiveSpellsResult(result);
+  const updateSpell = (e, result) => {
+    let spells = currentSpellList.spells.map(spell => {
+      if(spell.spell_id === result.spell_id){
+        return result;
+      } else {
+        return spell;
+      }
     });
+    setCurrentSpellList({ spells: spells });
   };
 
   const searchSpell = (evt, rquery) => {
@@ -46,13 +49,18 @@ export default function SpellOverview() {
   };
 
   useEffect(() => {
-    ipcRenderer.on("spellsUpdated", updateSpell);
     ipcRenderer.on("sendSpellSearchQuery", searchSpell);
     return () => {
-      ipcRenderer.removeListener("spellsUpdated", updateSpell);
       ipcRenderer.removeListener("sendSpellSearchQuery", searchSpell);
     };
   }, []);
+
+  useEffect(() => {
+    ipcRenderer.on("updateWindow", updateSpell);
+    return () => {
+      ipcRenderer.removeListener("updateWindow", updateSpell);
+    };
+  }, [updateSpell]);
 
   useEffect(() => {
     if (isFetching) {
