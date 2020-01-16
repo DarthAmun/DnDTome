@@ -58,8 +58,9 @@ export default function RightNav() {
         return { ...result, windowType: "monster" };
       } else if (shortWindow.windowType === "char" && result.char_id !== undefined && shortWindow.char_id === result.char_id) {
         return { ...result, windowType: "char" };
+      } else {
+        return shortWindow;
       }
-      return shortWindows;
     });
     console.log(windows);
     setShortWindows(windows);
