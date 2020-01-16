@@ -1,0 +1,200 @@
+#classeView {
+  height: calc(100% - 20px);
+  width: calc(100% - 20px);
+  color: var(--card-title-color);
+  padding: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#classeView .left {
+  width: 580px;
+  height: 100%;
+  float: left;
+}
+#classeView .right {
+  width: calc(100% - 590px);
+  height: 100%;
+  padding-left: 10px;
+  float: left;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#classeView .topPart {
+  width: 100%;
+  height: 135px;
+}
+
+#classeView input,
+#classeView select {
+  height: 30px;
+  width: 300px;
+  border: none;
+  border-radius: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  float: right;
+  font-family: inherit;
+  font-size: 14px;
+  box-shadow: var(--boxshadow);
+  background-color: var(--pagination-input-background-color);
+  color: var(--pagination-input-color);
+}
+
+#classeView select {
+  width: 320px;
+}
+
+#classeView button {
+  height: 30px;
+  width: auto;
+  border: none;
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 5px;
+  text-align: center;
+  float: left;
+  font-family: inherit;
+  font-size: 14px;
+  background-color: var(--button-background-color);
+  color: var(--button-color);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+#classeView button:hover {
+  box-shadow: var(--boxshadow-hover);
+  cursor: pointer;
+}
+
+#classeView button.delete {
+  background-color: darkred;
+}
+
+#classeView textarea {
+  height: auto;
+  width: calc(100% - 20px);
+  float: left;
+  border-radius: 3px;
+  border-bottom-right-radius: 0px;
+  resize: none;
+  border: none;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  box-shadow: var(--boxshadow);
+  background-color: var(--pagination-input-background-color);
+  color: var(--pagination-input-color);
+  margin-right: 5px;
+}
+
+#classeView textarea.small {
+  height: 48px;
+  width: calc(100% - 150px);
+  line-height: 15px;
+  float: right;
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
+#classeView label {
+  display: inline-block;
+  width: 100%;
+  text-align: right;
+  line-height: 30px;
+  float: left;
+}
+#classeView .top label {
+  width: 450px;
+}
+#classeView label .labelText {
+  float: left;
+  height: 37px;
+  line-height: 33px;
+  text-align: right;
+}
+#classeView label.small {
+  width: 290px;
+}
+#classeView label.smaller {
+  width: 150px;
+}
+#classeView label.left {
+  float: left;
+  text-align: left;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+#classeView label.small input {
+  width: 140px;
+}
+#classeView label.left input {
+  float: left;
+}
+#classeView label.small input[type="checkbox"] {
+  width: 15px;
+  background: none;
+  box-shadow: none;
+}
+
+#classeView .image {
+  height: 100px;
+  width: 100px;
+  float: left;
+  box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+  background-color: white;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+#classeView .top {
+  float: left;
+  width: 450px;
+  margin-right: 10px;
+}
+
+#classeView::-webkit-scrollbar,
+#classeView textarea::-webkit-scrollbar,
+#classeView .right::-webkit-scrollbar {
+  width: 6px;
+  background-color: var(--scrollbar);
+  border-radius: 5px;
+}
+
+#classeView::-webkit-scrollbar-thumb,
+#classeView textarea::-webkit-scrollbar-thumb,
+#classeView .right::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 5px;
+}
+
+#classeView .perk {
+  float: left;
+  width: calc(100% - 20px);
+  min-width: 200px;
+  height: 150px;
+  color: var(--card-color);
+  padding: 10px;
+  border-radius: 3px;
+  overflow: hidden;
+  background-color: var(--card-background-color);
+  box-shadow: var(--boxshadow);
+  margin-bottom: 10px;
+}
+#classeView .perk .perkTitle {
+  width: calc(100% - 123px);
+  margin: 0px;
+  float: left;
+}
+#classeView .perk .perkLevel {
+  width: 40px;
+  float: left;
+}
+#classeView .perk .perkText {
+  height: 90px;
+}

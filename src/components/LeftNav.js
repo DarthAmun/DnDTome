@@ -8,6 +8,7 @@ import Particles from 'react-particles-js';
 import backpackIcon from "../assets/img/backpack.png";
 import raceIcon from "../assets/img/orc-head.png";
 import encounterIcon from "../assets/img/sword-clash.png";
+import classeIcon from "../assets/img/hooded-assassin.png";
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -154,18 +155,23 @@ class LeftNav extends Component {
             <img src={raceIcon} style={{ width: '20px', marginTop: '10px', marginRight: '5px', float: 'left' }} /> Races
           </div>
         </Link>
-        <Link onClick={e => closeActiveView()} to="/char-overview" style={{ top: "230px" }} className={this.props.location.pathname == "/char-overview" ? "menuItemActiv" : ""}>
+        <Link onClick={e => closeActiveView()} to="/class-overview" style={{ top: "230px" }} className={this.props.location.pathname == "/class-overview" ? "menuItemActiv" : ""}>
+          <div className="menuItem">
+            <img src={classeIcon} style={{ width: '20px', marginTop: '10px', marginRight: '5px', float: 'left' }} /> Classes
+          </div>
+        </Link>
+        <Link onClick={e => closeActiveView()} to="/char-overview" style={{ top: "270px" }} className={this.props.location.pathname == "/char-overview" ? "menuItemActiv" : ""}>
           <div className="menuItem">
             <FontAwesomeIcon icon={faIdCard} /> Chars
           </div>
         </Link>
-        <Link onClick={e => closeActiveView()} to="/monster-overview" style={{ top: "270px" }} className={this.props.location.pathname == "/monster-overview" ? "menuItemActiv" : ""}>
+        <Link onClick={e => closeActiveView()} to="/monster-overview" style={{ top: "310px" }} className={this.props.location.pathname == "/monster-overview" ? "menuItemActiv" : ""}>
           <div className="menuItem">
             <FontAwesomeIcon icon={faDragon} /> Monsters
           </div>
         </Link>
-        <div className="seperator" style={{ top: "315px" }}></div>
-        <Link onClick={e => closeActiveView()} to="/encounters" style={{ top: "330px" }} className={this.props.location.pathname == "/encounters" ? "menuItemActiv" : ""}>
+        <div className="seperator" style={{ top: "355px" }}></div>
+        <Link onClick={e => closeActiveView()} to="/encounters" style={{ top: "370px" }} className={this.props.location.pathname == "/encounters" ? "menuItemActiv" : ""}>
           <div className="menuItem">
             <img src={encounterIcon} style={{ width: '20px', marginTop: '10px', marginRight: '5px', float: 'left' }} /> Encounters
           </div>

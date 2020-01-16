@@ -12,6 +12,7 @@ import GearOverview from './gear/GearOverview';
 import MonsterOverview from './monster/MonsterOverview';
 import CharOverview from './char/CharOverview';
 import RaceOverview from './race/RaceOverview';
+import ClassOverview from './classe/ClassOverview';
 
 import Home from './Home';
 import Options from './Options';
@@ -77,6 +78,7 @@ const App = () => {
         <LayoutRoute path="/monster-overview" layout={PageLayout} component={MonsterOverview} />
         <LayoutRoute path="/char-overview" layout={PageLayout} component={CharOverview} />
         <LayoutRoute path="/race-overview" layout={PageLayout} component={RaceOverview} />
+        <LayoutRoute path="/class-overview" layout={PageLayout} component={ClassOverview} />
         <LayoutRoute path="/add-char" layout={PageLayout} component={AddChar} />
         <LayoutRoute path="/add-spell" layout={PageLayout} component={AddSpell} />
         <LayoutRoute path="/add-item" layout={PageLayout} component={AddItem} />

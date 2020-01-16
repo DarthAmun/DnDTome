@@ -1,0 +1,88 @@
+.classe {
+    width: 180px;
+    height: 230px;
+    float: left;
+    color: var(--card-color);
+    text-align: center;
+    margin: 5px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: var(--card-background-color);
+    opacity: 0;
+    animation-name: zoomIn;
+    animation-duration: 300ms;
+    transition-duration: 300ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    box-shadow: var(--boxshadow);
+    position: relative;
+}
+
+.classe:hover {
+    box-shadow: var(--boxshadow-hover);
+    cursor: pointer;
+}
+
+.classe .icon {
+    width: 18px;
+    height: 50px;
+    line-height: 50px;
+    float: right;
+}
+
+.classe .small {
+    font-size: 6px;
+    margin-left: 5px;
+    margin-right: 5px;
+    line-height: 6px;
+}
+
+.classe .classeAttr {
+    height: auto;
+    float: left;
+    padding: 10px;
+}
+
+.classe .smallSpellAttr {
+    height: auto;
+    width: calc(100% - 20px);
+    float: left;
+    line-height: 10px;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.classe .classeName {
+    font-size: 14px;
+    border-top: var(--card-seperator-line);
+    border-bottom: var(--card-seperator-line);
+    width: calc(100% - 20px);
+    color: var(--card-title-color);
+}
+
+.classe .image{ 
+    height: 154px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: calc(100% - 26px);
+    border-radius: 100px;
+    border: 3px solid #8000ff;
+    box-shadow: 0px 0px 10px 0px rgba(172, 172, 172, 0.2);
+    background-color: white;
+    float: left;
+    overflow: hidden;
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(0.3, 0.3, 0.3);
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+    }
+}
