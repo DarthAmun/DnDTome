@@ -25,7 +25,7 @@ export default function AddItem() {
     };
 
     return (
-        <div id="newItem">
+        <div id="itemView">
             <div className="top">
                 <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} /></label>
                 <label>Sources:<input name="source" type="text" value={source} onChange={e => setSource(e.target.value)} /></label>

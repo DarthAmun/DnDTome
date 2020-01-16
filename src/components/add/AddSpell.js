@@ -23,7 +23,7 @@ export default function AddSpell() {
 
     return (
         <div id="overview">
-            <div id="newSpell">
+            <div id="spellView">
                 <div className="top">
                     <label>Name:<input name="name" type="text" value={name} onChange={e => setName(e.target.value)} /></label>
                     <label>School:<input name="school" type="text" value={school} onChange={e => setSchool(e.target.value)} /></label>
