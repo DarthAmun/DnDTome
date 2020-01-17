@@ -287,6 +287,37 @@ module.exports.deleteRace = (race) => {
   });
 }
 
+module.exports.deleteAllRaces = () => {
+  db.serialize(function() {
+    db.run(`DELETE FROM tab_races`, function(err) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log(`====> All from races successful deleted`);
+      mainWindow.webContents.send("displayMessage", { type: `Delete All races`, message: "delete all successful" });
+    });
+    db.run(`DELETE FROM sqlite_sequence WHERE name='tab_races'`, function(err) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log(`====> races autoincreasement reseted successful`);
+    });
+    db.run(`DELETE FROM tab_races_perks`, function(err) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log(`====> All from races successful deleted`);
+      mainWindow.webContents.send("displayMessage", { type: `Delete All races_perks`, message: "delete all successful" });
+    });
+    db.run(`DELETE FROM sqlite_sequence WHERE name='tab_races_perks'`, function(err) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log(`====> races_perks autoincreasement reseted successful`);
+    });
+  });
+};
+
 module.exports.addRaceToChar = (char, race, callback) => {
   let data = [];
   if (race.id === undefined) {

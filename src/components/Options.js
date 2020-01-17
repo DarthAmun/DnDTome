@@ -2,12 +2,12 @@ import '../assets/css/Options.css';
 import React, { useState, useEffect } from 'react';
 import OptionService from '../database/OptionService';
 import ThemeService from '../services/ThemeService';
-import { reciveAllSpells, saveNewSpells, addSpellToChar, saveNewSpellFromJson, reciveSpellByName } from '../database/SpellService';
-import { reciveAllItems, saveNewItems, reciveItemByName, addItemToChar, saveNewItemFromJson } from '../database/ItemService';
-import { reciveAllGears, saveNewGears, addGearToCharFromJson, reciveGearByName, saveNewGearFromJson } from '../database/GearService';
-import { reciveAllMonsters, saveNewMonsters, reciveMonstersByCertainName, addMonsterToChar, saveNewMonsterFromJson } from '../database/MonsterService';
-import { reciveAllChars, saveNewCharFromJson, reciveCharSpells, reciveCharItems, reciveCharMonsters } from '../database/CharacterService';
-import { reciveAllRaces, importRacePerks, reciveRacePerks, saveNewRaceFromJson } from '../database/RaceService';
+import { reciveAllSpells, saveNewSpells, addSpellToChar, saveNewSpellFromJson, reciveSpellByName, deleteAllSpells } from '../database/SpellService';
+import { reciveAllItems, saveNewItems, reciveItemByName, addItemToChar, saveNewItemFromJson, deleteAllItems } from '../database/ItemService';
+import { reciveAllGears, saveNewGears, addGearToCharFromJson, reciveGearByName, saveNewGearFromJson, deleteAllGear } from '../database/GearService';
+import { reciveAllMonsters, saveNewMonsters, reciveMonstersByCertainName, addMonsterToChar, saveNewMonsterFromJson, deleteAllMonsters } from '../database/MonsterService';
+import { reciveAllChars, saveNewCharFromJson, reciveCharSpells, reciveCharItems, reciveCharMonsters, deleteAllCharacters } from '../database/CharacterService';
+import { reciveAllRaces, importRacePerks, reciveRacePerks, saveNewRaceFromJson, deleteAllRaces } from '../database/RaceService';
 import { Line } from 'rc-progress';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPatreon, faDiscord } from '@fortawesome/free-brands-svg-icons';
@@ -417,7 +417,7 @@ export default function Options() {
     }
   }
 
-  const deleteAllItems = () => {
+  const deleteAllItemsAction = () => {
     const options = {
       type: 'question',
       buttons: ['Cancel', 'Yes, please', 'No, thanks'],
@@ -428,11 +428,11 @@ export default function Options() {
 
     dialog.showMessageBox(null, options, (response) => {
       if (response == 1) {
-        ipcRenderer.send('deleteAllItems');
+        deleteAllItems();
       }
     });
   }
-  const deleteAllGears = () => {
+  const deleteAllGearsAction = () => {
     const options = {
       type: 'question',
       buttons: ['Cancel', 'Yes, please', 'No, thanks'],
@@ -443,11 +443,11 @@ export default function Options() {
 
     dialog.showMessageBox(null, options, (response) => {
       if (response == 1) {
-        ipcRenderer.send('deleteAllGears');
+        deleteAllGear();
       }
     });
   }
-  const deleteAllSpells = () => {
+  const deleteAllSpellsAction = () => {
     const options = {
       type: 'question',
       buttons: ['Cancel', 'Yes, please', 'No, thanks'],
@@ -458,11 +458,11 @@ export default function Options() {
 
     dialog.showMessageBox(null, options, (response) => {
       if (response == 1) {
-        ipcRenderer.send('deleteAllSpells');
+        deleteAllSpells();
       }
     });
   }
-  const deleteAllMonsters = () => {
+  const deleteAllMonstersAction = () => {
     const options = {
       type: 'question',
       buttons: ['Cancel', 'Yes, please', 'No, thanks'],
@@ -473,11 +473,11 @@ export default function Options() {
 
     dialog.showMessageBox(null, options, (response) => {
       if (response == 1) {
-        ipcRenderer.send('deleteAllMonsters');
+        deleteAllMonsters();
       }
     });
   }
-  const deleteAllRaces = () => {
+  const deleteAllRacesAction = () => {
     const options = {
       type: 'question',
       buttons: ['Cancel', 'Yes, please', 'No, thanks'],
@@ -488,11 +488,11 @@ export default function Options() {
 
     dialog.showMessageBox(null, options, (response) => {
       if (response == 1) {
-        ipcRenderer.send('deleteAllRaces');
+        deleteAllRaces();
       }
     });
   }
-  const deleteAllChars = () => {
+  const deleteAllCharsAction = () => {
     const options = {
       type: 'question',
       buttons: ['Cancel', 'Yes, please', 'No, thanks'],
@@ -503,7 +503,7 @@ export default function Options() {
 
     dialog.showMessageBox(null, options, (response) => {
       if (response == 1) {
-        ipcRenderer.send('deleteAllChars');
+        deleteAllCharacters();
       }
     });
   }
@@ -574,12 +574,12 @@ export default function Options() {
           </div>
           <div className="optionSection">
             <h3>Delete Data</h3>
-            <button onClick={deleteAllSpells}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Spells </button><br />
-            <button onClick={deleteAllItems}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Magic Items </button><br />
-            <button onClick={deleteAllGears}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Gear </button><br />
-            <button onClick={deleteAllMonsters}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Monsters </button><br />
-            <button onClick={deleteAllChars}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Characters </button><br />
-            <button onClick={deleteAllRaces}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Races </button>
+            <button onClick={deleteAllSpellsAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Spells </button><br />
+            <button onClick={deleteAllItemsAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Magic Items </button><br />
+            <button onClick={deleteAllGearsAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Gear </button><br />
+            <button onClick={deleteAllMonstersAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Monsters </button><br />
+            <button onClick={deleteAllCharsAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Characters </button><br />
+            <button onClick={deleteAllRacesAction}><FontAwesomeIcon icon={faTrashAlt} /> Delete all Races </button>
           </div>
         </div>
       </div>

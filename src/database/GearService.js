@@ -120,22 +120,6 @@ module.exports.reciveAttributeSelection = (attribute, callback) => {
     });
 }
 
-module.exports.deleteGear = (gear) => {
-    let data = [gear.id];
-    let sql = `DELETE FROM 'main'.'tab_gears' WHERE gear_id = ?`;
-    db.serialize(function () {
-        db.run(sql, data, function (err) {
-            if (err) {
-                return console.error(err.message);
-            }
-            console.log(`====>Deleted ${gear.name} successfull`);
-            ipcRenderer.send('closeSpellWindow');
-            ipcRenderer.send('gearsUpdated', { gearStep, gearStart });
-            ipcRenderer.send('displayMessage', { type: `Deleted gear`, message: `Deleted ${gear.name} successful` });
-        });
-    });
-}
-
 module.exports.saveGear = (gear) => {
     let data = [gear.name, gear.description, gear.pic, gear.cost, gear.weight, gear.damage, gear.properties, gear.type, gear.sources, gear.id];
     let sql = `UPDATE 'main'.'tab_gears'
@@ -218,6 +202,60 @@ module.exports.addGearToChar = (char, gear, callback) => {
         });
     });
 }
+
+module.exports.deleteGear = (gear) => {
+    let data = [gear.id];
+    let sql1 = `DELETE FROM 'main'.'tab_gears' WHERE gear_id = ?`;
+    let sql2 = `DELETE FROM 'main'.'tab_characters_items' WHERE gear_id = ?`;
+    db.serialize(function () {
+        db.run(sql2, data, function (err) {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log(`====>Deleted ${gear.name} from characters successfull`);
+        });
+        db.run(sql1, data, function (err) {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log(`====>Deleted ${gear.name} successfull`);
+            ipcRenderer.send('closeActiveView');
+            ipcRenderer.send('gearsUpdated', { gearStep, gearStart });
+            ipcRenderer.send('displayMessage', { type: `Deleted gear`, message: `Deleted ${gear.name} successful` });
+        });
+    });
+}
+
+module.exports.deleteAllGear = () => {
+    db.serialize(function () {
+        db.run(`DELETE FROM tab_characters_gears`, function (err) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            console.log(`====> All from characters_gears successful deleted`);
+            mainWindow.webContents.send("displayMessage", { type: `Delete All gears`, message: "delete all gear from characters successful" });
+        });
+        db.run(`DELETE FROM sqlite_sequence WHERE name='tab_characters_gears'`, function (err) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            console.log(`====> characters_gears autoincreasement reseted successful`);
+        });
+        db.run(`DELETE FROM tab_gears`, function (err) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            console.log(`====> All from gears successful deleted`);
+            mainWindow.webContents.send("displayMessage", { type: `Delete all gears`, message: "delete all gears successful" });
+        });
+        db.run(`DELETE FROM sqlite_sequence WHERE name='tab_gears'`, function (err) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            console.log(`====> gears autoincreasement reseted successful`);
+        });
+    });
+};
 
 module.exports.addGearToCharFromJson = (char, gear, callback) => {
     let data = [];

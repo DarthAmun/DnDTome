@@ -333,3 +333,75 @@ module.exports.deleteChar = (id) => {
         });
     });
 }
+
+module.exports.deleteAllCharacters = () => {
+    db.serialize(function() {
+      db.run(`DELETE FROM tab_characters_spells`, function(err) {
+        if (err != null) {
+          console.log("====>" + err);
+        }
+        console.log(`====> All from characters_spells successful deleted`);
+        mainWindow.webContents.send("displayMessage", {
+          type: `Delete All character spells`,
+          message: "delete all successful",
+        });
+      });
+      db.run(`DELETE FROM sqlite_sequence WHERE name='tab_characters_spells'`, function(err) {
+        if (err != null) {
+          console.log("====>" + err);
+        }
+        console.log(`====> characters_spells autoincreasement reseted successful`);
+      });
+  
+      db.run(`DELETE FROM tab_characters_items`, function(err) {
+        if (err != null) {
+          console.log("====>" + err);
+        }
+        console.log(`====> All from characters_items successful deleted`);
+        mainWindow.webContents.send("displayMessage", {
+          type: `Delete All character items`,
+          message: "delete all successful",
+        });
+      });
+      db.run(`DELETE FROM sqlite_sequence WHERE name='tab_characters_items'`, function(err) {
+        if (err != null) {
+          console.log("====>" + err);
+        }
+        console.log(`====> characters_sitems autoincreasement reseted successful`);
+      });
+  
+      db.run(`DELETE FROM tab_characters_monsters`, function(err) {
+        if (err != null) {
+          console.log("====>" + err);
+        }
+        console.log(`====> All from characters_monsters successful deleted`);
+        mainWindow.webContents.send("displayMessage", {
+          type: `Delete All character monsters`,
+          message: "delete all successful",
+        });
+      });
+      db.run(`DELETE FROM sqlite_sequence WHERE name='tab_characters_monsters'`, function(err) {
+        if (err != null) {
+          console.log("====>" + err);
+        }
+        console.log(`====> characters_monsters autoincreasement reseted successful`);
+      });
+  
+      db.run(`DELETE FROM tab_characters`, function(err) {
+        if (err != null) {
+          console.log("====>" + err);
+        }
+        console.log(`====> All from characters successful deleted`);
+        mainWindow.webContents.send("displayMessage", {
+          type: `Delete All characters`,
+          message: "delete all successful",
+        });
+      });
+      db.run(`DELETE FROM sqlite_sequence WHERE name='tab_characters'`, function(err) {
+        if (err != null) {
+          console.log("====>" + err);
+        }
+        console.log(`====> characters autoincreasement reseted successful`);
+      });
+    });
+  };

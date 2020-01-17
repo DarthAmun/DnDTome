@@ -214,28 +214,66 @@ module.exports.saveNewSpellFromJson = (spell, callback) => {
 
 module.exports.deleteSpell = (spell) => {
   let data = [spell.id];
-  let sql = `DELETE FROM 'main'.'tab_spells' WHERE spell_id = ?`;
+  let sql1 = `DELETE FROM 'main'.'tab_spells' WHERE spell_id = ?`;
+  let sql2 = `DELETE FROM 'main'.'tab_characters_spells' WHERE spell_id = ?`;
   db.serialize(function () {
-    db.run(sql, data, function (err) {
+    db.run(sql2, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`====>Deleted ${spell.name} from characters successfull`);
+    });
+    db.run(sql1, data, function (err) {
       if (err) {
         return console.error(err.message);
       }
       console.log(`====>Deleted ${spell.name} successfull`);
-      ipcRenderer.send('closeSpellWindow');
+      ipcRenderer.send('closeActiveView');
       ipcRenderer.send('spellsUpdated', { spellStep, spellStart });
       ipcRenderer.send('displayMessage', { type: `Deleted monster`, message: `Deleted ${spell.name} successful` });
     });
   });
 }
 
+module.exports.deleteAllSpells = () => {
+  db.serialize(function () {
+    db.run(`DELETE FROM tab_characters_spells`, function (err) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log(`====> All from characters_spells successful deleted`);
+      mainWindow.webContents.send("displayMessage", { type: `Delete all spells`, message: "delete all spells from characters successful" });
+    });
+    db.run(`DELETE FROM sqlite_sequence WHERE name='tab_characters_spells'`, function (err) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log(`====> characters_spells autoincreasement reseted successful`);
+    });
+    db.run(`DELETE FROM tab_spells`, function (err) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log(`====> All from spells successful deleted`);
+      mainWindow.webContents.send("displayMessage", { type: `Delete all spells`, message: "delete all spells successful" });
+    });
+    db.run(`DELETE FROM sqlite_sequence WHERE name='tab_spells'`, function (err) {
+      if (err != null) {
+        console.log("====>" + err);
+      }
+      console.log(`====> spells autoincreasement reseted successful`);
+    });
+  });
+}
+
 module.exports.addSpellToChar = (char, spell, callback) => {
   let data = [];
-  if(spell.id === undefined){
+  if (spell.id === undefined) {
     data = [char.selectedChar, spell.spell_id, false];
   } else {
     data = [char.selectedChar, spell.id, false];
   }
-  
+
   let sql = `INSERT INTO 'main'.'tab_characters_spells' (char_id, spell_id, spell_prepared)
               VALUES  (?, ?, ?)`;
   db.serialize(function () {

@@ -274,19 +274,57 @@ module.exports.saveNewMonsterFromJson = (monster, callback) => {
 
 module.exports.deleteMonster = (monster) => {
     let data = [monster.id];
-    let sql = `DELETE FROM 'main'.'tab_monsters' WHERE monster_id = ?`;
+    let sql1 = `DELETE FROM 'main'.'tab_monsters' WHERE monster_id = ?`;
+    let sql2 = `DELETE FROM 'main'.'tab_characters_monsters' WHERE monster_id = ?`;
     db.serialize(function () {
-        db.run(sql, data, function (err) {
+        db.run(sql2, data, function (err) {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log(`====>Deleted ${monster.name} from characters successfull`);
+        });
+        db.run(sql1, data, function (err) {
             if (err) {
                 return console.error(err.message);
             }
             console.log(`====>Deleted ${monster.name} successfull`);
-            ipcRenderer.send('closeMonsterWindow');
+            ipcRenderer.send('closeActiveView');
             ipcRenderer.send('monstersUpdated', { monsterStep, monsterStart });
             ipcRenderer.send('displayMessage', { type: `Deleted monster`, message: `Deleted ${monster.name} successful` });
         });
     });
 }
+
+module.exports.deleteAllMonsters = () => {
+    db.serialize(function () {
+        db.run(`DELETE FROM tab_characters_monsters`, function (err) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            console.log(`====> All from characters_monsters successful deleted`);
+            mainWindow.webContents.send("displayMessage", { type: `Delete All monsters`, message: "delete all successful" });
+        });
+        db.run(`DELETE FROM sqlite_sequence WHERE name='tab_characters_monsters'`, function (err) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            console.log(`====> characters_monsters autoincreasement reseted successful`);
+        });
+        db.run(`DELETE FROM tab_monsters`, function (err) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            console.log(`====> All from monsters successful deleted`);
+            mainWindow.webContents.send("displayMessage", { type: `Delete All monsters`, message: "delete all successful" });
+        });
+        db.run(`DELETE FROM sqlite_sequence WHERE name='tab_monsters'`, function (err) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            console.log(`====> monsters autoincreasement reseted successful`);
+        });
+    });
+};
 
 module.exports.addMonsterToChar = (char, monster, callback) => {
     let data = [];

@@ -68,7 +68,7 @@ module.exports.reciveItems = (step, start, query, callback) => {
         }
         if (searchItemQuery.attunment != null && typeof searchItemQuery.attunment !== 'undefined' && searchItemQuery.attunment != "") {
             q += `item_attunment = ${searchItemQuery.attunment} AND `;
-          }
+        }
         if (q.includes(" AND ")) {
             q = q.slice(0, -4);
         } else {
@@ -113,22 +113,6 @@ module.exports.reciveAttributeSelection = (attribute, callback) => {
             }
             callback(rows);
             console.log("====>" + `get all ${attribute} successfull`)
-        });
-    });
-}
-
-module.exports.deleteItem = (item) => {
-    let data = [item.id];
-    let sql = `DELETE FROM 'main'.'tab_items' WHERE item_id = ?`;
-    db.serialize(function () {
-        db.run(sql, data, function (err) {
-            if (err) {
-                return console.error(err.message);
-            }
-            console.log(`====>Deleted ${item.name} successfull`);
-            ipcRenderer.send('closeItemWindow');
-            ipcRenderer.send('itemsUpdated', { itemStep, itemStart });
-            ipcRenderer.send('displayMessage', { type: `Deleted magic item`, message: `Deleted ${item.name} successful` });
         });
     });
 }
@@ -199,6 +183,60 @@ module.exports.saveNewItemFromJson = (item, callback) => {
         });
     });
 }
+
+module.exports.deleteItem = (item) => {
+    let data = [item.id];
+    let sql1 = `DELETE FROM 'main'.'tab_items' WHERE item_id = ?`;
+    let sql2 = `DELETE FROM 'main'.'tab_characters_items' WHERE item_id = ?`;
+    db.serialize(function () {
+        db.run(sql2, data, function (err) {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log(`====>Deleted ${item.name} from characters successfull`);
+        });
+        db.run(sql1, data, function (err) {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log(`====>Deleted ${item.name} successfull`);
+            ipcRenderer.send('closeItemWindow');
+            ipcRenderer.send('itemsUpdated', { itemStep, itemStart });
+            ipcRenderer.send('displayMessage', { type: `Deleted magic item`, message: `Deleted ${item.name} successful` });
+        });
+    });
+}
+
+module.exports.deleteAllItems = () => {
+    db.serialize(function () {
+        db.run(`DELETE FROM tab_characters_items`, function (err) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            console.log(`====> All from characters_items successful deleted`);
+            mainWindow.webContents.send("displayMessage", { type: `Delete All items`, message: "delete all successful" });
+        });
+        db.run(`DELETE FROM sqlite_sequence WHERE name='tab_characters_items'`, function (err) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            console.log(`====> characters_items autoincreasement reseted successful`);
+        });
+        db.run(`DELETE FROM tab_items`, function (err) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            console.log(`====> All from items successful deleted`);
+            mainWindow.webContents.send("displayMessage", { type: `Delete All items`, message: "delete all successful" });
+        });
+        db.run(`DELETE FROM sqlite_sequence WHERE name='tab_items'`, function (err) {
+            if (err != null) {
+                console.log("====>" + err);
+            }
+            console.log(`====> items autoincreasement reseted successful`);
+        });
+    });
+};
 
 module.exports.addItemToChar = (char, item, callback) => {
     let data = [];
