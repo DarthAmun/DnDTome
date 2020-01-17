@@ -144,6 +144,21 @@ module.exports.deletePerk = (id, callback) => {
         return console.error(err.message);
       }
       callback();
+      console.log(`====>Deleted perk successfull`);
+      ipcRenderer.send('displayMessage', { type: `Deleted perk`, message: `Deleted perk successful` });
+    });
+  });
+}
+
+module.exports.deletePerks = (race, callback) => {
+  let data = [race.id];
+  let sql = `DELETE FROM 'main'.'tab_races_perks' WHERE race_id = ?`;
+  db.serialize(function () {
+    db.run(sql, data, function (err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      callback();
       console.log(`====>Deleted ${race.name} successfull`);
       ipcRenderer.send('displayMessage', { type: `Deleted perk`, message: `Deleted perk successful` });
     });

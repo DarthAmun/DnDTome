@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as ReactDOM from "react-dom";
 import '../../assets/css/race/RaceView.css';
-import { saveRace, savePerks, deleteRace, deletePerk, reciveRacePerks, insertNewPerk } from '../../database/RaceService';
+import { saveRace, savePerks, deleteRace, deletePerk, deletePerks, reciveRacePerks, insertNewPerk } from '../../database/RaceService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -77,6 +77,7 @@ export default function RaceView({ race }) {
         dialog.showMessageBox(null, options, (response) => {
             if (response == 1) {
                 deleteRace({ id, name, sources });
+                deletePerks({ id, name })
             }
         });
     }
