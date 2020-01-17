@@ -125,27 +125,13 @@ ipcMain.on("closeActiveView", (event) => {
   mainWindow.webContents.send("closeActiveView");
 });
 
-ipcMain.on("spellsUpdated", (event, arg) => {
-  const { spellStep, spellStart } = arg;
-  mainWindow.webContents.send("spellsUpdated", { spellStep, spellStart });
-});
-ipcMain.on("itemsUpdated", (event, arg) => {
-  const { itemStep, itemStart } = arg;
-  mainWindow.webContents.send("itemsUpdated", { itemStep, itemStart });
-});
-ipcMain.on("gearsUpdated", (event, arg) => {
-  const { gearStep, gearStart } = arg;
-  mainWindow.webContents.send("gearsUpdated", { gearStep, gearStart });
-});
-ipcMain.on("monstersUpdated", (event, arg) => {
-  const { monsterStep, monsterStart } = arg;
-  mainWindow.webContents.send("monstersUpdated", { monsterStep, monsterStart });
-});
-
 ipcMain.on("displayMessage", (event, m) => {
   mainWindow.webContents.send("displayMessage", { type: m.type, message: m.message });
 });
 
 ipcMain.on("updateWindow", (event, window) => {
   mainWindow.webContents.send("updateWindow", window);
+});
+ipcMain.on("removeWindow", (event, window) => {
+  mainWindow.webContents.send("removeWindow", window);
 });

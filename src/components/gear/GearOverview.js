@@ -28,12 +28,21 @@ export default function GearOverview() {
     });
   };
 
-  const updateGear = () => {
-    gears.current.scrollTop = 0;
-    setStart(10);
-    reciveGears(10, 0, query, function(result) {
-      receiveGearsResult(result);
+  const updateGear = (e, result) => {
+    let gears = currentGearList.gears.map(gear => {
+      if (gear.gear_id === result.gear_id) {
+        return result;
+      } else {
+        return gear;
+      }
     });
+    setCurrentGearList({ gears: gears });
+  };
+  const removeWindow = (e, result) => {
+    let gears = currentGearList.gears.filter(gear => {
+      if (gear.gear_id !== result.id) return gear;
+    });
+    setCurrentGearList({ gears: gears });
   };
 
   const searchGear = (evt, rquery) => {
@@ -46,13 +55,25 @@ export default function GearOverview() {
   };
 
   useEffect(() => {
-    ipcRenderer.on("gearsUpdated", updateGear);
     ipcRenderer.on("sendGearSearchQuery", searchGear);
     return () => {
-      ipcRenderer.removeListener("gearsUpdated", updateGear);
       ipcRenderer.removeListener("sendGearSearchQuery", searchGear);
     };
   }, []);
+
+  useEffect(() => {
+    ipcRenderer.on("updateWindow", updateGear);
+    return () => {
+      ipcRenderer.removeListener("updateWindow", updateGear);
+    };
+  }, [updateGear]);
+
+  useEffect(() => {
+    ipcRenderer.on("removeWindow", removeWindow);
+    return () => {
+      ipcRenderer.removeListener("removeWindow", removeWindow);
+    };
+  }, [removeWindow]);
 
   useEffect(() => {
     if (isFetching) {

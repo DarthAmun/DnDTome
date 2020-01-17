@@ -131,7 +131,6 @@ module.exports.saveGear = (gear) => {
                 return console.error(err.message);
             }
             console.log(`====> ${gear.name} updated successfull`);
-            ipcRenderer.send('gearsUpdated', { gearStep: parseInt(localStorage.getItem('gearStep'), 10), gearStart: parseInt(localStorage.getItem('gearStart'), 10) });
             ipcRenderer.send('displayMessage', { type: `Saved gear`, message: `Saved ${gear.name} successful` });
         });
     });
@@ -220,7 +219,7 @@ module.exports.deleteGear = (gear) => {
             }
             console.log(`====>Deleted ${gear.name} successfull`);
             ipcRenderer.send('closeActiveView');
-            ipcRenderer.send('gearsUpdated', { gearStep, gearStart });
+            ipcRenderer.send('removeWindow', gear);
             ipcRenderer.send('displayMessage', { type: `Deleted gear`, message: `Deleted ${gear.name} successful` });
         });
     });
@@ -233,7 +232,7 @@ module.exports.deleteAllGear = () => {
                 console.log("====>" + err);
             }
             console.log(`====> All from characters_gears successful deleted`);
-            mainWindow.webContents.send("displayMessage", { type: `Delete All gears`, message: "delete all gear from characters successful" });
+            ipcRenderer.send("displayMessage", { type: `Delete All gears`, message: "delete all gear from characters successful" });
         });
         db.run(`DELETE FROM sqlite_sequence WHERE name='tab_characters_gears'`, function (err) {
             if (err != null) {
@@ -246,7 +245,7 @@ module.exports.deleteAllGear = () => {
                 console.log("====>" + err);
             }
             console.log(`====> All from gears successful deleted`);
-            mainWindow.webContents.send("displayMessage", { type: `Delete all gears`, message: "delete all gears successful" });
+            ipcRenderer.send("displayMessage", { type: `Delete all gears`, message: "delete all gears successful" });
         });
         db.run(`DELETE FROM sqlite_sequence WHERE name='tab_gears'`, function (err) {
             if (err != null) {

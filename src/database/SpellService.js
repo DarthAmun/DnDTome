@@ -229,8 +229,8 @@ module.exports.deleteSpell = (spell) => {
       }
       console.log(`====>Deleted ${spell.name} successfull`);
       ipcRenderer.send('closeActiveView');
-      ipcRenderer.send('spellsUpdated', { spellStep, spellStart });
-      ipcRenderer.send('displayMessage', { type: `Deleted monster`, message: `Deleted ${spell.name} successful` });
+      ipcRenderer.send('removeWindow', spell);
+      ipcRenderer.send('displayMessage', { type: `Deleted spell`, message: `Deleted ${spell.name} successful` });
     });
   });
 }
@@ -242,7 +242,7 @@ module.exports.deleteAllSpells = () => {
         console.log("====>" + err);
       }
       console.log(`====> All from characters_spells successful deleted`);
-      mainWindow.webContents.send("displayMessage", { type: `Delete all spells`, message: "delete all spells from characters successful" });
+      ipcRenderer.send("displayMessage", { type: `Delete all spells`, message: "delete all spells from characters successful" });
     });
     db.run(`DELETE FROM sqlite_sequence WHERE name='tab_characters_spells'`, function (err) {
       if (err != null) {
@@ -255,7 +255,7 @@ module.exports.deleteAllSpells = () => {
         console.log("====>" + err);
       }
       console.log(`====> All from spells successful deleted`);
-      mainWindow.webContents.send("displayMessage", { type: `Delete all spells`, message: "delete all spells successful" });
+      ipcRenderer.send("displayMessage", { type: `Delete all spells`, message: "delete all spells successful" });
     });
     db.run(`DELETE FROM sqlite_sequence WHERE name='tab_spells'`, function (err) {
       if (err != null) {

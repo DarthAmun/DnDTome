@@ -200,8 +200,8 @@ module.exports.deleteItem = (item) => {
                 return console.error(err.message);
             }
             console.log(`====>Deleted ${item.name} successfull`);
-            ipcRenderer.send('closeItemWindow');
-            ipcRenderer.send('itemsUpdated', { itemStep, itemStart });
+            ipcRenderer.send('closeActiveView');
+            ipcRenderer.send('removeWindow', item);
             ipcRenderer.send('displayMessage', { type: `Deleted magic item`, message: `Deleted ${item.name} successful` });
         });
     });
@@ -214,7 +214,7 @@ module.exports.deleteAllItems = () => {
                 console.log("====>" + err);
             }
             console.log(`====> All from characters_items successful deleted`);
-            mainWindow.webContents.send("displayMessage", { type: `Delete All items`, message: "delete all successful" });
+            ipcRenderer.send("displayMessage", { type: `Delete All items`, message: "delete all successful" });
         });
         db.run(`DELETE FROM sqlite_sequence WHERE name='tab_characters_items'`, function (err) {
             if (err != null) {
@@ -227,7 +227,7 @@ module.exports.deleteAllItems = () => {
                 console.log("====>" + err);
             }
             console.log(`====> All from items successful deleted`);
-            mainWindow.webContents.send("displayMessage", { type: `Delete All items`, message: "delete all successful" });
+            ipcRenderer.send("displayMessage", { type: `Delete All items`, message: "delete all successful" });
         });
         db.run(`DELETE FROM sqlite_sequence WHERE name='tab_items'`, function (err) {
             if (err != null) {

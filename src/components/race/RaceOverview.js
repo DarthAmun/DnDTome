@@ -28,12 +28,21 @@ export default function RaceOverview() {
     });
   };
 
-  const updateRace = () => {
-    races.current.scrollTop = 0;
-    setStart(10);
-    reciveRaces(10, 0, query, function(result) {
-      receiveRacesResult(result);
+  const updateRace = (e, result) => {
+    let races = currentRaceList.races.map(race => {
+      if (race.race_id === result.race_id) {
+        return result;
+      } else {
+        return race;
+      }
     });
+    setCurrentRaceList({ races: races });
+  };
+  const removeWindow = (e, result) => {
+    let races = currentRaceList.races.filter(race => {
+      if (race.race_id !== result.id) return race;
+    });
+    setCurrentRaceList({ races: races });
   };
 
   const searchRace = (evt, rquery) => {
@@ -46,13 +55,25 @@ export default function RaceOverview() {
   };
 
   useEffect(() => {
-    ipcRenderer.on("racesUpdated", updateRace);
     ipcRenderer.on("sendRaceSearchQuery", searchRace);
     return () => {
-      ipcRenderer.removeListener("racesUpdated", updateRace);
       ipcRenderer.removeListener("sendRaceSearchQuery", searchRace);
     };
   }, []);
+
+  useEffect(() => {
+    ipcRenderer.on("updateWindow", updateRace);
+    return () => {
+      ipcRenderer.removeListener("updateWindow", updateRace);
+    };
+  }, [updateRace]);
+
+  useEffect(() => {
+    ipcRenderer.on("removeWindow", removeWindow);
+    return () => {
+      ipcRenderer.removeListener("removeWindow", removeWindow);
+    };
+  }, [removeWindow]);
 
   useEffect(() => {
     if (isFetching) {

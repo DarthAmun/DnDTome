@@ -30,11 +30,17 @@ export default function SpellOverview() {
 
   const updateSpell = (e, result) => {
     let spells = currentSpellList.spells.map(spell => {
-      if(spell.spell_id === result.spell_id){
+      if (spell.spell_id === result.spell_id) {
         return result;
       } else {
         return spell;
       }
+    });
+    setCurrentSpellList({ spells: spells });
+  };
+  const removeWindow = (e, result) => {
+    let spells = currentSpellList.spells.filter(spell => {
+      if (spell.spell_id !== result.id) return spell;
     });
     setCurrentSpellList({ spells: spells });
   };
@@ -43,7 +49,7 @@ export default function SpellOverview() {
     setQuery(rquery.query);
     spells.current.scrollTop = 0;
     setStart(0);
-    reciveSpells(10, 0, rquery.query, function(result) {
+    reciveSpells(10, 0, rquery.query, function (result) {
       receiveSpellsResult(result);
     });
   };
@@ -63,6 +69,13 @@ export default function SpellOverview() {
   }, [updateSpell]);
 
   useEffect(() => {
+    ipcRenderer.on("removeWindow", removeWindow);
+    return () => {
+      ipcRenderer.removeListener("removeWindow", removeWindow);
+    };
+  }, [removeWindow]);
+
+  useEffect(() => {
     if (isFetching) {
       fetchMoreListItems();
     }
@@ -71,16 +84,16 @@ export default function SpellOverview() {
   useEffect(() => {
     setIsFetching(false);
 
-    reciveSpellCount(query, function(result) {
+    reciveSpellCount(query, function (result) {
       let spellCount = result.count;
       if (spellCount > currentSpellList.spells.length) {
         if (!currentSpellList.spells.length) {
-          reciveSpells(10, start, query, function(result) {
+          reciveSpells(10, start, query, function (result) {
             receiveSpellsResult(result);
           });
         }
         if (spells.current.scrollHeight == spells.current.clientHeight && currentSpellList.spells.length) {
-          reciveSpells(10, start, query, function(spells) {
+          reciveSpells(10, start, query, function (spells) {
             receiveSpellsResult(spells);
           });
         }
@@ -93,7 +106,7 @@ export default function SpellOverview() {
   };
 
   const fetchMoreListItems = () => {
-    reciveSpells(10, start, query, function(result) {
+    reciveSpells(10, start, query, function (result) {
       receiveSpellsResult(result);
     });
   };

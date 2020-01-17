@@ -329,6 +329,7 @@ module.exports.deleteChar = (id) => {
                 return console.error(err.message);
             }
             console.log(`====>Removed character successfull`);
+            ipcRenderer.send('closeActiveView');
             ipcRenderer.send('displayMessage', { type: `Deleted character`, message: `Deleted character successful` });
         });
     });
@@ -341,7 +342,7 @@ module.exports.deleteAllCharacters = () => {
           console.log("====>" + err);
         }
         console.log(`====> All from characters_spells successful deleted`);
-        mainWindow.webContents.send("displayMessage", {
+        ipcRenderer.send("displayMessage", {
           type: `Delete All character spells`,
           message: "delete all successful",
         });
@@ -358,7 +359,7 @@ module.exports.deleteAllCharacters = () => {
           console.log("====>" + err);
         }
         console.log(`====> All from characters_items successful deleted`);
-        mainWindow.webContents.send("displayMessage", {
+        ipcRenderer.send("displayMessage", {
           type: `Delete All character items`,
           message: "delete all successful",
         });
@@ -375,7 +376,7 @@ module.exports.deleteAllCharacters = () => {
           console.log("====>" + err);
         }
         console.log(`====> All from characters_monsters successful deleted`);
-        mainWindow.webContents.send("displayMessage", {
+        ipcRenderer.send("displayMessage", {
           type: `Delete All character monsters`,
           message: "delete all successful",
         });
@@ -392,7 +393,7 @@ module.exports.deleteAllCharacters = () => {
           console.log("====>" + err);
         }
         console.log(`====> All from characters successful deleted`);
-        mainWindow.webContents.send("displayMessage", {
+        ipcRenderer.send("displayMessage", {
           type: `Delete All characters`,
           message: "delete all successful",
         });

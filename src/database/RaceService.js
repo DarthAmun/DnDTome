@@ -179,7 +179,6 @@ module.exports.savePerks = (perks) => {
           return console.error(err.message);
         }
         console.log(`====> perks updated successfull`);
-        ipcRenderer.send('racesUpdated', { raceStep: parseInt(localStorage.getItem('raceStep'), 10), raceStart: parseInt(localStorage.getItem('raceStart'), 10) });
         ipcRenderer.send('displayMessage', { type: `Saved race perks`, message: `Saved perks successful` });
       });
     });
@@ -197,7 +196,6 @@ module.exports.saveRace = (race) => {
         return console.error(err.message);
       }
       console.log(`====> ${race.name} updated successfull`);
-      ipcRenderer.send('racesUpdated', { raceStep: parseInt(localStorage.getItem('raceStep'), 10), raceStart: parseInt(localStorage.getItem('raceStart'), 10) });
       ipcRenderer.send('displayMessage', { type: `Saved race`, message: `Saved ${race.name} successful` });
     });
   });
@@ -280,8 +278,8 @@ module.exports.deleteRace = (race) => {
         return console.error(err.message);
       }
       console.log(`====>Deleted ${race.name} successfull`);
-      ipcRenderer.send('closeRaceWindow');
-      ipcRenderer.send('racesUpdated', { raceStep, raceStart });
+      ipcRenderer.send('closeActiveView');
+      ipcRenderer.send('removeWindow', race);
       ipcRenderer.send('displayMessage', { type: `Deleted race`, message: `Deleted ${race.name} successful` });
     });
   });
@@ -294,7 +292,7 @@ module.exports.deleteAllRaces = () => {
         console.log("====>" + err);
       }
       console.log(`====> All from races successful deleted`);
-      mainWindow.webContents.send("displayMessage", { type: `Delete All races`, message: "delete all successful" });
+      ipcRenderer.send("displayMessage", { type: `Delete All races`, message: "delete all successful" });
     });
     db.run(`DELETE FROM sqlite_sequence WHERE name='tab_races'`, function(err) {
       if (err != null) {
@@ -307,7 +305,7 @@ module.exports.deleteAllRaces = () => {
         console.log("====>" + err);
       }
       console.log(`====> All from races successful deleted`);
-      mainWindow.webContents.send("displayMessage", { type: `Delete All races_perks`, message: "delete all successful" });
+      ipcRenderer.send("displayMessage", { type: `Delete All races_perks`, message: "delete all successful" });
     });
     db.run(`DELETE FROM sqlite_sequence WHERE name='tab_races_perks'`, function(err) {
       if (err != null) {

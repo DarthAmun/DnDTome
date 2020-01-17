@@ -188,7 +188,6 @@ module.exports.saveMonster = (monster) => {
                 return console.error(err.message);
             }
             console.log(`====> ${monster.name} updated successfull`);
-            ipcRenderer.send('monstersUpdated', { monsterStep: parseInt(localStorage.getItem('monsterStep'), 10), monterStart: parseInt(localStorage.getItem('monterStart'), 10) });
             ipcRenderer.send('displayMessage', { type: `Saved monster`, message: `Saved ${monster.name} successful` });
         });
     });
@@ -289,7 +288,7 @@ module.exports.deleteMonster = (monster) => {
             }
             console.log(`====>Deleted ${monster.name} successfull`);
             ipcRenderer.send('closeActiveView');
-            ipcRenderer.send('monstersUpdated', { monsterStep, monsterStart });
+            ipcRenderer.send('removeWindow', monster);
             ipcRenderer.send('displayMessage', { type: `Deleted monster`, message: `Deleted ${monster.name} successful` });
         });
     });
@@ -302,7 +301,7 @@ module.exports.deleteAllMonsters = () => {
                 console.log("====>" + err);
             }
             console.log(`====> All from characters_monsters successful deleted`);
-            mainWindow.webContents.send("displayMessage", { type: `Delete All monsters`, message: "delete all successful" });
+            ipcRenderer.send("displayMessage", { type: `Delete All monsters`, message: "delete all successful" });
         });
         db.run(`DELETE FROM sqlite_sequence WHERE name='tab_characters_monsters'`, function (err) {
             if (err != null) {
@@ -315,7 +314,7 @@ module.exports.deleteAllMonsters = () => {
                 console.log("====>" + err);
             }
             console.log(`====> All from monsters successful deleted`);
-            mainWindow.webContents.send("displayMessage", { type: `Delete All monsters`, message: "delete all successful" });
+            ipcRenderer.send("displayMessage", { type: `Delete All monsters`, message: "delete all successful" });
         });
         db.run(`DELETE FROM sqlite_sequence WHERE name='tab_monsters'`, function (err) {
             if (err != null) {

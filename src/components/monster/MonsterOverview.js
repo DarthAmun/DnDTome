@@ -28,12 +28,21 @@ export default function MonsterOverview() {
     });
   };
 
-  const updateMonster = () => {
-    monsters.current.scrollTop = 0;
-    setStart(10);
-    reciveMonsters(10, 0, query, function(result) {
-      receiveMonstersResult(result);
+  const updateMonster = (e, result) => {
+    let monsters = currentMonsterList.monsters.map(monster => {
+      if (monster.monster_id === result.monster_id) {
+        return result;
+      } else {
+        return monster;
+      }
     });
+    setCurrentMonsterList({ monsters: monsters });
+  };
+  const removeWindow = (e, result) => {
+    let monsters = currentMonsterList.monsters.filter(monster => {
+      if (monster.monster_id !== result.id) return monster;
+    });
+    setCurrentMonsterList({ monsters: monsters });
   };
 
   const searchMonster = (evt, rquery) => {
@@ -46,13 +55,25 @@ export default function MonsterOverview() {
   };
 
   useEffect(() => {
-    ipcRenderer.on("monstersUpdated", updateMonster);
     ipcRenderer.on("sendMonsterSearchQuery", searchMonster);
     return () => {
-      ipcRenderer.removeListener("monstersUpdated", updateMonster);
       ipcRenderer.removeListener("sendMonsterSearchQuery", searchMonster);
     };
   }, []);
+
+  useEffect(() => {
+    ipcRenderer.on("updateWindow", updateMonster);
+    return () => {
+      ipcRenderer.removeListener("updateWindow", updateMonster);
+    };
+  }, [updateMonster]);
+
+  useEffect(() => {
+    ipcRenderer.on("removeWindow", removeWindow);
+    return () => {
+      ipcRenderer.removeListener("removeWindow", removeWindow);
+    };
+  }, [removeWindow]);
 
   useEffect(() => {
     if (isFetching) {

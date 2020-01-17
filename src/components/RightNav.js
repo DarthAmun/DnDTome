@@ -62,7 +62,20 @@ export default function RightNav() {
         return shortWindow;
       }
     });
-    console.log(windows);
+    setShortWindows(windows);
+  }
+  const removeWindow = (e, result) => {
+    let windows = shortWindows.filter(shortWindow => {
+      if (shortWindow.windowType === "spell" && shortWindow.spell_id === result.id) {
+      } else if (shortWindow.windowType === "item" && shortWindow.item_id === result.id) {
+      } else if (shortWindow.windowType === "gear" && shortWindow.gear_id === result.id) {
+      } else if (shortWindow.windowType === "race" && shortWindow.race_id === result.id) {
+      } else if (shortWindow.windowType === "monster" && shortWindow.monster_id === result.id) {
+      } else if (shortWindow.windowType === "char" && shortWindow.char_id === result.id) {
+      } else {
+        return shortWindow;
+      }
+    });
     setShortWindows(windows);
   }
 
@@ -82,7 +95,12 @@ export default function RightNav() {
       ipcRenderer.removeListener("updateWindow", updateWindow);
     };
   }, [updateWindow]);
-
+  useEffect(() => {
+    ipcRenderer.on("removeWindow", removeWindow);
+    return () => {
+      ipcRenderer.removeListener("removeWindow", removeWindow);
+    };
+  }, [removeWindow]);
 
 
   const getSpellPicture = spell => {

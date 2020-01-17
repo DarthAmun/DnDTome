@@ -28,12 +28,21 @@ export default function ItemOverview() {
     });
   };
 
-  const updateItem = () => {
-    items.current.scrollTop = 0;
-    setStart(10);
-    reciveItems(10, 0, query, function(result) {
-      receiveItemsResult(result);
+  const updateItem = (e, result) => {
+    let items = currentItemList.items.map(item => {
+      if (item.item_id === result.item_id) {
+        return result;
+      } else {
+        return item;
+      }
     });
+    setCurrentItemList({ items: items });
+  };
+  const removeWindow = (e, result) => {
+    let items = currentItemList.items.filter(item => {
+      if (item.item_id !== result.id) return item;
+    });
+    setCurrentItemList({ items: items });
   };
 
   const searchItem = (evt, rquery) => {
@@ -46,13 +55,26 @@ export default function ItemOverview() {
   };
 
   useEffect(() => {
-    ipcRenderer.on("itemsUpdated", updateItem);
     ipcRenderer.on("sendItemSearchQuery", searchItem);
     return () => {
-      ipcRenderer.removeListener("itemsUpdated", updateItem);
       ipcRenderer.removeListener("sendItemSearchQuery", searchItem);
     };
   }, []);
+
+  useEffect(() => {
+    ipcRenderer.on("updateWindow", updateItem);
+    return () => {
+      ipcRenderer.removeListener("updateWindow", updateItem);
+    };
+  }, [updateItem]);
+
+  useEffect(() => {
+    ipcRenderer.on("removeWindow", removeWindow);
+    return () => {
+      ipcRenderer.removeListener("removeWindow", removeWindow);
+    };
+  }, [removeWindow]);
+
 
   useEffect(() => {
     if (isFetching) {
